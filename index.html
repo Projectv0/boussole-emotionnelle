@@ -401,6 +401,22 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 
 .res-actions{ display:flex; gap:.9rem; justify-content:center; flex-wrap:wrap; padding:2.6rem 0 .5rem; }
 .copy-feedback{ text-align:center; font-size:.84rem; font-weight:600; color:var(--sage-deep); min-height:1.4em; margin-top:.6rem; }
+.soutien{ text-align:center; padding:1.2rem 0 .4rem; }
+.soutien p{ font-size:.86rem; color:var(--muted); margin-bottom:.8rem; }
+.carte-overlay{
+  position:fixed; inset:0; z-index:80; display:grid; place-items:center; padding:1.2rem;
+  background:rgba(45,40,51,.45);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+}
+.carte-overlay[hidden]{ display:none; }
+.carte-box{
+  background:var(--card); border-radius:1.6rem; padding:1.1rem;
+  max-width:26rem; width:100%; max-height:94vh; overflow:auto;
+  box-shadow:var(--shadow-soft); text-align:center;
+}
+.carte-box img{ display:block; width:100%; height:auto; border-radius:1rem; border:1px solid var(--hairline); }
+.carte-actions{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:1rem; }
+.carte-hint{ font-size:.76rem; color:var(--faint); margin-top:.8rem; padding:0 .4rem; }
 
 footer{
   position:relative; z-index:1;
@@ -624,10 +640,27 @@ footer p + p{ margin-top:.3rem; }
     </div>
 
     <div class="res-actions">
-      <button class="btn btn-primary" id="btnCopy">Copier mes résultats <span class="ico" aria-hidden="true">⧉</span></button>
+      <button class="btn btn-primary" id="btnCarte">Créer ma carte à partager <span class="ico" aria-hidden="true">✦</span></button>
+      <button class="btn btn-ghost" id="btnCopy">Copier mes résultats <span class="ico" aria-hidden="true">⧉</span></button>
       <button class="btn btn-ghost" id="btnRestart">Refaire le test <span class="ico" aria-hidden="true">↺</span></button>
     </div>
     <div class="copy-feedback" id="copyFeedback" role="status"></div>
+    <div class="soutien" id="soutienBox" hidden>
+      <p>Ce test t’a été utile ? Il restera toujours gratuit et sans pub.</p>
+      <a class="btn btn-ghost" id="soutienLien" target="_blank" rel="noopener">☕ Soutenir ce projet <span class="ico" aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="carte-overlay" id="carteOverlay" hidden>
+      <div class="carte-box">
+        <img id="carteImg" alt="Ta carte de résultats Boussole émotionnelle">
+        <div class="carte-actions">
+          <button class="btn btn-primary" id="btnCarteDl">Télécharger l’image <span class="ico" aria-hidden="true">⬇</span></button>
+          <button class="btn btn-ghost" id="btnCartePartage" hidden>Partager <span class="ico" aria-hidden="true">↗</span></button>
+          <button class="btn btn-ghost" id="btnCarteFermer">Fermer <span class="ico" aria-hidden="true">✕</span></button>
+        </div>
+        <p class="carte-hint">Si le téléchargement ne démarre pas : clic droit sur l’image (ou appui long sur mobile) → « Enregistrer l’image ».</p>
+      </div>
+    </div>
   </section>
 
 </main>
@@ -1011,6 +1044,12 @@ const SITUATIONS = [
   { t:"Ça ne me ferait pas grand-chose.", pts:{} }
 ]}
 ];
+/* ————— Réglages ————— */
+/* Colle ici ton lien de soutien (Ko-fi, Buy Me a Coffee, Stripe…) pour faire
+   apparaître le bouton « Soutenir ce projet » sur la page de résultats. */
+const LIEN_SOUTIEN = "";
+const URL_SITE = "projectv0.github.io/boussole-emotionnelle";
+
 /* ————— Outils ————— */
 const $ = sel => document.querySelector(sel);
 const N = SITUATIONS.length;
@@ -1367,6 +1406,176 @@ async function copierResultats(){
   setTimeout(() => { fb.textContent = ""; }, 5000);
 }
 
+/* ————— Carte de résultats à partager (image générée dans le navigateur) ————— */
+const chargeImage = src => new Promise((res, rej) => {
+  const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = src;
+});
+function cheminArrondi(ctx, x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+function radarCanvas(ctx, cx, cy, R, notes, SANS){
+  const pt = (k, r) => {
+    const a = (Math.PI * 2 * k) / EMOTIONS.length - Math.PI / 2;
+    return [cx + Math.cos(a) * r, cy + Math.sin(a) * r, Math.cos(a), Math.sin(a)];
+  };
+  const poly = (r, tracer) => {
+    ctx.beginPath();
+    EMOTIONS.forEach((e, k) => {
+      const [x, y] = pt(k, typeof r === "function" ? r(e) : r);
+      k ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    });
+    ctx.closePath(); tracer();
+  };
+  [2.5, 5, 7.5, 10].forEach(v => poly(R * v / 10, () => {
+    ctx.strokeStyle = v === 10 ? "rgba(45,40,51,.16)" : "rgba(45,40,51,.08)";
+    ctx.lineWidth = 2; ctx.stroke();
+  }));
+  EMOTIONS.forEach((e, k) => {
+    const [x, y] = pt(k, R);
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y);
+    ctx.strokeStyle = "rgba(45,40,51,.07)"; ctx.lineWidth = 2; ctx.stroke();
+  });
+  poly(e => R * notes[e.id] / 10, () => {
+    ctx.fillStyle = "rgba(63,130,113,.18)"; ctx.fill();
+    ctx.strokeStyle = "#3F8271"; ctx.lineWidth = 4; ctx.lineJoin = "round"; ctx.stroke();
+  });
+  EMOTIONS.forEach((e, k) => {
+    const [x, y] = pt(k, R * notes[e.id] / 10);
+    ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2);
+    ctx.fillStyle = e.color; ctx.fill();
+    ctx.strokeStyle = "#FFFDF8"; ctx.lineWidth = 3; ctx.stroke();
+  });
+  ctx.font = `600 25px ${SANS}`; ctx.fillStyle = "#6E6779";
+  EMOTIONS.forEach((e, k) => {
+    const [x, y, c, s] = pt(k, R + 36);
+    ctx.textAlign = c > .3 ? "left" : c < -.3 ? "right" : "center";
+    ctx.fillText(e.court, x, y + (s > .55 ? 20 : s < -.55 ? 0 : 9));
+  });
+}
+async function genererCarte(notes){
+  try{
+    await Promise.all([
+      document.fonts.load('620 66px Fraunces'), document.fonts.load('520 44px Fraunces'),
+      document.fonts.load('700 32px "Plus Jakarta Sans"'), document.fonts.ready
+    ]);
+  }catch(_){}
+  const SERIF = '"Fraunces", Georgia, serif';
+  const SANS  = '"Plus Jakarta Sans", -apple-system, sans-serif';
+  const W = 1080, H = 1350;
+  const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+  const ctx = cv.getContext("2d");
+
+  /* Fond crème + halos aquarellés */
+  ctx.fillStyle = "#F8F4EC"; ctx.fillRect(0, 0, W, H);
+  const halo = (x, y, r, rgb, a) => {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, `rgba(${rgb},${a})`); g.addColorStop(1, `rgba(${rgb},0)`);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  };
+  halo(140, 60, 620, "123,111,180", .15);
+  halo(W - 100, 200, 660, "233,182,142", .17);
+  halo(W / 2, H + 60, 700, "63,130,113", .13);
+  halo(W / 2, 40, 480, "227,166,47", .10);
+
+  /* Carte intérieure */
+  cheminArrondi(ctx, 36, 36, W - 72, H - 72, 48);
+  ctx.fillStyle = "rgba(255,253,248,.78)"; ctx.fill();
+  ctx.strokeStyle = "rgba(45,40,51,.08)"; ctx.lineWidth = 2; ctx.stroke();
+
+  /* En-tête : logo + nom du site */
+  try{
+    const logo = await chargeImage(document.querySelector(".brand .logo img").src);
+    ctx.save(); ctx.beginPath(); ctx.arc(129, 133, 39, 0, Math.PI * 2); ctx.clip();
+    ctx.drawImage(logo, 90, 94, 78, 78); ctx.restore();
+    ctx.beginPath(); ctx.arc(129, 133, 39, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(45,40,51,.12)"; ctx.lineWidth = 2; ctx.stroke();
+  }catch(_){}
+  ctx.textAlign = "left"; ctx.fillStyle = "#2D2833";
+  ctx.font = `620 44px ${SERIF}`;
+  ctx.fillText("Boussole émotionnelle", 190, 148);
+  ctx.font = `600 24px ${SANS}`; ctx.fillStyle = "#9A93A6";
+  ctx.fillText(new Date().toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" }), 190, 184);
+
+  /* Titre */
+  ctx.textAlign = "center"; ctx.fillStyle = "#2D2833";
+  ctx.font = `620 62px ${SERIF}`;
+  ctx.fillText("Ma boussole intérieure", W / 2, 290);
+
+  /* Radar */
+  radarCanvas(ctx, W / 2, 610, 240, notes, SANS);
+
+  /* Top 3 */
+  const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]).slice(0, 3);
+  const y0 = 916, rh = 88;
+  for(let k = 0; k < 3; k++){
+    const e = tri[k], y = y0 + k * (rh + 14);
+    cheminArrondi(ctx, 120, y, W - 240, rh, 26);
+    ctx.fillStyle = "rgba(255,255,255,.72)"; ctx.fill();
+    ctx.strokeStyle = "rgba(45,40,51,.09)"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.textAlign = "left"; ctx.fillStyle = "#9A93A6"; ctx.font = `620 34px ${SERIF}`;
+    ctx.fillText(String(k + 1), 152, y + 56);
+    try{
+      const ill = await chargeImage(ILLUS[e.id]);
+      ctx.save(); cheminArrondi(ctx, 196, y + 12, 64, 64, 17); ctx.clip();
+      ctx.drawImage(ill, 196, y + 12, 64, 64); ctx.restore();
+    }catch(_){}
+    ctx.fillStyle = "#2D2833"; ctx.font = `700 32px ${SANS}`;
+    ctx.fillText(e.nom, 288, y + 55);
+    ctx.textAlign = "right"; ctx.fillStyle = e.color; ctx.font = `620 42px ${SERIF}`;
+    ctx.fillText(fmt(notes[e.id]), W - 156, y + 58);
+  }
+
+  /* Pied de carte */
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#33685B"; ctx.font = `700 28px ${SANS}`;
+  ctx.fillText(`Fais le test → ${URL_SITE}`, W / 2, H - 100);
+  ctx.fillStyle = "#9A93A6"; ctx.font = `600 21px ${SANS}`;
+  ctx.fillText("Test indicatif de découverte de soi — pas un diagnostic. 100 % privé.", W / 2, H - 62);
+  return cv;
+}
+let carteBlob = null;
+async function ouvrirCarte(){
+  if(!lastNotes) return;
+  const btn = $("#btnCarte");
+  btn.disabled = true;
+  try{
+    const cv = await genererCarte(lastNotes);
+    $("#carteImg").src = cv.toDataURL("image/png");
+    carteBlob = await new Promise(res => cv.toBlob(res, "image/png"));
+    let partageOK = false;
+    try{
+      const f = new File([carteBlob], "boussole-emotionnelle.png", { type:"image/png" });
+      partageOK = !!(navigator.canShare && navigator.canShare({ files:[f] }));
+    }catch(_){}
+    $("#btnCartePartage").hidden = !partageOK;
+    $("#carteOverlay").hidden = false;
+  }finally{
+    btn.disabled = false;
+  }
+}
+function telechargerCarte(){
+  if(!carteBlob) return;
+  const url = URL.createObjectURL(carteBlob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "boussole-emotionnelle.png";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+async function partagerCarte(){
+  if(!carteBlob) return;
+  try{
+    const f = new File([carteBlob], "boussole-emotionnelle.png", { type:"image/png" });
+    await navigator.share({ files:[f], title:"Boussole émotionnelle",
+      text:`Ma boussole intérieure — fais le test : https://${URL_SITE}` });
+  }catch(_){ /* partage annulé */ }
+}
+
 /* ————— Auto-vérification (console) ————— */
 function runSelfTests(){
   const idxNeutre = s => s.opts.findIndex(o => Object.keys(o.pts).length === 0);
@@ -1413,6 +1622,15 @@ $("#btnNext").addEventListener("click", () => {
   else gotoQuestion(state.i + 1);
 });
 $("#btnCopy").addEventListener("click", copierResultats);
+$("#btnCarte").addEventListener("click", ouvrirCarte);
+$("#btnCarteDl").addEventListener("click", telechargerCarte);
+$("#btnCartePartage").addEventListener("click", partagerCarte);
+$("#btnCarteFermer").addEventListener("click", () => { $("#carteOverlay").hidden = true; });
+$("#carteOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) e.currentTarget.hidden = true; });
+if(LIEN_SOUTIEN){
+  $("#soutienLien").href = LIEN_SOUTIEN;
+  $("#soutienBox").hidden = false;
+}
 $("#btnRestart").addEventListener("click", () => {
   state.i = 0;
   state.answers = Array.from({length:N}, () => null);
