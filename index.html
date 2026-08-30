@@ -1,0 +1,1398 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boussole émotionnelle</title>
+<meta name="description" content="Un test bienveillant par mises en situation pour comprendre la place de 14 émotions dans ta vie. 100 % dans ton navigateur, aucune donnée collectée.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,420;9..144,520;9..144,620&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ————— Fondations ————— */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --bg:#F8F4EC;
+  --card:#FFFDF8;
+  --ink:#2D2833;
+  --muted:#6E6779;
+  --faint:#9A93A6;
+  --hairline:rgba(45,40,51,.08);
+  --hairline-strong:rgba(45,40,51,.14);
+  --sage:#3F8271;
+  --sage-deep:#33685B;
+  --sage-soft:rgba(63,130,113,.10);
+  --lavande:#7B6FB4;
+  --peche:#E9B68E;
+  --shadow-soft:0 30px 70px -30px rgba(74,58,42,.22), 0 8px 22px -12px rgba(74,58,42,.10);
+  --shadow-tiny:0 2px 10px -4px rgba(74,58,42,.14);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --r-outer:2rem;
+  --r-inner:calc(2rem - .5rem);
+  --serif:"Fraunces", Georgia, "Times New Roman", serif;
+  --sans:"Plus Jakarta Sans", -apple-system, "Segoe UI", sans-serif;
+}
+html{ scroll-behavior:smooth; }
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.65;
+  font-size:16.5px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* Aura de fond : halos très doux */
+.aura{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(42rem 30rem at 12% -6%, rgba(123,111,180,.10), transparent 62%),
+    radial-gradient(46rem 32rem at 96% 12%, rgba(233,182,142,.14), transparent 60%),
+    radial-gradient(40rem 34rem at 50% 112%, rgba(63,130,113,.09), transparent 62%);
+}
+/* Grain de film, très discret */
+body::after{
+  content:""; position:fixed; inset:0; z-index:50; pointer-events:none; opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{ background:rgba(123,111,180,.22); }
+
+h1,h2,h3{ font-family:var(--serif); font-weight:520; letter-spacing:-.015em; line-height:1.14; text-wrap:balance; }
+h1{ font-size:clamp(2.7rem, 6.4vw, 4.4rem); font-weight:620; }
+h2{ font-size:clamp(1.7rem, 3.4vw, 2.4rem); }
+h3{ font-size:1.22rem; line-height:1.3; }
+p{ text-wrap:pretty; }
+button{ font-family:inherit; color:inherit; background:none; border:none; cursor:pointer; }
+a{ color:var(--sage-deep); }
+
+main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.25rem 6rem; }
+
+/* ————— Navigation flottante ————— */
+.floatnav{
+  position:fixed; top:1.1rem; left:50%; transform:translateX(-50%);
+  z-index:40; display:flex; align-items:center; gap:.4rem;
+  padding:.4rem .5rem .4rem .5rem;
+  background:rgba(255,253,248,.72);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  border:1px solid rgba(45,40,51,.07);
+  border-radius:999px;
+  box-shadow:0 14px 40px -18px rgba(74,58,42,.25);
+  white-space:nowrap;
+}
+.brand{
+  display:flex; align-items:center; gap:.55rem;
+  font-weight:700; font-size:.92rem; letter-spacing:-.01em;
+  padding:.34rem .9rem .34rem .55rem; border-radius:999px;
+  transition:background .5s var(--ease);
+}
+.brand:hover{ background:rgba(45,40,51,.05); }
+.brand .logo{
+  width:1.9rem; height:1.9rem; display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(123,111,180,.16), rgba(63,130,113,.16));
+  border:1px solid rgba(45,40,51,.06); border-radius:999px; font-size:.95rem;
+}
+.privacy-chip{
+  display:flex; align-items:center; gap:.4rem;
+  font-size:.72rem; font-weight:600; color:var(--sage-deep);
+  background:var(--sage-soft); border:1px solid rgba(63,130,113,.16);
+  padding:.4rem .8rem; border-radius:999px;
+}
+.privacy-chip .dot{ width:.45rem; height:.45rem; border-radius:999px; background:var(--sage); box-shadow:0 0 0 3px rgba(63,130,113,.15); }
+
+/* ————— Vues ————— */
+.view{ display:none; padding-top:7.5rem; }
+.view.active{ display:block; }
+
+/* Apparition douce au scroll */
+.reveal{ opacity:0; transform:translateY(26px); filter:blur(7px); transition:opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease); }
+.reveal.in{ opacity:1; transform:none; filter:none; }
+
+/* ————— Étiquette « eyebrow » ————— */
+.eyebrow{
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.66rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--muted); background:rgba(255,253,248,.7);
+  border:1px solid var(--hairline); border-radius:999px;
+  padding:.42rem 1rem; margin-bottom:1.4rem;
+}
+.eyebrow::before{ content:""; width:.4rem; height:.4rem; border-radius:999px; background:linear-gradient(135deg,var(--lavande),var(--sage)); }
+
+/* ————— Double-bezel : coque + cœur ————— */
+.shell{
+  background:rgba(45,40,51,.045);
+  border:1px solid rgba(45,40,51,.055);
+  border-radius:var(--r-outer);
+  padding:.5rem;
+  box-shadow:var(--shadow-soft);
+}
+.core{
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:var(--r-inner);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.9);
+  padding:2rem;
+}
+@media (min-width:700px){ .core{ padding:2.6rem 2.8rem; } }
+
+/* ————— Boutons ————— */
+.btn{
+  display:inline-flex; align-items:center; gap:.85rem;
+  border-radius:999px; padding:.55rem .6rem .55rem 1.5rem;
+  font-weight:700; font-size:.98rem; letter-spacing:-.01em;
+  transition:transform .6s var(--ease), box-shadow .6s var(--ease), background .6s var(--ease), opacity .4s var(--ease);
+  will-change:transform;
+}
+.btn:active{ transform:scale(.97); }
+.btn .ico{
+  width:2.15rem; height:2.15rem; border-radius:999px;
+  display:grid; place-items:center; font-size:1rem;
+  transition:transform .6s var(--ease);
+}
+.btn:hover .ico{ transform:translate(3px,-1px) scale(1.06); }
+.btn-primary{
+  background:linear-gradient(160deg, #47907D, var(--sage-deep));
+  color:#FDFBF6;
+  box-shadow:0 18px 38px -16px rgba(51,104,91,.55), inset 0 1px 1px rgba(255,255,255,.28);
+}
+.btn-primary:hover{ box-shadow:0 22px 44px -16px rgba(51,104,91,.65), inset 0 1px 1px rgba(255,255,255,.28); }
+.btn-primary .ico{ background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.22); }
+.btn-ghost{
+  background:rgba(255,253,248,.75); color:var(--ink);
+  border:1px solid var(--hairline-strong);
+  box-shadow:var(--shadow-tiny);
+}
+.btn-ghost:hover{ background:#fff; }
+.btn-ghost .ico{ background:rgba(45,40,51,.05); border:1px solid var(--hairline); }
+.btn[disabled]{ opacity:.42; cursor:not-allowed; }
+.btn[disabled]:hover .ico{ transform:none; }
+.btn[disabled]:active{ transform:none; }
+
+/* ————— Accueil ————— */
+.hero{ text-align:center; padding:1.5rem 0 4.5rem; }
+.hero .sub{
+  max-width:34rem; margin:1.5rem auto 0; font-size:1.13rem; color:var(--muted); line-height:1.7;
+}
+.hero .cta-row{ display:flex; gap:.9rem; justify-content:center; flex-wrap:wrap; margin-top:2.4rem; }
+.hero-meta{ margin-top:2.2rem; display:flex; gap:1.6rem; justify-content:center; flex-wrap:wrap; font-size:.82rem; color:var(--faint); font-weight:600; }
+.hero-meta span{ display:flex; align-items:center; gap:.45rem; }
+
+.section{ padding:3.2rem 0 0; }
+.section-head{ max-width:36rem; margin-bottom:2rem; }
+.section-head p{ color:var(--muted); margin-top:.7rem; }
+
+.intro-grid{ display:grid; grid-template-columns:1fr; gap:1.1rem; }
+@media (min-width:820px){ .intro-grid{ grid-template-columns:1.25fr 1fr; align-items:stretch; } }
+.intro-grid .core{ height:100%; }
+.intro-grid p + p{ margin-top:.9rem; }
+.intro-grid p{ color:#4A4453; }
+
+.steps{ display:grid; grid-template-columns:1fr; gap:1.1rem; margin-top:1.1rem; counter-reset:step; }
+@media (min-width:820px){ .steps{ grid-template-columns:repeat(3,1fr); } }
+.step .core{ padding:1.8rem 1.7rem; height:100%; }
+.step-num{
+  font-family:var(--serif); font-size:2.2rem; font-weight:620; line-height:1;
+  background:linear-gradient(135deg,var(--lavande),var(--sage));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.step h3{ margin:.9rem 0 .45rem; }
+.step p{ font-size:.92rem; color:var(--muted); }
+.step .mins{ display:inline-block; margin-top:.9rem; font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--sage-deep); background:var(--sage-soft); padding:.3rem .7rem; border-radius:999px; }
+
+.callout{ display:flex; gap:1rem; align-items:flex-start; padding:1.5rem 1.6rem; border-radius:1.4rem; margin-top:1.1rem; }
+.callout .emo{ font-size:1.3rem; line-height:1.4; }
+.callout p{ font-size:.94rem; }
+.callout strong{ display:block; margin-bottom:.15rem; }
+.callout-privacy{ background:var(--sage-soft); border:1px solid rgba(63,130,113,.16); color:#2F5A4F; }
+.callout-warn{ background:rgba(233,182,142,.14); border:1px solid rgba(202,141,90,.22); color:#6E5236; }
+.callout-heart{ background:rgba(123,111,180,.10); border:1px solid rgba(123,111,180,.20); color:#4E4477; }
+
+.center-cta{ text-align:center; padding:3.5rem 0 1rem; }
+
+/* ————— Les 14 émotions ————— */
+.emo-grid{ display:grid; grid-template-columns:1fr; gap:1rem; margin-top:1.6rem; }
+@media (min-width:640px){ .emo-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:980px){ .emo-grid{ grid-template-columns:repeat(3,1fr); } }
+.emo-card .core{ padding:1.6rem 1.55rem; height:100%; display:flex; flex-direction:column; gap:.55rem; }
+.emo-card .shellx{ height:100%; }
+.emo-top{ display:flex; align-items:center; gap:.8rem; }
+.emo-glyph{
+  width:2.7rem; height:2.7rem; flex:none; display:grid; place-items:center; font-size:1.25rem;
+  border-radius:1rem; border:1px solid var(--hairline);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.8);
+}
+.emo-card h3{ font-size:1.18rem; }
+.emo-cat{ font-size:.64rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); }
+.emo-card .def{ font-size:.92rem; color:#4A4453; }
+.emo-card .fn{ font-size:.86rem; color:var(--muted); }
+.emo-card .fn b, .emo-card .ex b{ color:var(--ink); font-weight:700; }
+.emo-card .ex{ font-size:.86rem; color:var(--muted); font-style:italic; border-left:2px solid var(--hairline-strong); padding-left:.8rem; margin-top:.2rem; }
+
+/* ————— Le test ————— */
+.test-wrap{ max-width:44rem; margin:0 auto; }
+.progress-zone{ margin-bottom:1.6rem; }
+.progress-top{ display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:.65rem; }
+.q-domain{
+  font-size:.68rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--lavande); background:rgba(123,111,180,.10);
+  border:1px solid rgba(123,111,180,.18);
+  padding:.34rem .85rem; border-radius:999px;
+}
+.q-count{ font-size:.8rem; font-weight:700; color:var(--faint); font-variant-numeric:tabular-nums; }
+.track{ height:.5rem; background:rgba(45,40,51,.07); border-radius:999px; overflow:hidden; }
+.fill{
+  height:100%; width:0%;
+  background:linear-gradient(90deg, var(--lavande), var(--sage));
+  border-radius:999px;
+  transition:width .7s var(--ease);
+}
+.q-card{ transition:opacity .45s var(--ease), transform .45s var(--ease), filter .45s var(--ease); }
+.q-card.fading{ opacity:0; transform:translateY(14px); filter:blur(5px); }
+.q-situation{
+  font-family:var(--serif); font-size:clamp(1.25rem, 2.6vw, 1.55rem); font-weight:520;
+  line-height:1.42; letter-spacing:-.01em; color:var(--ink);
+}
+.q-ask{
+  margin:1.8rem 0 .9rem; font-size:.78rem; font-weight:700; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--muted);
+  display:flex; align-items:center; gap:.7rem;
+}
+.q-ask::after{ content:""; flex:1; height:1px; background:var(--hairline); }
+.options{ display:flex; flex-direction:column; gap:.65rem; }
+.opt{
+  display:flex; gap:.95rem; align-items:flex-start; text-align:left; width:100%;
+  padding:1rem 1.15rem; border-radius:1.15rem;
+  background:rgba(255,255,255,.55);
+  border:1.5px solid var(--hairline);
+  font-size:.95rem; line-height:1.5; color:#443E4E;
+  transition:border-color .5s var(--ease), background .5s var(--ease), transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.opt:hover{ border-color:rgba(63,130,113,.4); background:#fff; transform:translateY(-1px); }
+.opt .tick{
+  flex:none; width:1.55rem; height:1.55rem; margin-top:.1rem;
+  border-radius:999px; border:1.5px solid var(--hairline-strong);
+  display:grid; place-items:center; font-size:.72rem; font-weight:700; color:var(--faint);
+  transition:all .5s var(--ease);
+}
+.opt.sel{
+  border-color:var(--sage); background:linear-gradient(180deg, rgba(63,130,113,.09), rgba(63,130,113,.05));
+  color:var(--ink); box-shadow:0 10px 26px -14px rgba(51,104,91,.35);
+}
+.opt.sel .tick{ background:var(--sage); border-color:var(--sage); color:#fff; }
+
+.intensity{ margin-top:2rem; opacity:0; transform:translateY(12px); filter:blur(4px); transition:opacity .7s var(--ease), transform .7s var(--ease), filter .7s var(--ease); pointer-events:none; height:0; overflow:hidden; }
+.intensity.on{ opacity:1; transform:none; filter:none; pointer-events:auto; height:auto; overflow:visible; }
+.int-scale{ display:grid; grid-template-columns:repeat(5,1fr); gap:.5rem; }
+.int-btn{
+  border-radius:1rem; padding:.8rem .3rem .7rem;
+  border:1.5px solid var(--hairline);
+  background:rgba(255,255,255,.55);
+  display:flex; flex-direction:column; align-items:center; gap:.15rem;
+  transition:all .5s var(--ease);
+}
+.int-btn:hover{ border-color:rgba(123,111,180,.45); background:#fff; }
+.int-btn .n{ font-family:var(--serif); font-size:1.3rem; font-weight:620; line-height:1; }
+.int-btn .l{ font-size:.62rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); }
+.int-btn.sel{ border-color:var(--lavande); background:linear-gradient(180deg, rgba(123,111,180,.12), rgba(123,111,180,.06)); box-shadow:0 10px 26px -14px rgba(123,111,180,.45); }
+.int-btn.sel .l{ color:var(--lavande); }
+
+.test-nav{ display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-top:1.8rem; flex-wrap:wrap; }
+.next-hint{ font-size:.78rem; color:var(--faint); flex-basis:100%; text-align:right; margin-top:.4rem; min-height:1.2em; }
+
+/* ————— Résultats ————— */
+.res-grid{ display:grid; grid-template-columns:1fr; gap:1.1rem; margin-top:1.6rem; }
+@media (min-width:880px){
+  .res-grid{ grid-template-columns:repeat(12,1fr); }
+  .res-span-4{ grid-column:span 4; } .res-span-5{ grid-column:span 5; } .res-span-7{ grid-column:span 7; }
+  .res-span-8{ grid-column:span 8; } .res-span-12{ grid-column:span 12; }
+}
+.res-grid > *{ min-width:0; }
+.res-card .core{ height:100%; padding:1.9rem 1.9rem; }
+.res-kicker{ font-size:.68rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--faint); margin-bottom:1rem; display:flex; align-items:center; gap:.6rem; }
+.res-kicker::before{ content:""; width:.38rem; height:.38rem; border-radius:99px; background:linear-gradient(135deg,var(--lavande),var(--sage)); }
+
+.podium{ display:flex; flex-direction:column; gap:.8rem; }
+.podium-row{ display:flex; align-items:center; gap:.9rem; padding:.75rem .9rem; border-radius:1.05rem; border:1px solid var(--hairline); background:rgba(255,255,255,.5); }
+.podium-rank{ font-family:var(--serif); font-weight:620; font-size:1.05rem; color:var(--faint); width:1.2rem; text-align:center; }
+.podium-row .emo-glyph{ width:2.3rem; height:2.3rem; font-size:1.05rem; border-radius:.8rem; }
+.podium-name{ font-weight:700; font-size:.95rem; flex:1; }
+.podium-score{ font-family:var(--serif); font-weight:620; font-size:1.1rem; font-variant-numeric:tabular-nums; }
+
+.low-list{ display:flex; flex-wrap:wrap; gap:.5rem; }
+.low-chip{ display:inline-flex; align-items:center; gap:.45rem; font-size:.82rem; font-weight:600; color:var(--muted); border:1px dashed var(--hairline-strong); border-radius:999px; padding:.4rem .85rem; background:rgba(255,255,255,.4); }
+.res-note{ font-size:.86rem; color:var(--muted); margin-top:1rem; }
+
+.balance-bars{ display:flex; flex-direction:column; gap:1rem; margin:1.1rem 0 1.2rem; }
+.bal-row .bal-head{ display:flex; justify-content:space-between; font-size:.82rem; font-weight:700; margin-bottom:.4rem; }
+.bal-row .bal-head .v{ font-family:var(--serif); font-variant-numeric:tabular-nums; }
+.bal-track{ height:.55rem; border-radius:999px; background:rgba(45,40,51,.07); overflow:hidden; }
+.bal-fill{ height:100%; border-radius:999px; width:0%; transition:width 1.1s var(--ease) .2s; }
+
+.radar-wrap{ display:grid; place-items:center; }
+.radar-wrap svg{ width:100%; max-width:30rem; height:auto; }
+
+.bars{ display:flex; flex-direction:column; gap:.9rem; }
+.bar-row{ display:grid; grid-template-columns:auto 1fr auto; gap:.4rem .9rem; align-items:center; }
+.bar-id{ display:flex; align-items:center; gap:.6rem; width:10.5rem; }
+.bar-id .g{ font-size:1rem; }
+.bar-id .nm{ font-weight:700; font-size:.88rem; }
+.bar-id .band{ display:block; font-size:.66rem; font-weight:600; color:var(--faint); letter-spacing:.04em; }
+.bar-track{ height:.62rem; background:rgba(45,40,51,.06); border-radius:999px; overflow:hidden; }
+.bar-fill{ height:100%; border-radius:999px; width:0%; transition:width 1s var(--ease); box-shadow:inset 0 1px 1px rgba(255,255,255,.4); }
+.bar-score{ font-family:var(--serif); font-weight:620; font-size:1rem; font-variant-numeric:tabular-nums; width:3.4rem; text-align:right; }
+@media (max-width:640px){
+  .bar-row{ grid-template-columns:1fr auto; }
+  .bar-id{ width:auto; grid-column:1 / -1; }
+}
+
+.analyses{ display:flex; flex-direction:column; gap:.8rem; margin-top:1.2rem; }
+.ana{ border:1px solid var(--hairline); border-radius:1.3rem; background:rgba(255,255,255,.55); overflow:hidden; }
+.ana summary{
+  list-style:none; display:flex; align-items:center; gap:.9rem;
+  padding:1.05rem 1.2rem; cursor:pointer; user-select:none;
+  transition:background .4s var(--ease);
+}
+.ana summary::-webkit-details-marker{ display:none; }
+.ana summary:hover{ background:rgba(255,255,255,.9); }
+.ana .emo-glyph{ width:2.4rem; height:2.4rem; font-size:1.1rem; border-radius:.85rem; }
+.ana-name{ font-weight:700; flex:1; font-size:.97rem; min-width:0; }
+@media (max-width:640px){
+  .ana summary{ flex-wrap:wrap; row-gap:.4rem; }
+  .ana-name{ flex:1 1 8rem; }
+}
+.ana-band{ font-size:.66rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.3rem .7rem; border-radius:999px; }
+.ana-score{ font-family:var(--serif); font-weight:620; font-size:1.05rem; font-variant-numeric:tabular-nums; }
+.ana-chev{ color:var(--faint); transition:transform .5s var(--ease); font-size:.8rem; }
+.ana[open] .ana-chev{ transform:rotate(180deg); }
+.ana-body{ padding:.2rem 1.3rem 1.3rem 4.5rem; font-size:.93rem; color:#4A4453; }
+@media (max-width:640px){ .ana-body{ padding-left:1.3rem; } }
+
+.synthese p{ font-size:1.02rem; line-height:1.75; color:#433D4D; }
+.synthese p + p{ margin-top:1rem; }
+.synthese .lead-letter::first-letter{
+  font-family:var(--serif); font-weight:620; font-size:2.6em; float:left;
+  line-height:.85; padding:.08em .12em 0 0; color:var(--sage-deep);
+}
+
+.res-actions{ display:flex; gap:.9rem; justify-content:center; flex-wrap:wrap; padding:2.6rem 0 .5rem; }
+.copy-feedback{ text-align:center; font-size:.84rem; font-weight:600; color:var(--sage-deep); min-height:1.4em; margin-top:.6rem; }
+
+footer{
+  position:relative; z-index:1;
+  text-align:center; padding:2.5rem 1.5rem 3rem; color:var(--faint); font-size:.8rem;
+  border-top:1px solid var(--hairline);
+  background:rgba(255,253,248,.5);
+}
+footer p + p{ margin-top:.3rem; }
+
+@media (max-width:640px){
+  .core{ padding:1.5rem 1.3rem; }
+  .view{ padding-top:6.3rem; }
+  .floatnav .privacy-chip .txt{ display:none; }
+  .int-btn .l{ font-size:.5rem; }
+  .hero{ padding-bottom:3rem; }
+}
+@media (prefers-reduced-motion: reduce){
+  *{ transition-duration:.01ms !important; animation-duration:.01ms !important; }
+  html{ scroll-behavior:auto; }
+  .reveal{ opacity:1; transform:none; filter:none; }
+}
+</style>
+</head>
+<body>
+<div class="aura" aria-hidden="true"></div>
+
+<nav class="floatnav" aria-label="Navigation principale">
+  <button class="brand" id="navHome" title="Revenir à l’accueil">
+    <span class="logo" aria-hidden="true">🧭</span>
+    <span>Boussole émotionnelle</span>
+  </button>
+  <span class="privacy-chip" title="Tout se passe dans ton navigateur : aucune donnée n’est enregistrée ni envoyée.">
+    <span class="dot" aria-hidden="true"></span><span class="txt">100&nbsp;% privé</span>
+  </span>
+</nav>
+
+<main id="app">
+
+  <!-- ——————— ACCUEIL ——————— -->
+  <section id="v-accueil" class="view active" aria-label="Accueil">
+    <div class="hero">
+      <div class="eyebrow reveal">Un moment rien que pour toi</div>
+      <h1 class="reveal">Comprendre<br>tes émotions,<br>en douceur.</h1>
+      <p class="sub reveal">Un parcours bienveillant pour découvrir les 14 grandes émotions, te projeter dans des situations de la vie de tous les jours… et voir la place que chacune occupe dans ta vie.</p>
+      <div class="cta-row reveal">
+        <button class="btn btn-primary" id="btnStart">Commencer le test <span class="ico" aria-hidden="true">→</span></button>
+        <a class="btn btn-ghost" href="#deroule" style="text-decoration:none">Comment ça marche <span class="ico" aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-meta reveal">
+        <span>🕊️ 24 situations du quotidien</span>
+        <span>⏳ 10 à 15 minutes</span>
+        <span>🔒 Aucune donnée collectée</span>
+      </div>
+    </div>
+
+    <div class="section reveal">
+      <div class="intro-grid">
+        <div class="shell">
+          <div class="core">
+            <div class="res-kicker">À quoi servent les émotions ?</div>
+            <p>Une émotion, c’est un <b>message</b> que ton corps et ton esprit t’envoient : « quelque chose d’important se passe ». La peur te protège, la colère défend tes limites, la joie te montre ce qui te fait du bien, la tristesse t’aide à digérer une perte…</p>
+            <p>Apprendre à les <b>reconnaître et à les nommer</b>, c’est comme allumer la lumière dans une pièce : ce qui te traverse devient plus clair, moins envahissant. Au quotidien, ça aide à mieux réagir, à mieux communiquer avec les autres, et à prendre des décisions plus alignées avec toi-même.</p>
+          </div>
+        </div>
+        <div class="shell">
+          <div class="core">
+            <div class="res-kicker">L’esprit du test</div>
+            <p>Pas de questions abstraites ici : tu vas te projeter dans <b>des situations concrètes</b> — une réunion, un appel, un imprévu, un dimanche matin — et choisir la réaction qui te ressemble le plus.</p>
+            <p style="margin-top:.9rem">À la fin, chaque émotion reçoit une note de <b>0 à 10</b> qui reflète la place qu’elle occupe dans ta vie, avec un résumé et une analyse personnalisée.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="deroule">
+      <div class="section-head reveal">
+        <div class="eyebrow">Le déroulé</div>
+        <h2>Trois étapes, à ton rythme</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><div class="shell"><div class="core">
+          <div class="step-num">01</div>
+          <h3>Fais connaissance</h3>
+          <p>Découvre les 14 émotions du test : à quoi elles servent, comment elles se manifestent au quotidien.</p>
+          <span class="mins">≈ 2 min</span>
+        </div></div></div>
+        <div class="step reveal"><div class="shell"><div class="core">
+          <div class="step-num">02</div>
+          <h3>Projette-toi</h3>
+          <p>24 situations de la vie de tous les jours. Pour chacune : comment réagirais-tu, et à quel point ça te toucherait ?</p>
+          <span class="mins">10 à 15 min</span>
+        </div></div></div>
+        <div class="step reveal"><div class="shell"><div class="core">
+          <div class="step-num">03</div>
+          <h3>Comprends-toi</h3>
+          <p>Une note de 0 à 10 par émotion, ton profil en un coup d’œil, et une analyse personnalisée, chaleureuse et concrète.</p>
+          <span class="mins">Tes résultats</span>
+        </div></div></div>
+      </div>
+
+      <div class="callout callout-privacy reveal">
+        <span class="emo" aria-hidden="true">🔒</span>
+        <p><strong>Tout se passe dans ton navigateur.</strong> Tes réponses ne sont ni enregistrées, ni envoyées, ni partagées — aucune donnée ne quitte cette page. Ferme l’onglet, et il ne reste rien.</p>
+      </div>
+      <div class="callout callout-warn reveal">
+        <span class="emo" aria-hidden="true">🌱</span>
+        <p><strong>Un outil de découverte de soi, rien de plus.</strong> Ce test t’invite à mieux te connaître ; il ne constitue en aucun cas un diagnostic médical ou psychologique, ni un avis professionnel.</p>
+      </div>
+    </div>
+
+    <div class="center-cta reveal">
+      <button class="btn btn-primary" id="btnStart2">Commencer le test <span class="ico" aria-hidden="true">→</span></button>
+    </div>
+  </section>
+
+  <!-- ——————— LES 14 ÉMOTIONS ——————— -->
+  <section id="v-emotions" class="view" aria-label="Les 14 émotions">
+    <div class="section-head">
+      <div class="eyebrow">Étape 1 · Faire connaissance</div>
+      <h2>Les 14 émotions que nous allons explorer</h2>
+      <p>Prends une minute pour les parcourir : six émotions dites « de base », universelles, et huit émotions plus complexes ou sociales, tissées dans nos relations.</p>
+    </div>
+
+    <div class="callout callout-heart">
+      <span class="emo" aria-hidden="true">💜</span>
+      <p><strong>Aucune émotion n’est « bonne » ou « mauvaise ».</strong> Même les plus inconfortables ont une fonction utile : ce sont des messagères. Certaines sont simplement plus agréables à vivre que d’autres.</p>
+    </div>
+
+    <div class="emo-grid" id="emoGrid"><!-- rempli par le script --></div>
+
+    <div class="center-cta">
+      <button class="btn btn-primary" id="btnToTest">C’est parti pour les situations <span class="ico" aria-hidden="true">→</span></button>
+      <p style="margin-top:1rem; font-size:.84rem; color:var(--faint)">Tu pourras revenir lire ces cartes à tout moment après le test.</p>
+    </div>
+  </section>
+
+  <!-- ——————— LE TEST ——————— -->
+  <section id="v-test" class="view" aria-label="Le questionnaire">
+    <div class="test-wrap">
+      <div class="progress-zone">
+        <div class="progress-top">
+          <span class="q-domain" id="qDomain">Travail</span>
+          <span class="q-count" id="qCount">1 / 24</span>
+        </div>
+        <div class="track" role="progressbar" aria-label="Progression du test" aria-valuemin="0" aria-valuemax="24"><div class="fill" id="qFill"></div></div>
+      </div>
+
+      <div class="q-card" id="qCard">
+        <div class="shell"><div class="core">
+          <p class="q-situation" id="qText"></p>
+          <div class="q-ask">Comment réagirais-tu&nbsp;?</div>
+          <div class="options" id="optionsList" role="radiogroup" aria-label="Réactions possibles"></div>
+          <div class="intensity" id="intensityBlock">
+            <div class="q-ask">À quel point cette situation te toucherait-elle&nbsp;?</div>
+            <div class="int-scale" id="intScale" role="radiogroup" aria-label="Intensité de 0 à 4"></div>
+          </div>
+        </div></div>
+
+        <div class="test-nav">
+          <button class="btn btn-ghost" id="btnPrev"><span class="ico" style="order:-1" aria-hidden="true">←</span> Précédent</button>
+          <button class="btn btn-primary" id="btnNext" disabled>Suivant <span class="ico" aria-hidden="true">→</span></button>
+          <div class="next-hint" id="nextHint"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ——————— RÉSULTATS ——————— -->
+  <section id="v-resultats" class="view" aria-label="Tes résultats">
+    <div class="section-head">
+      <div class="eyebrow">Étape 3 · Tes résultats</div>
+      <h2>Voici ta boussole intérieure</h2>
+      <p id="resDate"></p>
+    </div>
+
+    <div class="res-grid">
+      <div class="res-card res-span-4"><div class="shell"><div class="core">
+        <div class="res-kicker">Tes 3 émotions dominantes</div>
+        <div class="podium" id="resTop3"></div>
+      </div></div></div>
+
+      <div class="res-card res-span-4"><div class="shell"><div class="core">
+        <div class="res-kicker">Peu ou pas ressenties</div>
+        <div class="low-list" id="resLow"></div>
+        <p class="res-note" id="resLowNote"></p>
+      </div></div></div>
+
+      <div class="res-card res-span-4"><div class="shell"><div class="core">
+        <div class="res-kicker">Ton équilibre global</div>
+        <div class="balance-bars" id="resBalance"></div>
+        <p class="res-note" id="resBalanceNote"></p>
+      </div></div></div>
+
+      <div class="res-card res-span-5"><div class="shell"><div class="core">
+        <div class="res-kicker">Ton profil en un coup d’œil</div>
+        <div class="radar-wrap" id="radarWrap"></div>
+      </div></div></div>
+
+      <div class="res-card res-span-7"><div class="shell"><div class="core">
+        <div class="res-kicker">Les 14 émotions, de la plus forte à la plus discrète</div>
+        <div class="bars" id="barsWrap"></div>
+      </div></div></div>
+
+      <div class="res-card res-span-12"><div class="shell"><div class="core">
+        <div class="res-kicker">Ton analyse, émotion par émotion</div>
+        <p style="font-size:.9rem; color:var(--muted)">Chaque texte s’adapte à ta note. Les trois premières cartes sont ouvertes — déplie les autres à ton rythme.</p>
+        <div class="analyses" id="analysesWrap"></div>
+      </div></div></div>
+
+      <div class="res-card res-span-12 synthese"><div class="shell"><div class="core">
+        <div class="res-kicker">Ce que tes résultats racontent</div>
+        <div id="syntheseWrap"></div>
+      </div></div></div>
+    </div>
+
+    <div class="callout callout-heart" style="margin-top:1.1rem">
+      <span class="emo" aria-hidden="true">💛</span>
+      <p><strong>Un dernier mot, important.</strong> Si certaines émotions te débordent, s’installent ou te font souffrir au quotidien, en parler à un professionnel de santé — médecin, psychologue — est une vraie bonne démarche. Ce n’est pas un aveu de faiblesse : c’est prendre soin de toi.</p>
+    </div>
+
+    <div class="res-actions">
+      <button class="btn btn-primary" id="btnCopy">Copier mes résultats <span class="ico" aria-hidden="true">⧉</span></button>
+      <button class="btn btn-ghost" id="btnRestart">Refaire le test <span class="ico" aria-hidden="true">↺</span></button>
+    </div>
+    <div class="copy-feedback" id="copyFeedback" role="status"></div>
+  </section>
+
+</main>
+
+<footer>
+  <p><b>Boussole émotionnelle</b> — un outil de découverte de soi, fait avec soin.</p>
+  <p>100&nbsp;% dans ton navigateur · aucune donnée enregistrée ni envoyée · ne remplace pas l’avis d’un professionnel de santé.</p>
+</footer>
+
+<script>
+"use strict";
+/* ————— Les 14 émotions ————— */
+const EMOTIONS = [
+{
+  id:"joie", nom:"Joie", court:"Joie", art:"la ", emoji:"😄", color:"#E3A62F", cat:"base", val:"agreable",
+  def:"Une énergie légère et chaleureuse qui monte quand il t’arrive quelque chose de bon, ou que tu partages un moment qui compte.",
+  fn:"Elle te signale ce qui te fait du bien et te donne envie de le revivre et de le partager.",
+  ex:"Éclater de rire avec un ami retrouvé, et sentir que la soirée passe beaucoup trop vite.",
+  bandes:{
+    low:"La joie semble discrète dans ta vie en ce moment. Ce n’est pas une faute : la fatigue, une période chargée ou des soucis peuvent la mettre en veilleuse. Si cela dure, offre-toi de tout petits plaisirs très simples — une musique, une marche, un appel — sans attendre d’en avoir envie : c’est souvent elle qui revient en marchant.",
+    mid:"La joie fait des apparitions régulières dans ton quotidien, sans occuper toute la scène. Tu sais apprécier les bons moments quand ils se présentent ; tu peux encore les amplifier en les savourant quelques secondes de plus, ou en les partageant avec quelqu’un.",
+    high:"La joie est bien présente chez toi : elle se manifeste par de l’énergie, des sourires spontanés, l’envie de partager et de célébrer. C’est un vrai moteur, pour toi comme pour ton entourage. Pour l’entretenir, note de temps en temps ce qui l’a déclenchée : tu sauras plus facilement la retrouver les jours gris.",
+    top:"La joie occupe une place très forte dans ta vie : enthousiasme communicatif, rires faciles, élans d’énergie, envie de fêter les petites comme les grandes victoires. Quelle ressource ! Garde simplement un œil sur ton besoin de repos — même la joie a besoin de pauses — et autorise-toi aussi les émotions plus douces ou plus tristes quand elles se présentent : elles ont le droit d’exister à côté d’elle."
+  }
+},
+{
+  id:"tristesse", nom:"Tristesse", court:"Tristesse", art:"la ", emoji:"😢", color:"#6E93CE", cat:"base", val:"desagreable",
+  def:"Une baisse d’énergie et une envie de repli quand tu perds quelque chose ou quelqu’un d’important, ou quand la réalité déçoit tes espoirs.",
+  fn:"Elle t’invite à ralentir pour digérer une perte, et signale aux autres que tu as besoin de douceur.",
+  ex:"Avoir la gorge serrée en rangeant les affaires d’une personne qui te manque.",
+  bandes:{
+    low:"La tristesse occupe peu de place en ce moment, comme si les pertes et les déceptions glissaient sans trop s’accrocher. Profites-en — et souviens-toi qu’elle reste une visiteuse normale : si elle passe un jour, l’accueillir quelques instants vaut mieux que lui fermer la porte.",
+    mid:"La tristesse te rend visite de temps en temps, sans s’installer. Tu sembles capable de la traverser : c’est exactement son rôle — t’aider à digérer les pertes et les déceptions, puis repartir.",
+    high:"La tristesse est bien présente dans ta vie. Elle se reconnaît à une gorge serrée, une énergie en berne, l’envie de te replier ou de ruminer ce qui a été perdu. Elle dit souvent que quelque chose ou quelqu’un compte énormément pour toi. Piste concrète : plutôt que de la chasser, offre-lui un espace limité — en parler à une personne de confiance, écrire dix minutes — puis referme doucement la parenthèse avec une activité qui te fait du bien.",
+    top:"La tristesse semble occuper une place très importante en ce moment : lourdeur au réveil, larmes proches, plaisir en berne, impression de fonctionner au ralenti. Ce n’est ni une faiblesse ni un caprice — c’est le signe que tu portes peut-être beaucoup. Parle-en à quelqu’un de confiance, garde de petites activités qui te relient aux autres, et si cet état s’installe depuis plusieurs semaines, en parler à un professionnel de santé est une démarche précieuse."
+  }
+},
+{
+  id:"colere", nom:"Colère", court:"Colère", art:"la ", emoji:"😠", color:"#CF5C41", cat:"base", val:"desagreable",
+  def:"Une montée de chaleur et de tension quand quelque chose te semble injuste, ou qu’une limite importante pour toi est franchie.",
+  fn:"Elle te donne l’énergie de défendre tes besoins, tes valeurs et ton territoire.",
+  ex:"Sentir ton cœur s’accélérer quand on te coupe la parole pour la troisième fois en réunion.",
+  bandes:{
+    low:"La colère semble rare chez toi : les frustrations et les injustices glissent, ou tu les traites à froid. C’est confortable — vérifie seulement qu’il ne t’arrive pas de « laisser passer » des choses qui, au fond, franchissent tes limites.",
+    mid:"La colère se manifeste chez toi de façon mesurée : elle s’allume quand quelque chose d’important est touché, puis retombe. Bien dosée, c’est exactement son travail — signaler qu’une limite ou une valeur mérite d’être défendue.",
+    high:"La colère est bien présente dans ta vie : chaleur qui monte, mâchoires serrées, mots plus vifs que prévu, ou longue rumination après coup. Elle montre que ton sens de la justice est solide. Piste concrète : quand elle monte, gagne dix secondes (respiration lente, un pas de côté), puis exprime le besoin caché derrière — « j’ai besoin de respect, de reconnaissance, d’équité » — plutôt que le reproche.",
+    top:"La colère occupe une place très forte : elle s’allume vite, fort, et te colle parfois à la peau des heures durant — tension dans le corps, pensées en boucle, mots qui dépassent. Cette énergie dit ton exigence de justice ; elle mérite d’être canalisée pour te servir au lieu de t’épuiser. Essaie une soupape physique régulière (marche rapide, sport) et le réflexe « je réponds dans une heure » pour tout ce qui peut attendre. Si elle abîme tes relations ou te fait souffrir, un professionnel peut t’aider à en faire une alliée."
+  }
+},
+{
+  id:"peur", nom:"Peur", court:"Peur", art:"la ", emoji:"😨", color:"#8B7CD6", cat:"base", val:"desagreable",
+  def:"Un signal d’alerte du corps face à un danger, réel ou imaginé : cœur qui s’accélère, souffle court, muscles prêts à réagir.",
+  fn:"Elle te protège en te préparant à fuir, à te figer ou à faire face.",
+  ex:"Retenir ta respiration quand une voiture freine brusquement juste à côté de toi.",
+  bandes:{
+    low:"La peur semble peu présente : tu abordes les situations nouvelles ou risquées avec assurance. Belle ressource — garde simplement à l’esprit qu’elle est parfois bonne conseillère : un petit frisson avant de traverser, c’est elle qui veille.",
+    mid:"La peur joue son rôle chez toi sans prendre le volant : elle s’active face aux vrais dangers ou aux grands enjeux, puis te laisse avancer. C’est le réglage dont elle rêve — te protéger sans t’empêcher de vivre.",
+    high:"La peur est bien présente dans ton quotidien : cœur qui s’accélère, souffle court, jambes molles, envie d’éviter certaines situations. Elle te protège… parfois avec un peu trop de zèle. Piste concrète : face à une situation qui t’effraie mais ne présente pas de danger réel, avance par toutes petites marches — chaque pas franchi apprend à ton corps que l’alerte peut baisser d’un cran.",
+    top:"La peur semble très forte dans ta vie : alarmes fréquentes, évitements qui se multiplient, corps souvent en état d’alerte (cœur, ventre, souffle). Vivre avec une alarme aussi sensible est fatigant, et tu n’y es pour rien. Deux appuis concrets : la respiration lente (expirations plus longues que les inspirations) pour apaiser le corps, et l’approche très progressive de ce que tu évites, accompagné·e si besoin. Si la peur restreint ta vie, un professionnel de santé peut réellement t’aider à retrouver de l’espace."
+  }
+},
+{
+  id:"surprise", nom:"Surprise", court:"Surprise", art:"la ", emoji:"😮", color:"#47AECB", cat:"base", val:"neutre",
+  def:"Un sursaut très bref, ni agréable ni désagréable en soi, quand la réalité ne correspond pas du tout à ce que tu attendais.",
+  fn:"Elle met ton attention en pause pour te laisser analyser la nouveauté.",
+  ex:"Rester bouche bée deux secondes en croisant un ami à l’autre bout du monde.",
+  bandes:{
+    low:"La surprise te traverse peu : soit ton quotidien est bien balisé, soit peu de choses te déstabilisent. Tu gagnes en stabilité ce que tu perds peut-être en frissons de nouveauté — glisse un imprévu choisi de temps en temps, pour le plaisir.",
+    mid:"Tu accueilles l’inattendu avec une réactivité moyenne : de quoi rester alerte sans être déstabilisé·e. La surprise fait son travail — capter ton attention quand la réalité sort du cadre — puis te rend la main.",
+    high:"La surprise est bien présente : tu réagis vivement à l’inattendu — sursauts, exclamations, besoin d’un moment pour atterrir. C’est le signe d’une grande sensibilité à ton environnement. Piste concrète : quand un imprévu te cueille, offre-toi trois secondes et une respiration avant de répondre — la première réaction n’est pas obligée d’être la réponse.",
+    top:"La surprise occupe une place très forte : l’inattendu te saisit fort, dans le corps (sursaut, cœur qui bondit) comme dans la tête (mots qui manquent, temps d’arrêt). Cette réactivité peut être une belle vivacité… à condition de te ménager des atterrissages en douceur : nomme ce qui vient de se passer (« je ne m’y attendais pas du tout ») et donne-toi le droit de répondre plus tard. Un quotidien un peu plus prévisible peut aussi t’aider à recharger."
+  }
+},
+{
+  id:"degout", nom:"Dégoût", court:"Dégoût", art:"le ", emoji:"🤢", color:"#93A64E", cat:"base", val:"desagreable",
+  def:"Un mouvement de recul, parfois très physique (grimace, haut-le-cœur), face à ce qui te semble toxique, malsain ou moralement inacceptable.",
+  fn:"Il te protège de ce qui pourrait te « contaminer » — un aliment, mais aussi un comportement.",
+  ex:"Reculer d’un pas en ouvrant une poubelle oubliée en plein été.",
+  bandes:{
+    low:"Le dégoût semble discret chez toi : peu de choses te répugnent, tu t’adaptes facilement. C’est pratique au quotidien — assure-toi seulement que cette tolérance ne t’amène pas à accepter des situations qui, au fond, ne te respectent pas.",
+    mid:"Ton dégoût fonctionne de façon équilibrée : il te fait reculer devant ce qui est douteux — un aliment, un comportement — sans te couper du monde. C’est un gardien utile de ta santé et de tes valeurs.",
+    high:"Le dégoût est bien présent chez toi : haut-le-cœur, grimaces, recul face à ce qui te semble malsain — physiquement ou moralement. C’est souvent le signe de valeurs affirmées et d’un vrai sens de l’intégrité. Piste concrète : quand quelque chose te répugne moralement, traduis-le en position claire (« ceci ne me convient pas ») plutôt qu’en rejet global des personnes — ton message portera mieux.",
+    top:"Le dégoût occupe une place très forte : beaucoup de choses — comportements, ambiances, sensations — provoquent chez toi un rejet immédiat et intense. Cette boussole morale et sensorielle très fine peut devenir fatigante si elle t’isole ou restreint ton quotidien. Piste : distingue ce qui est vraiment nocif pour toi de ce qui est seulement différent ou imparfait, et garde ton énergie de rejet pour la première catégorie."
+  }
+},
+{
+  id:"amour", nom:"Amour / tendresse", court:"Amour", art:"l’", emoji:"💗", color:"#E2799C", cat:"sociale", val:"agreable",
+  def:"Un élan chaleureux vers une personne (ou un animal, un lieu) : envie d’être proche, de prendre soin, de protéger.",
+  fn:"Il tisse et entretient les liens dont les humains ont profondément besoin.",
+  ex:"Regarder quelqu’un dormir et sentir ton cœur se serrer de douceur.",
+  bandes:{
+    low:"L’amour et la tendresse s’expriment peu dans tes réponses en ce moment. Cela ne dit rien de ta capacité à aimer : pudeur, période de repli ou besoin d’indépendance peuvent l’expliquer. Si le lien te manque, un tout petit geste — un message sincère, un moment offert — suffit souvent à rouvrir la porte.",
+    mid:"L’amour et la tendresse circulent dans ta vie à un rythme tranquille : tu tiens aux tiens, sans forcément le montrer en grand. Les liens se nourrissent de petites attentions régulières — tu en connais déjà le chemin.",
+    high:"L’amour et la tendresse sont bien présents : cœur qui se serre devant ceux que tu aimes, gestes d’attention spontanés, besoin de proximité. C’est un pilier de ton équilibre — et un cadeau pour ton entourage. Piste concrète : dis-le aussi avec des mots de temps en temps ; les personnes qui comptent ne devinent pas toujours ce qui te paraît évident.",
+    top:"L’amour et la tendresse occupent une place très forte dans ta vie : tu ressens les liens intensément, tu donnes beaucoup, tu portes tes proches dans ta tête et dans ton cœur. C’est magnifique — veille simplement à l’équilibre : donner sans te vider, aimer sans t’oublier. Garde des espaces rien qu’à toi, et souviens-toi que recevoir fait aussi partie du lien."
+  }
+},
+{
+  id:"anxiete", nom:"Anxiété", court:"Anxiété", art:"l’", emoji:"😰", color:"#AB7A43", cat:"sociale", val:"desagreable",
+  def:"Une inquiétude tournée vers l’avenir : la tête anticipe les problèmes possibles, le corps reste en tension, comme en veille permanente.",
+  fn:"Elle t’aide à prévoir et à te préparer — tant qu’elle reste à sa juste place.",
+  ex:"Refaire mentalement la liste de tout ce qui pourrait mal se passer, la veille d’un entretien.",
+  bandes:{
+    low:"L’anxiété semble peu présente : tu abordes l’avenir sans anticiper le pire, et ton esprit sait rester dans le présent. C’est une vraie ressource de tranquillité au quotidien.",
+    mid:"L’anxiété se manifeste chez toi par moments — avant un enjeu, dans l’incertitude — puis redescend. À cette dose, elle est plutôt une alliée : elle te pousse à te préparer sans t’empêcher de vivre.",
+    high:"L’anxiété est bien présente dans ta vie : scénarios qui tournent en boucle, vérifications, tensions dans le corps (ventre noué, mâchoires, sommeil plus léger). Elle témoigne d’un esprit qui anticipe beaucoup — utile, mais coûteux. Piste concrète : donne à tes inquiétudes un « rendez-vous du souci » de dix minutes par jour, où tu les notes ; hors de ce cadre, ramène ton attention au présent par les sens — ce que tu vois, entends, touches.",
+    top:"L’anxiété occupe une place très forte : l’esprit semble rarement au repos — anticipations, ruminations, corps en tension, difficulté à savourer même les bons moments. Vivre ainsi demande une énergie considérable, et tu mérites mieux que de « faire avec ». Deux gestes qui aident vraiment : quelques minutes de respiration lente chaque jour, et sortir les soucis de ta tête en les écrivant. Si l’anxiété pèse sur ton sommeil, ton travail ou tes liens, un professionnel de santé peut t’apporter des outils efficaces — c’est une démarche qui change des vies."
+  }
+},
+{
+  id:"honte", nom:"Honte", court:"Honte", art:"la ", emoji:"😳", color:"#C583B5", cat:"sociale", val:"desagreable",
+  def:"La sensation brûlante d’être vu·e sous un mauvais jour : tu voudrais te cacher, disparaître, rentrer sous terre.",
+  fn:"Elle rappelle ton besoin d’être accepté·e par le groupe — quitte à être parfois trop sévère avec toi.",
+  ex:"Sentir tes joues chauffer quand ton téléphone sonne en plein silence, au cinéma.",
+  bandes:{
+    low:"La honte semble peu présente : le regard des autres ne te paralyse pas, et tu t’autorises à être vu·e tel·le que tu es. C’est une belle liberté.",
+    mid:"La honte te visite parfois — un moment de gêne, des joues qui chauffent — sans diriger ta vie. Elle rappelle ton besoin d’être accepté·e, et tu sembles savoir la traverser sans trop te juger.",
+    high:"La honte est bien présente : rougissements, envie de disparaître, peur du ridicule, tendance à te faire discret·ète pour éviter le regard des autres. Elle protège ton besoin d’appartenance, mais te fait payer le prix fort. Piste concrète : la honte se dissout dans le partage — raconter le moment gênant à une personne bienveillante, voire en rire avec elle, lui retire une grande partie de son pouvoir.",
+    top:"La honte occupe une place très forte : sensation fréquente d’être « de trop », peur intense du jugement, retenue dans les situations où tu voudrais exister davantage — parler, créer, oser. Sache-le : la honte ment souvent. Elle prétend parler de ta valeur alors qu’elle ne décrit qu’un instant. Piste : repère sa petite voix (« ils vont me trouver nul·le ») et réponds-lui comme tu répondrais à un ami cher. Si elle t’empêche de vivre des choses importantes, un accompagnement psychologique aide profondément sur ce terrain."
+  }
+},
+{
+  id:"culpabilite", nom:"Culpabilité", court:"Culpabilité", art:"la ", emoji:"😔", color:"#9C8878", cat:"sociale", val:"desagreable",
+  def:"Le pincement qui vient quand tu penses avoir mal agi ou blessé quelqu’un, avec l’envie de réparer.",
+  fn:"Elle veille sur tes valeurs et t’aide à préserver tes relations.",
+  ex:"Repenser toute la soirée à une parole un peu sèche lancée à un collègue le matin.",
+  bandes:{
+    low:"La culpabilité semble peu présente : tu tournes la page de tes erreurs sans t’y attarder. C’est reposant — garde simplement le réflexe de réparer quand un geste ou un mot a pu blesser : c’est la part utile de cette émotion.",
+    mid:"Ta culpabilité fonctionne à une dose plutôt saine : elle se manifeste quand tu penses avoir mal agi, t’invite à réparer, puis te laisse tranquille. C’est exactement son rôle de gardienne de tes valeurs.",
+    high:"La culpabilité est bien présente : tu te repasses les scènes (« j’aurais dû… »), tu t’excuses beaucoup, tu portes parfois des fautes qui ne t’appartiennent qu’à moitié. Elle dit ton sens des responsabilités et ton attachement aux autres. Piste concrète : pour chaque situation, demande-toi « qu’est-ce qui dépendait vraiment de moi ? » — puis choisis une réparation concrète si besoin, ou le droit de classer le dossier.",
+    top:"La culpabilité occupe une place très forte : elle semble s’inviter partout, même là où tu n’as rien fait de mal — comme si tu étais responsable du bien-être de tout le monde. Ce poids en dit long sur ta conscience et ta loyauté, mais il t’épuise. Piste : distingue la culpabilité utile (j’ai blessé → je répare) de la culpabilité réflexe (je me sens fautif·ve par habitude), et entraîne-toi à dire « ce n’était pas de mon ressort » à voix haute. Tu as le droit d’être imparfait·e : c’est le tarif normal d’une vie humaine."
+  }
+},
+{
+  id:"jalousie", nom:"Jalousie / envie", court:"Jalousie", art:"la ", emoji:"😒", color:"#3E9F82", cat:"sociale", val:"desagreable",
+  def:"Le pincement qui vient quand quelqu’un a — ou risque de te prendre — ce qui compte pour toi : réussite, attention, affection.",
+  fn:"Elle pointe ce que tu désires vraiment et ce que tu as peur de perdre.",
+  ex:"Sentir une pointe te traverser à l’annonce de la promotion d’un collègue, au poste que tu visais.",
+  bandes:{
+    low:"La jalousie et l’envie semblent peu présentes : la réussite des autres ne te pince pas, ou très peu. Tu compares peu ta vie à celle des autres — c’est un vrai facteur de paix intérieure.",
+    mid:"L’envie te traverse parfois — un pincement devant la réussite ou le bonheur d’un autre — sans s’installer. Bien écoutée, elle est utile : elle pointe ce qui compte pour toi et que tu aimerais développer.",
+    high:"La jalousie et l’envie sont bien présentes : comparaisons fréquentes, pincement devant les réussites des autres, parfois une petite amertume qui colle. Bonne nouvelle : l’envie est une boussole déguisée — elle montre exactement ce que tu désires. Piste concrète : à chaque pincement, demande-toi « qu’est-ce que cela dit de ce que je veux ? », puis transforme-le en un petit pas vers ce but. Et allège ce qui nourrit la comparaison, réseaux sociaux en tête.",
+    top:"La jalousie et l’envie occupent une place très forte : la vie des autres semble sans cesse te renvoyer à ce qui te manque, avec son cortège de comparaisons, de ruminations — et parfois la gêne d’en ressentir autant. D’abord : tu n’es pas une mauvaise personne. L’envie dit un désir de vivre plus grand, pas une méchanceté. Pistes : réduis franchement les vitrines qui te blessent (réseaux, certaines conversations), note chaque jour une chose de ta vie que tu apprécies vraiment, et choisis UN désir que l’envie te révèle pour en faire un vrai projet."
+  }
+},
+{
+  id:"fierte", nom:"Fierté", court:"Fierté", art:"la ", emoji:"🏅", color:"#DE7E3F", cat:"sociale", val:"agreable",
+  def:"Une chaleur qui redresse les épaules quand tu accomplis quelque chose qui compte à tes yeux — ou qu’un proche y parvient.",
+  fn:"Elle nourrit la confiance en toi et t’encourage à poursuivre tes efforts.",
+  ex:"Te retourner sur ton travail terminé et te dire tout bas : « c’est moi qui ai fait ça ».",
+  bandes:{
+    low:"La fierté semble peu présente : tu minimises peut-être tes réussites, ou tu passes vite à la suite sans t’attribuer le mérite. Piste douce : la prochaine fois que tu accomplis quelque chose, dis-le simplement à voix haute — « je l’ai fait » — et laisse la sensation durer dix secondes.",
+    mid:"La fierté se manifeste chez toi avec mesure : tu sais reconnaître tes réussites sans en faire des trophées. C’est un bel équilibre entre confiance et humilité.",
+    high:"La fierté est bien présente : tu savoures tes accomplissements, tu te redresses quand ton travail est reconnu, et cette confiance te pousse à continuer. C’est un moteur précieux. Piste concrète : ancre-la en gardant une trace de tes réussites (une note, un dossier « victoires ») à relire les jours de doute.",
+    top:"La fierté occupe une place très forte : tes accomplissements comptent énormément, la reconnaissance te porte, et tu places sans doute la barre haut. Cette exigence est une force — surveille juste son revers : si ta valeur dépend trop des réussites et du regard des autres, les échecs coûtent double. Rappelle-toi que tu vaux aussi quand tu ne produis rien, et savoure les réussites collectives autant que les tiennes : elles nourrissent, sans mettre de pression."
+  }
+},
+{
+  id:"gratitude", nom:"Gratitude", court:"Gratitude", art:"la ", emoji:"🙏", color:"#57A05B", cat:"sociale", val:"agreable",
+  def:"Un merci intérieur : tu mesures ce que la vie ou les autres t’apportent, sans le considérer comme un dû.",
+  fn:"Elle renforce les liens et aide le moral à se tourner vers ce qui va bien.",
+  ex:"Repenser au coup de main d’un ami et sentir une bouffée de chaleur pour lui.",
+  bandes:{
+    low:"La gratitude semble discrète : dans le tourbillon du quotidien, ce qui va bien passe peut-être inaperçu. Piste toute simple : le soir, note une chose agréable de ta journée — même minuscule. En quelques semaines, ce petit geste change réellement la couleur des jours.",
+    mid:"La gratitude fait partie de ta vie à dose modérée : tu sais apprécier ce qu’on t’apporte, sans forcément t’y arrêter longtemps. Tu tiens là un muscle facile à développer, aux effets étonnants sur le moral.",
+    high:"La gratitude est bien présente : tu remarques les attentions, tu mesures ta chance, tu dis merci — et cela se sent dans tes liens. C’est l’une des émotions les plus nourrissantes qui soient. Piste concrète : de temps en temps, exprime ta gratitude directement à la personne concernée, par un mot ou un message précis — effet garanti des deux côtés.",
+    top:"La gratitude occupe une place très forte : tu vois ce que les autres et la vie t’apportent, tu le ressens profondément et tu le rends bien. C’est un trésor pour ton moral et tes relations. Une seule vigilance : que ce grand sens du « merci » ne t’empêche jamais de demander, de recevoir sans te sentir en dette, ou de dire quand quelque chose ne te convient pas — la gratitude n’a pas à faire taire tes besoins."
+  }
+},
+{
+  id:"serenite", nom:"Sérénité", court:"Sérénité", art:"la ", emoji:"🌿", color:"#63AFA4", cat:"sociale", val:"agreable",
+  def:"Un calme posé : le corps est détendu, l’esprit tranquille, rien à fuir ni à conquérir dans l’instant.",
+  fn:"Elle permet de récupérer, de prendre du recul et de savourer le présent.",
+  ex:"Marcher sans but un dimanche matin et sentir que rien ne presse.",
+  bandes:{
+    low:"La sérénité semble rare en ce moment : peu de vrais moments de calme intérieur, comme si le système restait toujours un peu en marche. Ce n’est pas une fatalité — c’est une capacité qui s’entraîne. Commence minuscule : deux minutes par jour, assis·e, à respirer lentement en laissant passer les pensées.",
+    mid:"La sérénité te rend visite régulièrement : tu connais des moments de calme et tu sais parfois relativiser. Tu peux étendre ce territoire en protégeant de vrais espaces sans sollicitations — sans écran, sans « il faudrait que ».",
+    high:"La sérénité est bien présente : épaules qui se relâchent, capacité à relativiser, moments savourés sans arrière-pensée. C’est une force tranquille, qui profite aussi à ton entourage. Piste concrète : identifie tes « sources de calme » (lieux, personnes, activités) et inscris-les dans ton agenda comme de vrais rendez-vous — le calme aussi mérite sa place.",
+    top:"La sérénité occupe une place très forte dans ta vie : tu sembles disposer d’un fond de calme stable, capable d’absorber les vagues du quotidien. C’est précieux, et assez rare pour être souligné. Continue de cultiver ce qui l’entretient, et vérifie seulement qu’elle reste de la vraie tranquillité — pas une façon de tenir à distance les émotions plus remuantes. Si c’est du calme véritable : bravo, tu tiens là un art de vivre."
+  }
+}
+];
+/* ————— Les 24 mises en situation —————
+   Chaque réaction attribue de 0 à 3 points à une ou plusieurs émotions (grille cachée).
+   Chaque situation propose une réaction neutre (aucun point) pour que les émotions
+   peu ressenties puissent réellement approcher 0. */
+const SITUATIONS = [
+{ dom:"Travail", txt:"En réunion, un collègue présente une idée que tu lui avais soufflée la veille, sans te citer. Tout le monde le félicite, et il savoure les compliments sans un regard pour toi.",
+  opts:[
+  { t:"Je bous intérieurement, mâchoires serrées, et j’y repense encore le soir en rentrant.", pts:{colere:3, jalousie:1} },
+  { t:"Je glisse calmement, devant tout le monde : « Ravi·e que notre idée d’hier te plaise autant. »", pts:{fierte:2, colere:1} },
+  { t:"Je me tasse sur ma chaise en me demandant pourquoi je n’ose jamais présenter mes idées moi-même.", pts:{honte:2, tristesse:1} },
+  { t:"Je me dis que l’essentiel est que l’idée avance ; peu importe qui la porte.", pts:{serenite:2} },
+  { t:"Ça ne me toucherait pas vraiment.", pts:{} }
+]},
+{ dom:"Famille", txt:"Un mardi soir ordinaire, un membre de ta famille t’appelle « juste comme ça » : il pensait à toi et voulait entendre ta voix.",
+  opts:[
+  { t:"Je raccroche le cœur tout chaud, le sourire aux lèvres pour le reste de la soirée.", pts:{amour:3, joie:2} },
+  { t:"Je me dis que j’ai vraiment de la chance d’avoir des gens comme ça dans ma vie.", pts:{gratitude:3, amour:1} },
+  { t:"Je me demande aussitôt s’il y a un problème, ou une nouvelle à m’annoncer.", pts:{anxiete:2} },
+  { t:"Ça me fait plaisir sur le moment, puis je passe vite à autre chose.", pts:{joie:1} },
+  { t:"Ça ne me ferait ni chaud ni froid.", pts:{} }
+]},
+{ dom:"Transports", txt:"Sur le quai de la gare, tu tombes sur une ancienne connaissance de classe. En cinq minutes, tu sais tout : poste passionnant, appartement tout juste acheté, mariage prévu l’été prochain.",
+  opts:[
+  { t:"Je félicite poliment, mais ce bonheur étalé me renvoie à tout ce qui manque encore dans ma vie.", pts:{jalousie:3, tristesse:1} },
+  { t:"Je repars le sourire aux lèvres : ces retrouvailles et ces bonnes nouvelles m’ont fait du bien.", pts:{joie:2} },
+  { t:"Pendant tout le trajet, je refais mes choix de vie dans ma tête, en me comparant malgré moi.", pts:{jalousie:2, anxiete:1} },
+  { t:"Je me dis que chacun avance à son rythme, et que le mien me va bien.", pts:{serenite:2} },
+  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
+]},
+{ dom:"Imprévu", txt:"Il est trois heures du matin. Un bruit sourd te réveille en sursaut dans ton logement. Tu tends l’oreille : plus un son.",
+  opts:[
+  { t:"Le cœur cognant, je reste sans bouger sous la couette, à guetter le moindre craquement.", pts:{peur:3, anxiete:1} },
+  { t:"Je sursaute, le temps de comprendre où je suis, puis je me lève voir d’où ça vient.", pts:{surprise:2} },
+  { t:"Je me dis que c’est un meuble qui travaille, ou un voisin, et je me rendors tranquillement.", pts:{serenite:2} },
+  { t:"Impossible de retrouver le sommeil : je passe en revue toutes les explications possibles, encore et encore.", pts:{anxiete:2, peur:1} },
+  { t:"Ça ne me réveillerait qu’à moitié : je me rendormirais aussitôt.", pts:{} }
+]},
+{ dom:"Travail", txt:"En pleine réunion d’équipe, ta responsable met ton travail en avant : « Si ce projet a abouti, c’est en grande partie grâce à toi. »",
+  opts:[
+  { t:"Je me redresse, je savoure, et j’ai déjà envie de raconter ça à un proche ce soir.", pts:{fierte:3, joie:2} },
+  { t:"Mes joues chauffent, je fixe mes notes en attendant que les regards se posent ailleurs.", pts:{honte:2, anxiete:1} },
+  { t:"Je pense à tous ceux qui m’ont aidé·e, avec l’envie de partager le mérite.", pts:{gratitude:2} },
+  { t:"Une petite voix me souffle : « Et si je n’arrivais pas à faire aussi bien la prochaine fois ? »", pts:{anxiete:2} },
+  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
+]},
+{ dom:"Réseaux sociaux", txt:"En scrollant le soir, tu tombes sur l’album de vacances d’une connaissance : lagon turquoise, bande d’amis, tout le monde rayonne sur chaque photo.",
+  opts:[
+  { t:"Un pincement me prend : j’ai l’impression que les autres vivent la vie que je devrais avoir.", pts:{jalousie:3, tristesse:1} },
+  { t:"Je souris et je like : ça fait plaisir à voir, tant mieux pour cette personne.", pts:{joie:2} },
+  { t:"Tout ce bonheur mis en scène me lasse : tout sonne faux, je referme l’application.", pts:{degout:2} },
+  { t:"Je me rappelle que les photos ne montrent qu’une facette, et je continue ma soirée tranquillement.", pts:{serenite:2} },
+  { t:"Ça ne me toucherait pas vraiment.", pts:{} }
+]},
+{ dom:"Argent", txt:"Ta voiture lâche sans prévenir : le garagiste annonce 900 € de réparation, pile le mois où ton budget était déjà serré.",
+  opts:[
+  { t:"L’estomac noué, je refais mes comptes en boucle, même le soir dans mon lit.", pts:{anxiete:3, peur:1} },
+  { t:"Je m’en veux terriblement de ne pas avoir mis d’argent de côté pour ce genre de coup dur.", pts:{culpabilite:3} },
+  { t:"Ces tuiles qui tombent toujours au pire moment… Je fulmine pendant des jours.", pts:{colere:2} },
+  { t:"Je souffle un bon coup : c’est embêtant, mais je vais trouver une solution, étape par étape.", pts:{serenite:2} },
+  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
+]},
+{ dom:"Fête", txt:"Tu rentres chez toi un soir ordinaire, tu allumes la lumière… et une dizaine de proches surgissent en criant « Joyeux anniversaire ! ».",
+  opts:[
+  { t:"Je fais un bond, la main sur la poitrine : il me faut dix bonnes secondes pour y croire.", pts:{surprise:3} },
+  { t:"Une vague de chaleur m’envahit : ils ont organisé tout ça pour moi.", pts:{gratitude:2, amour:2} },
+  { t:"J’éclate de rire, je serre tout le monde dans mes bras, la soirée démarre fort.", pts:{joie:3, surprise:1} },
+  { t:"Je souris, mais être au centre de l’attention me met mal à l’aise : je voudrais me faire tout petit.", pts:{honte:2} },
+  { t:"Ça ne me ferait pas d’effet particulier.", pts:{} }
+]},
+{ dom:"Amitié & couple", txt:"Tu envoies un long message important à une personne qui compte beaucoup pour toi. Deux jours plus tard : « vu », mais toujours aucune réponse.",
+  opts:[
+  { t:"Je vérifie mon téléphone sans arrêt en me demandant ce que j’ai bien pu dire de travers.", pts:{anxiete:3, culpabilite:1} },
+  { t:"Une boule se forme dans ma gorge : je me sens mis·e de côté, et je repense à toute notre relation.", pts:{tristesse:3} },
+  { t:"Je me surprends à guetter ses réseaux : le temps de poster, ça se trouve — mais pas de me répondre…", pts:{jalousie:2, colere:1} },
+  { t:"Je me dis que sa vie est bien remplie : la réponse viendra quand elle viendra.", pts:{serenite:2} },
+  { t:"Je n’y penserais même plus.", pts:{} }
+]},
+{ dom:"Maison", txt:"En rangeant le frigo, tu ouvres un plat oublié depuis des semaines : l’odeur âcre te saute au nez, le contenu a changé de couleur et de texture.",
+  opts:[
+  { t:"Un haut-le-cœur me prend : je détourne la tête et je jette tout en apnée.", pts:{degout:3} },
+  { t:"Je m’en veux d’avoir encore laissé de la nourriture se perdre.", pts:{culpabilite:2} },
+  { t:"Je fais la grimace, je jette, et je me promets d’être plus attentif·ve la prochaine fois.", pts:{degout:1, serenite:1} },
+  { t:"Intrigué·e, je me penche pour observer de plus près : c’est presque fascinant, ces couleurs.", pts:{surprise:1} },
+  { t:"Ça ne me ferait ni chaud ni froid.", pts:{} }
+]},
+{ dom:"Réussite", txt:"Après des mois d’efforts, tu atteins enfin un objectif qui te tenait vraiment à cœur : une course terminée, un diplôme, un projet abouti…",
+  opts:[
+  { t:"Je lève les bras, j’ai envie de danser et de l’annoncer à la terre entière.", pts:{joie:3} },
+  { t:"Je repense à tout le chemin parcouru et je me dis : « C’est moi qui ai fait ça. »", pts:{fierte:3} },
+  { t:"Je pense à toutes les personnes qui m’ont soutenu·e, avec l’envie de les remercier une par une.", pts:{gratitude:3, amour:1} },
+  { t:"À peine l’objectif atteint, je pense déjà au suivant, sans prendre le temps de savourer.", pts:{anxiete:1} },
+  { t:"Ça ne me ferait pas grand-chose de spécial.", pts:{} }
+]},
+{ dom:"Travail", txt:"Tu découvres qu’une erreur s’est glissée dans un dossier que tu as rendu, et qu’elle a compliqué la semaine de deux collègues.",
+  opts:[
+  { t:"Je me repasse la scène en boucle : « J’aurais dû vérifier »… Impossible de me le pardonner.", pts:{culpabilite:3} },
+  { t:"Mes joues brûlent à l’idée que tout le service soit au courant.", pts:{honte:3} },
+  { t:"Je vais voir mes collègues, je présente mes excuses et je propose un coup de main pour rattraper.", pts:{serenite:2, culpabilite:1} },
+  { t:"Je guette la moindre nouvelle complication, le ventre noué.", pts:{anxiete:2} },
+  { t:"Ça ne m’empêcherait pas de dormir.", pts:{} }
+]},
+{ dom:"Amitié", txt:"C’est ton déménagement. Sans rien demander, deux amis sonnent à ta porte le samedi à 8 h, avec des cartons vides et des croissants chauds.",
+  opts:[
+  { t:"Le cœur serré dans le bon sens, je mesure la chance folle que j’ai de les avoir.", pts:{gratitude:3, amour:2} },
+  { t:"Touché·e mais gêné·e de les déranger, je répète dix fois : « Il ne fallait pas, vraiment… »", pts:{culpabilite:2, gratitude:1} },
+  { t:"Une bouffée d’énergie me traverse : ce déménagement prend des airs de fête.", pts:{joie:2} },
+  { t:"Je note dans un coin de ma tête de leur rendre la pareille très vite.", pts:{gratitude:1} },
+  { t:"Ça ne me ferait pas grand-chose : ils sont là, tant mieux.", pts:{} }
+]},
+{ dom:"Famille", txt:"Au milieu d’un repas, un proche te lance une phrase blessante sur un sujet sensible, devant tout le monde. Un silence s’installe.",
+  opts:[
+  { t:"Le sang me monte au visage et je réplique du tac au tac, plus fort que je ne le voudrais.", pts:{colere:3} },
+  { t:"Je me ferme, je ravale la boule dans ma gorge et je rumine le reste du repas.", pts:{tristesse:2, colere:1} },
+  { t:"Je voudrais disparaître sous la table : tout le monde a entendu.", pts:{honte:3} },
+  { t:"Je reste sans voix quelques secondes : venant de cette personne, je ne l’avais pas vue venir.", pts:{surprise:2} },
+  { t:"Ça glisserait sur moi.", pts:{} }
+]},
+{ dom:"Calme", txt:"Dimanche matin, tôt. Tu bois une boisson chaude près de la fenêtre. La lumière est douce, la rue silencieuse, et tu n’as strictement rien de prévu.",
+  opts:[
+  { t:"Je savoure chaque gorgée, épaules relâchées, esprit posé : le temps peut bien s’étirer.", pts:{serenite:3} },
+  { t:"Je repense à tout ce que ma vie compte de bon en ce moment, et ça me réchauffe.", pts:{gratitude:2, joie:1} },
+  { t:"Au bout de cinq minutes, la liste des choses à faire se met à tourner dans ma tête.", pts:{anxiete:2} },
+  { t:"Un sourire me vient tout seul, sans raison particulière.", pts:{joie:2, serenite:1} },
+  { t:"Ce serait un moment comme un autre.", pts:{} }
+]},
+{ dom:"Travail", txt:"Un lundi, ta direction annonce une grande réorganisation : « Des postes vont évoluer dans les prochains mois. » Aucun détail de plus.",
+  opts:[
+  { t:"Mes soirées se remplissent de scénarios, surtout les pires : je me vois déjà mis·e sur la touche.", pts:{anxiete:3, peur:2} },
+  { t:"Je me dis que c’est peut-être l’occasion de bouger, et je me surprends à imaginer la suite avec entrain.", pts:{joie:2} },
+  { t:"Ces grandes manœuvres décidées d’en haut, sans un mot pour les équipes, me laissent un goût amer.", pts:{degout:2, colere:1} },
+  { t:"J’attends d’en savoir plus avant de m’alarmer : à chaque jour suffit sa peine.", pts:{serenite:2} },
+  { t:"Ça ne me ferait presque rien.", pts:{} }
+]},
+{ dom:"Couple & liens", txt:"Tu rentres épuisé·e d’une longue journée. La personne qui partage ta vie — ou un proche — t’a préparé ton plat préféré, sans rien dire, juste pour te faire plaisir.",
+  opts:[
+  { t:"Je fonds complètement : je la serre dans mes bras et la soirée devient toute douce.", pts:{amour:3, joie:1} },
+  { t:"Je réalise à quel point ces petites attentions comptent, et je le dis à voix haute.", pts:{gratitude:3} },
+  { t:"Une petite voix me demande si ce dîner ne cache pas quelque chose.", pts:{anxiete:2} },
+  { t:"Je me dis que je n’en fais pas autant de mon côté, et ça me trotte dans la tête toute la soirée.", pts:{culpabilite:2} },
+  { t:"Ça ne me toucherait pas particulièrement.", pts:{} }
+]},
+{ dom:"Société", txt:"Dans une file d’attente, quelqu’un double tout le monde sans un mot, puis répond sèchement à la personne âgée qui ose protester.",
+  opts:[
+  { t:"La moutarde me monte au nez : j’interviens d’un ton sec pour remettre les choses à leur place.", pts:{colere:3} },
+  { t:"Rien que de voir ça, ça me retourne l’estomac : je détourne le regard et je m’écarte de cette personne.", pts:{degout:3, colere:1} },
+  { t:"Je n’ose rien dire, et je m’en veux pendant tout le trajet du retour.", pts:{culpabilite:2, honte:1} },
+  { t:"Je me dis que cette personne a peut-être une urgence, qui sait, et je laisse couler.", pts:{serenite:2} },
+  { t:"Je n’y prêterais pas vraiment attention.", pts:{} }
+]},
+{ dom:"Santé", txt:"Ton médecin te prescrit des examens « de contrôle, simplement pour vérifier ». Les résultats n’arriveront que dans une semaine.",
+  opts:[
+  { t:"La semaine devient interminable : chaque soir, je cherche mes symptômes sur internet.", pts:{anxiete:3, peur:2} },
+  { t:"Un frisson me traverse chaque fois que j’y pense : et si on me trouvait quelque chose de grave ?", pts:{peur:3} },
+  { t:"Je fais confiance au médecin : s’il y avait une vraie alerte, il me l’aurait dit.", pts:{serenite:3} },
+  { t:"Je me dis que j’ai de la chance d’être bien suivi·e : tout le monde ne peut pas faire ces examens si facilement.", pts:{gratitude:2} },
+  { t:"Je n’y penserais plus jusqu’aux résultats.", pts:{} }
+]},
+{ dom:"Réseaux sociaux", txt:"Tu publies en ligne quelque chose que tu as créé : une photo, un texte, un projet. Le lendemain, un commentaire moqueur s’affiche — et il récolte quelques likes.",
+  opts:[
+  { t:"Le rouge aux joues, je songe à tout supprimer en me demandant ce que les gens pensent de moi.", pts:{honte:3, anxiete:1} },
+  { t:"Le cœur battant, je tape une réponse cinglante : cette méchanceté gratuite me hérisse.", pts:{colere:3, degout:1} },
+  { t:"Ça me plombe : j’y repense toute la soirée, l’envie de créer en berne.", pts:{tristesse:2} },
+  { t:"Un moqueur d’un côté, plusieurs retours chaleureux de l’autre : je choisis où poser mon attention.", pts:{serenite:2, fierte:1} },
+  { t:"Ça ne me ferait vraiment rien.", pts:{} }
+]},
+{ dom:"Famille", txt:"Un proche de ton âge t’annonce une grande nouvelle : il vient de décrocher exactement le poste dont tu rêves, dans le domaine qui t’attire depuis toujours.",
+  opts:[
+  { t:"Je me réjouis à fond : ce soir, on fête ça, c’est tout ce qui compte.", pts:{joie:3, amour:1} },
+  { t:"Je félicite sincèrement… mais une petite voix murmure : « Pourquoi lui, et pas moi ? »", pts:{jalousie:3} },
+  { t:"Je bombe le torse en racontant sa réussite autour de moi, comme si elle était un peu la mienne.", pts:{fierte:2, amour:1} },
+  { t:"Sa réussite me renvoie à mes propres choix et, le soir venu, j’ai le moral dans les chaussettes.", pts:{tristesse:2, jalousie:1} },
+  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
+]},
+{ dom:"Souvenirs", txt:"En triant de vieilles affaires, tu retrouves un objet ayant appartenu à une personne qui a beaucoup compté pour toi, et qui n’est plus dans ta vie.",
+  opts:[
+  { t:"La gorge se serre : je m’assois avec l’objet, et les souvenirs remontent par vagues.", pts:{tristesse:3, amour:1} },
+  { t:"Je souris en repensant aux bons moments : ce que j’ai vécu avec cette personne fait partie de moi.", pts:{gratitude:2, serenite:1, joie:1} },
+  { t:"Je repense à tout ce que je n’ai pas dit ou pas fait à l’époque, et ça me pince encore.", pts:{culpabilite:2, tristesse:1} },
+  { t:"Je range l’objet très vite, le souffle court, pour ne pas remuer tout ça.", pts:{peur:2} },
+  { t:"Ça ne me ferait pas particulièrement d’effet.", pts:{} }
+]},
+{ dom:"Travail", txt:"On te propose de présenter un projet devant une cinquantaine de personnes, dans deux semaines. Le sujet, tu le connais par cœur.",
+  opts:[
+  { t:"Dès le soir même, je dors mal : je me rejoue la scène en boucle, avec toutes les questions pièges possibles.", pts:{anxiete:3, peur:1} },
+  { t:"J’accepte avec un grand oui intérieur : ce genre de défi me met en mouvement.", pts:{joie:2, fierte:1} },
+  { t:"L’idée de tous ces regards posés sur moi me glace : je cherche déjà un moyen d’y échapper.", pts:{peur:3, honte:1} },
+  { t:"Je prépare sérieusement, puis j’y vais sans me mettre de pression : je connais mon sujet.", pts:{serenite:3} },
+  { t:"Ça ne me ferait ni chaud ni froid.", pts:{} }
+]},
+{ dom:"Imprévu", txt:"Un matin, une enveloppe t’attend dans la boîte aux lettres : un remboursement que tu n’attendais plus, une petite somme qui tombe du ciel.",
+  opts:[
+  { t:"Je relis trois fois pour être sûr·e, puis j’éclate de rire tout·e seul·e dans l’entrée.", pts:{surprise:3, joie:2} },
+  { t:"Je flaire l’erreur : ça cache forcément quelque chose, je vérifie tout de A à Z.", pts:{anxiete:2, surprise:1} },
+  { t:"Je pense aussitôt à marquer le coup avec mes proches, ou à faire plaisir à quelqu’un.", pts:{amour:2, joie:1, gratitude:1} },
+  { t:"Je me dis que la vie fait parfois bien les choses, et je range précieusement ce petit clin d’œil du sort.", pts:{gratitude:2, serenite:1} },
+  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
+]}
+];
+/* ————— Outils ————— */
+const $ = sel => document.querySelector(sel);
+const N = SITUATIONS.length;
+const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fmt = x => x.toFixed(1).replace(".", ",");
+const rgba = (hex, a) => {
+  const n = parseInt(hex.slice(1), 16);
+  return `rgba(${(n>>16)&255}, ${(n>>8)&255}, ${n&255}, ${a})`;
+};
+const BANDES = {
+  low:  { lbl:"Peu présente",  c:"#8F8A9B" },
+  mid:  { lbl:"Modérée",       c:"#7B6FB4" },
+  high: { lbl:"Bien présente", c:"#3F8271" },
+  top:  { lbl:"Très forte",    c:"#C4763B" }
+};
+const bandeDe = s => s <= 2 ? "low" : s <= 5 ? "mid" : s <= 7.9 ? "high" : "top";
+const INTENSITES = [["0","Pas du tout"],["1","Un peu"],["2","Moyennement"],["3","Beaucoup"],["4","Énormément"]];
+const AGREABLES = ["joie","amour","fierte","gratitude","serenite"];
+const DESAGREABLES = ["tristesse","colere","peur","degout","anxiete","honte","culpabilite","jalousie"];
+
+/* ————— État (uniquement en mémoire, jamais enregistré) ————— */
+const state = { i:0, answers: Array.from({length:N}, () => null) };
+
+/* ————— Apparitions douces ————— */
+const io = new IntersectionObserver(entries => {
+  entries.forEach((en, k) => {
+    if(en.isIntersecting){
+      en.target.style.transitionDelay = prefersReduced ? "0ms" : `${Math.min(k,4)*70}ms`;
+      en.target.classList.add("in");
+      io.unobserve(en.target);
+    }
+  });
+}, { threshold: .12 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+/* ————— Navigation entre vues ————— */
+function showView(id){
+  document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === id));
+  window.scrollTo({ top:0, behavior: prefersReduced ? "auto" : "smooth" });
+}
+
+/* ————— Cartes des 14 émotions ————— */
+function renderEmotionCards(){
+  $("#emoGrid").innerHTML = EMOTIONS.map(e => `
+    <div class="emo-card"><div class="shell shellx"><div class="core">
+      <div class="emo-top">
+        <div class="emo-glyph" style="background:${rgba(e.color,.14)}; border-color:${rgba(e.color,.28)}">${e.emoji}</div>
+        <div><h3>${e.nom}</h3><span class="emo-cat">${e.cat === "base" ? "Émotion de base" : "Émotion complexe & sociale"}</span></div>
+      </div>
+      <p class="def">${e.def}</p>
+      <p class="fn"><b>Sa fonction :</b> ${e.fn}</p>
+      <p class="ex"><b>Par exemple :</b> ${e.ex}</p>
+    </div></div></div>`).join("");
+}
+
+/* ————— Le questionnaire ————— */
+function renderQuestion(){
+  const i = state.i, s = SITUATIONS[i], a = state.answers[i];
+  $("#qDomain").textContent = s.dom;
+  $("#qCount").textContent = `${i+1} / ${N}`;
+  $("#qFill").style.width = `${((i+1)/N)*100}%`;
+  document.querySelector(".track").setAttribute("aria-valuenow", i+1);
+  $("#qText").textContent = s.txt;
+
+  $("#optionsList").innerHTML = s.opts.map((o, k) => `
+    <button class="opt${a && a.r === k ? " sel" : ""}" role="radio" aria-checked="${a && a.r === k}" data-k="${k}">
+      <span class="tick">${a && a.r === k ? "✓" : String.fromCharCode(65+k)}</span>
+      <span>${o.t}</span>
+    </button>`).join("");
+  $("#optionsList").querySelectorAll(".opt").forEach(b =>
+    b.addEventListener("click", () => selectReaction(+b.dataset.k)));
+
+  $("#intScale").innerHTML = INTENSITES.map(([n, l], k) => `
+    <button class="int-btn${a && a.k === k ? " sel" : ""}" role="radio" aria-checked="${a && a.k === k}" data-k="${k}">
+      <span class="n">${n}</span><span class="l">${l}</span>
+    </button>`).join("");
+  $("#intScale").querySelectorAll(".int-btn").forEach(b =>
+    b.addEventListener("click", () => selectIntensity(+b.dataset.k)));
+
+  $("#intensityBlock").classList.toggle("on", !!(a && a.r != null));
+  $("#btnPrev").innerHTML = i === 0
+    ? '<span class="ico" style="order:-1" aria-hidden="true">←</span> Les émotions'
+    : '<span class="ico" style="order:-1" aria-hidden="true">←</span> Précédent';
+  $("#btnNext").innerHTML = i === N-1
+    ? 'Voir mes résultats <span class="ico" aria-hidden="true">✦</span>'
+    : 'Suivant <span class="ico" aria-hidden="true">→</span>';
+  updateNav();
+}
+
+function selectReaction(k){
+  const a = state.answers[state.i] || (state.answers[state.i] = { r:null, k:null });
+  a.r = k;
+  const wasHidden = !$("#intensityBlock").classList.contains("on");
+  renderQuestion();
+  if(wasHidden && !prefersReduced){
+    setTimeout(() => $("#intensityBlock").scrollIntoView({ behavior:"smooth", block:"nearest" }), 120);
+  }
+}
+function selectIntensity(k){
+  const a = state.answers[state.i] || (state.answers[state.i] = { r:null, k:null });
+  a.k = k;
+  renderQuestion();
+}
+function updateNav(){
+  const a = state.answers[state.i];
+  const ok = a && a.r != null && a.k != null;
+  $("#btnNext").disabled = !ok;
+  $("#nextHint").textContent = ok ? "" :
+    (!a || a.r == null ? "Choisis d’abord la réaction qui te ressemble le plus."
+                       : "Indique aussi à quel point la situation te toucherait (0 à 4).");
+}
+function gotoQuestion(idx){
+  const card = $("#qCard");
+  if(prefersReduced){ state.i = idx; renderQuestion(); window.scrollTo({top:0}); return; }
+  card.classList.add("fading");
+  setTimeout(() => {
+    state.i = idx; renderQuestion();
+    card.classList.remove("fading");
+    window.scrollTo({ top:0, behavior:"smooth" });
+  }, 250);
+}
+
+/* ————— Calcul des notes —————
+   Contribution d’une situation = points de la réaction choisie × (intensité ÷ 4).
+   Note finale = (total obtenu ÷ maximum théorique de l’émotion) × 10, arrondie à 1 décimale. */
+function computeScores(answers){
+  const totaux = {}, maxima = {};
+  EMOTIONS.forEach(e => { totaux[e.id] = 0; maxima[e.id] = 0; });
+  SITUATIONS.forEach((s, i) => {
+    EMOTIONS.forEach(e => {
+      let m = 0;
+      s.opts.forEach(o => { m = Math.max(m, o.pts[e.id] || 0); });
+      maxima[e.id] += m;
+    });
+    const a = answers[i];
+    if(!a || a.r == null) return;
+    const coef = (a.k == null ? 0 : a.k) / 4;
+    const pts = s.opts[a.r].pts;
+    for(const id in pts) totaux[id] += pts[id] * coef;
+  });
+  const notes = {};
+  EMOTIONS.forEach(e => {
+    notes[e.id] = maxima[e.id] ? Math.round((totaux[e.id] / maxima[e.id]) * 100) / 10 : 0;
+  });
+  return notes;
+}
+
+/* ————— Résultats ————— */
+function moyenne(ids, notes){
+  return Math.round(ids.reduce((t, id) => t + notes[id], 0) / ids.length * 10) / 10;
+}
+
+function renderResults(notes){
+  const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
+  const date = new Date().toLocaleDateString("fr-FR", { weekday:"long", day:"numeric", month:"long", year:"numeric" });
+  $("#resDate").textContent = `Test réalisé le ${date}. Tes réponses n’ont pas quitté ton navigateur.`;
+
+  /* Top 3 */
+  $("#resTop3").innerHTML = tri.slice(0, 3).map((e, k) => `
+    <div class="podium-row">
+      <span class="podium-rank">${k+1}</span>
+      <span class="emo-glyph" style="background:${rgba(e.color,.15)}; border-color:${rgba(e.color,.3)}">${e.emoji}</span>
+      <span class="podium-name">${e.nom}</span>
+      <span class="podium-score" style="color:${e.color}">${fmt(notes[e.id])}</span>
+    </div>`).join("");
+
+  /* Peu ressenties (≤ 2) */
+  const basses = tri.filter(e => notes[e.id] <= 2);
+  $("#resLow").innerHTML = basses.length
+    ? basses.map(e => `<span class="low-chip">${e.emoji} ${e.nom} · ${fmt(notes[e.id])}</span>`).join("")
+    : `<span class="low-chip">✨ Aucune note ≤ 2</span>`;
+  $("#resLowNote").textContent = basses.length
+    ? "Une note basse n’est pas un manque : ces émotions sont simplement peu sollicitées dans ta vie en ce moment."
+    : "Toutes tes émotions trouvent une place dans ta vie — aucune ne semble éteinte.";
+
+  /* Équilibre agréables / désagréables */
+  const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
+  $("#resBalance").innerHTML = `
+    <div class="bal-row"><div class="bal-head"><span>😊 Émotions agréables</span><span class="v">${fmt(mAgr)} / 10</span></div>
+      <div class="bal-track"><div class="bal-fill" data-w="${mAgr*10}" style="background:linear-gradient(90deg,#57A05B,#63AFA4)"></div></div></div>
+    <div class="bal-row"><div class="bal-head"><span>🌧️ Émotions désagréables</span><span class="v">${fmt(mDes)} / 10</span></div>
+      <div class="bal-track"><div class="bal-fill" data-w="${mDes*10}" style="background:linear-gradient(90deg,#C4763B,#CF5C41)"></div></div></div>`;
+  const diff = mAgr - mDes;
+  $("#resBalanceNote").textContent =
+    diff >= 1.5 ? "Les émotions agréables dominent nettement : ton quotidien semble te nourrir plus qu’il ne te coûte. (La surprise, neutre, n’entre pas dans ce calcul.)" :
+    diff <= -1.5 ? "Les émotions désagréables pèsent plus lourd en ce moment : ton système émotionnel travaille beaucoup, et cela mérite douceur et récupération. (La surprise, neutre, n’entre pas dans ce calcul.)" :
+    "Agréables et désagréables s’équilibrent presque : une vie intérieure contrastée, où les deux registres cohabitent. (La surprise, neutre, n’entre pas dans ce calcul.)";
+
+  /* Radar */
+  $("#radarWrap").innerHTML = buildRadar(notes);
+
+  /* Barres */
+  $("#barsWrap").innerHTML = tri.map(e => {
+    const b = BANDES[bandeDe(notes[e.id])];
+    return `<div class="bar-row">
+      <div class="bar-id"><span class="g">${e.emoji}</span>
+        <span><span class="nm">${e.nom}</span><span class="band" style="color:${b.c}">${b.lbl}</span></span></div>
+      <div class="bar-track"><div class="bar-fill" data-w="${notes[e.id]*10}" style="background:linear-gradient(90deg, ${rgba(e.color,.65)}, ${e.color})"></div></div>
+      <div class="bar-score" style="color:${e.color}">${fmt(notes[e.id])}</div>
+    </div>`;
+  }).join("");
+
+  /* Analyses par émotion */
+  $("#analysesWrap").innerHTML = tri.map((e, k) => {
+    const bd = bandeDe(notes[e.id]), b = BANDES[bd];
+    return `<details class="ana"${k < 3 ? " open" : ""}>
+      <summary>
+        <span class="emo-glyph" style="background:${rgba(e.color,.14)}; border-color:${rgba(e.color,.28)}">${e.emoji}</span>
+        <span class="ana-name">${e.nom}</span>
+        <span class="ana-band" style="background:${rgba(b.c,.12)}; color:${b.c}">${b.lbl}</span>
+        <span class="ana-score">${fmt(notes[e.id])}</span>
+        <span class="ana-chev" aria-hidden="true">▼</span>
+      </summary>
+      <div class="ana-body">${e.bandes[bd]}</div>
+    </details>`;
+  }).join("");
+
+  /* Synthèse croisée */
+  $("#syntheseWrap").innerHTML = buildSynthese(notes, tri, mAgr, mDes, basses);
+
+  /* Animation des barres une fois posées */
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll(".bar-fill, .bal-fill").forEach(f => f.style.width = f.dataset.w + "%");
+  }));
+}
+
+/* ————— Radar SVG (14 axes) ————— */
+function buildRadar(notes){
+  const cx = 280, cy = 292, R = 172, RL = 206;
+  const pt = (k, r) => {
+    const ang = (Math.PI * 2 * k) / EMOTIONS.length - Math.PI / 2;
+    return [cx + Math.cos(ang) * r, cy + Math.sin(ang) * r, Math.cos(ang), Math.sin(ang)];
+  };
+  const ring = v => EMOTIONS.map((e, k) => pt(k, R * v / 10).slice(0, 2).map(n => n.toFixed(1)).join(",")).join(" ");
+  const axes = EMOTIONS.map((e, k) => {
+    const [x, y] = pt(k, R);
+    return `<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(45,40,51,.07)" stroke-width="1"/>`;
+  }).join("");
+  const labels = EMOTIONS.map((e, k) => {
+    const [x, y, c, s] = pt(k, RL);
+    const anchor = c > .3 ? "start" : c < -.3 ? "end" : "middle";
+    const dy = s > .55 ? 10 : s < -.55 ? -2 : 4;
+    return `<text x="${x.toFixed(1)}" y="${(y + dy).toFixed(1)}" text-anchor="${anchor}" font-size="12.5" font-weight="600" fill="#6E6779" font-family="inherit">${e.court}</text>`;
+  }).join("");
+  const poly = EMOTIONS.map((e, k) => pt(k, R * notes[e.id] / 10).slice(0, 2).map(n => n.toFixed(1)).join(",")).join(" ");
+  const dots = EMOTIONS.map((e, k) => {
+    const [x, y] = pt(k, R * notes[e.id] / 10);
+    return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4" fill="${e.color}" stroke="#FFFDF8" stroke-width="1.5"/>`;
+  }).join("");
+  return `<svg viewBox="0 0 560 584" role="img" aria-label="Radar de tes 14 notes émotionnelles">
+    ${[2.5, 5, 7.5, 10].map(v => `<polygon points="${ring(v)}" fill="none" stroke="rgba(45,40,51,${v === 10 ? ".14" : ".07"})" stroke-width="1"/>`).join("")}
+    ${axes}
+    <polygon points="${poly}" fill="rgba(63,130,113,.16)" stroke="#3F8271" stroke-width="2" stroke-linejoin="round"/>
+    ${dots}${labels}
+  </svg>`;
+}
+
+/* ————— Synthèse finale (5 à 8 phrases, générée à partir des notes) ————— */
+function buildSynthese(notes, tri, mAgr, mDes, basses){
+  const HI = 5.5, LO = 2;
+  const nm = e => e.art + e.nom.toLowerCase();
+  const ph = [];
+
+  const [t1, t2, t3] = tri;
+  ph.push(`Aujourd’hui, ton paysage intérieur est surtout coloré par ${nm(t1)} (${fmt(notes[t1.id])}/10), ${nm(t2)} (${fmt(notes[t2.id])}/10) et ${nm(t3)} (${fmt(notes[t3.id])}/10).`);
+
+  const diff = mAgr - mDes;
+  ph.push(diff >= 1.5
+    ? `Côté équilibre, les émotions agréables (${fmt(mAgr)}/10 en moyenne) prennent nettement le dessus sur les désagréables (${fmt(mDes)}/10) — ton quotidien semble te nourrir plus qu’il ne te coûte.`
+    : diff <= -1.5
+    ? `Côté équilibre, les émotions désagréables (${fmt(mDes)}/10 en moyenne) pèsent en ce moment plus lourd que les agréables (${fmt(mAgr)}/10) — non pas que tout aille mal, mais ton système émotionnel travaille beaucoup, et cela mérite de la douceur envers toi-même.`
+    : `Côté équilibre, émotions agréables (${fmt(mAgr)}/10) et désagréables (${fmt(mDes)}/10) se répondent presque à parts égales : une vie intérieure contrastée, où les deux registres cohabitent.`);
+
+  const n = id => notes[id];
+  const combos = [
+    { ok: n("anxiete") >= HI && n("colere") >= HI,
+      t:"Ton anxiété et ta colère montent souvent ensemble : ton système d’alarme anticipe le danger et se tient prêt à se défendre — repérer laquelle des deux arrive en premier t’aidera à choisir ta réponse plutôt que de la subir." },
+    { ok: n("honte") >= HI && n("culpabilite") >= HI,
+      t:"Honte et culpabilité élevées ensemble, c’est un projecteur souvent retourné contre toi : la culpabilité juge un acte, la honte croit juger la personne — rappelle-toi qu’une erreur est un événement, jamais une identité." },
+    { ok: n("joie") >= HI && n("gratitude") >= HI,
+      t:"Ta joie et ta gratitude se nourrissent l’une l’autre : tu sais à la fois savourer les bons moments et reconnaître ce qui les rend possibles, un duo qui protège durablement le moral." },
+    { ok: n("peur") >= HI && n("anxiete") >= HI,
+      t:"Peur et anxiété élevées ensemble dessinent un système de vigilance très sensible : il te protège, mais il sonne parfois pour des dangers qui n’arrivent jamais — le corps (respiration lente, ancrage par les sens) est la meilleure porte pour le calmer." },
+    { ok: n("tristesse") >= HI && n("jalousie") >= HI,
+      t:"Ta tristesse et ton envie se répondent : la comparaison appuie là où quelque chose manque déjà — derrière ce pincement se cache souvent un désir légitime qui attend ta permission d’exister." },
+    { ok: n("amour") >= HI && n("gratitude") >= HI,
+      t:"Le lien aux autres est clairement un pilier chez toi : tu ressens fort l’attachement et tu sais reconnaître ce que les autres t’apportent — un terreau de relations solides." },
+    { ok: n("serenite") >= HI && n("anxiete") >= HI,
+      t:"Fait intéressant : ta sérénité et ton anxiété sont toutes deux élevées — tu possèdes de vraies ressources de calme, mais un fond de vigilance revient vite ; tu peux t’appuyer plus souvent, et plus tôt, sur ce calme que tu connais déjà." },
+    { ok: n("colere") >= HI && n("fierte") >= HI,
+      t:"Ta colère et ta fierté racontent la même histoire : une grande sensibilité au respect et à la justice — ta colère défend des valeurs plus qu’elle ne cherche le conflit." },
+    { ok: n("degout") >= HI && n("colere") >= HI,
+      t:"Ton indignation a deux moteurs, la colère et le rejet moral : c’est le signe de convictions affirmées — veille à ce qu’elles restent une boussole, pas une armure." },
+    { ok: n("serenite") >= HI && n("anxiete") <= LO && n("colere") <= LO,
+      t:"Ta sérénité élevée, adossée à une anxiété et une colère très basses, dessine un fond de calme rare : une ressource précieuse, pour toi comme pour ton entourage." },
+    { ok: n("joie") <= LO && n("serenite") <= LO,
+      t:"Les émotions agréables semblent en veilleuse en ce moment ; ce n’est ni une faute ni une fatalité — remettre dans la semaine de toutes petites sources de plaisir, même minuscules, suffit souvent à relancer doucement la machine." },
+    { ok: n("surprise") >= HI,
+      t:"Tu réagis fort à l’inattendu : une belle vivacité, à condition de te laisser quelques secondes pour atterrir avant de répondre." }
+  ].filter(c => c.ok).slice(0, 3);
+  if(combos.length === 0){
+    combos.push({ t:"Aucune émotion n’écrase les autres : ton profil est nuancé, et tes réactions varient selon les contextes — une forme de flexibilité précieuse." });
+  }
+  combos.forEach(c => ph.push(c.t));
+
+  if(basses.length){
+    const noms = basses.slice(0, 3).map(nm);
+    const liste = noms.length > 1 ? noms.slice(0, -1).join(", ") + " et " + noms[noms.length-1] : noms[0];
+    ph.push(`À l’inverse, ${liste}${basses.length > 3 ? ", notamment," : ""} ${basses.length === 1 ? "occupe" : "occupent"} très peu de place en ce moment — ce n’est pas un manque, simplement des cordes moins sollicitées par ta vie actuelle.`);
+  }
+
+  ph.push("Garde en tête que ces notes photographient un moment de ta vie, pas une personnalité gravée dans le marbre : elles bougeront avec les saisons que tu traverses.");
+  if(ph.length < 8) ph.push("Et plus tu sauras nommer ce qui te traverse — comme tu viens de le faire —, plus il te sera facile d’en faire quelque chose.");
+
+  const coupe = Math.min(3, ph.length - 2);
+  return `<p class="lead-letter">${ph.slice(0, coupe).join(" ")}</p><p>${ph.slice(coupe).join(" ")}</p>`;
+}
+
+/* ————— Copier les résultats ————— */
+function buildCopyText(notes){
+  const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
+  const date = new Date().toLocaleDateString("fr-FR");
+  const lignes = tri.map((e, k) => `${String(k+1).padStart(2, " ")}. ${e.nom} — ${fmt(notes[e.id])}/10 (${BANDES[bandeDe(notes[e.id])].lbl.toLowerCase()})`);
+  const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
+  return [
+    `🧭 Boussole émotionnelle — mes résultats (${date})`,
+    "",
+    ...lignes,
+    "",
+    `Émotions dominantes : ${tri.slice(0, 3).map(e => e.nom).join(", ")}.`,
+    `Équilibre : agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.`,
+    "",
+    "Test indicatif par mises en situation, réalisé 100 % dans mon navigateur (aucune donnée collectée).",
+    "Ce n’est pas un diagnostic médical ou psychologique."
+  ].join("\n");
+}
+async function copierResultats(){
+  const texte = buildCopyText(lastNotes);
+  const fb = $("#copyFeedback");
+  try{
+    await navigator.clipboard.writeText(texte);
+    fb.textContent = "Résultats copiés ! Tu peux maintenant les coller où tu veux.";
+  }catch(_){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = texte; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); ta.remove();
+      fb.textContent = "Résultats copiés ! Tu peux maintenant les coller où tu veux.";
+    }catch(e){
+      fb.textContent = "La copie automatique n’a pas fonctionné — tu peux prendre une capture d’écran.";
+    }
+  }
+  setTimeout(() => { fb.textContent = ""; }, 5000);
+}
+
+/* ————— Auto-vérification (console) ————— */
+function runSelfTests(){
+  const idxNeutre = s => s.opts.findIndex(o => Object.keys(o.pts).length === 0);
+  const zeros = computeScores(SITUATIONS.map(s => ({ r: idxNeutre(s), k: 0 })));
+  const zeroOK = EMOTIONS.every(e => zeros[e.id] === 0);
+  const maxKO = [];
+  EMOTIONS.forEach(e => {
+    const rep = SITUATIONS.map(s => {
+      let best = 0, bi = idxNeutre(s);
+      s.opts.forEach((o, k) => { const p = o.pts[e.id] || 0; if(p > best){ best = p; bi = k; } });
+      return { r: bi, k: 4 };
+    });
+    if(computeScores(rep)[e.id] !== 10) maxKO.push(e.id);
+  });
+  const couverture = {};
+  EMOTIONS.forEach(e => {
+    couverture[e.id] = SITUATIONS.filter(s => s.opts.some(o => (o.pts[e.id] || 0) > 0)).length;
+  });
+  const covOK = Object.values(couverture).every(c => c >= 5);
+  console.info(`[Boussole émotionnelle] Auto-vérification — tout neutre à 0 → 0/10 partout : ${zeroOK ? "✓" : "✗"} · ` +
+    `réaction max + intensité 4 → 10/10 : ${maxKO.length === 0 ? "✓" : "✗ " + maxKO.join(",")} · ` +
+    `chaque émotion mesurée par ≥ 5 situations : ${covOK ? "✓" : "✗"}`, couverture);
+  return { zeroOK, maxOK: maxKO.length === 0, covOK, couverture };
+}
+
+/* ————— Câblage ————— */
+let lastNotes = null;
+function finish(){
+  lastNotes = computeScores(state.answers);
+  renderResults(lastNotes);
+  showView("v-resultats");
+}
+$("#navHome").addEventListener("click", () => showView("v-accueil"));
+$("#btnStart").addEventListener("click", () => showView("v-emotions"));
+$("#btnStart2").addEventListener("click", () => showView("v-emotions"));
+$("#btnToTest").addEventListener("click", () => { renderQuestion(); showView("v-test"); });
+$("#btnPrev").addEventListener("click", () => {
+  if(state.i === 0) showView("v-emotions");
+  else gotoQuestion(state.i - 1);
+});
+$("#btnNext").addEventListener("click", () => {
+  if($("#btnNext").disabled) return;
+  if(state.i === N - 1) finish();
+  else gotoQuestion(state.i + 1);
+});
+$("#btnCopy").addEventListener("click", copierResultats);
+$("#btnRestart").addEventListener("click", () => {
+  state.i = 0;
+  state.answers = Array.from({length:N}, () => null);
+  lastNotes = null;
+  $("#copyFeedback").textContent = "";
+  showView("v-accueil");
+});
+
+renderEmotionCards();
+runSelfTests();
+window.__boussole = { EMOTIONS, SITUATIONS, computeScores, state, runSelfTests, buildCopyText };
+</script>
+</body>
+</html>
