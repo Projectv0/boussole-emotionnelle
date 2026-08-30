@@ -1540,6 +1540,11 @@ async function genererCarte(notes){
   return cv;
 }
 let carteBlob = null;
+/* Dans l'app claude.ai (artifact), le téléchargement passe par une capacité dédiée */
+let dlCapacite = null;
+if(window.claude && typeof window.claude.use === "function"){
+  window.claude.use("downloads").then(ns => { dlCapacite = ns; }).catch(() => {});
+}
 async function ouvrirCarte(){
   if(!lastNotes) return;
   const btn = $("#btnCarte");
@@ -1559,8 +1564,13 @@ async function ouvrirCarte(){
     btn.disabled = false;
   }
 }
-function telechargerCarte(){
+async function telechargerCarte(){
   if(!carteBlob) return;
+  if(dlCapacite){
+    try{ await dlCapacite.save({ filename:"boussole-emotionnelle.png", data: carteBlob }); }
+    catch(_){ /* refus du viewer ou limite : on n'insiste pas */ }
+    return;
+  }
   const url = URL.createObjectURL(carteBlob);
   const a = document.createElement("a");
   a.href = url; a.download = "boussole-emotionnelle.png";
