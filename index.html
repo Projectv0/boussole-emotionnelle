@@ -456,6 +456,41 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 }
 .cle-input:focus{ outline:2px solid var(--sage); outline-offset:2px; }
 
+/* ————— Pop-up de fin de questionnaire ————— */
+.paywall-box{ max-width:38rem; text-align:center; padding:1.8rem 1.6rem 1.4rem; }
+.paywall-glyphs{ display:flex; gap:.7rem; justify-content:center; margin-bottom:1rem; }
+.paywall-glyphs img{
+  width:3.4rem; height:3.4rem; border-radius:1.1rem; border:1px solid var(--hairline-strong);
+  filter:blur(5px) saturate(.9); opacity:.85;
+}
+.paywall-titre{ font-size:1.7rem; }
+.paywall-sous{ font-size:.92rem; color:var(--muted); max-width:28rem; margin:.6rem auto 1.4rem; }
+.offres{ display:grid; grid-template-columns:1fr; gap:.9rem; text-align:left; }
+@media (min-width:640px){ .offres{ grid-template-columns:1fr 1.15fr; align-items:stretch; } }
+.offre{
+  border:1.5px solid var(--hairline-strong); border-radius:1.3rem; padding:1.3rem 1.25rem;
+  background:rgba(255,255,255,.55); display:flex; flex-direction:column; gap:.6rem;
+}
+.offre h4{ font-family:var(--serif); font-size:1.12rem; font-weight:620; }
+.offre ul{ list-style:none; display:flex; flex-direction:column; gap:.35rem; flex:1; }
+.offre li{ font-size:.82rem; color:#4A4453; padding-left:1.1rem; position:relative; }
+.offre li::before{ content:"✓"; position:absolute; left:0; color:var(--sage); font-weight:700; }
+.offre .btn{ justify-content:center; margin-top:.4rem; }
+.offre-prix{ font-family:var(--serif); font-weight:620; font-size:1.7rem; color:var(--ink); }
+.offre-prix s, .vente-prix s{ color:var(--faint); font-size:.62em; font-weight:400; margin-left:.25rem; }
+.offre-star{
+  border-color:var(--sage); background:linear-gradient(180deg, rgba(63,130,113,.08), rgba(255,255,255,.6));
+  box-shadow:0 14px 34px -18px rgba(51,104,91,.4); position:relative;
+}
+.offre-badge{
+  display:inline-block; align-self:flex-start; font-size:.62rem; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:#fff; background:linear-gradient(135deg,#47907D,var(--sage-deep));
+  padding:.32rem .75rem; border-radius:999px;
+}
+.paywall-foot{ margin-top:1.1rem; font-size:.84rem; color:var(--faint); display:flex; gap:.6rem; justify-content:center; align-items:center; flex-wrap:wrap; }
+.linklike{ font-size:.84rem; font-weight:600; color:var(--sage-deep); text-decoration:underline; text-underline-offset:3px; }
+.linklike:hover{ color:var(--ink); }
+
 /* ————— Vue dossier ————— */
 .rapport{ max-width:46rem; margin:0 auto; display:flex; flex-direction:column; gap:1rem; }
 .rap-bloc{
@@ -733,7 +768,8 @@ footer p + p{ margin-top:.3rem; }
             <p class="vente-note">Comme le test, le dossier est généré <b>dans ton navigateur</b> : tes réponses ne sont jamais envoyées. Après l’achat, tu reçois une clé par e-mail — elle débloque le dossier et son téléchargement en PDF. <b>Garde cet onglet ouvert</b> pendant l’achat : c’est lui qui contient tes réponses.</p>
           </div>
           <div class="vente-cta">
-            <div class="vente-prix" id="ventePrix">7 €</div>
+            <span class="offre-badge">Offre de lancement · −50 %</span>
+            <div class="vente-prix" id="ventePrix">9,99 € <s>20 €</s></div>
             <div class="vente-prix-note">paiement unique · TVA incluse</div>
             <a class="btn btn-primary" id="btnAcheter" target="_blank" rel="noopener">Obtenir mon dossier <span class="ico" aria-hidden="true">→</span></a>
             <button class="btn btn-ghost" id="btnDejaCle">J’ai déjà ma clé <span class="ico" aria-hidden="true">🔑</span></button>
@@ -744,14 +780,54 @@ footer p + p{ margin-top:.3rem; }
 
     <div class="carte-overlay" id="rapportOverlay" hidden>
       <div class="carte-box">
-        <h3 style="font-size:1.3rem; margin:.4rem 0 .6rem">Débloquer ton dossier</h3>
-        <p class="carte-hint" style="margin-top:0">Colle ici la clé de licence reçue par e-mail juste après ton achat.</p>
+        <h3 style="font-size:1.3rem; margin:.4rem 0 .6rem">Débloquer avec ma clé</h3>
+        <p class="carte-hint" style="margin-top:0">Colle ici la clé de licence reçue par e-mail juste après ton achat — elle ouvre la formule que tu as choisie.</p>
         <input class="cle-input" id="cleLicence" placeholder="XXXXXXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
         <div class="carte-actions">
           <button class="btn btn-primary" id="btnValiderCle">Débloquer <span class="ico" aria-hidden="true">🔓</span></button>
           <button class="btn btn-ghost" id="btnFermerCle">Fermer <span class="ico" aria-hidden="true">✕</span></button>
         </div>
         <p class="copy-feedback" id="cleStatut" role="status"></p>
+      </div>
+    </div>
+
+    <div class="carte-overlay" id="paywallOverlay" hidden>
+      <div class="carte-box paywall-box">
+        <div class="paywall-glyphs" id="paywallGlyphs" aria-hidden="true"></div>
+        <h3 class="paywall-titre">Tes résultats sont prêts ✨</h3>
+        <p class="paywall-sous">24 situations, 14 émotions passées au crible : ta boussole intérieure est calculée — tes trois émotions dominantes t’attendent juste derrière. Choisis ta formule pour la découvrir.</p>
+        <div class="offres">
+          <div class="offre">
+            <h4>Tes résultats</h4>
+            <div class="offre-prix" id="pwPrixResultats">1,99 €</div>
+            <ul>
+              <li>Radar et classement des 14 émotions</li>
+              <li>Analyse personnalisée par émotion</li>
+              <li>Synthèse croisée de ton profil</li>
+              <li>Carte de résultats à partager</li>
+            </ul>
+            <a class="btn btn-ghost" id="btnPayerResultats" target="_blank" rel="noopener">Voir mes résultats <span class="ico" aria-hidden="true">→</span></a>
+          </div>
+          <div class="offre offre-star">
+            <span class="offre-badge">Offre de lancement · −50 %</span>
+            <h4>Résultats + Dossier complet</h4>
+            <div class="offre-prix" id="pwPrixDossier">9,99 € <s>20 €</s></div>
+            <ul>
+              <li><b>Tout ce qui précède</b>, et en plus :</li>
+              <li>14 fiches approfondies · 42 pratiques</li>
+              <li>Tes croisements décodés</li>
+              <li>Plan personnalisé de 30 jours</li>
+              <li>Export PDF, ta copie à garder</li>
+            </ul>
+            <a class="btn btn-primary" id="btnPayerDossier" target="_blank" rel="noopener">Tout débloquer <span class="ico" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="paywall-foot">
+          <button class="linklike" id="btnPaywallCle">J’ai déjà ma clé</button>
+          <span aria-hidden="true">·</span>
+          <button class="linklike" id="btnPaywallRetour">Revenir au questionnaire</button>
+        </div>
+        <p class="carte-hint">Paiement sécurisé (Lemon Squeezy) · clé envoyée par e-mail · tes réponses ne quittent jamais ton navigateur. Garde cet onglet ouvert pendant l’achat.</p>
       </div>
     </div>
 
@@ -1295,14 +1371,25 @@ const SITUATIONS = [
    apparaître le bouton « Soutenir ce projet » sur la page de résultats. */
 const LIEN_SOUTIEN = "https://buymeacoffee.com/odem";
 const URL_SITE = "projectv0.github.io/boussole-emotionnelle";
-/* Dossier d'analyse payant : colle ici le lien d'achat Lemon Squeezy pour afficher
-   l'offre en fin de test. `produitId` (optionnel) restreint les clés à ton produit. */
-const RAPPORT = {
-  prix: "7 €",
-  lienAchat: "",
-  produitId: ""
+/* ————— Modèle payant —————
+   Deux produits Lemon Squeezy : « Résultats » (1,99 €) et « Résultats + Dossier » (9,99 €).
+   Le verrou (pop-up en fin de test, aucun résultat sans paiement) s'active automatiquement
+   quand `actif` est true ET que les deux liens d'achat sont renseignés.
+   Les `produit…` (IDs Lemon Squeezy, optionnels mais recommandés) servent à reconnaître
+   quelle formule une clé débloque. `?apercu=1` dans l'URL permet de tout tester sans payer. */
+const VENTE = {
+  actif: true,
+  prixResultats: "1,99 €",
+  lienResultats: "",
+  produitResultats: "",
+  prixDossier: "9,99 €",
+  prixDossierRef: "20 €",
+  lienDossier: "",
+  produitDossier: ""
 };
 const APERCU = new URLSearchParams(location.search).has("apercu");
+let niveauAcces = "aucun"; /* "aucun" | "resultats" | "dossier" — pour la session en cours */
+const paywallActif = () => APERCU || (VENTE.actif && !!VENTE.lienResultats && !!VENTE.lienDossier);
 
 /* ————— Outils ————— */
 const $ = sel => document.querySelector(sel);
@@ -1523,6 +1610,9 @@ function renderResults(notes){
 
   /* Synthèse croisée */
   $("#syntheseWrap").innerHTML = buildSynthese(notes, tri, mAgr, mDes, basses);
+
+  /* Vitrine du dossier selon l'accès */
+  majVenteBox();
 
   /* Animation des barres une fois posées */
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -2052,8 +2142,55 @@ function renderRapport(notes){
 }
 function ouvrirRapport(){
   if(!lastNotes) return;
+  if(paywallActif() && niveauAcces !== "dossier") return;
   renderRapport(lastNotes);
   showView("v-rapport");
+}
+
+/* ————— Pop-up de fin de questionnaire (le verrou) ————— */
+function ouvrirPaywall(){
+  const tri = [...EMOTIONS].sort((a, b) => lastNotes[b.id] - lastNotes[a.id]).slice(0, 3);
+  $("#paywallGlyphs").innerHTML = tri.map(e => `<img src="${ILLUS[e.id]}" alt="">`).join("");
+  const aR = $("#btnPayerResultats"), aD = $("#btnPayerDossier");
+  $("#pwPrixResultats").textContent = VENTE.prixResultats;
+  $("#pwPrixDossier").innerHTML = `${VENTE.prixDossier} <s>${VENTE.prixDossierRef}</s>`;
+  if(VENTE.lienResultats && VENTE.lienDossier){
+    aR.href = VENTE.lienResultats; aR.onclick = null;
+    aD.href = VENTE.lienDossier; aD.onclick = null;
+  }else{
+    /* mode aperçu sans liens configurés : les boutons débloquent directement */
+    aR.removeAttribute("href"); aD.removeAttribute("href");
+    aR.onclick = e => { e.preventDefault(); appliquerAcces("resultats"); };
+    aD.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); };
+  }
+  $("#paywallOverlay").hidden = false;
+}
+function appliquerAcces(niveau){
+  niveauAcces = niveau;
+  $("#paywallOverlay").hidden = true;
+  $("#rapportOverlay").hidden = true;
+  if(!lastNotes) return;
+  renderResults(lastNotes);
+  showView("v-resultats");
+}
+/* Vitrine du dossier sur la page de résultats, selon l'accès en cours */
+function majVenteBox(){
+  const box = $("#venteBox"), a = $("#btnAcheter");
+  $("#ventePrix").innerHTML = `${VENTE.prixDossier} <s>${VENTE.prixDossierRef}</s>`;
+  a.onclick = null;
+  if(niveauAcces === "dossier"){
+    box.hidden = false;
+    a.removeAttribute("href");
+    a.innerHTML = 'Ouvrir mon dossier <span class="ico" aria-hidden="true">→</span>';
+    a.onclick = e => { e.preventDefault(); ouvrirRapport(); };
+  }else if(paywallActif()){
+    box.hidden = false;
+    a.innerHTML = 'Passer au dossier complet <span class="ico" aria-hidden="true">→</span>';
+    if(VENTE.lienDossier){ a.href = VENTE.lienDossier; }
+    else{ a.removeAttribute("href"); a.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); }; }
+  }else{
+    box.hidden = true;
+  }
 }
 async function validerCle(){
   const cle = $("#cleLicence").value.trim();
@@ -2067,19 +2204,26 @@ async function validerCle(){
       body:"license_key=" + encodeURIComponent(cle)
     });
     const d = await r.json();
-    const bonProduit = !RAPPORT.produitId || String(d.meta && d.meta.product_id) === String(RAPPORT.produitId);
-    if(d.valid && bonProduit){
-      rapportDebloque = true;
-      if(!lastNotes){
-        st.textContent = "Clé valide ! Mais tes réponses ne sont plus là (le site n’enregistre rien) : refais le test, puis reviens cliquer « J’ai déjà ma clé » — elle fonctionnera toujours.";
-        return;
-      }
-      st.textContent = "";
-      $("#rapportOverlay").hidden = true;
-      ouvrirRapport();
-    }else{
+    if(!d.valid){
       st.textContent = "Clé non reconnue. Vérifie l’e-mail reçu juste après ton achat.";
+      return;
     }
+    /* Quelle formule cette clé débloque-t-elle ? */
+    const pid = String((d.meta && d.meta.product_id) || "");
+    let niveau = "dossier";
+    if(VENTE.produitDossier || VENTE.produitResultats){
+      if(pid === String(VENTE.produitDossier)) niveau = "dossier";
+      else if(pid === String(VENTE.produitResultats)) niveau = "resultats";
+      else{ st.textContent = "Cette clé ne correspond pas à un produit de ce site."; return; }
+    }
+    if(!lastNotes){
+      niveauAcces = niveau;
+      st.textContent = "Clé valide ! Mais tes réponses ne sont plus là (le site n’enregistre rien) : refais le test — tes résultats s’ouvriront directement à la fin.";
+      return;
+    }
+    st.textContent = "";
+    appliquerAcces(niveau);
+    if(niveau === "dossier") ouvrirRapport();
   }catch(_){
     st.textContent = "Vérification impossible ici — ouvre le site officiel du test pour débloquer ton dossier.";
   }
@@ -2114,6 +2258,7 @@ function runSelfTests(){
 let lastNotes = null;
 function finish(){
   lastNotes = computeScores(state.answers);
+  if(paywallActif() && niveauAcces === "aucun"){ ouvrirPaywall(); return; }
   renderResults(lastNotes);
   showView("v-resultats");
 }
@@ -2135,23 +2280,20 @@ document.body.appendChild($("#carteOverlay")); /* sort les modales du contexte d
 document.body.appendChild($("#rapportOverlay"));
 $("#btnCarte").addEventListener("click", ouvrirCarte);
 
-/* Offre du dossier d'analyse */
-if(RAPPORT.lienAchat || APERCU){
-  $("#venteBox").hidden = false;
-  $("#ventePrix").textContent = RAPPORT.prix;
-  if(RAPPORT.lienAchat){
-    $("#btnAcheter").href = RAPPORT.lienAchat;
-  }else{
-    $("#btnAcheter").innerHTML = 'Aperçu du dossier <span class="ico" aria-hidden="true">→</span>';
-    $("#btnAcheter").addEventListener("click", e => { e.preventDefault(); ouvrirRapport(); });
-  }
-}
-$("#btnDejaCle").addEventListener("click", () => {
-  if(rapportDebloque || APERCU){ ouvrirRapport(); return; }
+/* Verrou de fin de test + offre du dossier */
+document.body.appendChild($("#paywallOverlay"));
+const ouvrirModaleCle = () => {
   $("#cleStatut").textContent = "";
   $("#rapportOverlay").hidden = false;
   $("#cleLicence").focus();
+};
+$("#btnDejaCle").addEventListener("click", () => {
+  if(niveauAcces === "dossier"){ ouvrirRapport(); return; }
+  ouvrirModaleCle();
 });
+$("#btnPaywallCle").addEventListener("click", ouvrirModaleCle);
+$("#btnPaywallRetour").addEventListener("click", () => { $("#paywallOverlay").hidden = true; });
+$("#paywallOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) e.currentTarget.hidden = true; });
 $("#btnValiderCle").addEventListener("click", validerCle);
 $("#cleLicence").addEventListener("keydown", e => { if(e.key === "Enter") validerCle(); });
 $("#btnFermerCle").addEventListener("click", () => { $("#rapportOverlay").hidden = true; });
