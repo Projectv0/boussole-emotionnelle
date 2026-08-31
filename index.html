@@ -280,43 +280,39 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
   display:flex; align-items:center; gap:.7rem;
 }
 .q-ask::after{ content:""; flex:1; height:1px; background:var(--hairline); }
-.options{ display:flex; flex-direction:column; gap:.65rem; }
-.opt{
-  display:flex; gap:.95rem; align-items:flex-start; text-align:left; width:100%;
-  padding:1rem 1.15rem; border-radius:1.15rem;
-  background:rgba(255,255,255,.55);
-  border:1.5px solid var(--hairline);
-  font-size:.95rem; line-height:1.5; color:#443E4E;
-  transition:border-color .5s var(--ease), background .5s var(--ease), transform .5s var(--ease), box-shadow .5s var(--ease);
+.eval-legende{ font-size:.8rem; color:var(--muted); margin:-.4rem 0 1rem; }
+.eval-rows{ display:flex; flex-direction:column; gap:.55rem; }
+.eval-row{
+  display:flex; align-items:center; gap:.8rem; flex-wrap:wrap;
+  padding:.6rem .85rem; border-radius:1.05rem;
+  background:rgba(255,255,255,.5); border:1.5px solid var(--hairline);
+  transition:border-color .4s var(--ease), background .4s var(--ease);
 }
-.opt:hover{ border-color:rgba(63,130,113,.4); background:#fff; transform:translateY(-1px); }
-.opt .tick{
-  flex:none; width:1.55rem; height:1.55rem; margin-top:.1rem;
-  border-radius:999px; border:1.5px solid var(--hairline-strong);
-  display:grid; place-items:center; font-size:.72rem; font-weight:700; color:var(--faint);
-  transition:all .5s var(--ease);
+.eval-row.ok{ border-color:rgba(63,130,113,.35); background:rgba(63,130,113,.05); }
+.eval-id{ display:flex; align-items:center; gap:.55rem; flex:1; min-width:8.5rem; }
+.eval-id img{ width:1.9rem; height:1.9rem; border-radius:.6rem; object-fit:cover; border:1px solid var(--hairline); }
+.eval-id .nm{ font-weight:700; font-size:.9rem; }
+.eval-scale{ display:flex; gap:.35rem; }
+.seg{
+  width:2.3rem; height:2.3rem; border-radius:.75rem;
+  border:1.5px solid var(--hairline-strong); background:rgba(255,255,255,.65);
+  font-weight:700; font-size:.9rem; color:var(--muted);
+  display:grid; place-items:center;
+  transition:all .35s var(--ease);
 }
-.opt.sel{
-  border-color:var(--sage); background:linear-gradient(180deg, rgba(63,130,113,.09), rgba(63,130,113,.05));
-  color:var(--ink); box-shadow:0 10px 26px -14px rgba(51,104,91,.35);
+.seg:hover{ border-color:var(--sage); }
+.seg.sel{ background:var(--sage); border-color:var(--sage); color:#fff; box-shadow:0 6px 16px -8px rgba(51,104,91,.5); }
+.seg.sel[data-v="0"]{ background:#8F8A9B; border-color:#8F8A9B; box-shadow:none; }
+.btn-rien{
+  margin-top:1.2rem; font-size:.82rem; font-weight:600; color:var(--muted);
+  border:1.5px dashed var(--hairline-strong); border-radius:999px; padding:.6rem 1.15rem;
+  transition:all .4s var(--ease);
 }
-.opt.sel .tick{ background:var(--sage); border-color:var(--sage); color:#fff; }
-
-.intensity{ margin-top:2rem; opacity:0; transform:translateY(12px); filter:blur(4px); transition:opacity .7s var(--ease), transform .7s var(--ease), filter .7s var(--ease); pointer-events:none; height:0; overflow:hidden; }
-.intensity.on{ opacity:1; transform:none; filter:none; pointer-events:auto; height:auto; overflow:visible; }
-.int-scale{ display:grid; grid-template-columns:repeat(5,1fr); gap:.5rem; }
-.int-btn{
-  border-radius:1rem; padding:.8rem .3rem .7rem;
-  border:1.5px solid var(--hairline);
-  background:rgba(255,255,255,.55);
-  display:flex; flex-direction:column; align-items:center; gap:.15rem;
-  transition:all .5s var(--ease);
+.btn-rien:hover{ color:var(--sage-deep); border-color:var(--sage); background:var(--sage-soft); }
+@media (max-width:560px){
+  .seg{ width:2.05rem; height:2.05rem; }
+  .eval-id{ min-width:100%; }
 }
-.int-btn:hover{ border-color:rgba(123,111,180,.45); background:#fff; }
-.int-btn .n{ font-family:var(--serif); font-size:1.3rem; font-weight:620; line-height:1; }
-.int-btn .l{ font-size:.62rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); }
-.int-btn.sel{ border-color:var(--lavande); background:linear-gradient(180deg, rgba(123,111,180,.12), rgba(123,111,180,.06)); box-shadow:0 10px 26px -14px rgba(123,111,180,.45); }
-.int-btn.sel .l{ color:var(--lavande); }
 
 .test-nav{ display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-top:1.8rem; flex-wrap:wrap; }
 .next-hint{ font-size:.78rem; color:var(--faint); flex-basis:100%; text-align:right; margin-top:.4rem; min-height:1.2em; }
@@ -593,7 +589,7 @@ footer p + p{ margin-top:.3rem; }
         <div class="shell">
           <div class="core">
             <div class="res-kicker">L’esprit du test</div>
-            <p>Pas de questions abstraites ici : tu vas te projeter dans <b>des situations concrètes</b> — une réunion, un appel, un imprévu, un dimanche matin — et choisir la réaction qui te ressemble le plus.</p>
+            <p>Pas de questions abstraites ici : tu te projettes dans <b>des situations concrètes</b> — une réunion, un appel, un imprévu, un dimanche matin — et tu indiques, sur un spectre de 0 à 4, ce que chacune éveillerait en toi.</p>
             <p style="margin-top:.9rem">À la fin, chaque émotion reçoit une note de <b>0 à 10</b> qui reflète la place qu’elle occupe dans ta vie, avec un résumé et une analyse personnalisée.</p>
           </div>
         </div>
@@ -615,7 +611,7 @@ footer p + p{ margin-top:.3rem; }
         <div class="step reveal"><div class="shell"><div class="core">
           <div class="step-num">02</div>
           <h3>Projette-toi</h3>
-          <p>24 situations de la vie de tous les jours. Pour chacune : comment réagirais-tu, et à quel point ça te toucherait ?</p>
+          <p>24 situations de la vie de tous les jours. Pour chacune, note de 0 à 4 l’intensité de ce qu’elle éveillerait en toi, émotion par émotion.</p>
           <span class="mins">10 à 15 min</span>
         </div></div></div>
         <div class="step reveal"><div class="shell"><div class="core">
@@ -676,11 +672,11 @@ footer p + p{ margin-top:.3rem; }
       <div class="q-card" id="qCard">
         <div class="shell"><div class="core">
           <p class="q-situation" id="qText"></p>
-          <div class="q-ask">Comment réagirais-tu&nbsp;?</div>
-          <div class="options" id="optionsList" role="radiogroup" aria-label="Réactions possibles"></div>
-          <div class="intensity" id="intensityBlock">
-            <div class="q-ask">À quel point cette situation te toucherait-elle&nbsp;?</div>
-            <div class="int-scale" id="intScale" role="radiogroup" aria-label="Intensité de 0 à 4"></div>
+          <div class="q-ask">Qu’est-ce que ça éveillerait en toi&nbsp;?</div>
+          <p class="eval-legende">Pour chaque émotion, choisis un cran : de <b>0</b> — pas du tout, à <b>4</b> — énormément.</p>
+          <div class="eval-rows" id="evalRows"></div>
+          <div style="text-align:center">
+            <button class="btn-rien" id="btnRien">Cette situation ne m’évoquerait pas grand-chose → tout à 0</button>
           </div>
         </div></div>
 
@@ -1175,202 +1171,58 @@ serenite:{
 }
 };
 /* ————— Les 24 mises en situation —————
-   Chaque réaction attribue de 0 à 3 points à une ou plusieurs émotions (grille cachée).
-   Chaque situation propose une réaction neutre (aucun point) pour que les émotions
-   peu ressenties puissent réellement approcher 0. */
+   Pour chaque situation, la personne note sur un spectre de 0 (pas du tout)
+   à 4 (énormément) chacune des émotions plausibles listées dans `emos`.
+   Chaque émotion est évaluée dans au moins 5 situations. */
 const SITUATIONS = [
 { dom:"Travail", txt:"En réunion, un collègue présente une idée que tu lui avais soufflée la veille, sans te citer. Tout le monde le félicite, et il savoure les compliments sans un regard pour toi.",
-  opts:[
-  { t:"Je bous intérieurement, mâchoires serrées, et j’y repense encore le soir en rentrant.", pts:{colere:3, jalousie:1} },
-  { t:"Je glisse calmement, devant tout le monde : « Ravi·e que notre idée d’hier te plaise autant. »", pts:{fierte:2, colere:1} },
-  { t:"Je me tasse sur ma chaise en me demandant pourquoi je n’ose jamais présenter mes idées moi-même.", pts:{honte:2, tristesse:1} },
-  { t:"Je me dis que l’essentiel est que l’idée avance ; peu importe qui la porte.", pts:{serenite:2} },
-  { t:"Ça ne me toucherait pas vraiment.", pts:{} }
-]},
+  emos:["colere", "honte", "fierte", "tristesse", "jalousie", "serenite"] },
 { dom:"Famille", txt:"Un mardi soir ordinaire, un membre de ta famille t’appelle « juste comme ça » : il pensait à toi et voulait entendre ta voix.",
-  opts:[
-  { t:"Je raccroche le cœur tout chaud, le sourire aux lèvres pour le reste de la soirée.", pts:{amour:3, joie:2} },
-  { t:"Je me dis que j’ai vraiment de la chance d’avoir des gens comme ça dans ma vie.", pts:{gratitude:3, amour:1} },
-  { t:"Je me demande aussitôt s’il y a un problème, ou une nouvelle à m’annoncer.", pts:{anxiete:2} },
-  { t:"Ça me fait plaisir sur le moment, puis je passe vite à autre chose.", pts:{joie:1} },
-  { t:"Ça ne me ferait ni chaud ni froid.", pts:{} }
-]},
+  emos:["joie", "amour", "gratitude", "anxiete"] },
 { dom:"Transports", txt:"Sur le quai de la gare, tu tombes sur une ancienne connaissance de classe. En cinq minutes, tu sais tout : poste passionnant, appartement tout juste acheté, mariage prévu l’été prochain.",
-  opts:[
-  { t:"Je félicite poliment, mais ce bonheur étalé me renvoie à tout ce qui manque encore dans ma vie.", pts:{jalousie:3, tristesse:1} },
-  { t:"Je repars le sourire aux lèvres : ces retrouvailles et ces bonnes nouvelles m’ont fait du bien.", pts:{joie:2} },
-  { t:"Pendant tout le trajet, je refais mes choix de vie dans ma tête, en me comparant malgré moi.", pts:{jalousie:2, anxiete:1} },
-  { t:"Je me dis que chacun avance à son rythme, et que le mien me va bien.", pts:{serenite:2} },
-  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
-]},
+  emos:["joie", "jalousie", "tristesse", "anxiete", "serenite"] },
 { dom:"Imprévu", txt:"Il est trois heures du matin. Un bruit sourd te réveille en sursaut dans ton logement. Tu tends l’oreille : plus un son.",
-  opts:[
-  { t:"Le cœur cognant, je reste sans bouger sous la couette, à guetter le moindre craquement.", pts:{peur:3, anxiete:1} },
-  { t:"Je sursaute, le temps de comprendre où je suis, puis je me lève voir d’où ça vient.", pts:{surprise:2} },
-  { t:"Je me dis que c’est un meuble qui travaille, ou un voisin, et je me rendors tranquillement.", pts:{serenite:2} },
-  { t:"Impossible de retrouver le sommeil : je passe en revue toutes les explications possibles, encore et encore.", pts:{anxiete:2, peur:1} },
-  { t:"Ça ne me réveillerait qu’à moitié : je me rendormirais aussitôt.", pts:{} }
-]},
+  emos:["peur", "surprise", "anxiete", "serenite"] },
 { dom:"Travail", txt:"En pleine réunion d’équipe, ta responsable met ton travail en avant : « Si ce projet a abouti, c’est en grande partie grâce à toi. »",
-  opts:[
-  { t:"Je me redresse, je savoure, et j’ai déjà envie de raconter ça à un proche ce soir.", pts:{fierte:3, joie:2} },
-  { t:"Mes joues chauffent, je fixe mes notes en attendant que les regards se posent ailleurs.", pts:{honte:2, anxiete:1} },
-  { t:"Je pense à tous ceux qui m’ont aidé·e, avec l’envie de partager le mérite.", pts:{gratitude:2} },
-  { t:"Une petite voix me souffle : « Et si je n’arrivais pas à faire aussi bien la prochaine fois ? »", pts:{anxiete:2} },
-  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
-]},
+  emos:["joie", "fierte", "honte", "gratitude", "anxiete"] },
 { dom:"Réseaux sociaux", txt:"En scrollant le soir, tu tombes sur l’album de vacances d’une connaissance : lagon turquoise, bande d’amis, tout le monde rayonne sur chaque photo.",
-  opts:[
-  { t:"Un pincement me prend : j’ai l’impression que les autres vivent la vie que je devrais avoir.", pts:{jalousie:3, tristesse:1} },
-  { t:"Je souris et je like : ça fait plaisir à voir, tant mieux pour cette personne.", pts:{joie:2} },
-  { t:"Tout ce bonheur mis en scène me lasse : tout sonne faux, je referme l’application.", pts:{degout:2} },
-  { t:"Je me rappelle que les photos ne montrent qu’une facette, et je continue ma soirée tranquillement.", pts:{serenite:2} },
-  { t:"Ça ne me toucherait pas vraiment.", pts:{} }
-]},
+  emos:["joie", "jalousie", "tristesse", "degout", "serenite"] },
 { dom:"Argent", txt:"Ta voiture lâche sans prévenir : le garagiste annonce 900 € de réparation, pile le mois où ton budget était déjà serré.",
-  opts:[
-  { t:"L’estomac noué, je refais mes comptes en boucle, même le soir dans mon lit.", pts:{anxiete:3, peur:1} },
-  { t:"Je m’en veux terriblement de ne pas avoir mis d’argent de côté pour ce genre de coup dur.", pts:{culpabilite:3} },
-  { t:"Ces tuiles qui tombent toujours au pire moment… Je fulmine pendant des jours.", pts:{colere:2} },
-  { t:"Je souffle un bon coup : c’est embêtant, mais je vais trouver une solution, étape par étape.", pts:{serenite:2} },
-  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
-]},
+  emos:["anxiete", "colere", "peur", "culpabilite", "serenite"] },
 { dom:"Fête", txt:"Tu rentres chez toi un soir ordinaire, tu allumes la lumière… et une dizaine de proches surgissent en criant « Joyeux anniversaire ! ».",
-  opts:[
-  { t:"Je fais un bond, la main sur la poitrine : il me faut dix bonnes secondes pour y croire.", pts:{surprise:3} },
-  { t:"Une vague de chaleur m’envahit : ils ont organisé tout ça pour moi.", pts:{gratitude:2, amour:2} },
-  { t:"J’éclate de rire, je serre tout le monde dans mes bras, la soirée démarre fort.", pts:{joie:3, surprise:1} },
-  { t:"Je souris, mais être au centre de l’attention me met mal à l’aise : je voudrais me faire tout petit.", pts:{honte:2} },
-  { t:"Ça ne me ferait pas d’effet particulier.", pts:{} }
-]},
+  emos:["joie", "surprise", "amour", "gratitude", "honte"] },
 { dom:"Amitié & couple", txt:"Tu envoies un long message important à une personne qui compte beaucoup pour toi. Deux jours plus tard : « vu », mais toujours aucune réponse.",
-  opts:[
-  { t:"Je vérifie mon téléphone sans arrêt en me demandant ce que j’ai bien pu dire de travers.", pts:{anxiete:3, culpabilite:1} },
-  { t:"Une boule se forme dans ma gorge : je me sens mis·e de côté, et je repense à toute notre relation.", pts:{tristesse:3} },
-  { t:"Je me surprends à guetter ses réseaux : le temps de poster, ça se trouve — mais pas de me répondre…", pts:{jalousie:2, colere:1} },
-  { t:"Je me dis que sa vie est bien remplie : la réponse viendra quand elle viendra.", pts:{serenite:2} },
-  { t:"Je n’y penserais même plus.", pts:{} }
-]},
+  emos:["anxiete", "tristesse", "jalousie", "colere", "culpabilite", "serenite"] },
 { dom:"Maison", txt:"En rangeant le frigo, tu ouvres un plat oublié depuis des semaines : l’odeur âcre te saute au nez, le contenu a changé de couleur et de texture.",
-  opts:[
-  { t:"Un haut-le-cœur me prend : je détourne la tête et je jette tout en apnée.", pts:{degout:3} },
-  { t:"Je m’en veux d’avoir encore laissé de la nourriture se perdre.", pts:{culpabilite:2} },
-  { t:"Je fais la grimace, je jette, et je me promets d’être plus attentif·ve la prochaine fois.", pts:{degout:1, serenite:1} },
-  { t:"Intrigué·e, je me penche pour observer de plus près : c’est presque fascinant, ces couleurs.", pts:{surprise:1} },
-  { t:"Ça ne me ferait ni chaud ni froid.", pts:{} }
-]},
+  emos:["degout", "surprise", "culpabilite", "serenite"] },
 { dom:"Réussite", txt:"Après des mois d’efforts, tu atteins enfin un objectif qui te tenait vraiment à cœur : une course terminée, un diplôme, un projet abouti…",
-  opts:[
-  { t:"Je lève les bras, j’ai envie de danser et de l’annoncer à la terre entière.", pts:{joie:3} },
-  { t:"Je repense à tout le chemin parcouru et je me dis : « C’est moi qui ai fait ça. »", pts:{fierte:3} },
-  { t:"Je pense à toutes les personnes qui m’ont soutenu·e, avec l’envie de les remercier une par une.", pts:{gratitude:3, amour:1} },
-  { t:"À peine l’objectif atteint, je pense déjà au suivant, sans prendre le temps de savourer.", pts:{anxiete:1} },
-  { t:"Ça ne me ferait pas grand-chose de spécial.", pts:{} }
-]},
+  emos:["joie", "fierte", "gratitude", "amour", "anxiete"] },
 { dom:"Travail", txt:"Tu découvres qu’une erreur s’est glissée dans un dossier que tu as rendu, et qu’elle a compliqué la semaine de deux collègues.",
-  opts:[
-  { t:"Je me repasse la scène en boucle : « J’aurais dû vérifier »… Impossible de me le pardonner.", pts:{culpabilite:3} },
-  { t:"Mes joues brûlent à l’idée que tout le service soit au courant.", pts:{honte:3} },
-  { t:"Je vais voir mes collègues, je présente mes excuses et je propose un coup de main pour rattraper.", pts:{serenite:2, culpabilite:1} },
-  { t:"Je guette la moindre nouvelle complication, le ventre noué.", pts:{anxiete:2} },
-  { t:"Ça ne m’empêcherait pas de dormir.", pts:{} }
-]},
+  emos:["honte", "culpabilite", "anxiete", "serenite"] },
 { dom:"Amitié", txt:"C’est ton déménagement. Sans rien demander, deux amis sonnent à ta porte le samedi à 8 h, avec des cartons vides et des croissants chauds.",
-  opts:[
-  { t:"Le cœur serré dans le bon sens, je mesure la chance folle que j’ai de les avoir.", pts:{gratitude:3, amour:2} },
-  { t:"Touché·e mais gêné·e de les déranger, je répète dix fois : « Il ne fallait pas, vraiment… »", pts:{culpabilite:2, gratitude:1} },
-  { t:"Une bouffée d’énergie me traverse : ce déménagement prend des airs de fête.", pts:{joie:2} },
-  { t:"Je note dans un coin de ma tête de leur rendre la pareille très vite.", pts:{gratitude:1} },
-  { t:"Ça ne me ferait pas grand-chose : ils sont là, tant mieux.", pts:{} }
-]},
+  emos:["joie", "gratitude", "amour", "culpabilite"] },
 { dom:"Famille", txt:"Au milieu d’un repas, un proche te lance une phrase blessante sur un sujet sensible, devant tout le monde. Un silence s’installe.",
-  opts:[
-  { t:"Le sang me monte au visage et je réplique du tac au tac, plus fort que je ne le voudrais.", pts:{colere:3} },
-  { t:"Je me ferme, je ravale la boule dans ma gorge et je rumine le reste du repas.", pts:{tristesse:2, colere:1} },
-  { t:"Je voudrais disparaître sous la table : tout le monde a entendu.", pts:{honte:3} },
-  { t:"Je reste sans voix quelques secondes : venant de cette personne, je ne l’avais pas vue venir.", pts:{surprise:2} },
-  { t:"Ça glisserait sur moi.", pts:{} }
-]},
+  emos:["colere", "tristesse", "honte", "surprise"] },
 { dom:"Calme", txt:"Dimanche matin, tôt. Tu bois une boisson chaude près de la fenêtre. La lumière est douce, la rue silencieuse, et tu n’as strictement rien de prévu.",
-  opts:[
-  { t:"Je savoure chaque gorgée, épaules relâchées, esprit posé : le temps peut bien s’étirer.", pts:{serenite:3} },
-  { t:"Je repense à tout ce que ma vie compte de bon en ce moment, et ça me réchauffe.", pts:{gratitude:2, joie:1} },
-  { t:"Au bout de cinq minutes, la liste des choses à faire se met à tourner dans ma tête.", pts:{anxiete:2} },
-  { t:"Un sourire me vient tout seul, sans raison particulière.", pts:{joie:2, serenite:1} },
-  { t:"Ce serait un moment comme un autre.", pts:{} }
-]},
+  emos:["serenite", "joie", "gratitude", "anxiete"] },
 { dom:"Travail", txt:"Un lundi, ta direction annonce une grande réorganisation : « Des postes vont évoluer dans les prochains mois. » Aucun détail de plus.",
-  opts:[
-  { t:"Mes soirées se remplissent de scénarios, surtout les pires : je me vois déjà mis·e sur la touche.", pts:{anxiete:3, peur:2} },
-  { t:"Je me dis que c’est peut-être l’occasion de bouger, et je me surprends à imaginer la suite avec entrain.", pts:{joie:2} },
-  { t:"Ces grandes manœuvres décidées d’en haut, sans un mot pour les équipes, me laissent un goût amer.", pts:{degout:2, colere:1} },
-  { t:"J’attends d’en savoir plus avant de m’alarmer : à chaque jour suffit sa peine.", pts:{serenite:2} },
-  { t:"Ça ne me ferait presque rien.", pts:{} }
-]},
+  emos:["anxiete", "peur", "colere", "degout", "joie", "serenite"] },
 { dom:"Couple & liens", txt:"Tu rentres épuisé·e d’une longue journée. La personne qui partage ta vie — ou un proche — t’a préparé ton plat préféré, sans rien dire, juste pour te faire plaisir.",
-  opts:[
-  { t:"Je fonds complètement : je la serre dans mes bras et la soirée devient toute douce.", pts:{amour:3, joie:1} },
-  { t:"Je réalise à quel point ces petites attentions comptent, et je le dis à voix haute.", pts:{gratitude:3} },
-  { t:"Une petite voix me demande si ce dîner ne cache pas quelque chose.", pts:{anxiete:2} },
-  { t:"Je me dis que je n’en fais pas autant de mon côté, et ça me trotte dans la tête toute la soirée.", pts:{culpabilite:2} },
-  { t:"Ça ne me toucherait pas particulièrement.", pts:{} }
-]},
+  emos:["amour", "joie", "gratitude", "culpabilite", "anxiete"] },
 { dom:"Société", txt:"Dans une file d’attente, quelqu’un double tout le monde sans un mot, puis répond sèchement à la personne âgée qui ose protester.",
-  opts:[
-  { t:"La moutarde me monte au nez : j’interviens d’un ton sec pour remettre les choses à leur place.", pts:{colere:3} },
-  { t:"Rien que de voir ça, ça me retourne l’estomac : je détourne le regard et je m’écarte de cette personne.", pts:{degout:3, colere:1} },
-  { t:"Je n’ose rien dire, et je m’en veux pendant tout le trajet du retour.", pts:{culpabilite:2, honte:1} },
-  { t:"Je me dis que cette personne a peut-être une urgence, qui sait, et je laisse couler.", pts:{serenite:2} },
-  { t:"Je n’y prêterais pas vraiment attention.", pts:{} }
-]},
+  emos:["colere", "degout", "honte", "culpabilite", "serenite"] },
 { dom:"Santé", txt:"Ton médecin te prescrit des examens « de contrôle, simplement pour vérifier ». Les résultats n’arriveront que dans une semaine.",
-  opts:[
-  { t:"La semaine devient interminable : chaque soir, je cherche mes symptômes sur internet.", pts:{anxiete:3, peur:2} },
-  { t:"Un frisson me traverse chaque fois que j’y pense : et si on me trouvait quelque chose de grave ?", pts:{peur:3} },
-  { t:"Je fais confiance au médecin : s’il y avait une vraie alerte, il me l’aurait dit.", pts:{serenite:3} },
-  { t:"Je me dis que j’ai de la chance d’être bien suivi·e : tout le monde ne peut pas faire ces examens si facilement.", pts:{gratitude:2} },
-  { t:"Je n’y penserais plus jusqu’aux résultats.", pts:{} }
-]},
+  emos:["peur", "anxiete", "gratitude", "serenite"] },
 { dom:"Réseaux sociaux", txt:"Tu publies en ligne quelque chose que tu as créé : une photo, un texte, un projet. Le lendemain, un commentaire moqueur s’affiche — et il récolte quelques likes.",
-  opts:[
-  { t:"Le rouge aux joues, je songe à tout supprimer en me demandant ce que les gens pensent de moi.", pts:{honte:3, anxiete:1} },
-  { t:"Le cœur battant, je tape une réponse cinglante : cette méchanceté gratuite me hérisse.", pts:{colere:3, degout:1} },
-  { t:"Ça me plombe : j’y repense toute la soirée, l’envie de créer en berne.", pts:{tristesse:2} },
-  { t:"Un moqueur d’un côté, plusieurs retours chaleureux de l’autre : je choisis où poser mon attention.", pts:{serenite:2, fierte:1} },
-  { t:"Ça ne me ferait vraiment rien.", pts:{} }
-]},
+  emos:["honte", "colere", "tristesse", "degout", "anxiete", "serenite"] },
 { dom:"Famille", txt:"Un proche de ton âge t’annonce une grande nouvelle : il vient de décrocher exactement le poste dont tu rêves, dans le domaine qui t’attire depuis toujours.",
-  opts:[
-  { t:"Je me réjouis à fond : ce soir, on fête ça, c’est tout ce qui compte.", pts:{joie:3, amour:1} },
-  { t:"Je félicite sincèrement… mais une petite voix murmure : « Pourquoi lui, et pas moi ? »", pts:{jalousie:3} },
-  { t:"Je bombe le torse en racontant sa réussite autour de moi, comme si elle était un peu la mienne.", pts:{fierte:2, amour:1} },
-  { t:"Sa réussite me renvoie à mes propres choix et, le soir venu, j’ai le moral dans les chaussettes.", pts:{tristesse:2, jalousie:1} },
-  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
-]},
+  emos:["joie", "fierte", "jalousie", "tristesse", "amour"] },
 { dom:"Souvenirs", txt:"En triant de vieilles affaires, tu retrouves un objet ayant appartenu à une personne qui a beaucoup compté pour toi, et qui n’est plus dans ta vie.",
-  opts:[
-  { t:"La gorge se serre : je m’assois avec l’objet, et les souvenirs remontent par vagues.", pts:{tristesse:3, amour:1} },
-  { t:"Je souris en repensant aux bons moments : ce que j’ai vécu avec cette personne fait partie de moi.", pts:{gratitude:2, serenite:1, joie:1} },
-  { t:"Je repense à tout ce que je n’ai pas dit ou pas fait à l’époque, et ça me pince encore.", pts:{culpabilite:2, tristesse:1} },
-  { t:"Je range l’objet très vite, le souffle court, pour ne pas remuer tout ça.", pts:{peur:2} },
-  { t:"Ça ne me ferait pas particulièrement d’effet.", pts:{} }
-]},
+  emos:["tristesse", "amour", "gratitude", "culpabilite", "peur", "serenite"] },
 { dom:"Travail", txt:"On te propose de présenter un projet devant une cinquantaine de personnes, dans deux semaines. Le sujet, tu le connais par cœur.",
-  opts:[
-  { t:"Dès le soir même, je dors mal : je me rejoue la scène en boucle, avec toutes les questions pièges possibles.", pts:{anxiete:3, peur:1} },
-  { t:"J’accepte avec un grand oui intérieur : ce genre de défi me met en mouvement.", pts:{joie:2, fierte:1} },
-  { t:"L’idée de tous ces regards posés sur moi me glace : je cherche déjà un moyen d’y échapper.", pts:{peur:3, honte:1} },
-  { t:"Je prépare sérieusement, puis j’y vais sans me mettre de pression : je connais mon sujet.", pts:{serenite:3} },
-  { t:"Ça ne me ferait ni chaud ni froid.", pts:{} }
-]},
+  emos:["anxiete", "peur", "fierte", "honte", "joie", "serenite"] },
 { dom:"Imprévu", txt:"Un matin, une enveloppe t’attend dans la boîte aux lettres : un remboursement que tu n’attendais plus, une petite somme qui tombe du ciel.",
-  opts:[
-  { t:"Je relis trois fois pour être sûr·e, puis j’éclate de rire tout·e seul·e dans l’entrée.", pts:{surprise:3, joie:2} },
-  { t:"Je flaire l’erreur : ça cache forcément quelque chose, je vérifie tout de A à Z.", pts:{anxiete:2, surprise:1} },
-  { t:"Je pense aussitôt à marquer le coup avec mes proches, ou à faire plaisir à quelqu’un.", pts:{amour:2, joie:1, gratitude:1} },
-  { t:"Je me dis que la vie fait parfois bien les choses, et je range précieusement ce petit clin d’œil du sort.", pts:{gratitude:2, serenite:1} },
-  { t:"Ça ne me ferait pas grand-chose.", pts:{} }
-]}
+  emos:["surprise", "joie", "gratitude", "amour", "anxiete", "serenite"] }
 ];
 /* ————— Réglages ————— */
 /* Colle ici ton lien de soutien (Ko-fi, Buy Me a Coffee, Stripe…) pour faire
@@ -1457,29 +1309,26 @@ function renderEmotionCards(){
 
 /* ————— Le questionnaire ————— */
 function renderQuestion(){
-  const i = state.i, s = SITUATIONS[i], a = state.answers[i];
+  const i = state.i, s = SITUATIONS[i], a = state.answers[i] || (state.answers[i] = {});
   $("#qDomain").textContent = s.dom;
   $("#qCount").textContent = `${i+1} / ${N}`;
   $("#qFill").style.width = `${((i+1)/N)*100}%`;
   document.querySelector(".track").setAttribute("aria-valuenow", i+1);
   $("#qText").textContent = s.txt;
 
-  $("#optionsList").innerHTML = s.opts.map((o, k) => `
-    <button class="opt${a && a.r === k ? " sel" : ""}" role="radio" aria-checked="${a && a.r === k}" data-k="${k}">
-      <span class="tick">${a && a.r === k ? "✓" : String.fromCharCode(65+k)}</span>
-      <span>${o.t}</span>
-    </button>`).join("");
-  $("#optionsList").querySelectorAll(".opt").forEach(b =>
-    b.addEventListener("click", () => selectReaction(+b.dataset.k)));
+  $("#evalRows").innerHTML = s.emos.map(id => {
+    const e = EMOTIONS.find(x => x.id === id);
+    return `<div class="eval-row${a[id] != null ? " ok" : ""}" data-emo="${id}">
+      <span class="eval-id"><img src="${ILLUS[id]}" alt=""><span class="nm">${e.court}</span></span>
+      <span class="eval-scale" role="radiogroup" aria-label="${e.court} : de 0 à 4">
+        ${[0,1,2,3,4].map(v => `<button class="seg${a[id] === v ? " sel" : ""}" data-v="${v}" role="radio" aria-checked="${a[id] === v}" aria-label="${e.court} : ${INTENSITES[v][1]}">${v}</button>`).join("")}
+      </span>
+    </div>`;
+  }).join("");
+  $("#evalRows").querySelectorAll(".eval-row").forEach(row =>
+    row.querySelectorAll(".seg").forEach(b =>
+      b.addEventListener("click", () => noter(row.dataset.emo, +b.dataset.v))));
 
-  $("#intScale").innerHTML = INTENSITES.map(([n, l], k) => `
-    <button class="int-btn${a && a.k === k ? " sel" : ""}" role="radio" aria-checked="${a && a.k === k}" data-k="${k}">
-      <span class="n">${n}</span><span class="l">${l}</span>
-    </button>`).join("");
-  $("#intScale").querySelectorAll(".int-btn").forEach(b =>
-    b.addEventListener("click", () => selectIntensity(+b.dataset.k)));
-
-  $("#intensityBlock").classList.toggle("on", !!(a && a.r != null));
   $("#btnPrev").innerHTML = i === 0
     ? '<span class="ico" style="order:-1" aria-hidden="true">←</span> Les émotions'
     : '<span class="ico" style="order:-1" aria-hidden="true">←</span> Précédent';
@@ -1489,27 +1338,30 @@ function renderQuestion(){
   updateNav();
 }
 
-function selectReaction(k){
-  const a = state.answers[state.i] || (state.answers[state.i] = { r:null, k:null });
-  a.r = k;
-  const wasHidden = !$("#intensityBlock").classList.contains("on");
-  renderQuestion();
-  if(wasHidden && !prefersReduced){
-    setTimeout(() => $("#intensityBlock").scrollIntoView({ behavior:"smooth", block:"nearest" }), 120);
-  }
+function noter(id, v){
+  const a = state.answers[state.i] || (state.answers[state.i] = {});
+  a[id] = v;
+  const row = $("#evalRows").querySelector(`.eval-row[data-emo="${id}"]`);
+  row.classList.add("ok");
+  row.querySelectorAll(".seg").forEach(b => {
+    const sel = +b.dataset.v === v;
+    b.classList.toggle("sel", sel);
+    b.setAttribute("aria-checked", sel);
+  });
+  updateNav();
 }
-function selectIntensity(k){
-  const a = state.answers[state.i] || (state.answers[state.i] = { r:null, k:null });
-  a.k = k;
+function toutAZero(){
+  const s = SITUATIONS[state.i];
+  const a = state.answers[state.i] || (state.answers[state.i] = {});
+  s.emos.forEach(id => { a[id] = 0; });
   renderQuestion();
 }
 function updateNav(){
-  const a = state.answers[state.i];
-  const ok = a && a.r != null && a.k != null;
+  const s = SITUATIONS[state.i], a = state.answers[state.i] || {};
+  const fait = s.emos.filter(id => a[id] != null).length;
+  const ok = fait === s.emos.length;
   $("#btnNext").disabled = !ok;
-  $("#nextHint").textContent = ok ? "" :
-    (!a || a.r == null ? "Choisis d’abord la réaction qui te ressemble le plus."
-                       : "Indique aussi à quel point la situation te toucherait (0 à 4).");
+  $("#nextHint").textContent = ok ? "" : `Note chaque émotion pour continuer (${fait}/${s.emos.length}).`;
 }
 function gotoQuestion(idx){
   const card = $("#qCard");
@@ -1523,22 +1375,18 @@ function gotoQuestion(idx){
 }
 
 /* ————— Calcul des notes —————
-   Contribution d’une situation = points de la réaction choisie × (intensité ÷ 4).
-   Note finale = (total obtenu ÷ maximum théorique de l’émotion) × 10, arrondie à 1 décimale. */
+   Chaque situation fait noter ses émotions plausibles de 0 à 4.
+   Note finale d’une émotion = (somme de ses crans ÷ maximum théorique, soit 4 × nombre
+   de situations qui l’évaluent) × 10, arrondie à 1 décimale. */
 function computeScores(answers){
   const totaux = {}, maxima = {};
   EMOTIONS.forEach(e => { totaux[e.id] = 0; maxima[e.id] = 0; });
   SITUATIONS.forEach((s, i) => {
-    EMOTIONS.forEach(e => {
-      let m = 0;
-      s.opts.forEach(o => { m = Math.max(m, o.pts[e.id] || 0); });
-      maxima[e.id] += m;
+    const a = answers[i] || {};
+    s.emos.forEach(id => {
+      maxima[id] += 4;
+      totaux[id] += a[id] || 0;
     });
-    const a = answers[i];
-    if(!a || a.r == null) return;
-    const coef = (a.k == null ? 0 : a.k) / 4;
-    const pts = s.opts[a.r].pts;
-    for(const id in pts) totaux[id] += pts[id] * coef;
   });
   const notes = {};
   EMOTIONS.forEach(e => {
@@ -2241,26 +2089,21 @@ async function validerCle(){
 
 /* ————— Auto-vérification (console) ————— */
 function runSelfTests(){
-  const idxNeutre = s => s.opts.findIndex(o => Object.keys(o.pts).length === 0);
-  const zeros = computeScores(SITUATIONS.map(s => ({ r: idxNeutre(s), k: 0 })));
+  const zeros = computeScores(SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, 0]))));
   const zeroOK = EMOTIONS.every(e => zeros[e.id] === 0);
   const maxKO = [];
   EMOTIONS.forEach(e => {
-    const rep = SITUATIONS.map(s => {
-      let best = 0, bi = idxNeutre(s);
-      s.opts.forEach((o, k) => { const p = o.pts[e.id] || 0; if(p > best){ best = p; bi = k; } });
-      return { r: bi, k: 4 };
-    });
+    const rep = SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, id === e.id ? 4 : 0])));
     if(computeScores(rep)[e.id] !== 10) maxKO.push(e.id);
   });
   const couverture = {};
   EMOTIONS.forEach(e => {
-    couverture[e.id] = SITUATIONS.filter(s => s.opts.some(o => (o.pts[e.id] || 0) > 0)).length;
+    couverture[e.id] = SITUATIONS.filter(s => s.emos.includes(e.id)).length;
   });
   const covOK = Object.values(couverture).every(c => c >= 5);
-  console.info(`[Boussole émotionnelle] Auto-vérification — tout neutre à 0 → 0/10 partout : ${zeroOK ? "✓" : "✗"} · ` +
-    `réaction max + intensité 4 → 10/10 : ${maxKO.length === 0 ? "✓" : "✗ " + maxKO.join(",")} · ` +
-    `chaque émotion mesurée par ≥ 5 situations : ${covOK ? "✓" : "✗"}`, couverture);
+  console.info(`[Boussole émotionnelle] Auto-vérification — tout à 0 → 0/10 partout : ${zeroOK ? "✓" : "✗"} · ` +
+    `tout à 4 → 10/10 : ${maxKO.length === 0 ? "✓" : "✗ " + maxKO.join(",")} · ` +
+    `chaque émotion évaluée par ≥ 5 situations : ${covOK ? "✓" : "✗"}`, couverture);
   return { zeroOK, maxOK: maxKO.length === 0, covOK, couverture };
 }
 
@@ -2276,6 +2119,7 @@ $("#navHome").addEventListener("click", () => showView("v-accueil"));
 $("#btnStart").addEventListener("click", () => showView("v-emotions"));
 $("#btnStart2").addEventListener("click", () => showView("v-emotions"));
 $("#btnToTest").addEventListener("click", () => { renderQuestion(); showView("v-test"); });
+$("#btnRien").addEventListener("click", toutAZero);
 $("#btnPrev").addEventListener("click", () => {
   if(state.i === 0) showView("v-emotions");
   else gotoQuestion(state.i - 1);

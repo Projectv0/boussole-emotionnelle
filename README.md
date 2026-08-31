@@ -6,7 +6,7 @@
 
 ## Ce que c'est
 
-- 24 mises en situation concrètes (travail, famille, amitié, argent, imprévus…) : tu choisis la réaction qui te ressemble, puis l'intensité ressentie (0 à 4).
+- 24 mises en situation concrètes (travail, famille, amitié, argent, imprévus…) : pour chacune, tu notes sur un spectre de 0 à 4 l'intensité de ce qu'elle éveillerait en toi, émotion par émotion.
 - 14 émotions mesurées : joie, tristesse, colère, peur, surprise, dégoût, amour/tendresse, anxiété, honte, culpabilité, jalousie/envie, fierté, gratitude, sérénité.
 - Résultats : radar, classement, analyse par émotion selon ta note, synthèse croisée — et une carte à partager (format post ou story).
 
