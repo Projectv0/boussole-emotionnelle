@@ -434,6 +434,59 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .carte-actions{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:1rem; }
 .carte-hint{ font-size:.76rem; color:var(--faint); margin-top:.8rem; padding:0 .4rem; }
 
+/* ————— Offre du dossier d'analyse ————— */
+.vente h3{ font-size:1.55rem; margin-bottom:.6rem; }
+.vente-grid{ display:grid; grid-template-columns:1fr; gap:1.6rem; }
+@media (min-width:880px){ .vente-grid{ grid-template-columns:1.6fr 1fr; align-items:center; } }
+.vente-intro{ color:#4A4453; font-size:.96rem; }
+.vente-liste{ list-style:none; margin:1.1rem 0; display:flex; flex-direction:column; gap:.55rem; }
+.vente-liste li{ font-size:.92rem; color:#4A4453; padding-left:.1rem; }
+.vente-note{ font-size:.8rem; color:var(--muted); border-left:2px solid var(--hairline-strong); padding-left:.8rem; }
+.vente-cta{
+  text-align:center; display:flex; flex-direction:column; gap:.7rem; align-items:center;
+  background:rgba(255,255,255,.55); border:1px solid var(--hairline);
+  border-radius:1.4rem; padding:1.8rem 1.4rem;
+}
+.vente-prix{ font-family:var(--serif); font-weight:620; font-size:2.6rem; line-height:1; color:var(--sage-deep); }
+.vente-prix-note{ font-size:.72rem; font-weight:600; color:var(--faint); margin-bottom:.5rem; }
+.cle-input{
+  width:100%; padding:.85rem 1rem; border-radius:1rem; border:1.5px solid var(--hairline-strong);
+  font-family:inherit; font-size:.95rem; text-align:center; letter-spacing:.06em;
+  background:rgba(255,255,255,.8); color:var(--ink); margin:.4rem 0 1rem;
+}
+.cle-input:focus{ outline:2px solid var(--sage); outline-offset:2px; }
+
+/* ————— Vue dossier ————— */
+.rapport{ max-width:46rem; margin:0 auto; display:flex; flex-direction:column; gap:1rem; }
+.rap-bloc{
+  background:var(--card); border:1px solid var(--hairline); border-radius:1.5rem;
+  padding:1.9rem 2rem; box-shadow:var(--shadow-tiny);
+}
+.rap-bloc h3{ font-size:1.35rem; margin-bottom:.7rem; }
+.rap-bloc h4{ font-family:var(--sans); font-size:.72rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--sage-deep); margin:1.2rem 0 .4rem; }
+.rap-bloc p, .rap-bloc li{ font-size:.94rem; color:#4A4453; }
+.rap-bloc ol{ padding-left:1.2rem; display:flex; flex-direction:column; gap:.5rem; }
+.rap-entete{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+.rap-entete .emo-glyph{ width:3rem; height:3rem; border-radius:1rem; }
+.rap-entete .titres{ flex:1; min-width:10rem; }
+.rap-entete .note{ font-family:var(--serif); font-weight:620; font-size:1.7rem; font-variant-numeric:tabular-nums; }
+.rap-couv{ text-align:center; padding:2.6rem 2rem; }
+.rap-couv h3{ font-family:var(--serif); font-size:2rem; }
+.rap-couv .date{ color:var(--faint); font-size:.85rem; margin-top:.4rem; }
+.rap-semaine{ border-left:3px solid var(--sage); padding-left:1rem; margin-top:1rem; }
+.rap-semaine b{ color:var(--ink); }
+
+/* ————— Impression / export PDF ————— */
+@media print{
+  .floatnav, .aura, footer, .no-print, body::after, .carte-overlay{ display:none !important; }
+  body{ background:#fff !important; font-size:12.5px; }
+  main{ max-width:none; padding:0; }
+  .view{ padding-top:0; }
+  .rapport{ max-width:none; gap:.6rem; }
+  .rap-bloc{ box-shadow:none; border-color:#ddd; break-inside:avoid; padding:1.2rem 1.4rem; }
+  .rap-couv{ break-after:page; }
+}
+
 footer{
   position:relative; z-index:1;
   text-align:center; padding:2.6rem 1.5rem 3rem; color:var(--faint); font-size:.8rem;
@@ -603,6 +656,21 @@ footer p + p{ margin-top:.3rem; }
     </div>
   </section>
 
+  <!-- ——————— DOSSIER D'ANALYSE (contenu débloqué) ——————— -->
+  <section id="v-rapport" class="view" aria-label="Dossier d’analyse complet">
+    <div class="section-head no-print">
+      <div class="eyebrow">Ton dossier complet</div>
+      <h2>Dossier d’analyse personnalisé</h2>
+      <p>Lis-le tranquillement ici — et télécharge-le en PDF : c’est ta copie, à garder et à relire.</p>
+      <div style="display:flex; gap:.9rem; flex-wrap:wrap; margin-top:1.4rem">
+        <button class="btn btn-primary" id="btnRapportPdf">Télécharger en PDF <span class="ico" aria-hidden="true">⬇</span></button>
+        <button class="btn btn-ghost" id="btnRapportRetour"><span class="ico" style="order:-1" aria-hidden="true">←</span> Retour aux résultats</button>
+      </div>
+      <p style="font-size:.78rem; color:var(--faint); margin-top:.8rem">Dans la fenêtre d’impression qui s’ouvre, choisis « Enregistrer au format PDF ».</p>
+    </div>
+    <div class="rapport" id="rapportContenu"></div>
+  </section>
+
   <!-- ——————— RÉSULTATS ——————— -->
   <section id="v-resultats" class="view" aria-label="Tes résultats">
     <div class="section-head">
@@ -649,6 +717,42 @@ footer p + p{ margin-top:.3rem; }
         <div class="res-kicker">Ce que tes résultats racontent</div>
         <div id="syntheseWrap"></div>
       </div></div></div>
+
+      <div class="res-card res-span-12" id="venteBox" hidden><div class="shell"><div class="core vente">
+        <div class="res-kicker">Pour aller plus loin</div>
+        <div class="vente-grid">
+          <div>
+            <h3>Ton dossier d’analyse complet</h3>
+            <p class="vente-intro">Tes résultats méritent mieux qu’un simple survol. Le dossier reprend ton profil et l’explore en profondeur, fiche par fiche — à lire ici et à garder en PDF.</p>
+            <ul class="vente-liste">
+              <li>🗂️ <b>14 fiches détaillées</b> — comment chaque émotion fonctionne, comment elle se manifeste chez toi selon ta note, et le signal à surveiller</li>
+              <li>🌱 <b>42 pratiques concrètes</b> — trois exercices gradués par émotion, pour réguler les envahissantes et cultiver les ressources</li>
+              <li>🔀 <b>Tes croisements décodés</b> — ce que racontent tes émotions quand on les lit ensemble</li>
+              <li>🗓️ <b>Ton plan de 30 jours</b> — quatre semaines personnalisées selon ton profil, pas à pas</li>
+            </ul>
+            <p class="vente-note">Comme le test, le dossier est généré <b>dans ton navigateur</b> : tes réponses ne sont jamais envoyées. Après l’achat, tu reçois une clé par e-mail — elle débloque le dossier et son téléchargement en PDF.</p>
+          </div>
+          <div class="vente-cta">
+            <div class="vente-prix" id="ventePrix">7 €</div>
+            <div class="vente-prix-note">paiement unique · TVA incluse</div>
+            <a class="btn btn-primary" id="btnAcheter" target="_blank" rel="noopener">Obtenir mon dossier <span class="ico" aria-hidden="true">→</span></a>
+            <button class="btn btn-ghost" id="btnDejaCle">J’ai déjà ma clé <span class="ico" aria-hidden="true">🔑</span></button>
+          </div>
+        </div>
+      </div></div></div>
+    </div>
+
+    <div class="carte-overlay" id="rapportOverlay" hidden>
+      <div class="carte-box">
+        <h3 style="font-size:1.3rem; margin:.4rem 0 .6rem">Débloquer ton dossier</h3>
+        <p class="carte-hint" style="margin-top:0">Colle ici la clé de licence reçue par e-mail juste après ton achat.</p>
+        <input class="cle-input" id="cleLicence" placeholder="XXXXXXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
+        <div class="carte-actions">
+          <button class="btn btn-primary" id="btnValiderCle">Débloquer <span class="ico" aria-hidden="true">🔓</span></button>
+          <button class="btn btn-ghost" id="btnFermerCle">Fermer <span class="ico" aria-hidden="true">✕</span></button>
+        </div>
+        <p class="copy-feedback" id="cleStatut" role="status"></p>
+      </div>
     </div>
 
     <div class="callout callout-heart" style="margin-top:1.1rem">
@@ -871,6 +975,123 @@ const EMOTIONS = [
   }
 }
 ];
+
+/* ————— Contenu du dossier d'analyse complet (offre payante) —————
+   Par émotion : fonctionnement, manifestations, trois pratiques concrètes, signal d'alerte. */
+const DOSSIER = {
+joie:{
+  meca:"La joie est le signal « besoin nourri » de ton cerveau : elle marque ce qui te fait du bien pour t’inviter à le refaire. Elle a une particularité précieuse : elle grandit quand on la savoure et quand on la partage, et s’étiole quand on l’enjambe pour passer à la tâche suivante.",
+  corps:"Sourire spontané, énergie qui remonte, envie de contact et de mouvement, impression que le temps passe plus vite. Côté pensées : légèreté, optimisme, idées qui circulent mieux.",
+  exo:["Savourer 20 secondes : quand un bon moment arrive, arrête-toi vraiment — sens ton corps, ton souffle, ce qui se passe — avant de reprendre le fil.",
+       "La collection du soir : note chaque soir un moment agréable de la journée, et surtout ce que TU as fait pour qu’il arrive.",
+       "La joie racontée : partage une bonne nouvelle ou un bon souvenir avec quelqu’un dans la journée — une joie racontée se vit deux fois."],
+  alerte:"Si plus rien ne te fait vraiment plaisir depuis plusieurs semaines, ce n’est pas de la paresse : parles-en à un professionnel de santé, cela se travaille très bien."
+},
+tristesse:{
+  meca:"La tristesse ralentit tout le système pour te laisser digérer une perte — une personne, un projet, une image de toi. Elle envoie aussi un signal aux autres : « j’ai besoin de douceur ». La refouler la prolonge ; l’accueillir par doses la laisse faire son travail.",
+  corps:"Gorge serrée, larmes proches, énergie en berne, envie de te replier, ruminations tournées vers le passé. Le corps se voûte, le monde paraît plus terne.",
+  exo:["Le rendez-vous des larmes : accorde-lui dix minutes d’accueil véritable (musique, écriture, souvenirs), puis referme la parenthèse par une action douce et concrète.",
+       "Écrire la perte en trois phrases : ce que j’ai perdu, ce que cela m’apportait, ce que j’en garde pour la suite.",
+       "Rester relié·e : un contact léger par jour (un message, un café), même sans envie — le lien est son meilleur remède."],
+  alerte:"Une tristesse quasi quotidienne depuis plus de deux semaines, qui touche sommeil, appétit ou plaisir : c’est le bon moment pour consulter, sans attendre que « ça passe »."
+},
+colere:{
+  meca:"La colère mobilise ton énergie quand un obstacle, une injustice ou un manque de respect se dresse devant quelque chose qui compte. Excellente messagère, mauvais carburant : ponctuelle, elle protège tes limites ; permanente, elle épuise et abîme les liens.",
+  corps:"Chaleur qui monte, mâchoires et poings qui se serrent, voix qui prend du volume, puis ruminations de revanche ou de justification longtemps après.",
+  exo:["La règle des 90 secondes : quand elle monte, nomme-la (« je sens la colère »), expire longuement, et laisse passer la première vague avant de répondre.",
+       "La phrase en trois temps : « Quand [fait précis], je ressens…, et j’ai besoin de… » — exprimer le besoin désarme, le reproche escalade.",
+       "La décharge propre : les jours où elle a chauffé, offre-lui une sortie physique — marche rapide, sport, rangement énergique."],
+  alerte:"Si elle explose régulièrement, te fait dire ou faire des choses que tu regrettes, un accompagnement dédié change vraiment la donne — c’est un travail concret et efficace."
+},
+peur:{
+  meca:"La peur est ton alarme de survie : elle détecte le danger avant même que tu aies le temps de réfléchir, et prépare le corps à fuir, te figer ou faire face. Elle se recalibre par l’expérience vécue — jamais par l’évitement, qui la conforte dans l’idée que le danger était réel.",
+  corps:"Cœur qui s’accélère, souffle court, ventre noué, jambes fébriles, hypervigilance. Côté comportements : détours, reports, excuses pour ne pas y aller.",
+  exo:["La respiration 4-6 : inspire sur 4 secondes, expire sur 6, pendant trois minutes — l’expiration longue est l’interrupteur de l’alarme.",
+       "L’échelle des petits pas : décompose ce qui t’effraie en cinq marches, de la plus facile à la plus difficile, et franchis la première cette semaine.",
+       "Le fact-check : écris la peur en une phrase, puis liste ce qui s’est réellement passé les dernières fois — les faits recalibrent l’alarme."],
+  alerte:"Quand les évitements se multiplient et rétrécissent ta vie (lieux, personnes, projets), une thérapie brève est remarquablement efficace sur les peurs."
+},
+surprise:{
+  meca:"La surprise remet ton attention à zéro quand la réalité contredit ce que tu avais prévu. Elle ne dure que quelques secondes : juste le temps d’analyser la nouveauté, avant de passer le relais à une autre émotion — joie, peur, colère… C’est celle-là qu’il faut écouter.",
+  corps:"Sursaut, sourcils levés, souffle suspendu, bref arrêt sur image. Parfois un temps de sidération où les mots manquent.",
+  exo:["Atterrir d’abord : après un imprévu, pose trois respirations avant toute décision ou réponse.",
+       "Nommer la suite : demande-toi « et maintenant, quelle émotion prend le relais ? » — c’est elle qui porte le vrai message.",
+       "Muscler l’imprévu : glisse chaque semaine une petite nouveauté choisie (un trajet, un plat, une activité) pour apprivoiser l’inattendu en terrain ami."],
+  alerte:"Sursauter à tout, rester en alerte longtemps après un événement marquant : c’est un signal qui mérite l’oreille d’un professionnel."
+},
+degout:{
+  meca:"Le dégoût te protège de ce qui pourrait te « contaminer » : d’abord les aliments douteux, puis — chez l’humain — les comportements qui heurtent tes valeurs. C’est lui qui te fait reculer devant ce qui te semble malsain, physiquement ou moralement.",
+  corps:"Haut-le-cœur, grimace, mouvement de recul, besoin de t’éloigner ou de te « laver » de ce que tu viens de voir ou d’entendre.",
+  exo:["Trier le signal : devant un rejet, demande-toi « danger réel, ou simple différence ? » — le dégoût confond parfois les deux.",
+       "Dire la valeur : derrière un dégoût moral se cache une valeur touchée ; nomme-la (« je tiens à l’honnêteté ») et exprime-la calmement plutôt que de rejeter la personne en bloc.",
+       "L’approche douce : si un dégoût te handicape au quotidien, approche-le par toutes petites étapes répétées — il se désensibilise étonnamment bien."],
+  alerte:"S’il restreint nettement ton alimentation, tes soins ou tes relations, un professionnel peut t’aider à le désensibiliser pas à pas."
+},
+amour:{
+  meca:"L’amour et la tendresse relèvent du système d’attachement : ce besoin fondamental de proximité, de soin donné et reçu, de sécurité affective. Contrairement au cliché, il s’entretient moins par les grandes déclarations que par la répétition de petits gestes fiables.",
+  corps:"Chaleur dans la poitrine, détente en présence de l’autre, envie de proximité, réflexe de protéger et de prendre soin.",
+  exo:["L’attention du jour : un geste concret quotidien pour quelqu’un qui compte — un message précis, un service, dix minutes d’écoute pleine.",
+       "Le dire avec des mots : une fois par semaine, exprime explicitement ce que tu apprécies chez un proche — ce qui te paraît évident ne l’est pas pour l’autre.",
+       "Recevoir aussi : entraîne-toi à accueillir un compliment ou une aide par un simple « merci », sans minimiser ni rendre la pareille immédiatement."],
+  alerte:"Aimer en t’oubliant complètement — tes besoins toujours derrière ceux des autres — finit par vider le réservoir : c’est un déséquilibre qui se travaille très bien."
+},
+anxiete:{
+  meca:"L’anxiété est un simulateur d’avenir en surrégime : elle anticipe les problèmes possibles pour t’aider à te préparer. Utile quand elle débouche sur une action concrète, elle devient coûteuse quand elle tourne en boucle sans rien déclencher — le corps paie alors la facture de dangers qui n’arrivent jamais.",
+  corps:"Tension diffuse, ventre noué, mâchoires serrées, sommeil plus léger, besoin de vérifier et re-vérifier, scénarios catastrophe en boucle, difficulté à savourer le présent.",
+  exo:["Le rendez-vous du souci : dix minutes par jour, à heure fixe, pour écrire toutes tes inquiétudes ; hors de ce créneau, note-les et reporte-les au lendemain.",
+       "Le tri en deux colonnes : « j’y peux quelque chose » → décide la première petite action ; « je n’y peux rien » → reviens au présent par les cinq sens.",
+       "La respiration 4-6 en entretien : cinq minutes par jour, même les jours calmes — un système entraîné redescend beaucoup plus vite."],
+  alerte:"Si elle grignote ton sommeil, ton travail ou tes liens depuis des mois, consulte : les prises en charge de l’anxiété comptent parmi les plus efficaces qui soient."
+},
+honte:{
+  meca:"La honte est la gardienne de ton appartenance au groupe : elle surveille le regard des autres de peur d’être rejeté·e. Sa particularité : elle se nourrit du secret et fond dans le partage choisi — la raconter à la bonne personne lui retire presque tout son pouvoir.",
+  corps:"Joues qui chauffent, regard qui fuit, envie de disparaître ou de te faire tout·e petit·e, évitement des situations où tu serais exposé·e (parler, créer, oser).",
+  exo:["La confier : raconte un moment de honte à UNE personne sûre et bienveillante — et observe ce qui change dans ton corps une fois la chose dite.",
+       "Réécrire la voix : note la phrase exacte de la honte (« ils vont me trouver… »), puis réponds-lui par écrit comme tu répondrais à un ami cher.",
+       "L’imperfection volontaire : fais exprès une petite imperfection publique — une question « bête », un avis assumé — et note la réaction réelle des autres, presque toujours plus douce que prévu."],
+  alerte:"Une honte de fond qui te suit depuis longtemps — le sentiment diffus d’être « défaillant·e » — se travaille très bien accompagné·e : c’est même l’un des grands classiques de la thérapie."
+},
+culpabilite:{
+  meca:"La culpabilité est le contrôle qualité de tes actes : elle compare ce que tu as fait à tes valeurs et te pousse à réparer. Ponctuelle, elle entretient tes relations ; en réflexe permanent, elle te fait porter des fautes qui ne t’appartiennent pas.",
+  corps:"Pincement au ventre, ruminations en « j’aurais dû », excuses répétées, difficulté à dire non, tendance à te sentir responsable du bien-être de tout le monde.",
+  exo:["Le test des trois questions : ai-je réellement causé du tort ? était-ce volontaire ? qu’est-ce qui dépendait vraiment de moi ?",
+       "Réparer OU classer : si le tort est réel, choisis une réparation concrète ; sinon, écris une phrase de clôture — « ce n’était pas de mon ressort » — et classe le dossier.",
+       "Le non d’entraînement : décline une petite demande cette semaine, avec une seule phrase d’explication, pas plus."],
+  alerte:"Se sentir coupable de tout, tout le temps, épuise en silence — un regard extérieur (proche de confiance ou professionnel) aide beaucoup à recalibrer la juste part."
+},
+jalousie:{
+  meca:"La jalousie et l’envie forment ton radar de comparaison sociale : elles pointent ce que tu désires vraiment et ce que tu crains de perdre. L’information est précieuse ; c’est la boucle de comparaison permanente qui empoisonne.",
+  corps:"Pincement à l’annonce des réussites des autres, ruminations comparatives, scroll compulsif, petite amertume qui colle à la journée.",
+  exo:["Traduire le pincement : à chaque pointe d’envie, écris « ce que ça dit de MON désir : … », puis choisis un premier pas concret vers ce désir.",
+       "Le régime de comparaison : sept jours en coupant la source qui pique le plus — un compte, une appli, une conversation.",
+       "L’inventaire à toi : chaque soir, note une chose de TA vie que tu ne voudrais échanger contre rien."],
+  alerte:"Quand la jalousie empoisonne une relation précise — surveillance, angoisse de perdre l’autre — mieux vaut en parler à deux, ou accompagné·e, que la laisser gonfler."
+},
+fierte:{
+  meca:"La fierté récompense l’effort aligné avec tes valeurs : c’est elle qui transforme les réussites en confiance durable. Mais elle a besoin d’être ressentie pour nourrir — enchaîner les objectifs sans jamais savourer, c’est verser de l’eau dans un seau percé.",
+  corps:"Épaules qui se redressent, chaleur, sourire intérieur, envie de raconter — ou au contraire gêne à recevoir des compliments si elle est bridée.",
+  exo:["La minute de crédit : après chaque tâche terminée, trente secondes pour reconnaître TA part — « c’est moi qui ai fait ça ».",
+       "Le dossier victoires : une note où s’empilent réussites, retours positifs et caps franchis, à relire les jours de doute.",
+       "La fierté partagée : célèbre activement la réussite de quelqu’un d’autre cette semaine — la fierté se multiplie quand elle circule."],
+  alerte:"Si ta valeur ne tient que par la performance — un échec et tout s’effondre — c’est un beau sujet à déposer quelque part, avant que la mécanique ne s’use."
+},
+gratitude:{
+  meca:"La gratitude oriente ton attention vers ce qui t’est donné plutôt que vers ce qui manque. C’est l’un des leviers du moral les mieux documentés : pratiquée régulièrement, elle change réellement la couleur par défaut des journées.",
+  corps:"Chaleur diffuse, détente, envie de rendre et de remercier, sourire intérieur en repensant à ce qu’on a reçu.",
+  exo:["Les trois du soir : chaque soir, trois choses agréables de la journée — et pourquoi elles sont arrivées.",
+       "Le merci précis : une fois par semaine, remercie quelqu’un en nommant exactement ce qu’il ou elle a fait, et l’effet que ça t’a fait.",
+       "La gratitude d’obstacle : trouve UNE chose qu’une difficulté récente t’a apprise — sans nier la difficulté."],
+  alerte:"Un seul piège : la gratitude-écran, celle qui interdit de se plaindre. Être reconnaissant·e ET avoir des besoins, des colères, des limites — tout cela est parfaitement compatible."
+},
+serenite:{
+  meca:"La sérénité est l’état du système apaisé : sécurité, présence, récupération. Ce n’est pas un don réservé à quelques-uns mais une capacité qui s’entraîne — chaque moment de calme volontaire rend le suivant plus accessible.",
+  corps:"Épaules basses, souffle ample et lent, esprit disponible, temps qui semble s’étirer, sommeil plus profond.",
+  exo:["Deux minutes d’ancrage : chaque jour, pose-toi et remarque cinq choses — sons, appuis du corps, souffle — sans rien changer.",
+       "Le sas de transition : trois respirations conscientes entre deux activités — en voiture, devant une porte, avant une réunion.",
+       "Le rendez-vous calme : bloque dans ton agenda un vrai moment ressourçant par semaine, non négociable, comme un rendez-vous important — parce que c’en est un."],
+  alerte:"Si le calme est devenu impossible même au repos, c’est le signe d’un système en surchauffe : douceur avec toi-même, et avis professionnel si cela dure."
+}
+};
 /* ————— Les 24 mises en situation —————
    Chaque réaction attribue de 0 à 3 points à une ou plusieurs émotions (grille cachée).
    Chaque situation propose une réaction neutre (aucun point) pour que les émotions
@@ -1074,6 +1295,14 @@ const SITUATIONS = [
    apparaître le bouton « Soutenir ce projet » sur la page de résultats. */
 const LIEN_SOUTIEN = "https://buymeacoffee.com/odem";
 const URL_SITE = "projectv0.github.io/boussole-emotionnelle";
+/* Dossier d'analyse payant : colle ici le lien d'achat Lemon Squeezy pour afficher
+   l'offre en fin de test. `produitId` (optionnel) restreint les clés à ton produit. */
+const RAPPORT = {
+  prix: "7 €",
+  lienAchat: "",
+  produitId: ""
+};
+const APERCU = new URLSearchParams(location.search).has("apercu");
 
 /* ————— Outils ————— */
 const $ = sel => document.querySelector(sel);
@@ -1332,24 +1561,11 @@ function buildRadar(notes){
   </svg>`;
 }
 
-/* ————— Synthèse finale (5 à 8 phrases, générée à partir des notes) ————— */
-function buildSynthese(notes, tri, mAgr, mDes, basses){
+/* ————— Croisements entre émotions (partagés par la synthèse et le dossier) ————— */
+function listeCombos(notes){
   const HI = 5.5, LO = 2;
-  const nm = e => e.art + e.nom.toLowerCase();
-  const ph = [];
-
-  const [t1, t2, t3] = tri;
-  ph.push(`Aujourd’hui, ton paysage intérieur est surtout coloré par ${nm(t1)} (${fmt(notes[t1.id])}/10), ${nm(t2)} (${fmt(notes[t2.id])}/10) et ${nm(t3)} (${fmt(notes[t3.id])}/10).`);
-
-  const diff = mAgr - mDes;
-  ph.push(diff >= 1.5
-    ? `Côté équilibre, les émotions agréables (${fmt(mAgr)}/10 en moyenne) prennent nettement le dessus sur les désagréables (${fmt(mDes)}/10) — ton quotidien semble te nourrir plus qu’il ne te coûte.`
-    : diff <= -1.5
-    ? `Côté équilibre, les émotions désagréables (${fmt(mDes)}/10 en moyenne) pèsent en ce moment plus lourd que les agréables (${fmt(mAgr)}/10) — non pas que tout aille mal, mais ton système émotionnel travaille beaucoup, et cela mérite de la douceur envers toi-même.`
-    : `Côté équilibre, émotions agréables (${fmt(mAgr)}/10) et désagréables (${fmt(mDes)}/10) se répondent presque à parts égales : une vie intérieure contrastée, où les deux registres cohabitent.`);
-
   const n = id => notes[id];
-  const combos = [
+  return [
     { ok: n("anxiete") >= HI && n("colere") >= HI,
       t:"Ton anxiété et ta colère montent souvent ensemble : ton système d’alarme anticipe le danger et se tient prêt à se défendre — repérer laquelle des deux arrive en premier t’aidera à choisir ta réponse plutôt que de la subir." },
     { ok: n("honte") >= HI && n("culpabilite") >= HI,
@@ -1372,9 +1588,34 @@ function buildSynthese(notes, tri, mAgr, mDes, basses){
       t:"Ta sérénité élevée, adossée à une anxiété et une colère très basses, dessine un fond de calme rare : une ressource précieuse, pour toi comme pour ton entourage." },
     { ok: n("joie") <= LO && n("serenite") <= LO,
       t:"Les émotions agréables semblent en veilleuse en ce moment ; ce n’est ni une faute ni une fatalité — remettre dans la semaine de toutes petites sources de plaisir, même minuscules, suffit souvent à relancer doucement la machine." },
+    { ok: n("amour") >= HI && n("peur") >= HI,
+      t:"Un attachement fort accompagné d’une peur bien présente : tu tiens profondément aux tiens, et cette importance nourrit la crainte de perdre — nommer cette peur à voix haute la rend souvent bien plus légère." },
+    { ok: n("fierte") >= HI && n("anxiete") >= HI,
+      t:"Fierté et anxiété élevées ensemble racontent souvent une exigence tournée contre soi : beaucoup donner, et craindre que ce ne soit jamais assez — rappelle-toi que le repos fait partie de la performance." },
+    { ok: n("tristesse") >= HI && n("gratitude") >= HI,
+      t:"Ta tristesse cohabite avec une vraie gratitude : tu peux traverser des moments lourds sans perdre de vue ce qui compte — c’est une forme de résilience discrète, précieuse dans les périodes difficiles." },
     { ok: n("surprise") >= HI,
       t:"Tu réagis fort à l’inattendu : une belle vivacité, à condition de te laisser quelques secondes pour atterrir avant de répondre." }
-  ].filter(c => c.ok).slice(0, 3);
+  ].filter(c => c.ok);
+}
+
+/* ————— Synthèse finale (5 à 8 phrases, générée à partir des notes) ————— */
+function buildSynthese(notes, tri, mAgr, mDes, basses){
+  const HI = 5.5, LO = 2;
+  const nm = e => e.art + e.nom.toLowerCase();
+  const ph = [];
+
+  const [t1, t2, t3] = tri;
+  ph.push(`Aujourd’hui, ton paysage intérieur est surtout coloré par ${nm(t1)} (${fmt(notes[t1.id])}/10), ${nm(t2)} (${fmt(notes[t2.id])}/10) et ${nm(t3)} (${fmt(notes[t3.id])}/10).`);
+
+  const diff = mAgr - mDes;
+  ph.push(diff >= 1.5
+    ? `Côté équilibre, les émotions agréables (${fmt(mAgr)}/10 en moyenne) prennent nettement le dessus sur les désagréables (${fmt(mDes)}/10) — ton quotidien semble te nourrir plus qu’il ne te coûte.`
+    : diff <= -1.5
+    ? `Côté équilibre, les émotions désagréables (${fmt(mDes)}/10 en moyenne) pèsent en ce moment plus lourd que les agréables (${fmt(mAgr)}/10) — non pas que tout aille mal, mais ton système émotionnel travaille beaucoup, et cela mérite de la douceur envers toi-même.`
+    : `Côté équilibre, émotions agréables (${fmt(mAgr)}/10) et désagréables (${fmt(mDes)}/10) se répondent presque à parts égales : une vie intérieure contrastée, où les deux registres cohabitent.`);
+
+  const combos = listeCombos(notes).slice(0, 3);
   if(combos.length === 0){
     combos.push({ t:"Aucune émotion n’écrase les autres : ton profil est nuancé, et tes réactions varient selon les contextes — une forme de flexibilité précieuse." });
   }
@@ -1735,6 +1976,111 @@ async function partagerCarte(){
   }catch(_){ /* partage annulé */ }
 }
 
+/* ————— Dossier d'analyse complet (offre payante) ————— */
+let rapportDebloque = false;
+
+function planTrenteJours(notes){
+  const desTri = DESAGREABLES.map(id => EMOTIONS.find(e => e.id === id)).sort((a, b) => notes[b.id] - notes[a.id]);
+  const agrTri = AGREABLES.map(id => EMOTIONS.find(e => e.id === id)).sort((a, b) => notes[a.id] - notes[b.id]);
+  const cible = notes[desTri[0].id] > 2 ? desTri[0] : null;
+  const ressource = agrTri[0];
+  const exoCible = cible ? DOSSIER[cible.id].exo : null;
+  const exoRes = DOSSIER[ressource.id].exo;
+  return `
+    <div class="rap-semaine"><b>Semaine 1 — Observer et nommer.</b>
+      <p>Chaque jour, une minute de « météo intérieure » : quelle émotion domine, où je la sens dans le corps, quel besoin elle pointe. Note trois lignes le soir — sans juger, juste observer. C’est la fondation de tout le reste.</p></div>
+    ${cible ? `<div class="rap-semaine"><b>Semaine 2 — Apprivoiser ${cible.art}${cible.nom.toLowerCase()} (${fmt(notes[cible.id])}/10).</b>
+      <p>C’est ton émotion désagréable la plus présente. Trois fois cette semaine : « ${exoCible[0]} » Et si l’occasion se présente : « ${exoCible[1]} »</p></div>`
+    : `<div class="rap-semaine"><b>Semaine 2 — Entretenir ton calme.</b>
+      <p>Aucune émotion désagréable ne domine ton profil : profites-en pour renforcer les fondations. Chaque jour, trois minutes de respiration lente (inspire 4 s, expire 6 s), même — surtout — les jours où tout va bien.</p></div>`}
+    <div class="rap-semaine"><b>Semaine 3 — Cultiver ${ressource.art}${ressource.nom.toLowerCase()} (${fmt(notes[ressource.id])}/10).</b>
+      <p>C’est ton émotion agréable la plus discrète : elle a de la place pour grandir. Cette semaine : « ${exoRes[0]} » Puis, si le cœur t’en dit : « ${exoRes[1]} »</p></div>
+    <div class="rap-semaine"><b>Semaine 4 — Ancrer.</b>
+      <p>Choisis les deux pratiques qui t’ont fait le plus de bien ce mois-ci et donne-leur une vraie place dans ton agenda — un moment fixe, comme un rendez-vous. Puis refais le test à J30 : compare tes notes, célèbre ce qui a bougé, et ajuste la suite.</p></div>`;
+}
+
+function renderRapport(notes){
+  const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
+  const date = new Date().toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
+  const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
+  const combos = listeCombos(notes);
+  const fiches = tri.map(e => {
+    const bd = bandeDe(notes[e.id]), b = BANDES[bd], d = DOSSIER[e.id];
+    return `<div class="rap-bloc">
+      <div class="rap-entete">
+        <span class="emo-glyph" style="border-color:${rgba(e.color,.3)}"><img src="${ILLUS[e.id]}" alt=""></span>
+        <div class="titres"><h3 style="margin:0">${e.nom}</h3>
+          <span class="ana-band" style="background:${rgba(b.c,.12)}; color:${b.c}">${b.lbl}</span></div>
+        <span class="note" style="color:${e.color}">${fmt(notes[e.id])}<span style="font-size:.9rem; color:var(--faint)"> /10</span></span>
+      </div>
+      <h4>Chez toi, aujourd’hui</h4><p>${e.bandes[bd]}</p>
+      <h4>Comment elle fonctionne</h4><p>${d.meca}</p>
+      <h4>Comment elle se manifeste</h4><p>${d.corps}</p>
+      <h4>${AGREABLES.includes(e.id) ? "Trois pratiques pour la cultiver" : "Trois pratiques pour l’apprivoiser"}</h4>
+      <ol>${d.exo.map(x => `<li>${x}</li>`).join("")}</ol>
+      <h4>Le signal à surveiller</h4><p>${d.alerte}</p>
+    </div>`;
+  }).join("");
+  $("#rapportContenu").innerHTML = `
+    <div class="rap-bloc rap-couv">
+      <div style="font-size:2rem" aria-hidden="true">🧭</div>
+      <h3>Dossier d’analyse personnalisé</h3>
+      <p class="date">Boussole émotionnelle · établi le ${date}</p>
+      <p style="max-width:30rem; margin:1rem auto 0">Tes émotions dominantes : <b>${tri.slice(0, 3).map(e => e.nom).join(", ")}</b>.
+      Équilibre du moment : émotions agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.</p>
+      <div class="radar-wrap" style="margin-top:1.2rem">${buildRadar(notes)}</div>
+    </div>
+    <div class="rap-bloc">
+      <h3>Comment lire ce dossier</h3>
+      <p>Prends-le comme une promenade, pas comme un bulletin de notes. Chaque fiche décrit une émotion telle qu’elle vit chez toi <i>en ce moment</i> — tes notes bougeront avec les saisons de ta vie. Les pratiques proposées sont des invitations : choisis celles qui te parlent, une ou deux suffisent pour commencer. Et souviens-toi : ce dossier éclaire, il ne diagnostique pas.</p>
+    </div>
+    ${fiches}
+    <div class="rap-bloc">
+      <h3>Tes croisements décodés</h3>
+      ${combos.length ? combos.map(c => `<p style="margin-bottom:.7rem">${c.t}</p>`).join("")
+        : `<p>Aucun croisement marquant : ton profil est nuancé, sans alliance d’émotions qui domine — tes réactions s’ajustent selon les contextes, et c’est une souplesse précieuse.</p>`}
+    </div>
+    <div class="rap-bloc">
+      <h3>Ton plan de 30 jours</h3>
+      <p>Quatre semaines, une intention par semaine — dix minutes par jour suffisent.</p>
+      ${planTrenteJours(notes)}
+    </div>
+    <div class="rap-bloc">
+      <h3>Pour finir</h3>
+      <p>Ce dossier a été généré dans ton navigateur, à partir de tes seules réponses : rien n’a été enregistré ni transmis. Il ne remplace ni un diagnostic ni un accompagnement — si une émotion te déborde ou te fait souffrir durablement, un professionnel de santé (médecin, psychologue) est la bonne porte, et la démarche est courageuse. Prends soin de toi. 💛</p>
+    </div>`;
+}
+function ouvrirRapport(){
+  if(!lastNotes) return;
+  renderRapport(lastNotes);
+  showView("v-rapport");
+}
+async function validerCle(){
+  const cle = $("#cleLicence").value.trim();
+  const st = $("#cleStatut");
+  if(!cle){ st.textContent = "Colle d’abord ta clé de licence."; return; }
+  st.textContent = "Vérification…";
+  try{
+    const r = await fetch("https://api.lemonsqueezy.com/v1/licenses/validate", {
+      method:"POST",
+      headers:{ "Accept":"application/json", "Content-Type":"application/x-www-form-urlencoded" },
+      body:"license_key=" + encodeURIComponent(cle)
+    });
+    const d = await r.json();
+    const bonProduit = !RAPPORT.produitId || String(d.meta && d.meta.product_id) === String(RAPPORT.produitId);
+    if(d.valid && bonProduit){
+      rapportDebloque = true;
+      st.textContent = "";
+      $("#rapportOverlay").hidden = true;
+      ouvrirRapport();
+    }else{
+      st.textContent = "Clé non reconnue. Vérifie l’e-mail reçu juste après ton achat.";
+    }
+  }catch(_){
+    st.textContent = "Vérification impossible ici — ouvre le site officiel du test pour débloquer ton dossier.";
+  }
+}
+
 /* ————— Auto-vérification (console) ————— */
 function runSelfTests(){
   const idxNeutre = s => s.opts.findIndex(o => Object.keys(o.pts).length === 0);
@@ -1781,8 +2127,33 @@ $("#btnNext").addEventListener("click", () => {
   else gotoQuestion(state.i + 1);
 });
 $("#btnCopy").addEventListener("click", copierResultats);
-document.body.appendChild($("#carteOverlay")); /* sort la modale du contexte d'empilement de <main> */
+document.body.appendChild($("#carteOverlay")); /* sort les modales du contexte d'empilement de <main> */
+document.body.appendChild($("#rapportOverlay"));
 $("#btnCarte").addEventListener("click", ouvrirCarte);
+
+/* Offre du dossier d'analyse */
+if(RAPPORT.lienAchat || APERCU){
+  $("#venteBox").hidden = false;
+  $("#ventePrix").textContent = RAPPORT.prix;
+  if(RAPPORT.lienAchat){
+    $("#btnAcheter").href = RAPPORT.lienAchat;
+  }else{
+    $("#btnAcheter").innerHTML = 'Aperçu du dossier <span class="ico" aria-hidden="true">→</span>';
+    $("#btnAcheter").addEventListener("click", e => { e.preventDefault(); ouvrirRapport(); });
+  }
+}
+$("#btnDejaCle").addEventListener("click", () => {
+  if(rapportDebloque || APERCU){ ouvrirRapport(); return; }
+  $("#cleStatut").textContent = "";
+  $("#rapportOverlay").hidden = false;
+  $("#cleLicence").focus();
+});
+$("#btnValiderCle").addEventListener("click", validerCle);
+$("#cleLicence").addEventListener("keydown", e => { if(e.key === "Enter") validerCle(); });
+$("#btnFermerCle").addEventListener("click", () => { $("#rapportOverlay").hidden = true; });
+$("#rapportOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) e.currentTarget.hidden = true; });
+$("#btnRapportPdf").addEventListener("click", () => window.print());
+$("#btnRapportRetour").addEventListener("click", () => showView("v-resultats"));
 $("#btnCarteDl").addEventListener("click", telechargerCarte);
 $("#btnCartePartage").addEventListener("click", partagerCarte);
 $("#btnCarteFermer").addEventListener("click", () => { $("#carteOverlay").hidden = true; });
