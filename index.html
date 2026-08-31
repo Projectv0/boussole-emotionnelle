@@ -730,7 +730,7 @@ footer p + p{ margin-top:.3rem; }
               <li>🔀 <b>Tes croisements décodés</b> — ce que racontent tes émotions quand on les lit ensemble</li>
               <li>🗓️ <b>Ton plan de 30 jours</b> — quatre semaines personnalisées selon ton profil, pas à pas</li>
             </ul>
-            <p class="vente-note">Comme le test, le dossier est généré <b>dans ton navigateur</b> : tes réponses ne sont jamais envoyées. Après l’achat, tu reçois une clé par e-mail — elle débloque le dossier et son téléchargement en PDF.</p>
+            <p class="vente-note">Comme le test, le dossier est généré <b>dans ton navigateur</b> : tes réponses ne sont jamais envoyées. Après l’achat, tu reçois une clé par e-mail — elle débloque le dossier et son téléchargement en PDF. <b>Garde cet onglet ouvert</b> pendant l’achat : c’est lui qui contient tes réponses.</p>
           </div>
           <div class="vente-cta">
             <div class="vente-prix" id="ventePrix">7 €</div>
@@ -2070,6 +2070,10 @@ async function validerCle(){
     const bonProduit = !RAPPORT.produitId || String(d.meta && d.meta.product_id) === String(RAPPORT.produitId);
     if(d.valid && bonProduit){
       rapportDebloque = true;
+      if(!lastNotes){
+        st.textContent = "Clé valide ! Mais tes réponses ne sont plus là (le site n’enregistre rien) : refais le test, puis reviens cliquer « J’ai déjà ma clé » — elle fonctionnera toujours.";
+        return;
+      }
       st.textContent = "";
       $("#rapportOverlay").hidden = true;
       ouvrirRapport();
