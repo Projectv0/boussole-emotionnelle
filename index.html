@@ -292,16 +292,15 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .eval-id{ display:flex; align-items:center; gap:.55rem; flex:1; min-width:8.5rem; }
 .eval-id img{ width:1.9rem; height:1.9rem; border-radius:.6rem; object-fit:cover; border:1px solid var(--hairline); }
 .eval-id .nm{ font-weight:700; font-size:.9rem; }
-.eval-scale{ display:flex; gap:.35rem; }
+.eval-scale{ display:flex; gap:.35rem; flex-wrap:wrap; justify-content:flex-end; }
 .seg{
-  width:2.3rem; height:2.3rem; border-radius:.75rem;
+  padding:.42rem .72rem; border-radius:999px;
   border:1.5px solid var(--hairline-strong); background:rgba(255,255,255,.65);
-  font-weight:700; font-size:.9rem; color:var(--muted);
-  display:grid; place-items:center;
+  font-weight:600; font-size:.74rem; color:var(--muted); white-space:nowrap;
   transition:all .35s var(--ease);
 }
 .seg:hover{ border-color:var(--sage); }
-.seg.sel{ background:var(--sage); border-color:var(--sage); color:#fff; box-shadow:0 6px 16px -8px rgba(51,104,91,.5); }
+.seg.sel{ background:var(--sage); border-color:var(--sage); color:#fff; font-weight:700; box-shadow:0 6px 16px -8px rgba(51,104,91,.5); }
 .seg.sel[data-v="0"]{ background:#8F8A9B; border-color:#8F8A9B; box-shadow:none; }
 .btn-rien{
   margin-top:1.2rem; font-size:.82rem; font-weight:600; color:var(--muted);
@@ -310,8 +309,9 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 }
 .btn-rien:hover{ color:var(--sage-deep); border-color:var(--sage); background:var(--sage-soft); }
 @media (max-width:560px){
-  .seg{ width:2.05rem; height:2.05rem; }
   .eval-id{ min-width:100%; }
+  .eval-scale{ justify-content:flex-start; }
+  .seg{ padding:.4rem .6rem; font-size:.7rem; }
 }
 
 .test-nav{ display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-top:1.8rem; flex-wrap:wrap; }
@@ -589,7 +589,7 @@ footer p + p{ margin-top:.3rem; }
         <div class="shell">
           <div class="core">
             <div class="res-kicker">L’esprit du test</div>
-            <p>Pas de questions abstraites ici : tu te projettes dans <b>des situations concrètes</b> — une réunion, un appel, un imprévu, un dimanche matin — et tu indiques, sur un spectre de 0 à 4, ce que chacune éveillerait en toi.</p>
+            <p>Pas de questions abstraites ici : tu te projettes dans <b>des situations concrètes</b> — une réunion, un appel, un imprévu, un dimanche matin — et tu indiques, de « pas du tout » à « énormément », ce que chacune éveillerait en toi.</p>
             <p style="margin-top:.9rem">À la fin, chaque émotion reçoit une note de <b>0 à 10</b> qui reflète la place qu’elle occupe dans ta vie, avec un résumé et une analyse personnalisée.</p>
           </div>
         </div>
@@ -611,7 +611,7 @@ footer p + p{ margin-top:.3rem; }
         <div class="step reveal"><div class="shell"><div class="core">
           <div class="step-num">02</div>
           <h3>Projette-toi</h3>
-          <p>24 situations de la vie de tous les jours. Pour chacune, note de 0 à 4 l’intensité de ce qu’elle éveillerait en toi, émotion par émotion.</p>
+          <p>24 situations de la vie de tous les jours. Pour chacune, indique — de « pas du tout » à « énormément » — ce qu’elle éveillerait en toi, émotion par émotion.</p>
           <span class="mins">10 à 15 min</span>
         </div></div></div>
         <div class="step reveal"><div class="shell"><div class="core">
@@ -673,10 +673,10 @@ footer p + p{ margin-top:.3rem; }
         <div class="shell"><div class="core">
           <p class="q-situation" id="qText"></p>
           <div class="q-ask">Qu’est-ce que ça éveillerait en toi&nbsp;?</div>
-          <p class="eval-legende">Pour chaque émotion, choisis un cran : de <b>0</b> — pas du tout, à <b>4</b> — énormément.</p>
+          <p class="eval-legende">Pour chaque émotion, indique à quel point tu la ressentirais dans cette situation.</p>
           <div class="eval-rows" id="evalRows"></div>
           <div style="text-align:center">
-            <button class="btn-rien" id="btnRien">Cette situation ne m’évoquerait pas grand-chose → tout à 0</button>
+            <button class="btn-rien" id="btnRien">Cette situation ne m’évoquerait pas grand-chose → tout à « pas du tout »</button>
           </div>
         </div></div>
 
@@ -1321,7 +1321,7 @@ function renderQuestion(){
     return `<div class="eval-row${a[id] != null ? " ok" : ""}" data-emo="${id}">
       <span class="eval-id"><img src="${ILLUS[id]}" alt=""><span class="nm">${e.court}</span></span>
       <span class="eval-scale" role="radiogroup" aria-label="${e.court} : de 0 à 4">
-        ${[0,1,2,3,4].map(v => `<button class="seg${a[id] === v ? " sel" : ""}" data-v="${v}" role="radio" aria-checked="${a[id] === v}" aria-label="${e.court} : ${INTENSITES[v][1]}">${v}</button>`).join("")}
+        ${[0,1,2,3,4].map(v => `<button class="seg${a[id] === v ? " sel" : ""}" data-v="${v}" role="radio" aria-checked="${a[id] === v}" aria-label="${e.court} : ${INTENSITES[v][1]}">${INTENSITES[v][1]}</button>`).join("")}
       </span>
     </div>`;
   }).join("");
