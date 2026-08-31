@@ -487,6 +487,8 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
   text-transform:uppercase; color:#fff; background:linear-gradient(135deg,#47907D,var(--sage-deep));
   padding:.32rem .75rem; border-radius:999px;
 }
+.skip-zone{ margin-top:1.2rem; padding-top:1.1rem; border-top:1px dashed var(--hairline-strong); }
+.skip-zone p{ font-size:.74rem; color:var(--faint); margin-top:.6rem; }
 .paywall-foot{ margin-top:1.1rem; font-size:.84rem; color:var(--faint); display:flex; gap:.6rem; justify-content:center; align-items:center; flex-wrap:wrap; }
 .linklike{ font-size:.84rem; font-weight:600; color:var(--sage-deep); text-decoration:underline; text-underline-offset:3px; }
 .linklike:hover{ color:var(--ink); }
@@ -821,6 +823,10 @@ footer p + p{ margin-top:.3rem; }
             </ul>
             <a class="btn btn-primary" id="btnPayerDossier" target="_blank" rel="noopener">Tout débloquer <span class="ico" aria-hidden="true">→</span></a>
           </div>
+        </div>
+        <div class="skip-zone" id="skipZone" hidden>
+          <button class="btn btn-ghost" id="btnSkipPaiement">Passer le paiement — version test <span class="ico" aria-hidden="true">⏭</span></button>
+          <p>Le site est en phase de test : le paiement n’est pas encore activé, tout est débloqué gratuitement.</p>
         </div>
         <div class="paywall-foot">
           <button class="linklike" id="btnPaywallCle">J’ai déjà ma clé</button>
@@ -1379,6 +1385,9 @@ const URL_SITE = "projectv0.github.io/boussole-emotionnelle";
    quelle formule une clé débloque. `?apercu=1` dans l'URL permet de tout tester sans payer. */
 const VENTE = {
   actif: true,
+  /* Phase de test entre amis : la pop-up s'affiche mais un bouton « Passer le
+     paiement » débloque tout. Passe à false au lancement des vrais paiements. */
+  modeTest: true,
   prixResultats: "1,99 €",
   lienResultats: "",
   produitResultats: "",
@@ -1389,7 +1398,7 @@ const VENTE = {
 };
 const APERCU = new URLSearchParams(location.search).has("apercu");
 let niveauAcces = "aucun"; /* "aucun" | "resultats" | "dossier" — pour la session en cours */
-const paywallActif = () => APERCU || (VENTE.actif && !!VENTE.lienResultats && !!VENTE.lienDossier);
+const paywallActif = () => APERCU || VENTE.modeTest || (VENTE.actif && !!VENTE.lienResultats && !!VENTE.lienDossier);
 
 /* ————— Outils ————— */
 const $ = sel => document.querySelector(sel);
@@ -2163,6 +2172,7 @@ function ouvrirPaywall(){
     aR.onclick = e => { e.preventDefault(); appliquerAcces("resultats"); };
     aD.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); };
   }
+  $("#skipZone").hidden = !(VENTE.modeTest || APERCU);
   $("#paywallOverlay").hidden = false;
 }
 function appliquerAcces(niveau){
@@ -2292,6 +2302,7 @@ $("#btnDejaCle").addEventListener("click", () => {
   ouvrirModaleCle();
 });
 $("#btnPaywallCle").addEventListener("click", ouvrirModaleCle);
+$("#btnSkipPaiement").addEventListener("click", () => appliquerAcces("dossier"));
 $("#btnPaywallRetour").addEventListener("click", () => { $("#paywallOverlay").hidden = true; });
 $("#paywallOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) e.currentTarget.hidden = true; });
 $("#btnValiderCle").addEventListener("click", validerCle);
