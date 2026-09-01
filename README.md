@@ -1,12 +1,13 @@
 # 🧭 Boussole émotionnelle
 
-**Un test bienveillant pour comprendre la place de tes émotions** — 24 situations de la vie quotidienne, 14 émotions notées de 0 à 10, une analyse personnalisée et une carte de résultats à partager.
+**Un test bienveillant pour comprendre la place de tes émotions** — tes moments vécus et 16 situations de la vie quotidienne, 14 émotions notées de 0 à 10, une analyse personnalisée et une carte de résultats à partager.
 
 **👉 Faire le test : https://projectv0.github.io/boussole-emotionnelle/**
 
 ## Ce que c'est
 
-- 24 mises en situation concrètes (travail, famille, amitié, argent, imprévus…) : pour chacune, tu indiques — de « pas du tout » à « énormément » — ce qu'elle éveillerait en toi, émotion par émotion.
+- Le journal des émotions ouvre le parcours : jusqu'à 5 moments réels exprimés, qui comptent dans les résultats et raccourcissent le test.
+- 16 mises en situation concrètes (travail, famille, amitié, argent, imprévus…) : pour chacune, tu indiques — de « pas du tout » à « énormément » — ce qu'elle éveillerait en toi, émotion par émotion.
 - 14 émotions mesurées : joie, tristesse, colère, peur, surprise, dégoût, amour/tendresse, anxiété, honte, culpabilité, jalousie/envie, fierté, gratitude, sérénité.
 - Résultats : radar, classement, analyse par émotion selon ta note, synthèse croisée — et une carte à partager (format post ou story).
 
