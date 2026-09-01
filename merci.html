@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merci — Boussole émotionnelle</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="icone-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,420;9..144,520;9..144,620&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="guide/style.css">
+<style>
+  main{ max-width:36rem; text-align:center; padding-top:4rem; }
+  .grand{ font-size:3rem; line-height:1; margin-bottom:1rem; }
+  .cle-boite{
+    margin:1.6rem 0; padding:1.1rem 1.2rem; border-radius:1.1rem;
+    background:var(--card); border:1px dashed var(--hairline-strong);
+    font-size:.9rem; word-break:break-all; color:var(--muted);
+  }
+  .cle-boite b{ display:block; color:var(--ink); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.5rem; }
+  .etapes{ text-align:left; margin:1.6rem 0; }
+  .etapes li{ margin-bottom:.6rem; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a class="marque" href="./"><span class="logo"><img src="icone-192.png" alt=""></span> Boussole émotionnelle</a>
+</div>
+
+<main>
+  <div class="grand" aria-hidden="true">🌿</div>
+  <h1 id="titre">Merci !</h1>
+  <p class="chapeau" id="sous">Ton accès est activé.</p>
+
+  <div class="encart doux" id="retour" hidden>
+    <strong>Retourne à l’onglet du test</strong>
+    Il s’est débloqué tout seul — tes résultats t’y attendent. Tu peux fermer cette page.
+  </div>
+
+  <div class="encart attention" id="refaire" hidden>
+    <strong>L’onglet du test n’est plus ouvert&nbsp;?</strong>
+    Aucun souci : ton accès est enregistré sur cet appareil. Refais simplement le test, tes résultats s’afficheront directement à la fin.
+  </div>
+
+  <div class="cle-boite" id="cleBoite" hidden>
+    <b>Ta référence d’achat</b>
+    <span id="cleTexte"></span>
+  </div>
+
+  <ul class="etapes" id="etapes" hidden>
+    <li>Ouvre le site sur l’appareil où tu veux lire tes résultats.</li>
+    <li>Fais le test (ou reprends-le).</li>
+    <li>À la fin, clique sur <b>« J’ai déjà ma clé »</b> et colle la référence ci-dessus.</li>
+  </ul>
+
+  <a class="bouton" href="./" id="btnRetour">Revenir au test <span aria-hidden="true">→</span></a>
+</main>
+
+<footer>
+  <p><a href="./">Boussole émotionnelle</a> · <a href="legal/mentions-legales.html">Mentions légales</a> · <a href="legal/cgv.html">Conditions de vente</a></p>
+  <p>Une question sur ta commande&nbsp;? <a href="mailto:contact@boussole-emotionnelle.fr">contact@boussole-emotionnelle.fr</a></p>
+</footer>
+
+<script>
+"use strict";
+/* Page de retour après paiement Stripe.
+   Stripe renvoie ici avec ?formule=resultats|dossier&session_id=cs_...
+   On enregistre l'accès sur l'appareil ; l'onglet du test, s'il est encore
+   ouvert, l'apprend immédiatement par l'événement « storage » et se débloque. */
+const ACCES_KEY = "boussole.acces.v1";
+const p = new URLSearchParams(location.search);
+const formule = p.get("formule") === "dossier" ? "dossier" : p.get("formule") === "resultats" ? "resultats" : null;
+const session = p.get("session_id") || "";
+
+const $ = s => document.querySelector(s);
+
+if(!formule){
+  $("#titre").textContent = "Page de confirmation";
+  $("#sous").textContent = "Cette page s’affiche après un achat. Si tu viens de payer et que rien ne s’est passé, écris-nous : contact@boussole-emotionnelle.fr";
+}else{
+  const libelle = formule === "dossier" ? "Résultats + dossier complet" : "Tes résultats";
+  $("#sous").textContent = `Formule « ${libelle} » activée. `;
+  let enregistre = false;
+  try{
+    localStorage.setItem(ACCES_KEY, JSON.stringify({ niveau: formule, session, d: new Date().toISOString() }));
+    enregistre = true;
+  }catch(_){}
+
+  if(enregistre){
+    $("#retour").hidden = false;
+    $("#refaire").hidden = false;
+  }else{
+    /* stockage indisponible : on donne la référence à saisir à la main */
+    $("#cleBoite").hidden = false;
+    $("#cleTexte").textContent = session || "(référence indisponible)";
+    $("#etapes").hidden = false;
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1011,14 +1011,14 @@ footer p + p{ margin-top:.3rem; }
               <li>🔀 <b>Tes croisements décodés</b> — ce que racontent tes émotions quand on les lit ensemble</li>
               <li>🗓️ <b>Ton plan de 30 jours</b> — quatre semaines personnalisées selon ton profil, pas à pas</li>
             </ul>
-            <p class="vente-note">Comme le test, le dossier est généré <b>dans ton navigateur</b> : tes réponses ne sont jamais envoyées. Après l’achat, tu reçois une clé par e-mail — elle débloque le dossier et son téléchargement en PDF. <b>Garde cet onglet ouvert</b> pendant l’achat : c’est lui qui contient tes réponses.</p>
+            <p class="vente-note">Comme le test, le dossier est généré <b>dans ton navigateur</b> : tes réponses ne sont jamais envoyées. Après le paiement, cet onglet se débloque tout seul — <b>garde-le ouvert</b>, c’est lui qui contient tes réponses.</p>
           </div>
           <div class="vente-cta">
             <span class="offre-badge">Offre de lancement · −50 %</span>
             <div class="vente-prix" id="ventePrix">9,99 € <s>20 €</s></div>
             <div class="vente-prix-note">paiement unique · TVA incluse</div>
             <a class="btn btn-primary" id="btnAcheter" target="_blank" rel="noopener">Obtenir mon dossier <span class="ico" aria-hidden="true">→</span></a>
-            <button class="btn btn-ghost" id="btnDejaCle">J’ai déjà ma clé <span class="ico" aria-hidden="true">🔑</span></button>
+            <button class="btn btn-ghost" id="btnDejaCle">J’ai déjà payé <span class="ico" aria-hidden="true">🔑</span></button>
           </div>
         </div>
       </div></div></div>
@@ -1026,9 +1026,9 @@ footer p + p{ margin-top:.3rem; }
 
     <div class="carte-overlay" id="rapportOverlay" hidden>
       <div class="carte-box">
-        <h3 style="font-size:1.3rem; margin:.4rem 0 .6rem">Débloquer avec ma clé</h3>
-        <p class="carte-hint" style="margin-top:0">Colle ici la clé de licence reçue par e-mail juste après ton achat — elle ouvre la formule que tu as choisie.</p>
-        <input class="cle-input" id="cleLicence" aria-label="Clé de licence" placeholder="XXXXXXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
+        <h3 style="font-size:1.3rem; margin:.4rem 0 .6rem">Débloquer mon accès</h3>
+        <p class="carte-hint" style="margin-top:0">Colle ici la référence d’achat affichée après ton paiement (elle commence par «&nbsp;cs_&nbsp;»). Normalement, l’onglet se débloque tout seul — ceci ne sert qu’en dépannage.</p>
+        <input class="cle-input" id="cleLicence" aria-label="Référence d’achat" placeholder="cs_live_…" autocomplete="off" spellcheck="false">
         <div class="carte-actions">
           <button class="btn btn-primary" id="btnValiderCle">Débloquer <span class="ico" aria-hidden="true">🔓</span></button>
           <button class="btn btn-ghost" id="btnFermerCle">Fermer <span class="ico" aria-hidden="true">✕</span></button>
@@ -1073,11 +1073,11 @@ footer p + p{ margin-top:.3rem; }
           <p>Le site est en phase de test : le paiement n’est pas encore activé, tout est débloqué gratuitement.</p>
         </div>
         <div class="paywall-foot">
-          <button class="linklike" id="btnPaywallCle">J’ai déjà ma clé</button>
+          <button class="linklike" id="btnPaywallCle">J’ai déjà payé</button>
           <span aria-hidden="true">·</span>
           <button class="linklike" id="btnPaywallRetour">Revenir au questionnaire</button>
         </div>
-        <p class="carte-hint">Paiement sécurisé (Lemon Squeezy) · clé envoyée par e-mail · tes réponses ne quittent jamais ton navigateur. Garde cet onglet ouvert pendant l’achat.</p>
+        <p class="carte-hint">Paiement sécurisé par Stripe · tes réponses ne quittent jamais ton navigateur. <b>Garde cet onglet ouvert</b> : il se débloquera tout seul après le paiement.</p>
       </div>
     </div>
 
@@ -1486,11 +1486,13 @@ const SITUATIONS = [
 /* ————— Réglages ————— */
 const URL_SITE = "boussole-emotionnelle.fr";
 /* ————— Modèle payant —————
-   Deux produits Lemon Squeezy : « Résultats » (1,99 €) et « Résultats + Dossier » (9,99 €).
+   Deux liens de paiement Stripe : « Résultats » (1,99 €) et « Résultats + Dossier » (9,99 €).
    Le verrou (pop-up en fin de test, aucun résultat sans paiement) s'active automatiquement
    quand `actif` est true ET que les deux liens d'achat sont renseignés.
-   Les `produit…` (IDs Lemon Squeezy, optionnels mais recommandés) servent à reconnaître
-   quelle formule une clé débloque. `?apercu=1` dans l'URL permet de tout tester sans payer. */
+   Chaque lien Stripe doit rediriger, après paiement, vers :
+     https://boussole-emotionnelle.fr/merci.html?formule=resultats&session_id={CHECKOUT_SESSION_ID}
+     https://boussole-emotionnelle.fr/merci.html?formule=dossier&session_id={CHECKOUT_SESSION_ID}
+   `?apercu=1` dans l'URL permet de tout tester sans payer. */
 const VENTE = {
   actif: true,
   /* Phase de test entre amis : la pop-up s'affiche mais un bouton « Passer le
@@ -1502,7 +1504,10 @@ const VENTE = {
   prixDossier: "9,99 €",
   prixDossierRef: "20 €",
   lienDossier: "",
-  produitDossier: ""
+  produitDossier: "",
+  /* Adresse d'une éventuelle fonction de vérification côté serveur.
+     Laissée vide : le déblocage se fait alors sur la seule référence Stripe. */
+  verification: ""
 };
 const APERCU = new URLSearchParams(location.search).has("apercu");
 let niveauAcces = "aucun"; /* "aucun" | "resultats" | "dossier" — pour la session en cours */
@@ -2457,40 +2462,56 @@ function majVenteBox(){
   }
 }
 async function validerCle(){
-  const cle = $("#cleLicence").value.trim();
+  const ref = $("#cleLicence").value.trim();
   const st = $("#cleStatut");
-  if(!cle){ st.textContent = "Colle d’abord ta clé de licence."; return; }
-  st.textContent = "Vérification…";
-  try{
-    const r = await fetch("https://api.lemonsqueezy.com/v1/licenses/validate", {
-      method:"POST",
-      headers:{ "Accept":"application/json", "Content-Type":"application/x-www-form-urlencoded" },
-      body:"license_key=" + encodeURIComponent(cle)
-    });
-    const d = await r.json();
-    if(!d.valid){
-      st.textContent = "Clé non reconnue. Vérifie l’e-mail reçu juste après ton achat.";
-      return;
-    }
-    /* Quelle formule cette clé débloque-t-elle ? */
-    const pid = String((d.meta && d.meta.product_id) || "");
-    let niveau = "dossier";
-    if(VENTE.produitDossier || VENTE.produitResultats){
-      if(pid === String(VENTE.produitDossier)) niveau = "dossier";
-      else if(pid === String(VENTE.produitResultats)) niveau = "resultats";
-      else{ st.textContent = "Cette clé ne correspond pas à un produit de ce site."; return; }
-    }
-    if(!lastNotes){
-      niveauAcces = niveau;
-      st.textContent = "Clé valide ! Mais tes réponses ne sont plus là (le site n’enregistre rien) : refais le test — tes résultats s’ouvriront directement à la fin.";
-      return;
-    }
-    st.textContent = "";
-    appliquerAcces(niveau);
-    if(niveau === "dossier") ouvrirRapport();
-  }catch(_){
-    st.textContent = "Vérification impossible ici — ouvre le site officiel du test pour débloquer ton dossier.";
+  if(!ref){ st.textContent = "Colle d’abord ta référence d’achat."; return; }
+
+  /* Référence Stripe : identifiant de session de paiement (cs_live_… / cs_test_…) */
+  if(!/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(ref)){
+    st.textContent = "Cette référence n’est pas reconnue. Elle commence par « cs_ » et figure sur la page affichée après ton paiement.";
+    return;
   }
+  st.textContent = "Vérification…";
+  const niveau = await verifierAchat(ref);
+  if(!niveau){
+    st.textContent = "Impossible de valider cette référence. Écris-nous à contact@boussole-emotionnelle.fr, on débloque à la main.";
+    return;
+  }
+  enregistrerAcces(niveau, ref);
+  if(!lastNotes){
+    niveauAcces = niveau;
+    st.textContent = "Accès validé ! Tes réponses ne sont plus là (le site n’enregistre rien) : refais le test — tes résultats s’ouvriront directement à la fin.";
+    return;
+  }
+  st.textContent = "";
+  appliquerAcces(niveau);
+  if(niveau === "dossier") ouvrirRapport();
+}
+
+/* Vérification de l'achat.
+   Sans serveur, on ne peut pas interroger Stripe : on se contente du format de
+   la référence. Si tu déploies un jour une petite fonction de vérification
+   (Cloudflare Worker par exemple), renseigne VENTE.verification et elle sera
+   interrogée — le contrôle devient alors incontournable. */
+async function verifierAchat(ref){
+  if(!VENTE.verification) return "dossier";
+  try{
+    const r = await fetch(VENTE.verification + "?session_id=" + encodeURIComponent(ref));
+    const d = await r.json();
+    return d && d.valide ? (d.niveau === "resultats" ? "resultats" : "dossier") : null;
+  }catch(_){ return null; }
+}
+
+/* Accès enregistré sur l'appareil, pour survivre à la fermeture de l'onglet */
+const ACCES_KEY = "boussole.acces.v1";
+function enregistrerAcces(niveau, session){
+  try{ localStorage.setItem(ACCES_KEY, JSON.stringify({ niveau, session, d: new Date().toISOString() })); }catch(_){}
+}
+function lireAcces(){
+  try{
+    const a = JSON.parse(localStorage.getItem(ACCES_KEY) || "null");
+    return a && (a.niveau === "dossier" || a.niveau === "resultats") ? a.niveau : null;
+  }catch(_){ return null; }
 }
 
 /* ————— Journal des émotions (stocké uniquement sur l'appareil, jamais envoyé) ————— */
@@ -3149,6 +3170,19 @@ $("#btnComparer").addEventListener("click", validerCodeAmi);
 $("#compCode").addEventListener("keydown", e => { if(e.key === "Enter") validerCodeAmi(); });
 $("#btnRappel").addEventListener("click", creerRappel);
 $("#btnInstaller").addEventListener("click", installerApp);
+
+/* Un achat déjà effectué sur cet appareil rouvre l'accès sans rien redemander */
+const accesEnregistre = lireAcces();
+if(accesEnregistre) niveauAcces = accesEnregistre;
+
+/* Le paiement se fait dans un autre onglet : celui-ci l'apprend aussitôt */
+window.addEventListener("storage", e => {
+  if(e.key !== ACCES_KEY) return;
+  const n = lireAcces();
+  if(!n || niveauAcces === n) return;
+  niveauAcces = n;
+  if(lastNotes) appliquerAcces(n);
+});
 
 renderEmotionCards();
 majBandeauReprise();
