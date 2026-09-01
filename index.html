@@ -1107,10 +1107,6 @@ footer p + p{ margin-top:.3rem; }
       </div>
       <p style="font-size:.76rem; color:var(--faint); margin-top:.7rem" id="rappelNote"></p>
     </div>
-    <div class="soutien" id="soutienBox" hidden>
-      <p>Ce test t’a été utile ? Il restera sans publicité, sans compte et sans traceur.</p>
-      <a class="btn btn-ghost" id="soutienLien" target="_blank" rel="noopener">☕ Soutenir ce projet <span class="ico" aria-hidden="true">→</span></a>
-    </div>
 
     <div class="carte-overlay" id="carteOverlay" hidden>
       <div class="carte-box">
@@ -1489,9 +1485,6 @@ const SITUATIONS = [
   emos:["surprise", "joie", "gratitude", "amour", "anxiete", "serenite"] }
 ];
 /* ————— Réglages ————— */
-/* Colle ici ton lien de soutien (Ko-fi, Buy Me a Coffee, Stripe…) pour faire
-   apparaître le bouton « Soutenir ce projet » sur la page de résultats. */
-const LIEN_SOUTIEN = "https://buymeacoffee.com/odem";
 const URL_SITE = "projectv0.github.io/boussole-emotionnelle";
 /* ————— Modèle payant —————
    Deux produits Lemon Squeezy : « Résultats » (1,99 €) et « Résultats + Dossier » (9,99 €).
@@ -3148,10 +3141,6 @@ document.querySelectorAll(".carte-formats .fmt").forEach(b => b.addEventListener
   await fabriquerCarte(500);
 }));
 $("#carteOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) e.currentTarget.hidden = true; });
-if(LIEN_SOUTIEN){
-  $("#soutienLien").href = LIEN_SOUTIEN;
-  $("#soutienBox").hidden = false;
-}
 $("#btnRestart").addEventListener("click", () => {
   effacerBrouillon();
   state.i = 0;
