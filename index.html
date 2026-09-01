@@ -175,6 +175,21 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .j-tag img{ width:1.1rem; height:1.1rem; border-radius:999px; object-fit:cover; }
 .j-tag.ctx{ color:var(--muted); border-style:dashed; }
 .j-txt{ font-size:.88rem; color:#555061; margin-top:.5rem; }
+.j-triche{ margin:.2rem 0 .8rem; }
+.j-triche summary{
+  list-style:none; cursor:pointer; user-select:none;
+  font-size:.8rem; font-weight:600; color:var(--sage-deep);
+  padding:.45rem .2rem;
+}
+.j-triche summary::-webkit-details-marker{ display:none; }
+.j-triche summary:hover{ color:var(--ink); }
+.j-triche-row{
+  display:flex; gap:.6rem; align-items:flex-start;
+  padding:.5rem .4rem; border-top:1px solid var(--hairline);
+  font-size:.82rem; color:#4A4453;
+}
+.j-triche-row img{ width:1.5rem; height:1.5rem; border-radius:.5rem; object-fit:cover; flex:none; margin-top:.1rem; }
+.j-triche-row b{ color:var(--ink); }
 
 /* ————— Vues ————— */
 .view{ display:none; padding-top:7.5rem; }
@@ -752,7 +767,7 @@ footer p + p{ margin-top:.3rem; }
     <div class="section-head">
       <div class="eyebrow">Ton journal</div>
       <h2>Journal des émotions</h2>
-      <p>Une minute par jour : note ce que tu ressens, dans quel contexte. Entrée après entrée, tes motifs apparaissent — ce qui déclenche quoi, quand, et comment ton corps te parle.</p>
+      <p>Deux minutes pour un moment réel, avec les mêmes questions à chaque fois — c’est le rituel qui fait apparaître les motifs : ce qui déclenche quoi, comment ton corps te parle, et ce qui compte vraiment pour toi.</p>
     </div>
     <div class="callout callout-privacy">
       <span class="emo" aria-hidden="true">📱</span>
@@ -763,14 +778,34 @@ footer p + p{ margin-top:.3rem; }
       <p><strong>Le stockage local n’est pas disponible ici.</strong> Ouvre le site officiel dans ton navigateur habituel (pas en navigation privée) pour utiliser le journal.</p>
     </div>
     <div class="shell" id="jSaisieBox"><div class="core">
-      <div class="res-kicker">Nouvelle entrée</div>
-      <p class="j-label">Qu’est-ce que tu ressens, là&nbsp;? <span>(1 à 3 émotions)</span></p>
+      <div class="res-kicker">Check-in · les mêmes questions, à chaque fois</div>
+      <p class="j-label">1 · Qu’est-ce qui s’est passé&nbsp;?</p>
+      <textarea class="j-note" id="jNote" rows="2" maxlength="500" style="margin-top:0" placeholder="Ex. : j’ai envoyé un message important… et deux jours plus tard, toujours pas de réponse."></textarea>
+      <div class="j-ctx" id="jCtx" style="margin-top:.7rem"></div>
+
+      <p class="j-label">2 · Ton corps, là — il est comment&nbsp;?</p>
+      <div class="j-ctx" id="jCorps"></div>
+
+      <p class="j-label">3 · Qu’est-ce que tu remarques physiquement&nbsp;? <span>(optionnel)</span></p>
+      <div class="j-ctx" id="jSens"></div>
+
+      <p class="j-label">4 · Quels mots décrivent ce que tu ressens&nbsp;? <span>(1 à 3)</span></p>
+      <details class="j-triche"><summary>🗂️ Besoin d’aide pour trouver le mot ? Ouvre l’antisèche</summary><div id="jTriche"></div></details>
       <div class="j-emos" id="jEmos"></div>
       <div id="jIntensites"></div>
-      <p class="j-label" style="margin-top:1.3rem">Le contexte <span>(optionnel)</span></p>
-      <div class="j-ctx" id="jCtx"></div>
-      <textarea class="j-note" id="jNote" rows="2" maxlength="500" placeholder="Qu’est-ce qui s’est passé ? Et dans le corps, ça fait quoi ? (optionnel)"></textarea>
-      <div style="text-align:center; margin-top:1.3rem">
+
+      <div id="jConfBloc" hidden>
+        <p class="j-label">5 · À quel point es-tu sûr·e de ces mots&nbsp;?</p>
+        <div class="j-ctx" id="jConf"></div>
+      </div>
+
+      <p class="j-label">6 · Qu’est-ce que ça te donne envie de faire&nbsp;? <span>(optionnel)</span></p>
+      <div class="j-ctx" id="jElan"></div>
+
+      <p class="j-label">7 · Qu’est-ce qui compte, là-dedans&nbsp;? <span>(2 max, optionnel)</span></p>
+      <div class="j-ctx" id="jImp"></div>
+
+      <div style="text-align:center; margin-top:1.4rem">
         <button class="btn btn-primary" id="btnJournalAjout" disabled>Ajouter au journal <span class="ico" aria-hidden="true">✎</span></button>
       </div>
       <p class="copy-feedback" id="jFeedback" role="status"></p>
@@ -2191,7 +2226,13 @@ async function validerCle(){
 const JOURNAL_KEY = "boussole.journal.v1";
 const CONTEXTES = ["Travail", "Famille", "Couple", "Amis", "Santé", "Argent", "Seul·e", "Autre"];
 const JOURS_FR = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
-let saisie = { emos: {}, ctx: new Set() };
+const CORPS_NIVEAUX = ["Très calme", "Posé", "Neutre", "Activé", "En surchauffe"];
+const SENSATIONS = ["Gorge serrée", "Ventre noué", "Cœur qui s’accélère", "Chaleur au visage", "Épaules tendues", "Mâchoires serrées", "Souffle court", "Larmes proches", "Lourdeur / vide", "Bouffée d’énergie"];
+const CONFIANCES = ["J’hésite", "Plutôt sûr·e", "Très sûr·e"];
+const ELANS = ["Me retirer", "En parler à quelqu’un", "Régler le problème", "Décharger / exploser", "Bouger / me dépenser", "Me figer", "Réparer / m’excuser", "Fêter / partager"];
+const IMPORTANTS = ["Respect", "Lien", "Reconnaissance", "Sécurité", "Justice", "Liberté", "Appartenance", "Accomplissement"];
+const saisieVierge = () => ({ emos: {}, ctx: new Set(), sens: new Set(), imp: new Set(), corps: null, conf: null, elan: null });
+let saisie = saisieVierge();
 
 function chargerJournal(){
   try{
@@ -2267,7 +2308,44 @@ function motifsJournal(entrees){
       ph.push(`Bonne nouvelle : ${nomDe(topAgr)} fleurit surtout en contexte « ${ctxTop} » — une source à cultiver.`);
     }
   }
-  return ph.slice(0, 4);
+  /* le corps comme annonciateur : sensation la plus liée à l'émotion dominante */
+  const top1 = parFreq[0];
+  if(top1){
+    const avecSens = rec.filter(e => e.emos[top1] != null && (e.sens || []).length);
+    const sN = {};
+    avecSens.forEach(e => e.sens.forEach(s => { sN[s] = (sN[s] || 0) + 1; }));
+    const sTop = Object.keys(sN).sort((a, b) => sN[b] - sN[a])[0];
+    if(sTop && sN[sTop] >= 3 && sN[sTop] / avecSens.length >= .5){
+      ph.push(`Ton corps t’annonce ${nomDe(top1)} par « ${sTop.toLowerCase()} » — présent dans ${Math.round(sN[sTop] / avecSens.length * 100)} % de ces moments.`);
+    }
+  }
+  /* élan et besoin dominants face à l'émotion désagréable la plus fréquente */
+  if(topDes){
+    const avec = rec.filter(e => e.emos[topDes] != null);
+    const eN = {};
+    avec.forEach(e => { if(e.elan) eN[e.elan] = (eN[e.elan] || 0) + 1; });
+    const eTop = Object.keys(eN).sort((a, b) => eN[b] - eN[a])[0];
+    if(eTop && eN[eTop] >= 3 && eN[eTop] / avec.length >= .5){
+      ph.push(`Face à ${nomDe(topDes)}, ton premier élan est le plus souvent « ${eTop.toLowerCase()} ».`);
+    }
+    const iN = {};
+    avec.forEach(e => (e.imp || []).forEach(c => { iN[c] = (iN[c] || 0) + 1; }));
+    const iTop = Object.keys(iN).sort((a, b) => iN[b] - iN[a])[0];
+    if(iTop && iN[iTop] >= 3 && iN[iTop] / avec.length >= .5){
+      ph.push(`Derrière ${nomDe(topDes)}, ce qui est touché le plus souvent : « ${iTop} ».`);
+    }
+  }
+  /* progression de la précision émotionnelle (question « es-tu sûr·e ? ») */
+  const avecConf = entrees.filter(e => e.conf);
+  if(avecConf.length >= 10){
+    const moitie = Math.floor(avecConf.length / 2);
+    const tauxHesite = liste => liste.filter(e => e.conf === 1).length / liste.length;
+    const avant = tauxHesite(avecConf.slice(0, moitie)), apres = tauxHesite(avecConf.slice(moitie));
+    if(avant - apres >= .2){
+      ph.push("Tu hésites de moins en moins sur tes mots : ta lecture de toi-même s’affine, entrée après entrée.");
+    }
+  }
+  return ph.slice(0, 6);
 }
 const maj = s => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -2279,8 +2357,25 @@ function renderJournal(){
   $("#jMotifs").innerHTML = ""; $("#jHistorique").innerHTML = "";
   if(indispo) return;
 
-  /* — saisie — */
-  const nb = Object.keys(saisie.emos).length;
+  /* — saisie (le check-in) — */
+  const groupeChips = (sel, liste, estSel, clic) => {
+    $(sel).innerHTML = liste.map((c, k) => `<button class="j-chip${estSel(c, k) ? " sel" : ""}" data-k="${k}">${c}</button>`).join("");
+    $(sel).querySelectorAll(".j-chip").forEach(b => b.addEventListener("click", () => { clic(liste[+b.dataset.k], +b.dataset.k); renderJournal(); }));
+  };
+  groupeChips("#jCtx", CONTEXTES, c => saisie.ctx.has(c), c => saisie.ctx.has(c) ? saisie.ctx.delete(c) : saisie.ctx.add(c));
+  groupeChips("#jCorps", CORPS_NIVEAUX, (c, k) => saisie.corps === k + 1, (c, k) => { saisie.corps = saisie.corps === k + 1 ? null : k + 1; });
+  groupeChips("#jSens", SENSATIONS, c => saisie.sens.has(c), c => saisie.sens.has(c) ? saisie.sens.delete(c) : saisie.sens.add(c));
+  groupeChips("#jConf", CONFIANCES, (c, k) => saisie.conf === k + 1, (c, k) => { saisie.conf = saisie.conf === k + 1 ? null : k + 1; });
+  groupeChips("#jElan", ELANS, c => saisie.elan === c, c => { saisie.elan = saisie.elan === c ? null : c; });
+  groupeChips("#jImp", IMPORTANTS, c => saisie.imp.has(c), c => {
+    if(saisie.imp.has(c)) saisie.imp.delete(c);
+    else if(saisie.imp.size < 2) saisie.imp.add(c);
+  });
+
+  if(!$("#jTriche").innerHTML){
+    $("#jTriche").innerHTML = EMOTIONS.map(e => `
+      <div class="j-triche-row"><img src="${ILLUS[e.id]}" alt=""><span><b>${e.nom}</b> — ${e.def}</span></div>`).join("");
+  }
   $("#jEmos").innerHTML = EMOTIONS.map(e => `
     <button class="j-chip${saisie.emos[e.id] != null ? " sel" : ""}" data-emo="${e.id}">
       <img src="${ILLUS[e.id]}" alt="">${e.court}
@@ -2295,6 +2390,7 @@ function renderJournal(){
     $("#jFeedback").textContent = "";
     renderJournal();
   }));
+  const nb = Object.keys(saisie.emos).length;
   $("#jIntensites").innerHTML = Object.keys(saisie.emos).map(id => {
     const e = EMOTIONS.find(x => x.id === id);
     return `<div class="j-int-row" data-emo="${id}"><span class="nm">${e.court}</span>
@@ -2307,13 +2403,7 @@ function renderJournal(){
       saisie.emos[row.dataset.emo] = +b.dataset.v;
       renderJournal();
     })));
-  $("#jCtx").innerHTML = CONTEXTES.map(c => `
-    <button class="j-chip${saisie.ctx.has(c) ? " sel" : ""}" data-ctx="${c}">${c}</button>`).join("");
-  $("#jCtx").querySelectorAll(".j-chip").forEach(b => b.addEventListener("click", () => {
-    const c = b.dataset.ctx;
-    saisie.ctx.has(c) ? saisie.ctx.delete(c) : saisie.ctx.add(c);
-    renderJournal();
-  }));
+  $("#jConfBloc").hidden = nb === 0;
   $("#btnJournalAjout").disabled = nb === 0;
 
   /* — motifs & stats — */
@@ -2356,6 +2446,11 @@ function renderJournal(){
             const em = EMOTIONS.find(x => x.id === id);
             return `<span class="j-tag"><img src="${ILLUS[id]}" alt="">${em.court} · ${INTENSITES[v][1].toLowerCase()}</span>`;
           }).join("")}
+          ${e.corps ? `<span class="j-tag ctx">⚡ ${CORPS_NIVEAUX[e.corps - 1]}</span>` : ""}
+          ${(e.sens || []).slice(0, 3).map(s => `<span class="j-tag ctx">${s.toLowerCase()}</span>`).join("")}
+          ${(e.sens || []).length > 3 ? `<span class="j-tag ctx">+${e.sens.length - 3}</span>` : ""}
+          ${e.elan ? `<span class="j-tag ctx">→ ${e.elan.toLowerCase()}</span>` : ""}
+          ${(e.imp || []).map(c => `<span class="j-tag ctx">♦ ${c}</span>`).join("")}
           ${(e.ctx || []).map(c => `<span class="j-tag ctx">${c}</span>`).join("")}
         </div>
         ${e.note ? `<p class="j-txt">${e.note.replace(/</g, "&lt;")}</p>` : ""}
@@ -2373,14 +2468,20 @@ function renderJournal(){
 function ajouterEntree(){
   const j = chargerJournal();
   if(!j) return;
-  j.entrees.push({
+  const entree = {
     d: new Date().toISOString(),
     emos: { ...saisie.emos },
     ctx: [...saisie.ctx],
     note: $("#jNote").value.trim()
-  });
+  };
+  if(saisie.corps) entree.corps = saisie.corps;
+  if(saisie.sens.size) entree.sens = [...saisie.sens];
+  if(saisie.conf) entree.conf = saisie.conf;
+  if(saisie.elan) entree.elan = saisie.elan;
+  if(saisie.imp.size) entree.imp = [...saisie.imp];
+  j.entrees.push(entree);
   if(!sauverJournal(j)){ $("#jFeedback").textContent = "Impossible d’enregistrer ici (stockage local indisponible)."; return; }
-  saisie = { emos: {}, ctx: new Set() };
+  saisie = saisieVierge();
   $("#jNote").value = "";
   renderJournal();
   $("#jFeedback").textContent = "C’est noté. À bientôt pour la prochaine entrée 🌱";
