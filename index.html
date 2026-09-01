@@ -790,6 +790,7 @@ footer p + p{ margin-top:.3rem; }
       <div class="j-ctx" id="jSens"></div>
 
       <p class="j-label">4 · Quels mots décrivent ce que tu ressens&nbsp;? <span>(1 à 3)</span></p>
+      <p class="eval-legende" id="jCible" hidden></p>
       <details class="j-triche"><summary>🗂️ Besoin d’aide pour trouver le mot ? Ouvre l’antisèche</summary><div id="jTriche"></div></details>
       <div class="j-emos" id="jEmos"></div>
       <div id="jIntensites"></div>
@@ -841,6 +842,15 @@ footer p + p{ margin-top:.3rem; }
       <div class="eyebrow">Étape 3 · Tes résultats</div>
       <h2>Voici ta boussole intérieure</h2>
       <p id="resDate"></p>
+    </div>
+
+    <div class="callout callout-privacy" id="gardeBox" hidden>
+      <span class="emo" aria-hidden="true">📌</span>
+      <div style="flex:1">
+        <p id="gardeTexte"><strong>Suivre ton évolution&nbsp;?</strong> Garde ces résultats sur cet appareil — et seulement ici : au prochain passage tu verras ce qui a bougé, et ton journal pourra croiser ton test avec ton vécu.</p>
+        <div class="j-tags" id="gardeEvo" style="margin-top:.55rem"></div>
+        <button class="btn btn-ghost" id="btnGarder" style="margin-top:.8rem">📌 Garder mes résultats sur cet appareil</button>
+      </div>
     </div>
 
     <div class="res-grid">
@@ -1603,8 +1613,9 @@ function renderResults(notes){
   /* Synthèse croisée */
   $("#syntheseWrap").innerHTML = buildSynthese(notes, tri, mAgr, mDes, basses);
 
-  /* Vitrine du dossier selon l'accès */
+  /* Vitrine du dossier selon l'accès + sauvegarde locale des résultats */
   majVenteBox();
+  majGardeBox();
 
   /* Animation des barres une fois posées */
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -2372,6 +2383,17 @@ function renderJournal(){
     else if(saisie.imp.size < 2) saisie.imp.add(c);
   });
 
+  const tTests = chargerTests();
+  if(tTests && tTests.passages.length){
+    const dern = tTests.passages[tTests.passages.length - 1];
+    const cibles = EMOTIONS.filter(e => (dern.notes[e.id] || 0) >= 5)
+      .sort((a, b) => dern.notes[b.id] - dern.notes[a.id]).slice(0, 3);
+    $("#jCible").hidden = !cibles.length;
+    if(cibles.length) $("#jCible").textContent = `🎯 D’après ton dernier test, guette en priorité : ${cibles.map(e => e.court).join(", ")}.`;
+  }else{
+    $("#jCible").hidden = true;
+  }
+
   if(!$("#jTriche").innerHTML){
     $("#jTriche").innerHTML = EMOTIONS.map(e => `
       <div class="j-triche-row"><img src="${ILLUS[e.id]}" alt=""><span><b>${e.nom}</b> — ${e.def}</span></div>`).join("");
@@ -2410,7 +2432,14 @@ function renderJournal(){
   const E = j.entrees;
   if(E.length){
     const serie = serieJours(E);
-    const motifs = motifsJournal(E);
+    const motifs = [...motifsJournal(E), ...motifsTestJournal(E)].slice(0, 7);
+    const infoTest = (() => {
+      const t = chargerTests();
+      if(!t || !t.passages.length) return "";
+      const d = t.passages[t.passages.length - 1];
+      const doms = [...EMOTIONS].sort((a, b) => (d.notes[b.id] || 0) - (d.notes[a.id] || 0)).slice(0, 3).map(e => e.court).join(", ");
+      return `<p style="font-size:.78rem; color:var(--faint); margin:-.3rem 0 .9rem">Dernier test gardé : ${new Date(d.d).toLocaleDateString("fr-FR")} · dominantes : ${doms}.</p>`;
+    })();
     const fen30 = Date.now() - 30 * 864e5;
     const rec = E.filter(e => new Date(e.d).getTime() >= fen30);
     const freq = {};
@@ -2418,6 +2447,7 @@ function renderJournal(){
     const top5 = Object.keys(freq).sort((a, b) => freq[b] - freq[a]).slice(0, 5);
     $("#jMotifs").innerHTML = `<div class="j-bloc">
       <h3>Tes motifs</h3>
+      ${infoTest}
       <div class="j-stats">
         <div class="j-stat"><b>${E.length}</b><span>entrée${E.length > 1 ? "s" : ""}</span></div>
         <div class="j-stat"><b>${serie}</b><span>jour${serie > 1 ? "s" : ""} d’affilée</span></div>
@@ -2520,6 +2550,88 @@ function importerJournal(fichier){
   lecteur.readAsText(fichier);
 }
 
+/* ————— Pont test ↔ journal (résultats gardés sur l'appareil, opt-in) ————— */
+const TESTS_KEY = "boussole.tests.v1";
+let resultatsGardesCe = false;
+const nomEmo = id => { const e = EMOTIONS.find(x => x.id === id); return e ? e.art + e.nom.toLowerCase() : id; };
+function chargerTests(){
+  try{
+    const brut = localStorage.getItem(TESTS_KEY);
+    const t = brut ? JSON.parse(brut) : { passages: [] };
+    if(!Array.isArray(t.passages)) t.passages = [];
+    return t;
+  }catch(_){ return null; }
+}
+function sauverTests(t){
+  try{ localStorage.setItem(TESTS_KEY, JSON.stringify(t)); return true; }
+  catch(_){ return false; }
+}
+function majGardeBox(){
+  const box = $("#gardeBox");
+  const t = chargerTests();
+  if(t === null || !lastNotes){ box.hidden = true; return; }
+  box.hidden = false;
+  const passages = t.passages;
+  const ref = resultatsGardesCe ? passages[passages.length - 2] : passages[passages.length - 1];
+  const evo = $("#gardeEvo");
+  if(ref){
+    const deltas = EMOTIONS
+      .map(e => ({ e, delta: Math.round((lastNotes[e.id] - ref.notes[e.id]) * 10) / 10 }))
+      .filter(x => Math.abs(x.delta) >= 1)
+      .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta)).slice(0, 4);
+    const dRef = new Date(ref.d).toLocaleDateString("fr-FR");
+    evo.innerHTML = `<span class="j-tag ctx">Depuis ton passage du ${dRef} :</span>` +
+      (deltas.length ? deltas.map(x => {
+        const positif = (x.delta > 0) === AGREABLES.includes(x.e.id);
+        const coul = x.e.id === "surprise" ? "var(--muted)" : positif ? "#33685B" : "#B0533B";
+        return `<span class="j-tag" style="color:${coul}">${x.e.court} ${x.delta > 0 ? "▲" : "▼"} ${fmt(Math.abs(x.delta))}</span>`;
+      }).join("") : `<span class="j-tag ctx">profil stable, aucun mouvement d’un point ou plus — belle constance</span>`);
+  }else{
+    evo.innerHTML = "";
+  }
+  $("#btnGarder").hidden = resultatsGardesCe;
+  $("#gardeTexte").innerHTML = resultatsGardesCe
+    ? "<strong>Résultats gardés sur cet appareil ✓</strong> Ils nourriront ton journal, et ton prochain passage montrera l’évolution."
+    : "<strong>Suivre ton évolution&nbsp;?</strong> Garde ces résultats sur cet appareil — et seulement ici : au prochain passage tu verras ce qui a bougé, et ton journal pourra croiser ton test avec ton vécu.";
+}
+function garderResultats(){
+  const t = chargerTests();
+  if(!t || !lastNotes) return;
+  t.passages.push({ d: new Date().toISOString(), notes: { ...lastNotes } });
+  if(sauverTests(t)){ resultatsGardesCe = true; majGardeBox(); }
+}
+/* Croisement test ↔ vécu, affiché dans les motifs du journal */
+function motifsTestJournal(entrees){
+  const t = chargerTests();
+  if(!t || !t.passages.length) return [];
+  const dernier = t.passages[t.passages.length - 1];
+  const rec = entrees.filter(e => new Date(e.d).getTime() >= Date.now() - 90 * 864e5);
+  if(rec.length < 8) return [];
+  const freq = {};
+  rec.forEach(e => Object.keys(e.emos || {}).forEach(id => { freq[id] = (freq[id] || 0) + 1; }));
+  const part = id => (freq[id] || 0) / rec.length;
+  const ph = [];
+  const hautes = EMOTIONS.filter(e => (dernier.notes[e.id] || 0) >= 5.5)
+    .sort((a, b) => dernier.notes[b.id] - dernier.notes[a.id]).slice(0, 3);
+  for(const e of hautes){
+    if(part(e.id) >= .4){
+      ph.push(`Ton test plaçait ${nomEmo(e.id)} haut (${fmt(dernier.notes[e.id])}/10), et ton vécu le confirme : présente dans ${Math.round(part(e.id) * 100)} % de tes entrées.`);
+      break;
+    }
+  }
+  const topJ = Object.keys(freq).sort((a, b) => freq[b] - freq[a])[0];
+  if(topJ && part(topJ) >= .5 && dernier.notes[topJ] != null && dernier.notes[topJ] <= 2.5){
+    ph.push(`Écart intéressant : ${nomEmo(topJ)} était basse dans ton test (${fmt(dernier.notes[topJ])}/10), mais revient dans ${Math.round(part(topJ) * 100)} % de ton vécu — ton image de toi la sous-estime peut-être.`);
+  }
+  for(const e of hautes){
+    if(part(e.id) <= .15){
+      ph.push(`À l’inverse, ${nomEmo(e.id)} — élevée dans ton test (${fmt(dernier.notes[e.id])}/10) — apparaît peu dans ton quotidien (${Math.round(part(e.id) * 100)} %) : la situation imaginée touche peut-être plus fort que le réel.`);
+      break;
+    }
+  }
+  return ph.slice(0, 2);
+}
+
 /* ————— Auto-vérification (console) ————— */
 function runSelfTests(){
   const zeros = computeScores(SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, 0]))));
@@ -2544,6 +2656,7 @@ function runSelfTests(){
 let lastNotes = null;
 function finish(){
   lastNotes = computeScores(state.answers);
+  resultatsGardesCe = false;
   if(paywallActif() && niveauAcces === "aucun"){ ouvrirPaywall(); return; }
   renderResults(lastNotes);
   showView("v-resultats");
@@ -2552,6 +2665,7 @@ $("#navHome").addEventListener("click", () => showView("v-accueil"));
 $("#navJournal").addEventListener("click", () => { renderJournal(); showView("v-journal"); });
 $("#btnVersJournal").addEventListener("click", () => { renderJournal(); showView("v-journal"); });
 $("#btnJournalAjout").addEventListener("click", ajouterEntree);
+$("#btnGarder").addEventListener("click", garderResultats);
 $("#btnJournalExport").addEventListener("click", exporterJournal);
 $("#jImport").addEventListener("change", e => { if(e.target.files[0]) importerJournal(e.target.files[0]); e.target.value = ""; });
 $("#btnJournalVider").addEventListener("click", () => {
