@@ -36,7 +36,7 @@
   outline-offset:3px;
   border-radius:.5rem;
 }
-.btn:focus-visible, .j-chip:focus-visible, .seg:focus-visible, .opt:focus-visible{ outline-offset:4px; }
+.btn:focus-visible, .j-chip:focus-visible, .seg:focus-visible{ outline-offset:4px; }
 :root{
   --bg:#F8F4EC;
   --card:#FFFDF8;
@@ -183,11 +183,6 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .j-tag img{ width:1.1rem; height:1.1rem; border-radius:999px; object-fit:cover; }
 .j-tag.ctx{ color:var(--muted); border-style:dashed; }
 .j-txt{ font-size:.88rem; color:#555061; margin-top:.5rem; }
-.perso-opt{
-  display:flex; align-items:center; gap:.55rem; margin-top:1rem;
-  font-size:.82rem; font-weight:600; color:var(--muted); cursor:pointer;
-}
-.perso-opt input{ accent-color:var(--sage); width:1.05rem; height:1.05rem; }
 .j-triche{ margin:.2rem 0 .8rem; }
 .j-triche summary{
   list-style:none; cursor:pointer; user-select:none;
@@ -408,7 +403,7 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 @media (min-width:880px){
   .res-grid{ grid-template-columns:repeat(12,1fr); }
   .res-span-4{ grid-column:span 4; } .res-span-5{ grid-column:span 5; } .res-span-7{ grid-column:span 7; }
-  .res-span-8{ grid-column:span 8; } .res-span-12{ grid-column:span 12; }
+  .res-span-12{ grid-column:span 12; }
 }
 .res-grid > *{ min-width:0; }
 .res-card .core{ height:100%; padding:1.9rem 1.9rem; }
@@ -640,8 +635,7 @@ footer p + p{ margin-top:.3rem; }
   .core{ padding:1.5rem 1.3rem; }
   .view{ padding-top:6.3rem; }
   .floatnav .privacy-chip .txt{ display:none; }
-  .int-btn .l{ font-size:.5rem; }
-  .hero{ padding-bottom:3rem; }
+    .hero{ padding-bottom:3rem; }
 }
 @media (prefers-reduced-motion: reduce){
   *{ transition-duration:.01ms !important; animation-duration:.01ms !important; }
@@ -663,7 +657,7 @@ footer p + p{ margin-top:.3rem; }
   </span>
 </nav>
 
-<main id="app">
+<main>
 
   <!-- ——————— ACCUEIL ——————— -->
   <section id="v-accueil" class="view active" aria-label="Accueil">
@@ -1134,7 +1128,13 @@ footer p + p{ margin-top:.3rem; }
 <footer>
   <p><b>Boussole émotionnelle</b> — un outil de découverte de soi, fait avec soin.</p>
   <p>Tes réponses et ton journal ne quittent jamais ton navigateur · ne remplace pas l’avis d’un professionnel de santé.</p>
-  <p style="margin-top:.6rem"><button class="linklike" id="btnFooterMethode">La méthode et ses limites</button></p>
+  <p style="margin-top:.6rem">
+    <button class="linklike" id="btnFooterMethode">La méthode et ses limites</button> ·
+    <a class="linklike" href="guide/">Le guide des émotions</a> ·
+    <a class="linklike" href="legal/mentions-legales.html">Mentions légales</a> ·
+    <a class="linklike" href="legal/confidentialite.html">Confidentialité</a> ·
+    <a class="linklike" href="legal/cgv.html">Conditions de vente</a>
+  </p>
 </footer>
 
 <script>
@@ -1537,10 +1537,6 @@ const DESAGREABLES = ["tristesse","colere","peur","degout","anxiete","honte","cu
 const TOUTES = SITUATIONS.map((_, k) => k);
 /* Ordre de priorité quand le test est raccourci : les 12 premières couvrent
    toutes les émotions ; chaque situation réelle ajoutée en retire deux. */
-/* Le test standard présente TAILLE_TEST situations (les premières de PRIORITE,
-   choisies pour couvrir chaque émotion au moins 4 fois) ; chaque moment réel
-   exprimé en retire deux, avec un plancher de 8 — les 8 premières de PRIORITE
-   couvrent encore chaque émotion au moins 2 fois, complétées par les moments réels. */
 const TAILLE_TEST = 16;
 /* Trois jeux de 16 situations puisés dans la banque de 24, alternés à chaque nouveau
    passage gardé : 8 scènes sur 16 changent d'un tour à l'autre (fini l'effet « je me
@@ -1957,7 +1953,7 @@ function listeCombos(notes){
 /* ————— Synthèse finale (5 à 8 phrases, générée à partir des notes) ————— */
 function buildSynthese(notes, tri, mAgr, mDes, basses){
   const HI = 5.5, LO = 2;
-  const nm = e => e.art + e.nom.toLowerCase();
+  const nm = e => nomEmo(e.id);
   const ph = [];
 
   const [t1, t2, t3] = tri;
@@ -2277,6 +2273,18 @@ function arreterRoulette(){
   $("#carteImg").style.display = "";
 }
 
+/* Un seul chemin de téléchargement, quel que soit le contexte d'exécution */
+async function telechargerFichier(nom, blob){
+  if(dlCapacite){
+    try{ await dlCapacite.save({ filename: nom, data: blob }); }catch(_){}
+    return;
+  }
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = nom;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
 let carteBlob = null;
 /* Dans l'app claude.ai (artifact), le téléchargement passe par une capacité dédiée */
 let dlCapacite = null;
@@ -2311,16 +2319,7 @@ async function ouvrirCarte(){
 }
 async function telechargerCarte(){
   if(!carteBlob) return;
-  if(dlCapacite){
-    try{ await dlCapacite.save({ filename:"boussole-emotionnelle.png", data: carteBlob }); }
-    catch(_){ /* refus du viewer ou limite : on n'insiste pas */ }
-    return;
-  }
-  const url = URL.createObjectURL(carteBlob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "boussole-emotionnelle.png";
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  await telechargerFichier("boussole-emotionnelle.png", carteBlob);
 }
 async function partagerCarte(){
   if(!carteBlob) return;
@@ -2332,7 +2331,6 @@ async function partagerCarte(){
 }
 
 /* ————— Dossier d'analyse complet (offre payante) ————— */
-let rapportDebloque = false;
 
 function planTrenteJours(notes){
   const desTri = DESAGREABLES.map(id => EMOTIONS.find(e => e.id === id)).sort((a, b) => notes[b.id] - notes[a.id]);
@@ -2592,7 +2590,6 @@ function motifsJournal(entrees){
   const freq = {};
   rec.forEach(e => Object.keys(e.emos || {}).forEach(id => { freq[id] = (freq[id] || 0) + 1; }));
   const parFreq = Object.keys(freq).sort((a, b) => freq[b] - freq[a]);
-  const nomDe = id => { const e = EMOTIONS.find(x => x.id === id); return e ? e.art + e.nom.toLowerCase() : id; };
 
   const topDes = parFreq.find(id => DESAGREABLES.includes(id));
   if(topDes){
@@ -2602,14 +2599,14 @@ function motifsJournal(entrees){
     avec.forEach(e => (e.ctx || []).forEach(c => { ctxN[c] = (ctxN[c] || 0) + 1; }));
     const ctxTop = Object.keys(ctxN).sort((a, b) => ctxN[b] - ctxN[a])[0];
     if(ctxTop && ctxN[ctxTop] >= 3 && ctxN[ctxTop] / avec.length >= .5){
-      ph.push(`${maj(nomDe(topDes))} apparaît surtout en contexte « ${ctxTop} » (${Math.round(ctxN[ctxTop] / avec.length * 100)} % de ses apparitions).`);
+      ph.push(`${maj(nomEmo(topDes))} apparaît surtout en contexte « ${ctxTop} » (${Math.round(ctxN[ctxTop] / avec.length * 100)} % de ses apparitions).`);
     }
     /* jour de semaine dominant */
     const jN = {};
     avec.forEach(e => { const j = JOURS_FR[new Date(e.d).getDay()]; jN[j] = (jN[j] || 0) + 1; });
     const jTop = Object.keys(jN).sort((a, b) => jN[b] - jN[a])[0];
     if(jTop && jN[jTop] >= 3 && jN[jTop] / avec.length >= .4){
-      ph.push(`${maj(nomDe(topDes))} revient souvent le ${jTop} — un motif à observer.`);
+      ph.push(`${maj(nomEmo(topDes))} revient souvent le ${jTop} — un motif à observer.`);
     }
     /* tendance d'intensité sur 4 semaines */
     const coupe = Date.now() - 14 * 864e5;
@@ -2617,7 +2614,7 @@ function motifsJournal(entrees){
     const m1 = moy(avec.filter(e => new Date(e.d).getTime() >= coupe));
     const m0 = moy(avec.filter(e => { const t = new Date(e.d).getTime(); return t < coupe && t >= Date.now() - 28 * 864e5; }));
     if(m1 != null && m0 != null && Math.abs(m1 - m0) >= .7){
-      ph.push(`Sur les deux dernières semaines, l’intensité de ${nomDe(topDes)} est en ${m1 > m0 ? "hausse" : "baisse"} par rapport aux deux précédentes.`);
+      ph.push(`Sur les deux dernières semaines, l’intensité de ${nomEmo(topDes)} est en ${m1 > m0 ? "hausse" : "baisse"} par rapport aux deux précédentes.`);
     }
   }
   const topAgr = parFreq.find(id => AGREABLES.includes(id));
@@ -2627,7 +2624,7 @@ function motifsJournal(entrees){
     avec.forEach(e => (e.ctx || []).forEach(c => { ctxN[c] = (ctxN[c] || 0) + 1; }));
     const ctxTop = Object.keys(ctxN).sort((a, b) => ctxN[b] - ctxN[a])[0];
     if(ctxTop && ctxN[ctxTop] >= 3 && ctxN[ctxTop] / avec.length >= .5){
-      ph.push(`Bonne nouvelle : ${nomDe(topAgr)} fleurit surtout en contexte « ${ctxTop} » — une source à cultiver.`);
+      ph.push(`Bonne nouvelle : ${nomEmo(topAgr)} fleurit surtout en contexte « ${ctxTop} » — une source à cultiver.`);
     }
   }
   /* le corps comme annonciateur : sensation la plus liée à l'émotion dominante */
@@ -2638,7 +2635,7 @@ function motifsJournal(entrees){
     avecSens.forEach(e => e.sens.forEach(s => { sN[s] = (sN[s] || 0) + 1; }));
     const sTop = Object.keys(sN).sort((a, b) => sN[b] - sN[a])[0];
     if(sTop && sN[sTop] >= 3 && sN[sTop] / avecSens.length >= .5){
-      ph.push(`Ton corps t’annonce ${nomDe(top1)} par « ${sTop.toLowerCase()} » — présent dans ${Math.round(sN[sTop] / avecSens.length * 100)} % de ces moments.`);
+      ph.push(`Ton corps t’annonce ${nomEmo(top1)} par « ${sTop.toLowerCase()} » — présent dans ${Math.round(sN[sTop] / avecSens.length * 100)} % de ces moments.`);
     }
   }
   /* élan et besoin dominants face à l'émotion désagréable la plus fréquente */
@@ -2648,13 +2645,13 @@ function motifsJournal(entrees){
     avec.forEach(e => { if(e.elan) eN[e.elan] = (eN[e.elan] || 0) + 1; });
     const eTop = Object.keys(eN).sort((a, b) => eN[b] - eN[a])[0];
     if(eTop && eN[eTop] >= 3 && eN[eTop] / avec.length >= .5){
-      ph.push(`Face à ${nomDe(topDes)}, ton premier élan est le plus souvent « ${eTop.toLowerCase()} ».`);
+      ph.push(`Face à ${nomEmo(topDes)}, ton premier élan est le plus souvent « ${eTop.toLowerCase()} ».`);
     }
     const iN = {};
     avec.forEach(e => (e.imp || []).forEach(c => { iN[c] = (iN[c] || 0) + 1; }));
     const iTop = Object.keys(iN).sort((a, b) => iN[b] - iN[a])[0];
     if(iTop && iN[iTop] >= 3 && iN[iTop] / avec.length >= .5){
-      ph.push(`Derrière ${nomDe(topDes)}, ce qui est touché le plus souvent : « ${iTop} ».`);
+      ph.push(`Derrière ${nomEmo(topDes)}, ce qui est touché le plus souvent : « ${iTop} ».`);
     }
   }
   /* progression de la précision émotionnelle (question « es-tu sûr·e ? ») */
@@ -2754,15 +2751,7 @@ async function exporterJournal(){
   if(!j || !j.entrees.length){ $("#jFeedback2").textContent = "Rien à exporter pour l’instant."; return; }
   const nom = `boussole-journal-${new Date().toISOString().slice(0, 10)}.json`;
   const blob = new Blob([JSON.stringify(j, null, 2)], { type:"application/json" });
-  if(dlCapacite){
-    try{ await dlCapacite.save({ filename: nom, data: blob }); }catch(_){}
-    return;
-  }
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = nom;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  await telechargerFichier(nom, blob);
 }
 function importerJournal(fichier){
   const lecteur = new FileReader();
@@ -2997,15 +2986,8 @@ function texteICS(){
 async function creerRappel(){
   const blob = new Blob([texteICS()], { type:"text/calendar" });
   const note = $("#rappelNote");
-  if(dlCapacite){
-    try{ await dlCapacite.save({ filename:"journal-emotions.ics", data: blob }); }catch(_){}
-    return;
-  }
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "journal-emotions.ics";
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  await telechargerFichier("journal-emotions.ics", blob);
+  if(dlCapacite) return;
   note.textContent = "Fichier téléchargé : ouvre-le pour ajouter le rappel de 21 h à ton agenda (tu peux changer l’heure ensuite).";
   setTimeout(() => { note.textContent = ""; }, 8000);
 }

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://projectv0.github.io/boussole-emotionnelle/sitemap.xml

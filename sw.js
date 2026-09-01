@@ -1,6 +1,6 @@
 /* Service worker — met le site en cache pour un usage hors connexion.
    Stratégie : réseau d'abord (pour recevoir les mises à jour), cache en secours. */
-const CACHE = "boussole-v7";
+const CACHE = "boussole-v8";
 const ESSENTIELS = ["./", "./index.html", "./manifest.webmanifest", "./icone-192.png", "./icone-512.png"];
 
 self.addEventListener("install", e => {
