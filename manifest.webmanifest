@@ -1,0 +1,30 @@
+{
+  "name": "Boussole émotionnelle",
+  "short_name": "Boussole",
+  "description": "Comprendre tes émotions, en douceur — test et journal, 100 % sur ton appareil.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F8F4EC",
+  "theme_color": "#F8F4EC",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icone-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
