@@ -119,14 +119,6 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
   padding:.4rem .8rem; border-radius:999px;
 }
 .privacy-chip .dot{ width:.45rem; height:.45rem; border-radius:999px; background:var(--sage); box-shadow:0 0 0 3px rgba(63,130,113,.15); }
-.nav-journal{
-  display:flex; align-items:center; gap:.35rem;
-  font-size:.8rem; font-weight:700; color:var(--ink);
-  padding:.4rem .8rem; border-radius:999px;
-  transition:background .5s var(--ease);
-}
-.nav-journal:hover{ background:rgba(45,40,51,.05); }
-@media (max-width:640px){ .nav-journal .txt{ display:none; } }
 
 /* ————— Journal des émotions ————— */
 .j-label{ font-size:.86rem; font-weight:700; margin:.4rem 0 .6rem; }
@@ -627,7 +619,6 @@ footer p + p{ margin-top:.3rem; }
     <span class="logo" aria-hidden="true"><img src="data:image/webp;base64,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" alt=""></span>
     <span>Boussole émotionnelle</span>
   </button>
-  <button class="nav-journal" id="navJournal" title="Ouvrir mon journal des émotions">📖 <span class="txt">Journal</span></button>
   <span class="privacy-chip" title="Tout se passe dans ton navigateur : rien n’est jamais envoyé sur internet.">
     <span class="dot" aria-hidden="true"></span><span class="txt">100&nbsp;% privé</span>
   </span>
@@ -736,13 +727,13 @@ footer p + p{ margin-top:.3rem; }
     </div>
   </section>
 
-  <!-- ——————— SITUATIONS RÉELLES (avant le test, esprit journal) ——————— -->
-  <section id="v-perso" class="view" aria-label="Tes situations réelles">
+  <!-- ——————— JOURNAL DES ÉMOTIONS (étape du parcours : le réel avant le test) ——————— -->
+  <section id="v-perso" class="view" aria-label="Journal des émotions">
     <div class="test-wrap">
       <div class="section-head">
-        <div class="eyebrow">Étape 2 · Partir du réel</div>
-        <h2>Des moments vécus à exprimer&nbsp;?</h2>
-        <p>C’est l’esprit du journal : le réel d’abord. Si un moment récent t’a marqué·e — une dispute, une bonne nouvelle, un message resté sans réponse — exprime-le ici : il comptera dans tes résultats, et le test sera raccourci d’autant. Si rien ne te vient, passe simplement au test guidé.</p>
+        <div class="eyebrow">Étape 2 · Ton journal des émotions</div>
+        <h2>Journal des émotions</h2>
+        <p>Le réel d’abord. Si un moment récent t’a marqué·e — une dispute, une bonne nouvelle, un message resté sans réponse — exprime-le ici : il comptera dans tes résultats, rejoindra ton journal, et raccourcira le test d’autant (jusqu’à 5 situations). Si rien ne te vient, commence simplement le test.</p>
       </div>
       <div class="shell"><div class="core">
         <p class="j-label">Le moment</p>
@@ -750,17 +741,40 @@ footer p + p{ margin-top:.3rem; }
         <p class="j-label">Ce que ça a éveillé en toi</p>
         <p class="eval-legende">Tout démarre à « pas du tout » : règle seulement ce qui a bougé.</p>
         <div class="eval-rows" id="persoRows"></div>
-        <label class="perso-opt"><input type="checkbox" id="persoVersJournal" checked> Ajouter aussi ce moment à mon journal (reste sur cet appareil)</label>
+        <details class="j-triche" style="margin-top:1rem">
+          <summary>➕ Aller plus loin (30 s) — contexte, corps, élan, ce qui compte</summary>
+          <p class="j-label">Le contexte</p>
+          <div class="j-ctx" id="jCtx"></div>
+          <p class="j-label">Ton corps, là — il est comment&nbsp;?</p>
+          <div class="j-ctx" id="jCorps"></div>
+          <p class="j-label">Qu’est-ce que tu remarques physiquement&nbsp;?</p>
+          <div class="j-ctx" id="jSens"></div>
+          <p class="j-label">Qu’est-ce que ça te donne envie de faire&nbsp;?</p>
+          <div class="j-ctx" id="jElan"></div>
+          <p class="j-label">Qu’est-ce qui compte, là-dedans&nbsp;? <span>(2 max)</span></p>
+          <div class="j-ctx" id="jImp"></div>
+          <p class="j-label">À quel point es-tu sûr·e de ta lecture&nbsp;?</p>
+          <div class="j-ctx" id="jConf"></div>
+        </details>
         <div style="text-align:center; margin-top:1.2rem">
           <button class="btn btn-ghost" id="btnPersoAjout">Ajouter cette situation <span class="ico" aria-hidden="true">＋</span></button>
         </div>
         <p class="copy-feedback" id="persoInfo" role="status"></p>
+        <p style="text-align:center; font-size:.74rem; color:var(--faint)" id="jStockNote"></p>
       </div></div>
       <div class="test-nav">
         <button class="btn btn-ghost" id="btnPersoRetour"><span class="ico" style="order:-1" aria-hidden="true">←</span> Les émotions</button>
-        <button class="btn btn-primary" id="btnPersoContinuer">Continuer vers le test <span class="ico" aria-hidden="true">→</span></button>
+        <button class="btn btn-primary" id="btnPersoContinuer">Commencer le test <span class="ico" aria-hidden="true">→</span></button>
         <div class="next-hint" id="persoCompte" style="text-align:center; flex-basis:100%"></div>
       </div>
+      <div id="jMotifs"></div>
+      <div id="jHistorique"></div>
+      <div class="res-actions" id="jActions" hidden>
+        <button class="btn btn-ghost" id="btnJournalExport">Exporter une sauvegarde <span class="ico" aria-hidden="true">⬇</span></button>
+        <label class="btn btn-ghost" style="cursor:pointer">Importer <span class="ico" aria-hidden="true">⬆</span><input type="file" id="jImport" accept=".json,application/json" hidden></label>
+        <button class="btn btn-ghost" id="btnJournalVider">Tout effacer <span class="ico" aria-hidden="true">🗑</span></button>
+      </div>
+      <p class="copy-feedback" id="jFeedback2" role="status"></p>
     </div>
   </section>
 
@@ -793,65 +807,6 @@ footer p + p{ margin-top:.3rem; }
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ——————— JOURNAL DES ÉMOTIONS (stocké uniquement sur l'appareil) ——————— -->
-  <section id="v-journal" class="view" aria-label="Journal des émotions">
-    <div class="section-head">
-      <div class="eyebrow">Ton journal</div>
-      <h2>Journal des émotions</h2>
-      <p>Deux minutes pour un moment réel, avec les mêmes questions à chaque fois — c’est le rituel qui fait apparaître les motifs : ce qui déclenche quoi, comment ton corps te parle, et ce qui compte vraiment pour toi.</p>
-    </div>
-    <div class="callout callout-privacy">
-      <span class="emo" aria-hidden="true">📱</span>
-      <p><strong>Tout reste sur cet appareil.</strong> Tes entrées vivent dans ce navigateur et ne sont jamais envoyées sur internet. Pense à exporter une sauvegarde de temps en temps (bouton en bas de page).</p>
-    </div>
-    <div id="jIndispo" class="callout callout-warn" hidden>
-      <span class="emo" aria-hidden="true">⚠️</span>
-      <p><strong>Le stockage local n’est pas disponible ici.</strong> Ouvre le site officiel dans ton navigateur habituel (pas en navigation privée) pour utiliser le journal.</p>
-    </div>
-    <div class="shell" id="jSaisieBox"><div class="core">
-      <div class="res-kicker">Check-in · les mêmes questions, à chaque fois</div>
-      <p class="j-label">1 · Qu’est-ce qui s’est passé&nbsp;?</p>
-      <textarea class="j-note" id="jNote" rows="2" maxlength="500" style="margin-top:0" placeholder="Ex. : j’ai envoyé un message important… et deux jours plus tard, toujours pas de réponse."></textarea>
-      <div class="j-ctx" id="jCtx" style="margin-top:.7rem"></div>
-
-      <p class="j-label">2 · Ton corps, là — il est comment&nbsp;?</p>
-      <div class="j-ctx" id="jCorps"></div>
-
-      <p class="j-label">3 · Qu’est-ce que tu remarques physiquement&nbsp;? <span>(optionnel)</span></p>
-      <div class="j-ctx" id="jSens"></div>
-
-      <p class="j-label">4 · Quels mots décrivent ce que tu ressens&nbsp;? <span>(1 à 3)</span></p>
-      <p class="eval-legende" id="jCible" hidden></p>
-      <details class="j-triche"><summary>🗂️ Besoin d’aide pour trouver le mot ? Ouvre l’antisèche</summary><div id="jTriche"></div></details>
-      <div class="j-emos" id="jEmos"></div>
-      <div id="jIntensites"></div>
-
-      <div id="jConfBloc" hidden>
-        <p class="j-label">5 · À quel point es-tu sûr·e de ces mots&nbsp;?</p>
-        <div class="j-ctx" id="jConf"></div>
-      </div>
-
-      <p class="j-label">6 · Qu’est-ce que ça te donne envie de faire&nbsp;? <span>(optionnel)</span></p>
-      <div class="j-ctx" id="jElan"></div>
-
-      <p class="j-label">7 · Qu’est-ce qui compte, là-dedans&nbsp;? <span>(2 max, optionnel)</span></p>
-      <div class="j-ctx" id="jImp"></div>
-
-      <div style="text-align:center; margin-top:1.4rem">
-        <button class="btn btn-primary" id="btnJournalAjout" disabled>Ajouter au journal <span class="ico" aria-hidden="true">✎</span></button>
-      </div>
-      <p class="copy-feedback" id="jFeedback" role="status"></p>
-    </div></div>
-    <div id="jMotifs"></div>
-    <div id="jHistorique"></div>
-    <div class="res-actions">
-      <button class="btn btn-ghost" id="btnJournalExport">Exporter une sauvegarde <span class="ico" aria-hidden="true">⬇</span></button>
-      <label class="btn btn-ghost" style="cursor:pointer">Importer <span class="ico" aria-hidden="true">⬆</span><input type="file" id="jImport" accept=".json,application/json" hidden></label>
-      <button class="btn btn-ghost" id="btnJournalVider">Tout effacer <span class="ico" aria-hidden="true">🗑</span></button>
-    </div>
-    <p class="copy-feedback" id="jFeedback2" role="status"></p>
   </section>
 
   <!-- ——————— DOSSIER D'ANALYSE (contenu débloqué) ——————— -->
@@ -1019,8 +974,8 @@ footer p + p{ margin-top:.3rem; }
     </div>
     <div class="copy-feedback" id="copyFeedback" role="status"></div>
     <div class="soutien">
-      <p>Et ensuite ? Tes émotions bougent chaque jour — ton journal est là pour les suivre.</p>
-      <button class="btn btn-ghost" id="btnVersJournal">📖 Ouvrir mon journal des émotions <span class="ico" aria-hidden="true">→</span></button>
+      <p>Tes émotions bougent chaque jour — ton journal les suit, moment après moment.</p>
+      <button class="btn btn-ghost" id="btnVersJournal">📖 Ajouter un moment à mon journal <span class="ico" aria-hidden="true">→</span></button>
     </div>
     <div class="soutien" id="soutienBox" hidden>
       <p>Ce test t’a été utile ? Il restera toujours gratuit et sans pub.</p>
@@ -1565,6 +1520,10 @@ function gotoQuestion(idx){
   }, 250);
 }
 
+function groupeChips(sel, liste, estSel, clic, rerender){
+  $(sel).innerHTML = liste.map((c, k) => `<button class="j-chip${estSel(c, k) ? " sel" : ""}" data-k="${k}">${c}</button>`).join("");
+  $(sel).querySelectorAll(".j-chip").forEach(b => b.addEventListener("click", () => { clic(liste[+b.dataset.k], +b.dataset.k); rerender(); }));
+}
 /* ————— Situations réelles (avant le test, esprit journal) ————— */
 let persoNotes = null;
 const persoVierge = () => Object.fromEntries(EMOTIONS.map(e => [e.id, 0]));
@@ -1582,36 +1541,56 @@ function renderPerso(){
       persoNotes[row.dataset.emo] = +b.dataset.v;
       renderPerso();
     })));
-  document.querySelector(".perso-opt").style.display = chargerJournal() === null ? "none" : "";
+  /* extras optionnels du check-in (contexte, corps, sensations, élan, valeurs, sûreté) */
+  groupeChips("#jCtx", CONTEXTES, c => saisie.ctx.has(c), c => saisie.ctx.has(c) ? saisie.ctx.delete(c) : saisie.ctx.add(c), renderPerso);
+  groupeChips("#jCorps", CORPS_NIVEAUX, (c, k) => saisie.corps === k + 1, (c, k) => { saisie.corps = saisie.corps === k + 1 ? null : k + 1; }, renderPerso);
+  groupeChips("#jSens", SENSATIONS, c => saisie.sens.has(c), c => saisie.sens.has(c) ? saisie.sens.delete(c) : saisie.sens.add(c), renderPerso);
+  groupeChips("#jElan", ELANS, c => saisie.elan === c, c => { saisie.elan = saisie.elan === c ? null : c; }, renderPerso);
+  groupeChips("#jImp", IMPORTANTS, c => saisie.imp.has(c), c => {
+    if(saisie.imp.has(c)) saisie.imp.delete(c);
+    else if(saisie.imp.size < 2) saisie.imp.add(c);
+  }, renderPerso);
+  groupeChips("#jConf", CONFIANCES, (c, k) => saisie.conf === k + 1, (c, k) => { saisie.conf = saisie.conf === k + 1 ? null : k + 1; }, renderPerso);
   majPersoCompte();
+  renderJournalBlocs();
 }
 function majPersoCompte(){
-  const R = state.reelles.length;
+  const R = state.reelles.length, MAXR = 5;
   const n = Math.max(12, N - 2 * R);
   $("#persoCompte").textContent = R === 0
-    ? `Aucune situation réelle pour l’instant — le test complet t’attend : ${N} situations.`
-    : `${R} situation${R > 1 ? "s" : ""} réelle${R > 1 ? "s" : ""} ajoutée${R > 1 ? "s" : ""} ✓ — le test passe à ${n} situations imaginées.`;
+    ? `Rien à exprimer aujourd’hui ? Aucun souci — le test complet t’attend : ${N} situations.`
+    : `${R}/${MAXR} situation${R > 1 ? "s" : ""} exprimée${R > 1 ? "s" : ""} ✓ — le test passe à ${n} situations imaginées.`;
+  $("#btnPersoContinuer").innerHTML = (R === 0 ? "Commencer le test" : "Continuer vers le test") + ' <span class="ico" aria-hidden="true">→</span>';
+  $("#btnPersoAjout").disabled = R >= MAXR;
 }
 function ajouterPerso(){
+  if(state.reelles.length >= 5){
+    $("#persoInfo").textContent = "Cinq situations maximum par passage — c’est déjà très riche.";
+    return;
+  }
   if(!Object.values(persoNotes).some(v => v > 0)){
     $("#persoInfo").textContent = "Règle au moins une émotion au-dessus de « pas du tout ».";
     return;
   }
   state.reelles.push({ emos: { ...persoNotes } });
-  const txt = $("#persoTxt").value.trim();
-  if($("#persoVersJournal").checked){
-    const j = chargerJournal();
-    if(j){
-      const emosJ = {};
-      EMOTIONS.forEach(e => { if(persoNotes[e.id] > 0) emosJ[e.id] = persoNotes[e.id]; });
-      j.entrees.push({ d: new Date().toISOString(), emos: emosJ, ctx: [], note: txt });
-      sauverJournal(j);
-    }
+  /* la situation rejoint automatiquement le journal (sur l'appareil uniquement) */
+  const j = chargerJournal();
+  if(j){
+    const entree = { d: new Date().toISOString(), emos: {}, ctx: [...saisie.ctx], note: $("#persoTxt").value.trim() };
+    EMOTIONS.forEach(e => { if(persoNotes[e.id] > 0) entree.emos[e.id] = persoNotes[e.id]; });
+    if(saisie.corps) entree.corps = saisie.corps;
+    if(saisie.sens.size) entree.sens = [...saisie.sens];
+    if(saisie.conf) entree.conf = saisie.conf;
+    if(saisie.elan) entree.elan = saisie.elan;
+    if(saisie.imp.size) entree.imp = [...saisie.imp];
+    j.entrees.push(entree);
+    sauverJournal(j);
   }
   persoNotes = persoVierge();
+  saisie = saisieVierge();
   $("#persoTxt").value = "";
   renderPerso();
-  $("#persoInfo").textContent = "Situation ajoutée ✓ — elle comptera dans tes résultats.";
+  $("#persoInfo").textContent = "Situation ajoutée ✓ — elle compte dans tes résultats et rejoint ton journal.";
   setTimeout(() => { $("#persoInfo").textContent = ""; }, 3500);
 }
 
@@ -2462,75 +2441,16 @@ function motifsJournal(entrees){
 }
 const maj = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-function renderJournal(){
+function renderJournalBlocs(){
   const j = chargerJournal();
-  const indispo = j === null;
-  $("#jIndispo").hidden = !indispo;
-  $("#jSaisieBox").style.display = indispo ? "none" : "";
   $("#jMotifs").innerHTML = ""; $("#jHistorique").innerHTML = "";
-  if(indispo) return;
+  const dispo = j !== null;
+  $("#jStockNote").textContent = dispo
+    ? "📱 Chaque situation ajoutée rejoint ton journal — gardé sur cet appareil uniquement, jamais envoyé."
+    : "Stockage local indisponible ici : tes situations compteront pour le test, mais ne seront pas gardées.";
+  $("#jActions").hidden = !dispo || !j.entrees.length;
+  if(!dispo) return;
 
-  /* — saisie (le check-in) — */
-  const groupeChips = (sel, liste, estSel, clic) => {
-    $(sel).innerHTML = liste.map((c, k) => `<button class="j-chip${estSel(c, k) ? " sel" : ""}" data-k="${k}">${c}</button>`).join("");
-    $(sel).querySelectorAll(".j-chip").forEach(b => b.addEventListener("click", () => { clic(liste[+b.dataset.k], +b.dataset.k); renderJournal(); }));
-  };
-  groupeChips("#jCtx", CONTEXTES, c => saisie.ctx.has(c), c => saisie.ctx.has(c) ? saisie.ctx.delete(c) : saisie.ctx.add(c));
-  groupeChips("#jCorps", CORPS_NIVEAUX, (c, k) => saisie.corps === k + 1, (c, k) => { saisie.corps = saisie.corps === k + 1 ? null : k + 1; });
-  groupeChips("#jSens", SENSATIONS, c => saisie.sens.has(c), c => saisie.sens.has(c) ? saisie.sens.delete(c) : saisie.sens.add(c));
-  groupeChips("#jConf", CONFIANCES, (c, k) => saisie.conf === k + 1, (c, k) => { saisie.conf = saisie.conf === k + 1 ? null : k + 1; });
-  groupeChips("#jElan", ELANS, c => saisie.elan === c, c => { saisie.elan = saisie.elan === c ? null : c; });
-  groupeChips("#jImp", IMPORTANTS, c => saisie.imp.has(c), c => {
-    if(saisie.imp.has(c)) saisie.imp.delete(c);
-    else if(saisie.imp.size < 2) saisie.imp.add(c);
-  });
-
-  const tTests = chargerTests();
-  if(tTests && tTests.passages.length){
-    const dern = tTests.passages[tTests.passages.length - 1];
-    const cibles = EMOTIONS.filter(e => (dern.notes[e.id] || 0) >= 5)
-      .sort((a, b) => dern.notes[b.id] - dern.notes[a.id]).slice(0, 3);
-    $("#jCible").hidden = !cibles.length;
-    if(cibles.length) $("#jCible").textContent = `🎯 D’après ton dernier test, guette en priorité : ${cibles.map(e => e.court).join(", ")}.`;
-  }else{
-    $("#jCible").hidden = true;
-  }
-
-  if(!$("#jTriche").innerHTML){
-    $("#jTriche").innerHTML = EMOTIONS.map(e => `
-      <div class="j-triche-row"><img src="${ILLUS[e.id]}" alt=""><span><b>${e.nom}</b> — ${e.def}</span></div>`).join("");
-  }
-  $("#jEmos").innerHTML = EMOTIONS.map(e => `
-    <button class="j-chip${saisie.emos[e.id] != null ? " sel" : ""}" data-emo="${e.id}">
-      <img src="${ILLUS[e.id]}" alt="">${e.court}
-    </button>`).join("");
-  $("#jEmos").querySelectorAll(".j-chip").forEach(b => b.addEventListener("click", () => {
-    const id = b.dataset.emo;
-    if(saisie.emos[id] != null) delete saisie.emos[id];
-    else{
-      if(Object.keys(saisie.emos).length >= 3){ $("#jFeedback").textContent = "Trois émotions maximum par entrée — garde les plus fortes."; return; }
-      saisie.emos[id] = 2;
-    }
-    $("#jFeedback").textContent = "";
-    renderJournal();
-  }));
-  const nb = Object.keys(saisie.emos).length;
-  $("#jIntensites").innerHTML = Object.keys(saisie.emos).map(id => {
-    const e = EMOTIONS.find(x => x.id === id);
-    return `<div class="j-int-row" data-emo="${id}"><span class="nm">${e.court}</span>
-      <span class="eval-scale" style="justify-content:flex-start">
-        ${[1,2,3,4].map(v => `<button class="seg${saisie.emos[id] === v ? " sel" : ""}" data-v="${v}">${INTENSITES[v][1]}</button>`).join("")}
-      </span></div>`;
-  }).join("");
-  $("#jIntensites").querySelectorAll(".j-int-row").forEach(row =>
-    row.querySelectorAll(".seg").forEach(b => b.addEventListener("click", () => {
-      saisie.emos[row.dataset.emo] = +b.dataset.v;
-      renderJournal();
-    })));
-  $("#jConfBloc").hidden = nb === 0;
-  $("#btnJournalAjout").disabled = nb === 0;
-
-  /* — motifs & stats — */
   const E = j.entrees;
   if(E.length){
     const serie = serieJours(E);
@@ -2593,31 +2513,9 @@ function renderJournal(){
       if(!confirm("Supprimer cette entrée ?")) return;
       const jj = chargerJournal();
       jj.entrees = jj.entrees.filter(x => x.d !== b.dataset.d);
-      sauverJournal(jj); renderJournal();
+      sauverJournal(jj); renderJournalBlocs();
     }));
   }
-}
-function ajouterEntree(){
-  const j = chargerJournal();
-  if(!j) return;
-  const entree = {
-    d: new Date().toISOString(),
-    emos: { ...saisie.emos },
-    ctx: [...saisie.ctx],
-    note: $("#jNote").value.trim()
-  };
-  if(saisie.corps) entree.corps = saisie.corps;
-  if(saisie.sens.size) entree.sens = [...saisie.sens];
-  if(saisie.conf) entree.conf = saisie.conf;
-  if(saisie.elan) entree.elan = saisie.elan;
-  if(saisie.imp.size) entree.imp = [...saisie.imp];
-  j.entrees.push(entree);
-  if(!sauverJournal(j)){ $("#jFeedback").textContent = "Impossible d’enregistrer ici (stockage local indisponible)."; return; }
-  saisie = saisieVierge();
-  $("#jNote").value = "";
-  renderJournal();
-  $("#jFeedback").textContent = "C’est noté. À bientôt pour la prochaine entrée 🌱";
-  setTimeout(() => { $("#jFeedback").textContent = ""; }, 4000);
 }
 async function exporterJournal(){
   const j = chargerJournal();
@@ -2644,7 +2542,7 @@ function importerJournal(fichier){
       const vues = new Set(j.entrees.map(e => e.d));
       imp.entrees.forEach(e => { if(e && e.d && !vues.has(e.d)) j.entrees.push(e); });
       j.entrees.sort((a, b) => new Date(a.d) - new Date(b.d));
-      if(sauverJournal(j)){ renderJournal(); $("#jFeedback2").textContent = "Sauvegarde importée et fusionnée ✓"; }
+      if(sauverJournal(j)){ renderJournalBlocs(); $("#jFeedback2").textContent = "Sauvegarde importée et fusionnée ✓"; }
       else $("#jFeedback2").textContent = "Import lu, mais stockage local indisponible ici.";
     }catch(_){ $("#jFeedback2").textContent = "Ce fichier ne ressemble pas à une sauvegarde du journal."; }
     setTimeout(() => { $("#jFeedback2").textContent = ""; }, 5000);
@@ -2764,9 +2662,7 @@ function finish(){
   showView("v-resultats");
 }
 $("#navHome").addEventListener("click", () => showView("v-accueil"));
-$("#navJournal").addEventListener("click", () => { renderJournal(); showView("v-journal"); });
-$("#btnVersJournal").addEventListener("click", () => { renderJournal(); showView("v-journal"); });
-$("#btnJournalAjout").addEventListener("click", ajouterEntree);
+$("#btnVersJournal").addEventListener("click", () => { renderPerso(); showView("v-perso"); });
 $("#btnGarder").addEventListener("click", garderResultats);
 $("#btnJournalExport").addEventListener("click", exporterJournal);
 $("#jImport").addEventListener("change", e => { if(e.target.files[0]) importerJournal(e.target.files[0]); e.target.value = ""; });
@@ -2775,7 +2671,7 @@ $("#btnJournalVider").addEventListener("click", () => {
   if(!j || !j.entrees.length){ $("#jFeedback2").textContent = "Le journal est déjà vide."; return; }
   if(!confirm(`Effacer définitivement les ${j.entrees.length} entrées de ton journal ? (Pense à exporter d’abord.)`)) return;
   sauverJournal({ entrees: [] });
-  renderJournal();
+  renderJournalBlocs();
 });
 $("#btnStart").addEventListener("click", () => showView("v-emotions"));
 $("#btnStart2").addEventListener("click", () => showView("v-emotions"));
@@ -2848,6 +2744,7 @@ $("#btnRestart").addEventListener("click", () => {
   state.reelles = [];
   state.selection = [...TOUTES];
   persoNotes = null;
+  saisie = saisieVierge();
   $("#persoTxt").value = "";
   lastNotes = null;
   $("#copyFeedback").textContent = "";
