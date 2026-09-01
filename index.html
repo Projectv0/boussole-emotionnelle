@@ -642,12 +642,12 @@ footer p + p{ margin-top:.3rem; }
     <div class="section-head">
       <div class="eyebrow">Étape 1 · Faire connaissance</div>
       <h2>Les 14 émotions que nous allons explorer</h2>
-      <p>Prends une minute pour les parcourir : six émotions dites « de base », universelles, et huit émotions plus complexes ou sociales, tissées dans nos relations.</p>
+      <p>Prends une minute pour les parcourir : six émotions dites « de base », universelles ; six émotions sociales, tissées dans le lien aux autres ; et deux états intérieurs — l’anxiété et la sérénité — qui colorent le fond des journées.</p>
     </div>
 
     <div class="callout callout-heart">
       <span class="emo" aria-hidden="true">💜</span>
-      <p><strong>Aucune émotion n’est « bonne » ou « mauvaise ».</strong> Même les plus inconfortables ont une fonction utile : ce sont des messagères. Certaines sont simplement plus agréables à vivre que d’autres.</p>
+      <p><strong>Aucune émotion n’est « bonne » ou « mauvaise ».</strong> Même les plus inconfortables ont une fonction utile : ce sont des messagères. Certaines sont simplement plus agréables à vivre que d’autres. Et garde en tête que le corps est polyvalent : des joues qui chauffent peuvent dire la honte comme la colère, un cœur qui s’emballe la peur comme l’enthousiasme — c’est le contexte qui départage.</p>
     </div>
 
     <div class="emo-grid" id="emoGrid"><!-- rempli par le script --></div>
@@ -969,7 +969,7 @@ const EMOTIONS = [
   }
 },
 {
-  id:"anxiete", nom:"Anxiété", court:"Anxiété", art:"l’", emoji:"😰", color:"#AB7A43", cat:"sociale", val:"desagreable",
+  id:"anxiete", nom:"Anxiété", court:"Anxiété", art:"l’", emoji:"😰", color:"#AB7A43", cat:"etat", val:"desagreable",
   def:"Une inquiétude tournée vers l’avenir : la tête anticipe les problèmes possibles, le corps reste en tension, comme en veille permanente.",
   fn:"Elle t’aide à prévoir et à te préparer — tant qu’elle reste à sa juste place.",
   ex:"Refaire mentalement la liste de tout ce qui pourrait mal se passer, la veille d’un entretien.",
@@ -1041,7 +1041,7 @@ const EMOTIONS = [
   }
 },
 {
-  id:"serenite", nom:"Sérénité", court:"Sérénité", art:"la ", emoji:"🌿", color:"#63AFA4", cat:"sociale", val:"agreable",
+  id:"serenite", nom:"Sérénité", court:"Sérénité", art:"la ", emoji:"🌿", color:"#63AFA4", cat:"etat", val:"agreable",
   def:"Un calme posé : le corps est détendu, l’esprit tranquille, rien à fuir ni à conquérir dans l’instant.",
   fn:"Elle permet de récupérer, de prendre du recul et de savourer le présent.",
   ex:"Marcher sans but un dimanche matin et sentir que rien ne presse.",
@@ -1299,7 +1299,7 @@ function renderEmotionCards(){
     <div class="emo-card"><div class="shell shellx"><div class="core">
       <div class="emo-top">
         <div class="emo-glyph" style="border-color:${rgba(e.color,.28)}"><img src="${ILLUS[e.id]}" alt=""></div>
-        <div><h3>${e.nom}</h3><span class="emo-cat">${e.cat === "base" ? "Émotion de base" : "Émotion complexe & sociale"}</span></div>
+        <div><h3>${e.nom}</h3><span class="emo-cat">${e.cat === "base" ? "Émotion de base" : e.cat === "etat" ? "État intérieur" : "Émotion sociale"}</span></div>
       </div>
       <p class="def">${e.def}</p>
       <p class="fn"><b>Sa fonction :</b> ${e.fn}</p>
@@ -1979,7 +1979,7 @@ function renderRapport(notes){
     </div>
     <div class="rap-bloc">
       <h3>Comment lire ce dossier</h3>
-      <p>Prends-le comme une promenade, pas comme un bulletin de notes. Chaque fiche décrit une émotion telle qu’elle vit chez toi <i>en ce moment</i> — tes notes bougeront avec les saisons de ta vie. Les pratiques proposées sont des invitations : choisis celles qui te parlent, une ou deux suffisent pour commencer. Et souviens-toi : ce dossier éclaire, il ne diagnostique pas.</p>
+      <p>Prends-le comme une promenade, pas comme un bulletin de notes. Chaque fiche décrit une émotion telle qu’elle vit chez toi <i>en ce moment</i> — tes notes bougeront avec les saisons de ta vie. Un mot sur les manifestations décrites : le corps est polyvalent, et un même signal (joues qui chauffent, cœur qui s’emballe, ventre noué) peut servir plusieurs émotions — c’est le contexte qui permet de les distinguer. Les pratiques proposées sont des invitations : choisis celles qui te parlent, une ou deux suffisent pour commencer. Et souviens-toi : ce dossier éclaire, il ne diagnostique pas.</p>
     </div>
     ${fiches}
     <div class="rap-bloc">
