@@ -733,33 +733,44 @@ footer p + p{ margin-top:.3rem; }
       <div class="section-head">
         <div class="eyebrow">Étape 2 · Ton journal des émotions</div>
         <h2>Journal des émotions</h2>
-        <p>Le réel d’abord. Si un moment récent t’a marqué·e — une dispute, une bonne nouvelle, un message resté sans réponse — exprime-le ici : il comptera dans tes résultats, rejoindra ton journal, et raccourcira le test d’autant (jusqu’à 5 situations). Si rien ne te vient, commence simplement le test.</p>
+        <p>Le réel d’abord. Si un moment récent t’a marqué·e — une dispute, une bonne nouvelle, un message resté sans réponse — exprime-le avec le check-in : il rejoindra ton journal, comptera dans tes résultats et raccourcira le test d’autant (jusqu’à 5 moments par passage). Si rien ne te vient, commence simplement le test.</p>
+      </div>
+      <div class="callout callout-privacy">
+        <span class="emo" aria-hidden="true">📱</span>
+        <p><strong>Tout reste sur cet appareil.</strong> Tes moments rejoignent ton journal, dans ce navigateur uniquement — rien n’est jamais envoyé. Pense à exporter une sauvegarde de temps en temps (boutons en bas de page).</p>
       </div>
       <div class="shell"><div class="core">
-        <p class="j-label">Le moment</p>
-        <textarea id="persoTxt" class="j-note" rows="2" maxlength="500" style="margin-top:0" placeholder="Ex. : hier, un collègue a présenté mon idée en réunion sans me citer…"></textarea>
-        <p class="j-label">Ce que ça a éveillé en toi</p>
-        <p class="eval-legende">Tout démarre à « pas du tout » : règle seulement ce qui a bougé.</p>
-        <div class="eval-rows" id="persoRows"></div>
-        <details class="j-triche" style="margin-top:1rem">
-          <summary>➕ Aller plus loin (30 s) — contexte, corps, élan, ce qui compte</summary>
-          <p class="j-label">Le contexte</p>
-          <div class="j-ctx" id="jCtx"></div>
-          <p class="j-label">Ton corps, là — il est comment&nbsp;?</p>
-          <div class="j-ctx" id="jCorps"></div>
-          <p class="j-label">Qu’est-ce que tu remarques physiquement&nbsp;?</p>
-          <div class="j-ctx" id="jSens"></div>
-          <p class="j-label">Qu’est-ce que ça te donne envie de faire&nbsp;?</p>
-          <div class="j-ctx" id="jElan"></div>
-          <p class="j-label">Qu’est-ce qui compte, là-dedans&nbsp;? <span>(2 max)</span></p>
-          <div class="j-ctx" id="jImp"></div>
-          <p class="j-label">À quel point es-tu sûr·e de ta lecture&nbsp;?</p>
+        <div class="res-kicker">Check-in · les mêmes questions, à chaque fois</div>
+        <p class="j-label">1 · Qu’est-ce qui s’est passé&nbsp;?</p>
+        <textarea class="j-note" id="jNote" rows="2" maxlength="500" style="margin-top:0" placeholder="Ex. : j’ai envoyé un message important… et deux jours plus tard, toujours pas de réponse."></textarea>
+        <div class="j-ctx" id="jCtx" style="margin-top:.7rem"></div>
+
+        <p class="j-label">2 · Ton corps, là — il est comment&nbsp;?</p>
+        <div class="j-ctx" id="jCorps"></div>
+
+        <p class="j-label">3 · Qu’est-ce que tu remarques physiquement&nbsp;? <span>(optionnel)</span></p>
+        <div class="j-ctx" id="jSens"></div>
+
+        <p class="j-label">4 · Quels mots décrivent ce que tu ressens&nbsp;? <span>(1 à 3)</span></p>
+        <details class="j-triche"><summary>🗂️ Besoin d’aide pour trouver le mot ? Ouvre l’antisèche</summary><div id="jTriche"></div></details>
+        <div class="j-emos" id="jEmos"></div>
+        <div id="jIntensites"></div>
+
+        <div id="jConfBloc" hidden>
+          <p class="j-label">5 · À quel point es-tu sûr·e de ces mots&nbsp;?</p>
           <div class="j-ctx" id="jConf"></div>
-        </details>
-        <div style="text-align:center; margin-top:1.2rem">
-          <button class="btn btn-ghost" id="btnPersoAjout">Ajouter cette situation <span class="ico" aria-hidden="true">＋</span></button>
         </div>
-        <p class="copy-feedback" id="persoInfo" role="status"></p>
+
+        <p class="j-label">6 · Qu’est-ce que ça te donne envie de faire&nbsp;? <span>(optionnel)</span></p>
+        <div class="j-ctx" id="jElan"></div>
+
+        <p class="j-label">7 · Qu’est-ce qui compte, là-dedans&nbsp;? <span>(2 max, optionnel)</span></p>
+        <div class="j-ctx" id="jImp"></div>
+
+        <div style="text-align:center; margin-top:1.4rem">
+          <button class="btn btn-primary" id="btnMomentAjout" disabled>Ajouter au journal <span class="ico" aria-hidden="true">✎</span></button>
+        </div>
+        <p class="copy-feedback" id="jFeedback" role="status"></p>
         <p style="text-align:center; font-size:.74rem; color:var(--faint)" id="jStockNote"></p>
       </div></div>
       <div class="test-nav">
@@ -1524,33 +1535,57 @@ function groupeChips(sel, liste, estSel, clic, rerender){
   $(sel).innerHTML = liste.map((c, k) => `<button class="j-chip${estSel(c, k) ? " sel" : ""}" data-k="${k}">${c}</button>`).join("");
   $(sel).querySelectorAll(".j-chip").forEach(b => b.addEventListener("click", () => { clic(liste[+b.dataset.k], +b.dataset.k); rerender(); }));
 }
-/* ————— Situations réelles (avant le test, esprit journal) ————— */
-let persoNotes = null;
-const persoVierge = () => Object.fromEntries(EMOTIONS.map(e => [e.id, 0]));
+/* ————— Journal des émotions — étape du parcours (jusqu'à 5 moments par passage) ————— */
 function renderPerso(){
-  if(!persoNotes) persoNotes = persoVierge();
-  $("#persoRows").innerHTML = EMOTIONS.map(e => `
-    <div class="eval-row${persoNotes[e.id] > 0 ? " ok" : ""}" data-emo="${e.id}">
-      <span class="eval-id"><img src="${ILLUS[e.id]}" alt=""><span class="nm">${e.court}</span></span>
-      <span class="eval-scale">
-        ${[0,1,2,3,4].map(v => `<button class="seg${persoNotes[e.id] === v ? " sel" : ""}" data-v="${v}">${INTENSITES[v][1]}</button>`).join("")}
-      </span>
-    </div>`).join("");
-  $("#persoRows").querySelectorAll(".eval-row").forEach(row =>
-    row.querySelectorAll(".seg").forEach(b => b.addEventListener("click", () => {
-      persoNotes[row.dataset.emo] = +b.dataset.v;
-      renderPerso();
-    })));
-  /* extras optionnels du check-in (contexte, corps, sensations, élan, valeurs, sûreté) */
+  /* le check-in, identique à la page journal */
   groupeChips("#jCtx", CONTEXTES, c => saisie.ctx.has(c), c => saisie.ctx.has(c) ? saisie.ctx.delete(c) : saisie.ctx.add(c), renderPerso);
   groupeChips("#jCorps", CORPS_NIVEAUX, (c, k) => saisie.corps === k + 1, (c, k) => { saisie.corps = saisie.corps === k + 1 ? null : k + 1; }, renderPerso);
   groupeChips("#jSens", SENSATIONS, c => saisie.sens.has(c), c => saisie.sens.has(c) ? saisie.sens.delete(c) : saisie.sens.add(c), renderPerso);
+  groupeChips("#jConf", CONFIANCES, (c, k) => saisie.conf === k + 1, (c, k) => { saisie.conf = saisie.conf === k + 1 ? null : k + 1; }, renderPerso);
   groupeChips("#jElan", ELANS, c => saisie.elan === c, c => { saisie.elan = saisie.elan === c ? null : c; }, renderPerso);
   groupeChips("#jImp", IMPORTANTS, c => saisie.imp.has(c), c => {
     if(saisie.imp.has(c)) saisie.imp.delete(c);
     else if(saisie.imp.size < 2) saisie.imp.add(c);
   }, renderPerso);
-  groupeChips("#jConf", CONFIANCES, (c, k) => saisie.conf === k + 1, (c, k) => { saisie.conf = saisie.conf === k + 1 ? null : k + 1; }, renderPerso);
+
+  if(!$("#jTriche").innerHTML){
+    $("#jTriche").innerHTML = EMOTIONS.map(e => `
+      <div class="j-triche-row"><img src="${ILLUS[e.id]}" alt=""><span><b>${e.nom}</b> — ${e.def}</span></div>`).join("");
+  }
+  $("#jEmos").innerHTML = EMOTIONS.map(e => `
+    <button class="j-chip${saisie.emos[e.id] != null ? " sel" : ""}" data-emo="${e.id}">
+      <img src="${ILLUS[e.id]}" alt="">${e.court}
+    </button>`).join("");
+  $("#jEmos").querySelectorAll(".j-chip").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.emo;
+    if(saisie.emos[id] != null) delete saisie.emos[id];
+    else{
+      if(Object.keys(saisie.emos).length >= 3){ $("#jFeedback").textContent = "Trois émotions maximum par moment — garde les plus fortes."; return; }
+      saisie.emos[id] = 2;
+    }
+    $("#jFeedback").textContent = "";
+    renderPerso();
+  }));
+  const nb = Object.keys(saisie.emos).length;
+  $("#jIntensites").innerHTML = Object.keys(saisie.emos).map(id => {
+    const e = EMOTIONS.find(x => x.id === id);
+    return `<div class="j-int-row" data-emo="${id}"><span class="nm">${e.court}</span>
+      <span class="eval-scale" style="justify-content:flex-start">
+        ${[1,2,3,4].map(v => `<button class="seg${saisie.emos[id] === v ? " sel" : ""}" data-v="${v}">${INTENSITES[v][1]}</button>`).join("")}
+      </span></div>`;
+  }).join("");
+  $("#jIntensites").querySelectorAll(".j-int-row").forEach(row =>
+    row.querySelectorAll(".seg").forEach(b => b.addEventListener("click", () => {
+      saisie.emos[row.dataset.emo] = +b.dataset.v;
+      renderPerso();
+    })));
+  $("#jConfBloc").hidden = nb === 0;
+  $("#btnMomentAjout").disabled = nb === 0 || state.reelles.length >= 5;
+
+  const dispo = chargerJournal() !== null;
+  $("#jStockNote").textContent = dispo
+    ? "📱 Chaque moment ajouté rejoint ton journal — gardé sur cet appareil uniquement, jamais envoyé."
+    : "Stockage local indisponible ici : tes moments compteront pour le test, mais ne seront pas gardés.";
   majPersoCompte();
   renderJournalBlocs();
 }
@@ -1559,25 +1594,24 @@ function majPersoCompte(){
   const n = Math.max(12, N - 2 * R);
   $("#persoCompte").textContent = R === 0
     ? `Rien à exprimer aujourd’hui ? Aucun souci — le test complet t’attend : ${N} situations.`
-    : `${R}/${MAXR} situation${R > 1 ? "s" : ""} exprimée${R > 1 ? "s" : ""} ✓ — le test passe à ${n} situations imaginées.`;
+    : `${R}/${MAXR} moment${R > 1 ? "s" : ""} exprimé${R > 1 ? "s" : ""} ✓ — le test passe à ${n} situations imaginées.`;
   $("#btnPersoContinuer").innerHTML = (R === 0 ? "Commencer le test" : "Continuer vers le test") + ' <span class="ico" aria-hidden="true">→</span>';
-  $("#btnPersoAjout").disabled = R >= MAXR;
 }
-function ajouterPerso(){
+function ajouterMoment(){
   if(state.reelles.length >= 5){
-    $("#persoInfo").textContent = "Cinq situations maximum par passage — c’est déjà très riche.";
+    $("#jFeedback").textContent = "Cinq moments maximum par passage — c’est déjà très riche.";
     return;
   }
-  if(!Object.values(persoNotes).some(v => v > 0)){
-    $("#persoInfo").textContent = "Règle au moins une émotion au-dessus de « pas du tout ».";
+  if(!Object.keys(saisie.emos).length){
+    $("#jFeedback").textContent = "Choisis d’abord un ou plusieurs mots (question 4).";
     return;
   }
-  state.reelles.push({ emos: { ...persoNotes } });
-  /* la situation rejoint automatiquement le journal (sur l'appareil uniquement) */
+  /* le moment compte dans le test : émotions choisies = intensité, les autres = 0 */
+  state.reelles.push({ emos: { ...saisie.emos } });
+  /* et rejoint automatiquement le journal, sur l'appareil uniquement */
   const j = chargerJournal();
   if(j){
-    const entree = { d: new Date().toISOString(), emos: {}, ctx: [...saisie.ctx], note: $("#persoTxt").value.trim() };
-    EMOTIONS.forEach(e => { if(persoNotes[e.id] > 0) entree.emos[e.id] = persoNotes[e.id]; });
+    const entree = { d: new Date().toISOString(), emos: { ...saisie.emos }, ctx: [...saisie.ctx], note: $("#jNote").value.trim() };
     if(saisie.corps) entree.corps = saisie.corps;
     if(saisie.sens.size) entree.sens = [...saisie.sens];
     if(saisie.conf) entree.conf = saisie.conf;
@@ -1586,12 +1620,11 @@ function ajouterPerso(){
     j.entrees.push(entree);
     sauverJournal(j);
   }
-  persoNotes = persoVierge();
   saisie = saisieVierge();
-  $("#persoTxt").value = "";
+  $("#jNote").value = "";
   renderPerso();
-  $("#persoInfo").textContent = "Situation ajoutée ✓ — elle compte dans tes résultats et rejoint ton journal.";
-  setTimeout(() => { $("#persoInfo").textContent = ""; }, 3500);
+  $("#jFeedback").textContent = "C’est noté ✓ — ce moment compte dans tes résultats et rejoint ton journal.";
+  setTimeout(() => { $("#jFeedback").textContent = ""; }, 4000);
 }
 
 /* ————— Calcul des notes —————
@@ -2677,7 +2710,7 @@ $("#btnStart").addEventListener("click", () => showView("v-emotions"));
 $("#btnStart2").addEventListener("click", () => showView("v-emotions"));
 $("#btnToTest").addEventListener("click", () => { renderPerso(); showView("v-perso"); });
 $("#btnRien").addEventListener("click", toutAZero);
-$("#btnPersoAjout").addEventListener("click", ajouterPerso);
+$("#btnMomentAjout").addEventListener("click", ajouterMoment);
 $("#btnPersoRetour").addEventListener("click", () => showView("v-emotions"));
 $("#btnPersoContinuer").addEventListener("click", () => {
   construireSelection();
@@ -2743,9 +2776,8 @@ $("#btnRestart").addEventListener("click", () => {
   state.answers = Array.from({length:N}, () => null);
   state.reelles = [];
   state.selection = [...TOUTES];
-  persoNotes = null;
   saisie = saisieVierge();
-  $("#persoTxt").value = "";
+  $("#jNote").value = "";
   lastNotes = null;
   $("#copyFeedback").textContent = "";
   showView("v-accueil");
