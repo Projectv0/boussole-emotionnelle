@@ -27,6 +27,13 @@
 /* ————— Fondations ————— */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 [hidden]{ display:none !important; }
+/* Navigation au clavier : le focus doit toujours se voir */
+:focus-visible{
+  outline:2.5px solid var(--sage);
+  outline-offset:3px;
+  border-radius:.5rem;
+}
+.btn:focus-visible, .j-chip:focus-visible, .seg:focus-visible, .opt:focus-visible{ outline-offset:4px; }
 :root{
   --bg:#F8F4EC;
   --card:#FFFDF8;
@@ -282,7 +289,8 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .intro-grid p{ color:#4A4453; }
 
 .steps{ display:grid; grid-template-columns:1fr; gap:1.1rem; margin-top:1.1rem; counter-reset:step; }
-@media (min-width:820px){ .steps{ grid-template-columns:repeat(3,1fr); } }
+@media (min-width:660px){ .steps{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1060px){ .steps{ grid-template-columns:repeat(4,1fr); } }
 .step .core{ padding:1.8rem 1.7rem; height:100%; }
 .step-num{
   font-family:var(--serif); font-size:2.2rem; font-weight:620; line-height:1;
@@ -706,7 +714,7 @@ footer p + p{ margin-top:.3rem; }
     <div class="section" id="deroule">
       <div class="section-head reveal">
         <div class="eyebrow">Le déroulé</div>
-        <h2>Trois étapes, à ton rythme</h2>
+        <h2>Quatre temps, à ton rythme</h2>
       </div>
       <div class="steps">
         <div class="step reveal"><div class="shell"><div class="core">
@@ -717,12 +725,18 @@ footer p + p{ margin-top:.3rem; }
         </div></div></div>
         <div class="step reveal"><div class="shell"><div class="core">
           <div class="step-num">02</div>
-          <h3>Projette-toi</h3>
-          <p>16 situations de la vie de tous les jours — moins si tu exprimes des moments réels. Pour chacune, indique ce qu’elle éveillerait en toi, émotion par émotion.</p>
-          <span class="mins">≈ 10 min</span>
+          <h3>Pars du réel</h3>
+          <p>Ton journal ouvre le parcours : exprime jusqu’à 5 moments récemment vécus. Ils comptent dans tes résultats, restent sur ton appareil — et raccourcissent le test d’autant.</p>
+          <span class="mins">2 min par moment</span>
         </div></div></div>
         <div class="step reveal"><div class="shell"><div class="core">
           <div class="step-num">03</div>
+          <h3>Projette-toi</h3>
+          <p>16 situations de la vie de tous les jours — moins si tu as exprimé des moments réels. Pour chacune, indique ce qu’elle éveillerait en toi, émotion par émotion.</p>
+          <span class="mins">≈ 10 min</span>
+        </div></div></div>
+        <div class="step reveal"><div class="shell"><div class="core">
+          <div class="step-num">04</div>
           <h3>Comprends-toi</h3>
           <p>Une note de 0 à 10 par émotion, ton profil en un coup d’œil, et une analyse personnalisée, chaleureuse et concrète.</p>
           <span class="mins">Tes résultats</span>
@@ -974,7 +988,7 @@ footer p + p{ margin-top:.3rem; }
         <p style="font-size:.94rem; color:#4A4453">Chacun fait le test de son côté, puis vous échangez vos codes : vos deux profils s’affichent côte à côte, avec ce que vous partagez et ce qui vous distingue. <b>Aucune donnée n’est envoyée</b> — le code contient simplement tes 14 notes.</p>
         <div class="comp-actions">
           <button class="btn btn-primary" id="btnCopierCode">Copier mon code <span class="ico" aria-hidden="true">⧉</span></button>
-          <input class="cle-input comp-input" id="compCode" placeholder="Colle ici le code d’un proche (BE1-…)" autocomplete="off" spellcheck="false">
+          <input class="cle-input comp-input" id="compCode" aria-label="Code d’un proche à comparer" placeholder="Colle ici le code d’un proche (BE1-…)" autocomplete="off" spellcheck="false">
           <button class="btn btn-ghost" id="btnComparer">Comparer <span class="ico" aria-hidden="true">→</span></button>
         </div>
         <p class="copy-feedback" id="compInfo" role="status"></p>
@@ -1014,7 +1028,7 @@ footer p + p{ margin-top:.3rem; }
       <div class="carte-box">
         <h3 style="font-size:1.3rem; margin:.4rem 0 .6rem">Débloquer avec ma clé</h3>
         <p class="carte-hint" style="margin-top:0">Colle ici la clé de licence reçue par e-mail juste après ton achat — elle ouvre la formule que tu as choisie.</p>
-        <input class="cle-input" id="cleLicence" placeholder="XXXXXXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
+        <input class="cle-input" id="cleLicence" aria-label="Clé de licence" placeholder="XXXXXXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
         <div class="carte-actions">
           <button class="btn btn-primary" id="btnValiderCle">Débloquer <span class="ico" aria-hidden="true">🔓</span></button>
           <button class="btn btn-ghost" id="btnFermerCle">Fermer <span class="ico" aria-hidden="true">✕</span></button>
@@ -3081,6 +3095,15 @@ $("#btnRestart").addEventListener("click", () => {
   showView("v-accueil");
 });
 
+/* Échap ferme la fenêtre ouverte (sauf le verrou de paiement, qu'on ne contourne pas) */
+document.addEventListener("keydown", e => {
+  if(e.key !== "Escape") return;
+  const fermables = ["#carteOverlay", "#rapportOverlay"];
+  for(const sel of fermables){
+    const el = $(sel);
+    if(el && !el.hidden){ el.hidden = true; e.preventDefault(); return; }
+  }
+});
 $("#btnVersMethode").addEventListener("click", () => showView("v-methode"));
 $("#btnFooterMethode").addEventListener("click", () => showView("v-methode"));
 $("#btnMethodeRetour").addEventListener("click", () => showView("v-emotions"));
