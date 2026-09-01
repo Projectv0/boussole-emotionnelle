@@ -2,7 +2,7 @@
 
 **Un test bienveillant pour comprendre la place de tes émotions** — tes moments vécus et 16 situations de la vie quotidienne, 14 émotions notées de 0 à 10, une analyse personnalisée et une carte de résultats à partager.
 
-**👉 Faire le test : https://projectv0.github.io/boussole-emotionnelle/**
+**👉 Faire le test : https://boussole-emotionnelle.fr/**
 
 ## Ce que c'est
 
