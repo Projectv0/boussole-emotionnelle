@@ -175,6 +175,11 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .j-tag img{ width:1.1rem; height:1.1rem; border-radius:999px; object-fit:cover; }
 .j-tag.ctx{ color:var(--muted); border-style:dashed; }
 .j-txt{ font-size:.88rem; color:#555061; margin-top:.5rem; }
+.perso-opt{
+  display:flex; align-items:center; gap:.55rem; margin-top:1rem;
+  font-size:.82rem; font-weight:600; color:var(--muted); cursor:pointer;
+}
+.perso-opt input{ accent-color:var(--sage); width:1.05rem; height:1.05rem; }
 .j-triche{ margin:.2rem 0 .8rem; }
 .j-triche summary{
   list-style:none; cursor:pointer; user-select:none;
@@ -728,6 +733,34 @@ footer p + p{ margin-top:.3rem; }
     <div class="center-cta">
       <button class="btn btn-primary" id="btnToTest">C’est parti pour les situations <span class="ico" aria-hidden="true">→</span></button>
       <p style="margin-top:1rem; font-size:.84rem; color:var(--faint)">Tu pourras revenir lire ces cartes à tout moment après le test.</p>
+    </div>
+  </section>
+
+  <!-- ——————— SITUATIONS RÉELLES (avant le test, esprit journal) ——————— -->
+  <section id="v-perso" class="view" aria-label="Tes situations réelles">
+    <div class="test-wrap">
+      <div class="section-head">
+        <div class="eyebrow">Étape 2 · Partir du réel</div>
+        <h2>Des moments vécus à exprimer&nbsp;?</h2>
+        <p>C’est l’esprit du journal : le réel d’abord. Si un moment récent t’a marqué·e — une dispute, une bonne nouvelle, un message resté sans réponse — exprime-le ici : il comptera dans tes résultats, et le test sera raccourci d’autant. Si rien ne te vient, passe simplement au test guidé.</p>
+      </div>
+      <div class="shell"><div class="core">
+        <p class="j-label">Le moment</p>
+        <textarea id="persoTxt" class="j-note" rows="2" maxlength="500" style="margin-top:0" placeholder="Ex. : hier, un collègue a présenté mon idée en réunion sans me citer…"></textarea>
+        <p class="j-label">Ce que ça a éveillé en toi</p>
+        <p class="eval-legende">Tout démarre à « pas du tout » : règle seulement ce qui a bougé.</p>
+        <div class="eval-rows" id="persoRows"></div>
+        <label class="perso-opt"><input type="checkbox" id="persoVersJournal" checked> Ajouter aussi ce moment à mon journal (reste sur cet appareil)</label>
+        <div style="text-align:center; margin-top:1.2rem">
+          <button class="btn btn-ghost" id="btnPersoAjout">Ajouter cette situation <span class="ico" aria-hidden="true">＋</span></button>
+        </div>
+        <p class="copy-feedback" id="persoInfo" role="status"></p>
+      </div></div>
+      <div class="test-nav">
+        <button class="btn btn-ghost" id="btnPersoRetour"><span class="ico" style="order:-1" aria-hidden="true">←</span> Les émotions</button>
+        <button class="btn btn-primary" id="btnPersoContinuer">Continuer vers le test <span class="ico" aria-hidden="true">→</span></button>
+        <div class="next-hint" id="persoCompte" style="text-align:center; flex-basis:100%"></div>
+      </div>
     </div>
   </section>
 
@@ -1418,7 +1451,15 @@ const AGREABLES = ["joie","amour","fierte","gratitude","serenite"];
 const DESAGREABLES = ["tristesse","colere","peur","degout","anxiete","honte","culpabilite","jalousie"];
 
 /* ————— État (uniquement en mémoire, jamais enregistré) ————— */
-const state = { i:0, answers: Array.from({length:N}, () => null) };
+const TOUTES = SITUATIONS.map((_, k) => k);
+/* Ordre de priorité quand le test est raccourci : les 12 premières couvrent
+   toutes les émotions ; chaque situation réelle ajoutée en retire deux. */
+const PRIORITE = [0, 1, 3, 5, 7, 9, 12, 15, 17, 20, 21, 22, 2, 4, 6, 8, 10, 11, 13, 14, 16, 18, 19, 23];
+const state = { i:0, answers: Array.from({length:N}, () => null), reelles: [], selection: [...TOUTES] };
+function construireSelection(){
+  const n = Math.max(12, N - 2 * state.reelles.length);
+  state.selection = PRIORITE.slice(0, n).sort((a, b) => a - b);
+}
 
 /* ————— Apparitions douces ————— */
 const io = new IntersectionObserver(entries => {
@@ -1454,10 +1495,13 @@ function renderEmotionCards(){
 
 /* ————— Le questionnaire ————— */
 function renderQuestion(){
-  const i = state.i, s = SITUATIONS[i], a = state.answers[i] || (state.answers[i] = {});
+  const i = state.i, idx = state.selection[i], s = SITUATIONS[idx];
+  const a = state.answers[idx] || (state.answers[idx] = {});
+  const total = state.selection.length;
   $("#qDomain").textContent = s.dom;
-  $("#qCount").textContent = `${i+1} / ${N}`;
-  $("#qFill").style.width = `${((i+1)/N)*100}%`;
+  $("#qCount").textContent = `${i+1} / ${total}`;
+  $("#qFill").style.width = `${((i+1)/total)*100}%`;
+  document.querySelector(".track").setAttribute("aria-valuemax", total);
   document.querySelector(".track").setAttribute("aria-valuenow", i+1);
   $("#qText").textContent = s.txt;
 
@@ -1475,16 +1519,17 @@ function renderQuestion(){
       b.addEventListener("click", () => noter(row.dataset.emo, +b.dataset.v))));
 
   $("#btnPrev").innerHTML = i === 0
-    ? '<span class="ico" style="order:-1" aria-hidden="true">←</span> Les émotions'
+    ? '<span class="ico" style="order:-1" aria-hidden="true">←</span> Mes situations'
     : '<span class="ico" style="order:-1" aria-hidden="true">←</span> Précédent';
-  $("#btnNext").innerHTML = i === N-1
+  $("#btnNext").innerHTML = i === total-1
     ? 'Voir mes résultats <span class="ico" aria-hidden="true">✦</span>'
     : 'Suivant <span class="ico" aria-hidden="true">→</span>';
   updateNav();
 }
 
 function noter(id, v){
-  const a = state.answers[state.i] || (state.answers[state.i] = {});
+  const idx = state.selection[state.i];
+  const a = state.answers[idx] || (state.answers[idx] = {});
   a[id] = v;
   const row = $("#evalRows").querySelector(`.eval-row[data-emo="${id}"]`);
   row.classList.add("ok");
@@ -1496,13 +1541,14 @@ function noter(id, v){
   updateNav();
 }
 function toutAZero(){
-  const s = SITUATIONS[state.i];
-  const a = state.answers[state.i] || (state.answers[state.i] = {});
+  const idx = state.selection[state.i], s = SITUATIONS[idx];
+  const a = state.answers[idx] || (state.answers[idx] = {});
   s.emos.forEach(id => { a[id] = 0; });
   renderQuestion();
 }
 function updateNav(){
-  const s = SITUATIONS[state.i], a = state.answers[state.i] || {};
+  const idx = state.selection[state.i];
+  const s = SITUATIONS[idx], a = state.answers[idx] || {};
   const fait = s.emos.filter(id => a[id] != null).length;
   const ok = fait === s.emos.length;
   $("#btnNext").disabled = !ok;
@@ -1519,20 +1565,76 @@ function gotoQuestion(idx){
   }, 250);
 }
 
+/* ————— Situations réelles (avant le test, esprit journal) ————— */
+let persoNotes = null;
+const persoVierge = () => Object.fromEntries(EMOTIONS.map(e => [e.id, 0]));
+function renderPerso(){
+  if(!persoNotes) persoNotes = persoVierge();
+  $("#persoRows").innerHTML = EMOTIONS.map(e => `
+    <div class="eval-row${persoNotes[e.id] > 0 ? " ok" : ""}" data-emo="${e.id}">
+      <span class="eval-id"><img src="${ILLUS[e.id]}" alt=""><span class="nm">${e.court}</span></span>
+      <span class="eval-scale">
+        ${[0,1,2,3,4].map(v => `<button class="seg${persoNotes[e.id] === v ? " sel" : ""}" data-v="${v}">${INTENSITES[v][1]}</button>`).join("")}
+      </span>
+    </div>`).join("");
+  $("#persoRows").querySelectorAll(".eval-row").forEach(row =>
+    row.querySelectorAll(".seg").forEach(b => b.addEventListener("click", () => {
+      persoNotes[row.dataset.emo] = +b.dataset.v;
+      renderPerso();
+    })));
+  document.querySelector(".perso-opt").style.display = chargerJournal() === null ? "none" : "";
+  majPersoCompte();
+}
+function majPersoCompte(){
+  const R = state.reelles.length;
+  const n = Math.max(12, N - 2 * R);
+  $("#persoCompte").textContent = R === 0
+    ? `Aucune situation réelle pour l’instant — le test complet t’attend : ${N} situations.`
+    : `${R} situation${R > 1 ? "s" : ""} réelle${R > 1 ? "s" : ""} ajoutée${R > 1 ? "s" : ""} ✓ — le test passe à ${n} situations imaginées.`;
+}
+function ajouterPerso(){
+  if(!Object.values(persoNotes).some(v => v > 0)){
+    $("#persoInfo").textContent = "Règle au moins une émotion au-dessus de « pas du tout ».";
+    return;
+  }
+  state.reelles.push({ emos: { ...persoNotes } });
+  const txt = $("#persoTxt").value.trim();
+  if($("#persoVersJournal").checked){
+    const j = chargerJournal();
+    if(j){
+      const emosJ = {};
+      EMOTIONS.forEach(e => { if(persoNotes[e.id] > 0) emosJ[e.id] = persoNotes[e.id]; });
+      j.entrees.push({ d: new Date().toISOString(), emos: emosJ, ctx: [], note: txt });
+      sauverJournal(j);
+    }
+  }
+  persoNotes = persoVierge();
+  $("#persoTxt").value = "";
+  renderPerso();
+  $("#persoInfo").textContent = "Situation ajoutée ✓ — elle comptera dans tes résultats.";
+  setTimeout(() => { $("#persoInfo").textContent = ""; }, 3500);
+}
+
 /* ————— Calcul des notes —————
    Chaque situation fait noter ses émotions plausibles de 0 à 4.
    Note finale d’une émotion = (somme de ses crans ÷ maximum théorique, soit 4 × nombre
    de situations qui l’évaluent) × 10, arrondie à 1 décimale. */
-function computeScores(answers){
+function computeScores(answers, reelles, selection){
   const totaux = {}, maxima = {};
   EMOTIONS.forEach(e => { totaux[e.id] = 0; maxima[e.id] = 0; });
-  SITUATIONS.forEach((s, i) => {
-    const a = answers[i] || {};
+  const idxs = (selection && selection.length) ? selection : TOUTES;
+  idxs.forEach(k => {
+    const s = SITUATIONS[k], a = answers[k] || {};
     s.emos.forEach(id => {
       maxima[id] += 4;
       totaux[id] += a[id] || 0;
     });
   });
+  /* les situations réelles évaluent les 14 émotions, au même barème */
+  (reelles || []).forEach(r => EMOTIONS.forEach(e => {
+    maxima[e.id] += 4;
+    totaux[e.id] += (r.emos && r.emos[e.id]) || 0;
+  }));
   const notes = {};
   EMOTIONS.forEach(e => {
     notes[e.id] = maxima[e.id] ? Math.round((totaux[e.id] / maxima[e.id]) * 100) / 10 : 0;
@@ -2634,12 +2736,12 @@ function motifsTestJournal(entrees){
 
 /* ————— Auto-vérification (console) ————— */
 function runSelfTests(){
-  const zeros = computeScores(SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, 0]))));
+  const zeros = computeScores(SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, 0]))), [], null);
   const zeroOK = EMOTIONS.every(e => zeros[e.id] === 0);
   const maxKO = [];
   EMOTIONS.forEach(e => {
     const rep = SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, id === e.id ? 4 : 0])));
-    if(computeScores(rep)[e.id] !== 10) maxKO.push(e.id);
+    if(computeScores(rep, [], null)[e.id] !== 10) maxKO.push(e.id);
   });
   const couverture = {};
   EMOTIONS.forEach(e => {
@@ -2655,7 +2757,7 @@ function runSelfTests(){
 /* ————— Câblage ————— */
 let lastNotes = null;
 function finish(){
-  lastNotes = computeScores(state.answers);
+  lastNotes = computeScores(state.answers, state.reelles, state.selection);
   resultatsGardesCe = false;
   if(paywallActif() && niveauAcces === "aucun"){ ouvrirPaywall(); return; }
   renderResults(lastNotes);
@@ -2677,15 +2779,23 @@ $("#btnJournalVider").addEventListener("click", () => {
 });
 $("#btnStart").addEventListener("click", () => showView("v-emotions"));
 $("#btnStart2").addEventListener("click", () => showView("v-emotions"));
-$("#btnToTest").addEventListener("click", () => { renderQuestion(); showView("v-test"); });
+$("#btnToTest").addEventListener("click", () => { renderPerso(); showView("v-perso"); });
 $("#btnRien").addEventListener("click", toutAZero);
+$("#btnPersoAjout").addEventListener("click", ajouterPerso);
+$("#btnPersoRetour").addEventListener("click", () => showView("v-emotions"));
+$("#btnPersoContinuer").addEventListener("click", () => {
+  construireSelection();
+  state.i = 0;
+  renderQuestion();
+  showView("v-test");
+});
 $("#btnPrev").addEventListener("click", () => {
-  if(state.i === 0) showView("v-emotions");
+  if(state.i === 0){ renderPerso(); showView("v-perso"); }
   else gotoQuestion(state.i - 1);
 });
 $("#btnNext").addEventListener("click", () => {
   if($("#btnNext").disabled) return;
-  if(state.i === N - 1) finish();
+  if(state.i === state.selection.length - 1) finish();
   else gotoQuestion(state.i + 1);
 });
 $("#btnCopy").addEventListener("click", copierResultats);
@@ -2735,6 +2845,10 @@ if(LIEN_SOUTIEN){
 $("#btnRestart").addEventListener("click", () => {
   state.i = 0;
   state.answers = Array.from({length:N}, () => null);
+  state.reelles = [];
+  state.selection = [...TOUTES];
+  persoNotes = null;
+  $("#persoTxt").value = "";
   lastNotes = null;
   $("#copyFeedback").textContent = "";
   showView("v-accueil");
