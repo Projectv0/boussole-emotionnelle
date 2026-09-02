@@ -612,6 +612,65 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .rap-semaine{ border-left:3px solid var(--sage); padding-left:1rem; margin-top:1rem; }
 .rap-semaine b{ color:var(--ink); }
 
+/* ————— Blocs enrichis du dossier ————— */
+.rap-arch{
+  margin:1.4rem auto 0; max-width:32rem; padding:1.3rem 1.5rem;
+  background:linear-gradient(180deg, rgba(63,130,113,.09), rgba(123,111,180,.07));
+  border:1px solid var(--hairline); border-radius:1.4rem;
+}
+.rap-arch .etiq{ font-size:.64rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+.rap-arch .titre{ font-family:var(--serif); font-size:1.7rem; font-weight:620; margin:.35rem 0 .5rem; color:var(--ink); }
+.rap-arch .phrase{ font-size:.95rem; color:#4A4453; }
+.rap-somm{ padding-left:1.2rem; display:flex; flex-direction:column; gap:.4rem; margin-top:.8rem; }
+.rap-somm li{ font-size:.94rem; color:#4A4453; }
+
+.rap-recap{ display:flex; flex-direction:column; gap:.5rem; margin-top:1rem; }
+.rap-ligne{ display:grid; grid-template-columns:1.6rem minmax(0,8.5rem) minmax(2rem,1fr) minmax(0,6.5rem) 2.6rem; gap:.7rem; align-items:center; }
+.rap-ligne > *{ min-width:0; }
+.rap-ligne .nm, .rap-ligne .bd{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rap-ligne img{ width:1.6rem; height:1.6rem; border-radius:.5rem; object-fit:cover; }
+.rap-ligne .nm{ font-size:.88rem; font-weight:700; }
+.rap-ligne .tr{ height:.5rem; border-radius:99px; background:rgba(45,40,51,.07); overflow:hidden; display:block; }
+.rap-ligne .fl{ height:100%; border-radius:99px; display:block; }
+.rap-ligne .bd{ font-size:.72rem; font-weight:600; }
+.rap-ligne .nt{ font-family:var(--serif); font-weight:620; font-size:.95rem; text-align:right; font-variant-numeric:tabular-nums; }
+@media (max-width:640px){
+  .rap-ligne{ grid-template-columns:1.5rem 1fr 2.4rem; }
+  .rap-ligne .tr, .rap-ligne .bd{ grid-column:1 / -1; }
+  .rap-ligne .bd{ font-size:.7rem; }
+}
+.rap-equilibre{ display:flex; gap:2rem; margin-top:1.3rem; padding-top:1rem; border-top:1px solid var(--hairline); }
+.rap-equilibre b{ font-family:var(--serif); font-size:1.4rem; font-weight:620; display:block; }
+.rap-equilibre span{ font-size:.78rem; color:var(--muted); }
+
+.rap-levier{ display:flex; gap:1rem; margin-top:1.2rem; align-items:flex-start; }
+.rap-levier .rang{ flex:none; width:2.2rem; height:2.2rem; border-radius:999px; display:grid; place-items:center; font-family:var(--serif); font-weight:620; font-size:1.1rem; }
+.rap-levier .quand{ font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--sage-deep); }
+.rap-levier .quoi{ font-size:.96rem; color:var(--ink); margin-top:.25rem; }
+.rap-levier .pourquoi{ font-size:.85rem; color:var(--muted); margin-top:.35rem; }
+
+.rap-moment{ margin-top:1rem; padding:.9rem 1.1rem; border-radius:1.1rem; background:rgba(255,255,255,.5); border:1px solid var(--hairline); }
+.rap-moment .num{ font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); }
+.rap-moment .tags{ display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.5rem; }
+
+.rap-rang{ font-size:.72rem; color:var(--faint); font-weight:600; margin-top:.5rem; }
+.rap-question{
+  margin-top:1.2rem; padding:1rem 1.2rem; border-radius:1.1rem;
+  background:rgba(123,111,180,.08); border:1px solid rgba(123,111,180,.18);
+  font-size:.92rem; color:#4E4477;
+}
+.rap-question b{ display:block; font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; margin-bottom:.35rem; }
+
+.rap-suivi .rap-champ{ display:flex; gap:1rem; align-items:baseline; margin-top:1rem; }
+.rap-suivi .rap-champ b{ font-size:.8rem; min-width:13rem; color:var(--muted); font-weight:700; }
+.rap-suivi .rap-champ span{ flex:1; font-size:.9rem; }
+.rap-suivi .vide{ border-bottom:1px dashed var(--hairline-strong); min-height:1.6rem; }
+.rap-suivi .vide.grand{ min-height:4rem; }
+@media (max-width:640px){
+  .rap-suivi .rap-champ{ flex-direction:column; gap:.3rem; }
+  .rap-suivi .rap-champ b{ min-width:0; }
+}
+
 /* ————— Impression / export PDF ————— */
 @media print{
   .floatnav, .aura, footer, .no-print, body::after, .carte-overlay{ display:none !important; }
@@ -620,7 +679,16 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
   .view{ padding-top:0; }
   .rapport{ max-width:none; gap:.6rem; }
   .rap-bloc{ box-shadow:none; border-color:#ddd; break-inside:avoid; padding:1.2rem 1.4rem; }
-  .rap-couv{ break-after:page; }
+  .rap-couv{ break-after:page; padding:1.2rem 1.4rem; }
+  .rap-couv .radar-wrap svg{ max-width:11cm; }
+  .rap-couv h3{ font-size:1.6rem; }
+  .rap-arch{ margin-top:.8rem; padding:.9rem 1.1rem; }
+  .rap-arch .titre{ font-size:1.4rem; }
+  .rap-fiche{ break-before:page; }
+  .rap-suivi{ break-before:page; }
+  .rap-question, .rap-levier, .rap-ligne, .rap-semaine{ break-inside:avoid; }
+  .rap-arch{ background:none !important; border-color:#ddd; }
+  @page{ margin:14mm 12mm; }
 }
 
 footer{
@@ -2356,52 +2424,235 @@ function planTrenteJours(notes){
       <p>Choisis les deux pratiques qui t’ont fait le plus de bien ce mois-ci et donne-leur une vraie place dans ton agenda — un moment fixe, comme un rendez-vous. Puis refais le test à J30 : compare tes notes, célèbre ce qui a bougé, et ajuste la suite.</p></div>`;
 }
 
+/* ————— Questions de réflexion du dossier (une par émotion) ————— */
+const QUESTIONS = {
+  joie:"Quand as-tu ri pour la dernière fois sans te retenir&nbsp;? Qu’est-ce qui l’avait déclenché, et à quand remonte la fois d’avant&nbsp;?",
+  tristesse:"Y a-t-il une perte que tu n’as jamais vraiment eu le temps de pleurer&nbsp;? Qu’est-ce qui t’en a empêché·e&nbsp;?",
+  colere:"Repense à ta dernière colère : quelle limite avait été franchie, et l’as-tu dite à la personne concernée&nbsp;?",
+  peur:"Qu’est-ce que tu évites depuis un moment&nbsp;? Quelle serait la plus petite marche possible vers cette chose&nbsp;?",
+  surprise:"Face au dernier imprévu qui t’a cueilli·e, quelle a été ta toute première réaction — et l’aurais-tu choisie à froid&nbsp;?",
+  degout:"Qu’est-ce qui te fait dire «&nbsp;ça, jamais&nbsp;»&nbsp;? Quelle valeur se cache derrière ce refus&nbsp;?",
+  amour:"À qui n’as-tu jamais dit franchement ce qu’il ou elle représente pour toi&nbsp;? Qu’est-ce qui retient les mots&nbsp;?",
+  anxiete:"De tout ce qui t’inquiétait il y a un an, qu’est-ce qui est réellement arrivé&nbsp;? Qu’est-ce que ça t’apprend&nbsp;?",
+  honte:"Quel souvenir te fait encore grimacer&nbsp;? Si un ami te le racontait, que lui répondrais-tu&nbsp;?",
+  culpabilite:"Pour quoi te sens-tu coupable en ce moment&nbsp;? Qu’est-ce qui dépendait vraiment de toi dans cette histoire&nbsp;?",
+  jalousie:"Devant qui ressens-tu ce pincement&nbsp;? Qu’est-ce que cette personne a, que tu voudrais pour toi aussi&nbsp;?",
+  fierte:"Quelle réussite de ces douze derniers mois n’as-tu jamais vraiment savourée&nbsp;? Pourquoi&nbsp;?",
+  gratitude:"Qui t’a rendu la vie plus douce récemment, sans le savoir&nbsp;? Le lui as-tu dit&nbsp;?",
+  serenite:"Où et quand te sens-tu vraiment posé·e&nbsp;? À quand remonte le dernier de ces moments&nbsp;?"
+};
+
+/* ————— Le profil en une phrase (couleur du moment, jamais une étiquette figée) ————— */
+function archetype(notes, tri){
+  const n = id => notes[id];
+  const HAUT = 5.5;
+  const haut = id => n(id) >= HAUT;
+  const t1 = tri[0].id, t2 = tri[1].id;
+  const duo = new Set([t1, t2]);
+  const a = (x, y) => duo.has(x) && duo.has(y);
+
+  const regles = [
+    { ok: a("serenite","gratitude") || a("serenite","joie"),
+      titre:"Le calme habité",
+      phrase:"Ta boussole penche vers l’apaisement : tu sais te poser, et tu remarques ce qui va bien. C’est une ressource rare — la garder vivante demande simplement de continuer à lui faire de la place." },
+    { ok: a("amour","gratitude") || a("amour","joie"),
+      titre:"Le cœur relié",
+      phrase:"Ce qui te porte, ce sont les liens. Tu ressens fort l’attachement et tu reconnais ce que les autres t’apportent : un terreau de relations solides, à condition de ne pas t’oublier dans l’équation." },
+    { ok: a("anxiete","peur") || (haut("anxiete") && haut("tristesse")),
+      titre:"La vigie",
+      phrase:"Ton système d’alerte est très éveillé : il anticipe, il protège, il ne dort jamais tout à fait. Cette vigilance t’a sûrement rendu service — l’enjeu, maintenant, est de lui apprendre à se reposer entre deux alertes." },
+    { ok: a("colere","fierte") || a("colere","degout"),
+      titre:"Le gardien des limites",
+      phrase:"Tu as un sens aigu de ce qui se fait et ne se fait pas. Ta colère ne cherche pas le conflit : elle défend des valeurs. Bien dirigée, c’est une force ; sans exutoire, elle coûte cher." },
+    { ok: a("honte","culpabilite") || (haut("honte") && haut("anxiete")),
+      titre:"L’exigeant discret",
+      phrase:"Le projecteur est souvent tourné vers toi, et rarement avec douceur. Tu portes une conscience aiguë de tes actes et du regard des autres — apprendre à te parler comme tu parlerais à un ami changerait beaucoup." },
+    { ok: a("tristesse","amour") || a("tristesse","gratitude"),
+      titre:"Le cœur profond",
+      phrase:"Tu ressens les choses avec intensité, et les liens te traversent vraiment. Cette profondeur rend les pertes plus lourdes — mais c’est la même sensibilité qui rend les moments beaux si vivants." },
+    { ok: a("jalousie","fierte") || a("jalousie","tristesse"),
+      titre:"L’élan comparé",
+      phrase:"Ton regard se porte souvent sur ce que les autres ont ou réussissent. Ce pincement n’est pas un défaut : c’est une boussole qui indique tes désirs. Reste à la suivre plutôt qu’à la subir." },
+    { ok: a("surprise","joie") || haut("surprise"),
+      titre:"Le vif",
+      phrase:"Tu réagis vite et fort à ce qui bouge. Cette vivacité te rend présent·e au monde ; elle gagne juste à s’accorder quelques secondes avant de répondre." },
+    { ok: haut("fierte") && haut("gratitude"),
+      titre:"Le bâtisseur reconnaissant",
+      phrase:"Tu avances, tu accomplis — et tu n’oublies pas ce que tu dois aux autres. Ce mélange d’exigence et de reconnaissance est un moteur puissant et rarement toxique." }
+  ];
+  const trouve = regles.find(r => r.ok);
+  if(trouve) return trouve;
+
+  const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
+  if(mDes - mAgr >= 1.5) return {
+    titre:"La traversée",
+    phrase:"Ton profil raconte une période exigeante : les émotions inconfortables occupent plus de place que les autres. Ce n’est pas un état permanent — c’est une saison, et elle demande surtout de la douceur envers toi-même." };
+  if(mAgr - mDes >= 1.5) return {
+    titre:"La belle saison",
+    phrase:"Les émotions agréables dominent nettement : ton quotidien semble te nourrir plus qu’il ne te coûte. Profite de cette période — c’est aussi le meilleur moment pour installer des habitudes qui tiendront quand le vent tournera." };
+  return {
+    titre:"Le profil nuancé",
+    phrase:"Aucune émotion n’écrase les autres chez toi : tes réactions s’ajustent au contexte plutôt que de suivre un pli unique. C’est une souplesse précieuse, même si elle rend le portrait moins spectaculaire." };
+}
+
+/* ————— Les trois leviers à activer en premier ————— */
+function leviers(notes, tri){
+  const out = [];
+  const desTri = DESAGREABLES.map(id => EMOTIONS.find(e => e.id === id)).sort((a, b) => notes[b.id] - notes[a.id]);
+  const agrTri = AGREABLES.map(id => EMOTIONS.find(e => e.id === id)).sort((a, b) => notes[a.id] - notes[b.id]);
+
+  if(notes[desTri[0].id] > 2){
+    out.push({ quand:"Cette semaine", pourquoi:`${maj(nomEmo(desTri[0].id))} est l’émotion inconfortable la plus présente chez toi (${fmt(notes[desTri[0].id])}/10).`,
+               quoi: DOSSIER[desTri[0].id].exo[0], emo: desTri[0] });
+  }
+  out.push({ quand: out.length ? "La semaine suivante" : "Cette semaine",
+             pourquoi:`${maj(nomEmo(agrTri[0].id))} est ton émotion agréable la plus discrète (${fmt(notes[agrTri[0].id])}/10) : c’est là qu’il y a le plus à gagner.`,
+             quoi: DOSSIER[agrTri[0].id].exo[0], emo: agrTri[0] });
+  const troisieme = notes[tri[0].id] >= 5 ? tri[0] : desTri[1];
+  out.push({ quand:"Quand les deux premiers seront installés",
+             pourquoi:`${maj(nomEmo(troisieme.id))} occupe une place importante dans ton profil — cette pratique l’accompagne au quotidien.`,
+             quoi: DOSSIER[troisieme.id].exo[1], emo: troisieme });
+  return out.slice(0, 3);
+}
+
 function renderRapport(notes){
   const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
   const date = new Date().toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
   const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
   const combos = listeCombos(notes);
-  const fiches = tri.map(e => {
+  const arch = archetype(notes, tri);
+  const lev = leviers(notes, tri);
+
+  /* — tableau récapitulatif des 14 notes — */
+  const recap = tri.map(e => {
+    const b = BANDES[bandeDe(notes[e.id])];
+    return `<div class="rap-ligne">
+      <img src="${ILLUS[e.id]}" alt="">
+      <span class="nm">${esc(e.nom)}</span>
+      <span class="tr"><span class="fl" style="width:${notes[e.id] * 10}%; background:${e.color}"></span></span>
+      <span class="bd" style="color:${b.c}">${b.lbl}</span>
+      <span class="nt" style="color:${e.color}">${fmt(notes[e.id])}</span>
+    </div>`;
+  }).join("");
+
+  /* — les moments réels exprimés avant le test — */
+  const moments = (state.reelles || []).map((r, i) => {
+    const nommees = Object.entries(r.emos || {}).sort((a, b) => b[1] - a[1]);
+    if(!nommees.length) return "";
+    return `<div class="rap-moment">
+      <span class="num">Moment ${i + 1}</span>
+      <div class="tags">${nommees.map(([id, v]) => {
+        const e = EMOTIONS.find(x => x.id === id);
+        return e ? `<span class="j-tag"><img src="${ILLUS[id]}" alt="">${esc(e.court)} · ${esc(INTENSITES[v] ? INTENSITES[v][1].toLowerCase() : "")}</span>` : "";
+      }).join("")}</div>
+    </div>`;
+  }).filter(Boolean).join("");
+
+  /* — les fiches, une par émotion — */
+  const fiches = tri.map((e, i) => {
     const bd = bandeDe(notes[e.id]), b = BANDES[bd], d = DOSSIER[e.id];
-    return `<div class="rap-bloc">
+    return `<div class="rap-bloc rap-fiche" id="fiche-${e.id}">
       <div class="rap-entete">
         <span class="emo-glyph" style="border-color:${rgba(e.color,.3)}"><img src="${ILLUS[e.id]}" alt=""></span>
-        <div class="titres"><h3 style="margin:0">${e.nom}</h3>
+        <div class="titres"><h3 style="margin:0">${esc(e.nom)}</h3>
           <span class="ana-band" style="background:${rgba(b.c,.12)}; color:${b.c}">${b.lbl}</span></div>
         <span class="note" style="color:${e.color}">${fmt(notes[e.id])}<span style="font-size:.9rem; color:var(--faint)"> /10</span></span>
       </div>
+      <p class="rap-rang">${i + 1}<sup>${i === 0 ? "re" : "e"}</sup> sur 14 dans ton profil</p>
       <h4>Chez toi, aujourd’hui</h4><p>${e.bandes[bd]}</p>
       <h4>Comment elle fonctionne</h4><p>${d.meca}</p>
       <h4>Comment elle se manifeste</h4><p>${d.corps}</p>
       <h4>${AGREABLES.includes(e.id) ? "Trois pratiques pour la cultiver" : "Trois pratiques pour l’apprivoiser"}</h4>
       <ol>${d.exo.map(x => `<li>${x}</li>`).join("")}</ol>
       <h4>Le signal à surveiller</h4><p>${d.alerte}</p>
+      <div class="rap-question"><b>À méditer</b>${QUESTIONS[e.id]}</div>
     </div>`;
   }).join("");
+
   $("#rapportContenu").innerHTML = `
     <div class="rap-bloc rap-couv">
       <div style="font-size:2rem" aria-hidden="true">🧭</div>
       <h3>Dossier d’analyse personnalisé</h3>
       <p class="date">Boussole émotionnelle · établi le ${date}</p>
-      <p style="max-width:30rem; margin:1rem auto 0">Tes émotions dominantes : <b>${tri.slice(0, 3).map(e => e.nom).join(", ")}</b>.
-      Équilibre du moment : émotions agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.</p>
-      <div class="radar-wrap" style="margin-top:1.2rem">${buildRadar(notes)}</div>
+      <div class="rap-arch">
+        <span class="etiq">Ta couleur du moment</span>
+        <p class="titre">${arch.titre}</p>
+        <p class="phrase">${arch.phrase}</p>
+      </div>
+      <div class="radar-wrap" style="margin-top:1.4rem">${buildRadar(notes)}</div>
+      <p style="max-width:30rem; margin:1.2rem auto 0; font-size:.92rem">Tes émotions dominantes : <b>${tri.slice(0, 3).map(e => esc(e.nom)).join(", ")}</b>.
+      Équilibre du moment : agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.</p>
     </div>
+
     <div class="rap-bloc">
-      <h3>Comment lire ce dossier</h3>
-      <p>Prends-le comme une promenade, pas comme un bulletin de notes. Chaque fiche décrit une émotion telle qu’elle vit chez toi <i>en ce moment</i> — tes notes bougeront avec les saisons de ta vie. Un mot sur les manifestations décrites : le corps est polyvalent, et un même signal (joues qui chauffent, cœur qui s’emballe, ventre noué) peut servir plusieurs émotions — c’est le contexte qui permet de les distinguer. Les pratiques proposées sont des invitations : choisis celles qui te parlent, une ou deux suffisent pour commencer. Et souviens-toi : ce dossier éclaire, il ne diagnostique pas.</p>
+      <h3>Ce que tu vas trouver ici</h3>
+      <ol class="rap-somm">
+        <li><b>Ton profil en un coup d’œil</b> — les quatorze notes, classées.</li>
+        <li><b>Tes trois leviers</b> — par quoi commencer, concrètement.</li>
+        ${moments ? "<li><b>Tes moments, relus</b> — ce que tu as exprimé avant le test.</li>" : ""}
+        <li><b>Les quatorze fiches</b> — une par émotion, avec pratiques et question de réflexion.</li>
+        <li><b>Tes croisements</b> — ce que tes émotions racontent ensemble.</li>
+        <li><b>Ton plan de trente jours</b> — quatre semaines, une intention chacune.</li>
+        <li><b>Ta page de suivi</b> — à remplir dans un mois.</li>
+      </ol>
+      <p style="margin-top:1rem">Prends ce dossier comme une promenade, pas comme un bulletin de notes. Chaque fiche décrit une émotion telle qu’elle vit chez toi <i>en ce moment</i> — tes notes bougeront avec les saisons de ta vie. Un mot sur les manifestations décrites : le corps est polyvalent, et un même signal (joues qui chauffent, ventre noué) peut servir plusieurs émotions — c’est le contexte qui les distingue. Enfin, ce dossier éclaire, il ne diagnostique pas.</p>
     </div>
+
+    <div class="rap-bloc">
+      <h3>Ton profil en un coup d’œil</h3>
+      <div class="rap-recap">${recap}</div>
+      <div class="rap-equilibre">
+        <div><b>${fmt(mAgr)}/10</b><span>émotions agréables</span></div>
+        <div><b>${fmt(mDes)}/10</b><span>émotions désagréables</span></div>
+      </div>
+    </div>
+
+    <div class="rap-bloc">
+      <h3>Tes trois leviers</h3>
+      <p>Quarante-deux pratiques t’attendent dans les fiches — mais on ne change pas tout à la fois. Voici par quoi commencer, dans cet ordre.</p>
+      ${lev.map((l, i) => `<div class="rap-levier">
+        <span class="rang" style="background:${rgba(l.emo.color,.15)}; color:${l.emo.color}">${i + 1}</span>
+        <div>
+          <span class="quand">${l.quand}</span>
+          <p class="quoi">${l.quoi}</p>
+          <p class="pourquoi">${l.pourquoi}</p>
+        </div>
+      </div>`).join("")}
+    </div>
+
+    ${moments ? `<div class="rap-bloc">
+      <h3>Tes moments, relus</h3>
+      <p>Avant le test, tu as exprimé ${state.reelles.length} moment${state.reelles.length > 1 ? "s" : ""} réellement vécu${state.reelles.length > 1 ? "s" : ""}. Ils ont compté dans le calcul, au même titre que les situations proposées — et ils disent quelque chose de plus juste que n’importe quelle scène imaginée. Voici ce que tu y avais nommé.</p>
+      ${moments}
+      <p style="margin-top:1rem; font-size:.9rem; color:var(--muted)">Relis-les dans un mois : ce que tu ressentais ces jours-là aura peut-être déjà changé de forme.</p>
+    </div>` : ""}
+
     ${fiches}
+
     <div class="rap-bloc">
       <h3>Tes croisements décodés</h3>
+      <p>Une émotion seule dit peu de chose. Ce sont leurs alliances qui dessinent une façon de fonctionner.</p>
       ${combos.length ? combos.map(c => `<p style="margin-bottom:.7rem">${c.t}</p>`).join("")
         : `<p>Aucun croisement marquant : ton profil est nuancé, sans alliance d’émotions qui domine — tes réactions s’ajustent selon les contextes, et c’est une souplesse précieuse.</p>`}
     </div>
+
     <div class="rap-bloc">
-      <h3>Ton plan de 30 jours</h3>
+      <h3>Ton plan de trente jours</h3>
       <p>Quatre semaines, une intention par semaine — dix minutes par jour suffisent.</p>
       ${planTrenteJours(notes)}
     </div>
+
+    <div class="rap-bloc rap-suivi">
+      <h3>Ta page de suivi</h3>
+      <p>Imprime cette page ou recopie-la. Reviens la remplir dans un mois, puis refais le test pour comparer.</p>
+      <div class="rap-champ"><b>Date du jour</b><span>${date}</span></div>
+      <div class="rap-champ"><b>Ce que je veux voir bouger</b><span class="vide"></span></div>
+      <div class="rap-champ"><b>La pratique que je m’engage à tenir</b><span class="vide"></span></div>
+      <div class="rap-champ"><b>Ce qui pourrait m’en empêcher</b><span class="vide"></span></div>
+      <div class="rap-champ"><b>Dans 30 jours — ce qui a changé</b><span class="vide grand"></span></div>
+      <div class="rap-champ"><b>Dans 30 jours — mes nouvelles notes</b><span class="vide"></span></div>
+    </div>
+
     <div class="rap-bloc">
       <h3>Pour finir</h3>
       <p>Ce dossier a été généré dans ton navigateur, à partir de tes seules réponses : rien n’a été enregistré ni transmis. Il ne remplace ni un diagnostic ni un accompagnement — si une émotion te déborde ou te fait souffrir durablement, un professionnel de santé (médecin, psychologue) est la bonne porte, et la démarche est courageuse. Prends soin de toi. 💛</p>
