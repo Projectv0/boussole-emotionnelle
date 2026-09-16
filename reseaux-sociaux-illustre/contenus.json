@@ -239,7 +239,7 @@
       "slug": "jalousie-et-envie",
       "titre": "CE N’EST PAS DE LA JALOUSIE, C’EST DE L’ENVIE",
       "titreAccent": "L’ENVIE",
-      "sousTitre": "Son appart, son poste, ses vacances : ce que tu ressens a un autre nom",
+      "sousTitre": "Son appart, son poste, ses vacances : ce que tu ressens à un autre nom",
       "emotions": [
         "jalousie",
         "peur",
@@ -338,7 +338,7 @@
               "etiquette": "Se comparer aux autres",
               "texte": "Tu compares ta vie de tous les jours à ce que les autres montrent. Or ils ne montrent que le meilleur.",
               "illustration": "salle-pause-felicitations",
-              "prompt": "Two colleagues in a bright staffroom: a woman in her fifties with deep brown skin and silver locs is being congratulated, a hand resting on her shoulder, her chin high and her smile wide; a step behind her a man in his fifties with light skin and glasses holds a coffee, his smile polite and brief, his eyes already back on the floor."
+              "prompt": "Two colleagues in a bright staffroom: a woman in her fifties with deep brown skin and silver locs holds a folder against her chest with both hands, her chin high and her smile wide after being congratulated; a step behind her a man in his fifties with light skin and glasses holds a coffee mug in both hands, his smile polite and brief, his eyes already back on the floor. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             }
           ]
         },
@@ -446,7 +446,7 @@
               "etiquette": "Le corps lourd",
               "texte": "Tu dors, parfois beaucoup, et tu te lèves quand même sans énergie, comme si la nuit n’avait pas compté.",
               "illustration": "matin-lourd",
-              "prompt": "A man in his forties with deep brown skin and short locs sits on the edge of a bath in the morning, a towel over his shoulders, elbows on his knees; his eyelids are heavy, his gaze is fixed on the tiles and his breathing is slow."
+              "prompt": "A man in his forties with deep brown skin and short locs sits on the edge of an unmade bed in the morning, fully dressed in a loose grey t-shirt and pyjama trousers, elbows on his knees; his eyelids are heavy, his gaze is fixed on the floor and his breathing is slow. Single character in frame. Clear detailed face, both eyes clearly visible, open and symmetrical."
             },
             {
               "etiquette": "La colère qui monte vite",
@@ -547,8 +547,8 @@
             {
               "etiquette": "Les fous rires",
               "texte": "Les autres rient autour de la table, tu vois bien que c’est drôle, et rien ne bouge en toi.",
-              "illustration": "bus-fenetre",
-              "prompt": "Two passengers side by side on a city bus: a young woman in her twenties with light brown skin and a short afro bursts out laughing at her phone, her head tipped back; beside her a young man in his twenties with light skin and straight dark hair looks out of the window, his face completely still, his brows flat and his eyes unfocused."
+              "illustration": "table-rires",
+              "prompt": "Two friends at a dining table after a meal: a man in his thirties with pale freckled skin and auburn hair laughs hard with his head tipped back and one hand flat on the table; across from him a woman in her thirties with light brown skin and a short afro holds a small polite smile that does not reach her eyes, her gaze drifting down to her glass, her shoulders still. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             },
             {
               "etiquette": "La musique",
@@ -705,7 +705,7 @@
       "slug": "deguisements-colere",
       "titre": "LA COLÈRE QU’ON NE DIT PAS SORT AILLEURS",
       "titreAccent": "SORT AILLEURS",
-      "sousTitre": "Quatre chemins qu’elle prend : l’ironie, les oublis, la fatigue.",
+      "sousTitre": "Quatre chemins qu’elle prend : la porte trop douce, le sarcasme, les oublis, la fatigue du soir.",
       "emotions": [
         "colere",
         "tristesse",
@@ -1242,7 +1242,7 @@
               "etiquette": "",
               "texte": "",
               "illustration": "canape-fin-de-jour",
-              "prompt": "A man in his thirties with light brown skin and dark wavy hair sits on a sofa in fading daylight, thumb tilting his phone to check the time, the other hand rubbing the back of his neck, mouth pulled down at one corner, shoulders drawn up toward his ears."
+              "prompt": "A man in his thirties with light brown skin and dark wavy hair sits on a sofa in fading daylight, one thumb tilting his phone to check the time, the other hand rubbing the back of his neck, mouth pulled down at one corner, shoulders drawn up toward his ears. Single character in frame. Absolutely no text, no letters, no numbers, no signage, no plaque, no clock display anywhere in the image; any screen is blank and dark."
             },
             {
               "etiquette": "",
@@ -1464,7 +1464,7 @@
               "etiquette": "Le trac d’avant",
               "texte": "Avant une présentation ou un entretien, ton corps se prépare. Une fois que c’est passé, ça redescend tout seul.",
               "illustration": "avant-la-reunion",
-              "prompt": "A man in his forties with deep brown skin and short curly hair stands just outside a meeting room holding blank papers against his chest, nostrils widening on one deliberate deep breath, eyes focused straight ahead, a quick ready half-smile, his weight on the balls of his feet."
+              "prompt": "A man in his forties with deep brown skin and short curly hair stands in a corridor just outside a plain closed door, holding blank papers against his chest, nostrils widening on one deliberate deep breath, eyes focused straight ahead, a quick ready half-smile, his weight on the balls of his feet. The door is completely bare. Single character in frame. Absolutely no text, no letters, no numbers, no signage, no plaque, no clock display anywhere in the image; any screen is blank and dark."
             },
             {
               "etiquette": "La boule tous les matins",
@@ -1592,7 +1592,7 @@
               "etiquette": "Les gestes du quotidien",
               "texte": "Il te manque le message du matin, ton côté du lit, le « à ce soir » qu’on dit sans y penser. Ton corps les cherche encore.",
               "illustration": "deux-tasses",
-              "prompt": "A man in his twenties with brown skin and short curls stands in a kitchen having automatically taken two mugs from the shelf, freezing as he notices the second one, his mouth opening slightly, one hard blink, his raised hand staying in mid-air, his jaw going loose."
+              "prompt": "A man in his twenties with brown skin and short curls stands in a kitchen having automatically taken two mugs from the shelf, freezing as he notices the second one, his mouth opening slightly, his raised hand staying in mid-air, his jaw going loose. Single character in frame. Clear detailed face, both eyes clearly visible, open and symmetrical. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             }
           ]
         },
@@ -1610,7 +1610,7 @@
               "etiquette": "Les moments où ça va",
               "texte": "Si tu ris deux jours après, tu ne trahis personne. Ça montre juste que tu respires encore, et c’est bon signe.",
               "illustration": "rire-dehors",
-              "prompt": "Two friends walk outdoors in bright soft light: a man in his forties with deep brown skin and a shaved head laughs with his head tipped slightly back and his eyes crinkled, and beside him a woman in her forties with pale skin and red hair smiles wide with one hand on his arm, both of them walking loose and open."
+              "prompt": "Two friends walk outdoors in bright soft light: a man in his forties with deep brown skin and a shaved head laughs with his head tipped slightly back and his eyes crinkled, both his hands loose at his sides; beside him a woman in her forties with pale skin and red hair smiles wide, one of her hands resting on his forearm and the other holding her jacket. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             }
           ]
         },
@@ -1949,7 +1949,7 @@
               "etiquette": "Souffler plus longtemps",
               "texte": "Quand tu souffles plus longtemps que tu inspires, ton cœur ralentit tout seul. Presque rien d’autre ne calme ton corps aussi vite.",
               "illustration": "souffle-fenetre",
-              "prompt": "A woman in her forties with warm brown skin and dark curly hair stands alone at a window in soft daylight, one hand resting on the frame, the other open at her side. Her eyes are closed, her lips barely parted, her eyebrows completely unknotted, her shoulders low, her chest narrow, her neck long and released."
+              "prompt": "A woman in her forties with warm brown skin and dark curly hair stands alone at a window in soft daylight, one hand resting flat on the window frame, the other open at her side with the fingers spread. Her eyes are closed, her lips barely parted, her eyebrows completely unknotted, her shoulders low, her neck long and released. Single character in frame. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             }
           ]
         }
@@ -2041,7 +2041,7 @@
               "texte": "J’ai coupé ton histoire devant les autres",
               "note": "Tu dis ce que tu as fait, et l’autre n’a plus besoin d’expliquer pourquoi ça lui a fait mal.",
               "illustration": "fait-et-effet",
-              "prompt": "The same man in his thirties with light brown skin and short wavy hair now sits down at the table across from the other person, forearms on the table, hands still. His eyebrows are level, his gaze steady and direct, his mouth speaking simply, his shoulders low and squared toward them."
+              "prompt": "A man in his thirties with light brown skin and short wavy hair sits at a kitchen table across from a woman in her thirties with deep brown skin and braided hair, his forearms on the table and his hands still. His eyebrows are level, his gaze steady and direct, his mouth speaking simply, his shoulders low and squared toward her; she listens with both hands around a mug, her head slightly tilted. Only these two characters in frame. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             }
           ]
         }
@@ -2366,7 +2366,7 @@
               "etiquette": "",
               "texte": "",
               "illustration": "couv-message-efface",
-              "prompt": "A woman in her thirties with East Asian features and straight dark hair stands in a hallway holding her phone, her thumb pressed down on the backspace key over a long message she has just written. Her jaw is tight, her eyebrows are low, her eyes stay hard on the screen and her free hand grips her elbow."
+              "prompt": "A woman in her thirties with East Asian features and straight dark hair stands in a hallway holding her phone firmly in one hand, her other thumb pressed down on it as she deletes a long message she has just written. Her jaw is tight, her eyebrows are low, her eyes stay hard on the screen. Single character in frame. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers. Absolutely no text, no letters, no numbers, no signage, no plaque, no clock display anywhere in the image; any screen is blank and dark."
             }
           ]
         },
@@ -2430,12 +2430,16 @@
             },
             {
               "etiquette": "SORS VINGT MINUTES",
-              "texte": "Marche, bois un verre d’eau, fais autre chose. Repasser la scène dans ta tête ne fait que rallumer la colère."
+              "texte": "Marche, bois un verre d’eau, fais autre chose. Repasser la scène dans ta tête ne fait que rallumer la colère.",
+              "illustration": "marche-vingt-minutes",
+              "prompt": "A man in his fifties with light tan skin and greying dark hair walks alone on a quiet residential pavement, one hand loose at his side, the other holding a water bottle. His jaw has unclenched, his brow is smoothing out, his breathing is visibly slower and his gaze rests on the middle distance. Single character in frame. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             },
             {
               "etiquette": "DIS CE QUI COMPTE",
               "texte": "Dis « j’ai besoin de finir mes phrases » plutôt qu’un reproche général. Ça passe beaucoup mieux.",
-              "bulle": "« J’ai besoin de finir mes phrases. »"
+              "bulle": "« J’ai besoin de finir mes phrases. »",
+              "illustration": "dire-ce-qui-compte",
+              "prompt": "A woman in her thirties with deep brown skin and short coiled hair sits across a kitchen table from a man in his thirties with pale freckled skin and auburn hair, one of her hands open and flat on the table as she speaks. Her eyebrows are level, her mouth calm and deliberate, no tension in her shoulders; he listens with his head tilted and his eyes on her. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             }
           ]
         }
@@ -2495,7 +2499,7 @@
               "etiquette": "« C’ÉTAIT L’ÉQUIPE »",
               "texte": "C’est vrai, et tu en faisais partie. Dis plutôt : « On l’a fait ensemble, et moi, j’ai fait cette partie-là. »",
               "illustration": "merite-rendu-equipe",
-              "prompt": "A woman in her forties with pale skin and a blonde bob stands in a meeting room, one open hand pointing away from herself towards the door as she steps back. Her smile is quick and her eyes drop to the carpet, while a man in his twenties with brown skin claps, his face open and delighted."
+              "prompt": "A woman in her forties with pale skin and a blonde bob stands in a meeting room, one open hand with five clearly drawn fingers gesturing away from herself towards the door as she steps back, the other hand holding a notebook. Her smile is quick and her eyes drop to the carpet, while a man in his twenties with brown skin claps, his face open and delighted. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             },
             {
               "etiquette": "« N’IMPORTE QUI L’AURAIT FAIT »",

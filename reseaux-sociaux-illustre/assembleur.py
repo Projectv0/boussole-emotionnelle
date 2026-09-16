@@ -62,6 +62,17 @@ def couper(t, f, maxw):
         lignes.append(cour)
     return lignes
 
+def police_ajustee(t, chemin, taille, poids, maxw, hmax, il=1.3, mini=21):
+    """Réduit le corps jusqu'à ce que le texte tienne dans hmax.
+
+    Sans cette borne, une case un peu bavarde déborde sur la rangée suivante ou
+    passe par-dessus le pied de page — le seul défaut de composition que la
+    relecture ait trouvé en série.
+    """
+    while taille > mini and len(couper(t, F(chemin, taille, poids), maxw)) * taille * il > hmax:
+        taille -= 1
+    return F(chemin, taille, poids)
+
 def ecrire(d, t, x, y, f, col, maxw, il=1.3, align="centre"):
     for l in couper(t, f, maxw):
         w = larg(l, f)
@@ -224,12 +235,17 @@ def slide_couverture(post):
         y = ecrire(d, post["sousTitre"], W / 2, y + 22, F(SANS, 37, MED), GRIS, W - 2 * MARGE - 40, 1.32)
     dispo = H - y - 130
     if n <= 2:
-        t = int(min(dispo - 30, (W - 2 * MARGE - 40) / max(1, n)))
-        ecart = 40
+        ecart = 32
+        t = int(min(dispo - 30, (W - 2 * MARGE - ecart) / max(1, n)))
+        # deux vignettes côte à côte à la même hauteur laissaient une large bande
+        # vide au-dessus et au-dessous ; on les décale pour occuper la page et
+        # donner à la couverture le même remplissage que celles à trois images.
+        decal = 72 if n == 2 else 0
         x0 = (W - (t * n + ecart * (n - 1))) / 2
-        y0 = y + (dispo - t) / 2
+        y0 = y + max(0, (dispo - t - decal) / 2)
         for k, it in enumerate(items[:n]):
-            poser_illu(img, it.get("illustration", f"p{post['numero']:02d}-c{k+1}"), x0 + k * (t + ecart), y0, t)
+            poser_illu(img, it.get("illustration", f"p{post['numero']:02d}-c{k+1}"),
+                       x0 + k * (t + ecart), y0 + k * decal, t)
     else:
         cols = 2
         t = int(min((dispo - 26) / 2, (W - 2 * MARGE - 34) / 2))
@@ -257,15 +273,22 @@ def slide_grille(post, s):
     rangs = (len(items) + cols - 1) // cols
     dispo = H - y - 150
     hcase = dispo / rangs
-    t = int(min(hcase * .52, (W - 2 * MARGE - 60) / cols * .78))
+    wetq, wtxt = (W - 2 * MARGE) / cols - 20, (W - 2 * MARGE) / cols - 16
+    fetq = F(SANS, 38, DEMI)
+    # la vignette cède la place au texte avant que le texte ne rétrécisse : les
+    # quatre cases gardent ainsi la même image et le même corps.
+    netq = max(len(couper(it["etiquette"], fetq, wetq)) for it in items)
+    ntxt = max(len(couper(it["texte"], F(SANS, 30, REG), wtxt)) for it in items)
+    htexte = 14 + netq * 38 * 1.2 + 6 + ntxt * 30 * 1.34 + 18
+    t = int(min(hcase * .52, (W - 2 * MARGE - 60) / cols * .78, max(168, hcase - htexte)))
     for k, it in enumerate(items):
         r, c = divmod(k, cols)
         cx = MARGE + (W - 2 * MARGE) * (c + .5) / cols
         cy = y + r * hcase
         poser_illu(img, it.get("illustration", ""), cx - t / 2, cy, t)
-        yy = cy + t + 14
-        yy = ecrire(d, it["etiquette"], cx, yy, F(SANS, 38, DEMI), TERRE, (W - 2 * MARGE) / cols - 20, 1.2)
-        ecrire(d, it["texte"], cx, yy + 6, F(SANS, 30, REG), GRIS, (W - 2 * MARGE) / cols - 16, 1.34)
+        yy = ecrire(d, it["etiquette"], cx, cy + t + 14, fetq, TERRE, wetq, 1.2)
+        ftxt = police_ajustee(it["texte"], SANS, 30, REG, wtxt, cy + hcase - 18 - (yy + 6), 1.34)
+        ecrire(d, it["texte"], cx, yy + 6, ftxt, GRIS, wtxt, 1.34)
     pied(img)
     return img
 
@@ -376,6 +399,35 @@ def slide_etapes(post, s):
     pied(img)
     return img
 
+def remplace_seul(img, d, it, y, dispo):
+    """Une seule paire « au lieu de / dis plutôt » occupe toute la page.
+
+    Rangée dans la grille à deux ou trois cases, elle laissait les deux tiers de la
+    diapositive en crème nu avec une vignette minuscule en bas à droite. Ici le texte
+    prend toute la largeur, l'illustration passe dessous en grand, et l'ensemble est
+    centré verticalement.
+    """
+    maxw = W - 2 * MARGE
+    flab = F(SANS, 27, DEMI)
+    fav, fap, fno = F(SERIF, 42, IT), F(SERIF, 50, SB), F(SANS, 31, REG)
+    note = (it.get("note") or "").strip()
+    av, ap = "« " + it["etiquette"] + " »", "« " + it["texte"] + " »"
+    nav, nap = len(couper(av, fav, maxw)), len(couper(ap, fap, maxw))
+    nno = len(couper(note, fno, maxw)) if note else 0
+    t = 360 if nav + nap + nno <= 7 else 300
+    hbloc = (36 + nav * 42 * 1.26 + 22 + 34 + nap * 50 * 1.26
+             + (20 + nno * 31 * 1.34 if note else 0) + 44 + t)
+    yt = y + max(0, (dispo - hbloc) / 2)
+    d.text((MARGE, yt), "AU LIEU DE", font=flab, fill=GRIS)
+    yt = ecrire(d, av, MARGE, yt + 36, fav, GRIS, maxw, 1.26, "gauche")
+    d.text((MARGE, yt + 22), "DIS PLUTÔT", font=flab, fill=TERRE)
+    yt = ecrire(d, ap, MARGE, yt + 56, fap, ENCRE, maxw, 1.26, "gauche")
+    if note:
+        yt = ecrire(d, note, MARGE, yt + 20, fno, GRIS, maxw, 1.34, "gauche")
+    poser_illu(img, it.get("illustration", ""), (W - t) / 2, yt + 44, t)
+    pied(img)
+    return img
+
 def slide_remplace(post, s):
     img = fond()
     d = ImageDraw.Draw(img)
@@ -384,6 +436,8 @@ def slide_remplace(post, s):
         y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + 30
     items = s["items"][:3]
     dispo = H - y - 150
+    if len(items) == 1:
+        return remplace_seul(img, d, s["items"][0], y, dispo)
     hcase = min(dispo / len(items), 380)
     y += max(0, (dispo - hcase * len(items)) / 2)
     fav, fap, fno = F(SERIF, 34, IT), F(SERIF, 37, SB), F(SANS, 26, REG)
