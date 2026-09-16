@@ -1,0 +1,170 @@
+{
+ "posts": [
+  {
+   "numero": 99,
+   "slug": "essai",
+   "titre": "LA HONTE ET LA CULPABILITÉ NE DISENT PAS LA MÊME CHOSE",
+   "titreAccent": "HONTE CULPABILITÉ",
+   "sousTitre": "Sept mots d’écart, deux mondes",
+   "emotions": [
+    "honte",
+    "culpabilite"
+   ],
+   "slides": [
+    {
+     "gabarit": "couverture",
+     "items": [
+      {
+       "etiquette": "",
+       "illustration": "essai-c1",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "",
+       "illustration": "essai-c2",
+       "prompt": "x"
+      }
+     ]
+    },
+    {
+     "gabarit": "duo",
+     "titre": "DEUX PHRASES",
+     "items": [
+      {
+       "etiquette": "« J’ai mal agi »",
+       "texte": "La culpabilité porte sur un acte, situé dans le temps. Donc réparable.",
+       "illustration": "essai-1",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "« Je suis mauvais »",
+       "texte": "La honte porte sur la personne entière. Et ça, ça ne se répare pas.",
+       "illustration": "essai-2",
+       "prompt": "x"
+      }
+     ]
+    },
+    {
+     "gabarit": "grille",
+     "titre": "COMMENT LA RECONNAÎTRE",
+     "items": [
+      {
+       "etiquette": "Le regard fuit",
+       "texte": "On cherche la sortie des yeux avant même d’avoir décidé de partir.",
+       "illustration": "essai-3",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "Le corps se replie",
+       "texte": "Épaules rentrées, buste refermé : se faire petit, sortir du champ.",
+       "illustration": "essai-4",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "Les mots absolus",
+       "texte": "« Toujours », « jamais », « nul » : la honte parle rarement au conditionnel.",
+       "illustration": "essai-5",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "Le silence",
+       "texte": "Ce qui reste caché grossit dans le noir, parfois pendant des années.",
+       "illustration": "essai-6",
+       "prompt": "x"
+      }
+     ]
+    },
+    {
+     "gabarit": "etapes",
+     "titre": "DESSERRER LE SECRET",
+     "items": [
+      {
+       "etiquette": "Choisis une personne sûre",
+       "texte": "Pas la plus proche : celle qui a déjà su écouter sans juger.",
+       "illustration": "essai-7",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "Raconte le moment précis",
+       "texte": "Les faits, ce que tu as ressenti — sans plaidoirie.",
+       "illustration": "essai-8",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "Observe l’après",
+       "texte": "Souvent, la scène redevient simplement… une histoire.",
+       "illustration": "essai-9",
+       "prompt": "x"
+      }
+     ]
+    },
+    {
+     "gabarit": "remplace",
+     "titre": "CHANGE UN MOT",
+     "items": [
+      {
+       "etiquette": "Je suis nul, j’ai encore raté",
+       "texte": "J’ai raté ça, cette fois",
+       "illustration": "essai-10",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "Désolé de te déranger",
+       "texte": "Merci de prendre le temps",
+       "illustration": "essai-11",
+       "prompt": "x"
+      }
+     ]
+    },
+    {
+     "gabarit": "avant-apres",
+     "titre": "AVANT ET APRÈS",
+     "items": [
+      {
+       "etiquette": "Avant",
+       "texte": "Tu revis la scène chaque nuit, seul, en boucle.",
+       "illustration": "essai-12",
+       "prompt": "x",
+       "bulle": "Et s’il s’en souvient encore ?"
+      },
+      {
+       "etiquette": "Après",
+       "texte": "Tu l’as dite une fois à quelqu’un. Elle a repris sa taille réelle.",
+       "illustration": "essai-13",
+       "prompt": "x"
+      }
+     ]
+    },
+    {
+     "gabarit": "liste",
+     "titre": "CE QUE ÇA CHANGE",
+     "items": [
+      {
+       "etiquette": "On s’excuse",
+       "texte": "La culpabilité pousse vers l’autre : réparer, recoudre.",
+       "illustration": "essai-14",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "On disparaît",
+       "texte": "La honte pousse loin de l’autre : éviter, se taire.",
+       "illustration": "essai-15",
+       "prompt": "x"
+      },
+      {
+       "etiquette": "On confond",
+       "texte": "Et on répare rarement ce qu’on n’a pas nommé.",
+       "illustration": "essai-16",
+       "prompt": "x"
+      }
+     ]
+    }
+   ],
+   "phraseFinale": "La culpabilité pousse vers l’autre. La honte pousse à se cacher.",
+   "question": "Quelle place la honte occupe-t-elle chez toi ?",
+   "legende": "Test.",
+   "hashtags": "#émotions",
+   "lienGuide": "honte.html"
+  }
+ ]
+}
