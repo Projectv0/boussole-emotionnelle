@@ -10,7 +10,7 @@ Une illustration absente laisse un cadre pointillé avec son identifiant : on pe
 composer un carrousel incomplet pour juger la mise en page avant de tout générer.
 """
 import json, os, sys, textwrap
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageStat
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 ILLUS = os.path.join(BASE, "illustrations")
@@ -85,6 +85,32 @@ def fond():
     return Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
 
 # ————— illustrations —————
+def recaler_fond(im):
+    """Aligne le fond clair de l'illustration sur le crème exact de la page.
+
+    Nano Banana rend un crème légèrement plus froid d'une image à l'autre : sans ce
+    recalage, chaque vignette se voit comme un rectangle posé sur la page au lieu de
+    flotter. Le décalage est appliqué à pleine force sur les tons clairs et s'éteint
+    sur les tons sombres, pour ne pas ternir les visages ni les traits de crayon.
+    Aucun effet si les quatre coins ne s'accordent pas sur un fond uni et clair.
+    """
+    b = max(4, im.width // 20)
+    coins = [im.crop((0, 0, b, b)), im.crop((im.width - b, 0, im.width, b)),
+             im.crop((0, im.height - b, b, im.height)),
+             im.crop((im.width - b, im.height - b, im.width, im.height))]
+    moy = [ImageStat.Stat(c).mean for c in coins]
+    for c in range(3):
+        v = [m[c] for m in moy]
+        if min(v) < 215 or max(v) - min(v) > 14:
+            return im
+    ecart = [CREME[c] - sum(m[c] for m in moy) / 4 for c in range(3)]
+    if max(abs(e) for e in ecart) < 1.5:
+        return im
+    table = []
+    for c in range(3):
+        table += [max(0, min(255, round(i + ecart[c] * (i / 255) ** .5))) for i in range(256)]
+    return im.point(table)
+
 _cache = {}
 def vignette(nom, taille, ronde=False):
     """charge illustrations/<nom>.png|jpg, recadre au carré, fond crème fondu"""
@@ -99,7 +125,7 @@ def vignette(nom, taille, ronde=False):
     if chemin is None:
         _cache[cle] = None
         return None
-    im = Image.open(chemin).convert("RGB")
+    im = recaler_fond(Image.open(chemin).convert("RGB"))
     c = min(im.size)
     im = im.crop(((im.width - c) // 2, (im.height - c) // 2,
                   (im.width + c) // 2, (im.height + c) // 2)).resize((taille, taille), Image.LANCZOS)
@@ -359,7 +385,7 @@ def slide_remplace(post, s):
     items = s["items"][:3]
     dispo = H - y - 150
     hcase = min(dispo / len(items), 380)
-    y += min((dispo - hcase * len(items)) / 2, 70)
+    y += max(0, (dispo - hcase * len(items)) / 2)
     fav, fap, fno = F(SERIF, 34, IT), F(SERIF, 37, SB), F(SANS, 26, REG)
     for k, it in enumerate(items):
         yy = y + k * hcase
