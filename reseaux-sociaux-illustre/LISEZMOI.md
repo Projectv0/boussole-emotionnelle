@@ -11,11 +11,11 @@ fond crème, titres percutants — appliqué aux 14 émotions de la Boussole.
 |---|---|
 | **GUIDE-STYLE.md** | l'analyse du style de référence et la charte à respecter. À lire en premier. |
 | **contenus.json** | les 30 posts : titres, textes, prompts. La source de tout le reste. |
-| **prompts/00-style.md** | le suffixe de style — la pièce qui garantit la cohérence des 100+ illustrations. |
+| **prompts/00-style.md** | le suffixe de style — la pièce qui garantit la cohérence des 285 illustrations. |
 | **prompts/post-XX-*.md** | une fiche par post : chaque prompt prêt à coller, avec le nom de fichier attendu. |
 | **prompts/TOUS-LES-PROMPTS.md** | tous les prompts à la suite, pour enchaîner les générations. |
-| **illustrations/** | tu déposes ici les images sorties de Nano Banana. |
-| **sortie/** | les carrousels finis : une diapositive par image + la légende. |
+| **illustrations/** | les 285 images sorties de Nano Banana. Hors dépôt (206 Mo). |
+| **sortie/** | les carrousels finis : 186 diapositives + une légende par post. Hors dépôt. |
 | **assembleur.py** | compose illustrations + typographie. |
 | **prompts.py** | régénère les fiches de prompts depuis contenus.json. |
 
@@ -70,5 +70,5 @@ autres si tu veux alterner les deux formats.
    immédiatement, et ça se voit plus que n'importe quel défaut individuel.
 2. **Laisser Nano Banana écrire du texte.** Il déforme systématiquement les mots. Les bulles de
    dialogue sont dessinées par l'assembleur, en vrai français : ne les demande jamais à l'image.
-3. **Générer les 100 illustrations avant d'en avoir composé une seule.** Une passe de validation
+3. **Générer les 285 illustrations avant d'en avoir composé une seule.** Une passe de validation
    sur un post complet coûte dix minutes et peut en économiser des heures.
