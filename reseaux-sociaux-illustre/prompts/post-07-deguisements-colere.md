@@ -1,6 +1,6 @@
 # Post 07 — LA COLÈRE QU’ON NE DIT PAS SORT AILLEURS
 
-*Quatre chemins qu’elle prend : l’ironie, les oublis, la fatigue.*
+*Quatre chemins qu’elle prend : la porte trop douce, le sarcasme, les oublis, la fatigue du soir.*
 
 **Émotions** : colere, tristesse, honte  
 **Illustrations à générer** : voir ci-dessous  

@@ -29,7 +29,7 @@ A man in his twenties with South Asian features and thick black hair stands agai
 > couverture
 
 ```
-A woman in her thirties with East Asian features and straight dark hair stands in a hallway holding her phone, her thumb pressed down on the backspace key over a long message she has just written. Her jaw is tight, her eyebrows are low, her eyes stay hard on the screen and her free hand grips her elbow. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
+A woman in her thirties with East Asian features and straight dark hair stands in a hallway holding her phone firmly in one hand, her other thumb pressed down on it as she deletes a long message she has just written. Her jaw is tight, her eyebrows are low, her eyes stay hard on the screen. Single character in frame. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers. Absolutely no text, no letters, no numbers, no signage, no plaque, no clock display anywhere in the image; any screen is blank and dark. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
 ## 4. `parole-coupee.png`
@@ -87,6 +87,24 @@ A young man with brown skin and short curly hair stands just outside a building 
 ```
 A woman in her thirties with medium brown skin and curly hair sits on the edge of a bed, a notebook on her knees and a pen paused in her hand. Her eyebrows are drawn together in thought, her gaze is slightly off camera and her other hand rests on her chest. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
+
+## 11. `marche-vingt-minutes.png`
+
+> SORS VINGT MINUTES — Marche, bois un verre d’eau, fais autre chose. Repasser la scène dans ta tête ne fait que rallumer la colère.
+
+```
+A man in his fifties with light tan skin and greying dark hair walks alone on a quiet residential pavement, one hand loose at his side, the other holding a water bottle. His jaw has unclenched, his brow is smoothing out, his breathing is visibly slower and his gaze rests on the middle distance. Single character in frame. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
+```
+
+## 12. `dire-ce-qui-compte.png`
+
+> DIS CE QUI COMPTE — Dis « j’ai besoin de finir mes phrases » plutôt qu’un reproche général. Ça passe beaucoup mieux.
+
+```
+A woman in her thirties with deep brown skin and short coiled hair sits across a kitchen table from a man in his thirties with pale freckled skin and auburn hair, one of her hands open and flat on the table as she speaks. Her eyebrows are level, her mouth calm and deliberate, no tension in her shoulders; he listens with his head tilted and his eyes on her. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
+```
+
+*(La bulle «&nbsp;« J’ai besoin de finir mes phrases. »&nbsp;» est dessinée par l'assembleur — ne la demande pas à Nano Banana.)*
 
 ---
 

@@ -1,6 +1,6 @@
 # Post 03 — CE N’EST PAS DE LA JALOUSIE, C’EST DE L’ENVIE
 
-*Son appart, son poste, ses vacances : ce que tu ressens a un autre nom*
+*Son appart, son poste, ses vacances : ce que tu ressens à un autre nom*
 
 **Émotions** : jalousie, peur, honte  
 **Illustrations à générer** : voir ci-dessous  
@@ -97,12 +97,12 @@ Night, close framing on the face: a woman in her thirties with pale skin and lon
 > Se comparer aux autres — Tu compares ta vie de tous les jours à ce que les autres montrent. Or ils ne montrent que le meilleur.
 
 ```
-Two colleagues in a bright staffroom: a woman in her fifties with deep brown skin and silver locs is being congratulated, a hand resting on her shoulder, her chin high and her smile wide; a step behind her a man in his fifties with light skin and glasses holds a coffee, his smile polite and brief, his eyes already back on the floor. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
+Two colleagues in a bright staffroom: a woman in her fifties with deep brown skin and silver locs holds a folder against her chest with both hands, her chin high and her smile wide after being congratulated; a step behind her a man in his fifties with light skin and glasses holds a coffee mug in both hands, his smile polite and brief, his eyes already back on the floor. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
 ## 12. `canape-aveu.png`
 
-> « Tu étais avec qui ? » — « J’ai eu peur de compter moins pour toi ce soir. » Tu dis ta peur, au lieu de chercher une preuve.
+> Tu étais avec qui ? — J’ai eu peur de compter moins pour toi ce soir.
 
 ```
 A man in his thirties with East Asian features and a woman in her thirties with light skin and curly blonde hair sit on a sofa turned toward each other, knees almost touching. He speaks with open palms and dropped shoulders, the inner ends of his brows raised; she leans in, one hand resting on his forearm, her face soft and attentive. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -110,7 +110,7 @@ A man in his thirties with East Asian features and a woman in her thirties with 
 
 ## 13. `atelier-admiration.png`
 
-> « Les autres ont tout » — « Ça me montre ce que je veux vraiment : par où je commence ? » Tu sais enfin ce que tu veux, et tu choisis une première chose à faire.
+> Les autres ont tout — Ça me montre ce que je veux vraiment : par où je commence ?
 
 ```
 A woman in her fifties with light skin and short auburn hair stands in the doorway of a workshop watching a younger woman with deep brown skin sand a wooden chair. Her eyebrows are raised with interest, her head tilts, her mouth is slightly open and one hand rests on the door frame as she leans in rather than away. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.

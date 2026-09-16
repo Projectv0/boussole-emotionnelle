@@ -86,7 +86,7 @@ A man in his sixties with brown skin and short white hair sits at a kitchen tabl
 
 ## 10. `carnet-dix-minutes.png`
 
-> « Arrête d’y penser » — « Ce soir, je prends dix minutes avec mon carnet pour y penser. » Tu ne chasses pas l’inquiétude, tu lui donnes rendez-vous.
+> Arrête d’y penser — Ce soir, je prends dix minutes avec mon carnet pour y penser.
 
 ```
 A man in his forties with brown skin and short dark hair sits at a dining table with a mug and a small kitchen timer, an open notebook in front of him with its pages angled away from view, pen resting in his hand. His shoulders are low, his brow is smooth, his eyes rest calmly on the table and his mouth is relaxed, slightly pursed in concentration. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -94,7 +94,7 @@ A man in his forties with brown skin and short dark hair sits at a dining table 
 
 ## 11. `sac-prepare.png`
 
-> « Arrête de stresser » — « Ce soir, je fais une seule chose : je prépare mon sac. » Une chose précise à faire t’aide plus que « arrête de stresser ».
+> Arrête de stresser — Ce soir, je fais une seule chose : je prépare mon sac.
 
 ```
 A young man in his twenties with pale skin, freckles and auburn curls crouches in a hallway packing a bag for the next morning, his movements unhurried; his brow is smooth, his lips are slightly parted in concentration and his shoulders are low and loose. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
