@@ -1,6 +1,6 @@
-# Post 13 — LU, ET PAS DE RÉPONSE
+# Post 13 — LU, ET TOUJOURS RIEN
 
-*Ce que ton esprit invente pendant que l’autre fait autre chose*
+*Ce que ta tête invente pendant que l’autre fait autre chose*
 
 **Émotions** : anxiete, peur, tristesse, honte, colere  
 **Illustrations à générer** : voir ci-dessous  
@@ -34,7 +34,7 @@ A woman in her forties with pale skin and auburn hair pinned up stands in a hall
 
 ## 4. `scenarios.png`
 
-> Ce que tu imagines — J’ai dit quelque chose de travers, on se lasse de moi, le lien s’abîme et je l’apprends en dernier.
+> Ce que tu imagines — Tu te dis que tu as écrit une bêtise. Ou que l’autre se lasse de toi, et que personne ne te le dira.
 
 ```
 A young man in his twenties with tan skin and messy dark curls paces an empty living room at night, one hand gripping the back of his neck, the other clenched at his side, eyes fixed on the floor, jaw tight, chin tucked down, his steps short and quick. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -42,7 +42,7 @@ A young man in his twenties with tan skin and messy dark curls paces an empty li
 
 ## 5. `ascenseur.png`
 
-> Ce qui arrive le plus souvent — Une réunion qui déborde, un enfant qui pleure, un message lu dans l’ascenseur puis oublié. Et parfois le silence dit quelque chose : demande plutôt que deviner.
+> Ce qui se passe — Le plus souvent, l’autre est en réunion, dans le métro, ou en train de conduire. Ton message a été lu, puis oublié dans la minute.
 
 ```
 A woman in her fifties with deep brown skin and short grey curls stands in an office lift holding a phone in one hand and a stack of folders in the other, giving the screen a distracted half-nod, eyelids relaxed, mouth easy, her attention already moving toward the opening doors. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -50,7 +50,7 @@ A woman in her fifties with deep brown skin and short grey curls stands in an of
 
 ## 6. `table-de-cuisine-doute.png`
 
-> Le vide se remplit — Sans information, l’esprit comble le vide avec le scénario qui fait le plus peur — et chez beaucoup, c’est celui où on est en cause.
+> Tu n’as pas la réponse — Quand tu ne sais pas pourquoi l’autre ne répond pas, ta tête invente la suite. Et elle choisit presque toujours le pire.
 
 ```
 A man in his sixties with light skin, glasses and short white hair sits at a kitchen table with both hands flat on the wood, looking down at his own hands, the lines across his forehead deepening, lips rolled inward, his shoulders heavy and completely still, a cold cup at the far edge of the table. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -60,7 +60,7 @@ A man in his sixties with light skin, glasses and short white hair sits at a kit
 
 ## 7. `relire-son-message.png`
 
-> La boucle — Tu relis ton message, tu comptes les heures, tu écris un « alors ? » que tu effaces trois fois.
+> La boucle qui tourne — Tu relis ton message et tu comptes les heures. Tu écris un « alors ? » que tu effaces trois fois.
 
 ```
 A woman in her thirties with East Asian features and straight black hair sits cross-legged on a sofa, phone held in both hands, thumbs poised above the screen, eyes retracing the same lines again, the outer ends of her eyebrows drawing down, her thumb rubbing the edge of the phone case, one heel bouncing fast, a cold mug forgotten beside her. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -68,13 +68,13 @@ A woman in her thirties with East Asian features and straight black hair sits cr
 
 ## 8. `question-simple.png`
 
-> La phrase claire — Laisse un vrai délai, puis demande simplement, sans reproche ni test : une question ferme la boucle.
+> La question simple — Attends un jour ou deux, puis demande simplement, sans reproche. Poser la question fait plus de bien que d’attendre.
 
 ```
 A man in his forties with brown skin and a trimmed beard walks outdoors in daylight, phone already back in his pocket, chin lifted, shoulders released, a small resolved smile, eyes clear and looking forward. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-*(La bulle «&nbsp;Ton silence me travaille un peu. Tout va bien ?&nbsp;» est dessinée par l'assembleur — ne la demande pas à Nano Banana.)*
+*(La bulle «&nbsp;Je me fais des films. Tout va bien ?&nbsp;» est dessinée par l'assembleur — ne la demande pas à Nano Banana.)*
 
 ---
 

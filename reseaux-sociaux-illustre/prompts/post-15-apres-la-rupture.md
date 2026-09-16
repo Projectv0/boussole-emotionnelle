@@ -1,6 +1,6 @@
 # Post 15 — TU NE PERDS PAS QU’UNE PERSONNE
 
-*La personne, le futur imaginé, et les gestes de tous les jours*
+*Tu perds aussi le futur que tu voyais et les gestes de tous les jours*
 
 **Émotions** : tristesse, amour, colere, culpabilite, jalousie  
 **Illustrations à générer** : voir ci-dessous  
@@ -34,7 +34,7 @@ A woman in her forties with pale skin and short auburn hair sits on a park bench
 
 ## 4. `chaise-vide.png`
 
-> La personne — Sa voix, sa présence, sa façon de te regarder. C’est la perte qu’on nomme en premier.
+> La personne — Tu perds sa voix, sa présence, sa façon de te regarder. C’est la perte que tout le monde voit, et c’est déjà beaucoup.
 
 ```
 A man in his fifties with tan skin and greying curls sits at a small two-seat table with the chair opposite him empty, both hands wrapped around a mug he is not drinking, eyes fixed on that empty chair, the corners of his mouth pulled down, his throat swallowing once. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -42,7 +42,7 @@ A man in his fifties with tan skin and greying curls sits at a small two-seat ta
 
 ## 5. `projets-ranges.png`
 
-> Le futur imaginé — Les voyages prévus, la maison envisagée, la version de ta vie où cette personne figurait.
+> Le futur que tu voyais — Tu perds aussi les voyages prévus et la maison dont vous parliez. Toute la vie que tu imaginais disparaît d’un coup.
 
 ```
 A woman in her thirties with East Asian features and shoulder-length black hair sits holding a folded blank map in her lap, her gaze going through it without seeing, her chin trembling faintly, her thumb stroking the same fold over and over. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -50,7 +50,7 @@ A woman in her thirties with East Asian features and shoulder-length black hair 
 
 ## 6. `deux-tasses.png`
 
-> Les habitudes — Le message du matin, le côté du lit, le « à ce soir » machinal. Le corps continue de les chercher.
+> Les gestes du quotidien — Il te manque le message du matin, ton côté du lit, le « à ce soir » qu’on dit sans y penser. Ton corps les cherche encore.
 
 ```
 A man in his twenties with brown skin and short curls stands in a kitchen having automatically taken two mugs from the shelf, freezing as he notices the second one, his mouth opening slightly, one hard blink, his raised hand staying in mid-air, his jaw going loose. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -58,7 +58,7 @@ A man in his twenties with brown skin and short curls stands in a kitchen having
 
 ## 7. `relire-la-nuit.png`
 
-> Le manque qui revient — Pensées obsédantes, envie de relire les messages : le circuit de la récompense réclame ce qu’il recevait tous les jours. Ça vient par vagues, pas en ligne droite.
+> Le manque qui revient — Tu penses à cette personne sans arrêt et tu veux relire vos messages. Certains jours tu vas bien, puis d’un coup ça revient très fort.
 
 ```
 A woman in her thirties with olive skin and dark curly hair lies curled on a sofa under a blanket at night, phone close to her face, thumb scrolling backwards without stopping, her eyes swollen, her breath catching in her chest, knees drawn up, the crease between her brows deep. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -66,7 +66,7 @@ A woman in her thirties with olive skin and dark curly hair lies curled on a sof
 
 ## 8. `rire-dehors.png`
 
-> Des éclaircies saines — Rire deux jours après ne trahit personne : ça montre seulement que ton système respire encore.
+> Les moments où ça va — Si tu ris deux jours après, tu ne trahis personne. Ça montre juste que tu respires encore, et c’est bon signe.
 
 ```
 Two friends walk outdoors in bright soft light: a man in his forties with deep brown skin and a shaved head laughs with his head tipped slightly back and his eyes crinkled, and beside him a woman in her forties with pale skin and red hair smiles wide with one hand on his arm, both of them walking loose and open. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -74,7 +74,7 @@ Two friends walk outdoors in bright soft light: a man in his forties with deep b
 
 ## 9. `mettre-en-sourdine.png`
 
-> Couper les déclencheurs — Mets son fil en sourdine quelques semaines, range les objets sans les jeter. Ce n’est pas fuir : c’est arrêter de rouvrir la plaie tous les matins.
+> Mettre de la distance — Mets ses comptes en sourdine quelques semaines et range ses affaires sans les jeter. Tu ne fuis pas : tu évites d’y repenser chaque matin.
 
 ```
 A woman in her twenties with brown skin and a high ponytail holds her phone in both hands and presses one deliberate button, chin lifted, jaw set with quiet resolve, her eyes steady though still red, her shoulders squared. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -82,7 +82,7 @@ A woman in her twenties with brown skin and a high ponytail holds her phone in b
 
 ## 10. `marche-du-matin.png`
 
-> Remettre du rythme — Coucher à peu près fixe, une marche dehors, des repas réels même sans appétit. Vise le minimum honorable.
+> Remettre du rythme — Couche-toi à peu près à la même heure et sors marcher un peu. Mange de vrais repas même sans faim, et vise juste le minimum.
 
 ```
 A man in his sixties with light skin and short white hair walks outdoors in cool morning light wearing a coat, hands in his pockets, gaze lifted toward the horizon, his breath faintly visible, his face tired but his step even and steady. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -90,7 +90,7 @@ A man in his sixties with light skin and short white hair walks outdoors in cool
 
 ## 11. `lettre-sous-la-lampe.png`
 
-> Écrire, si ça te soulage — Écris-lui la lettre que tu n’enverras pas, une fois, en entier. Mais si écrire te fait tourner dans la même boucle, arrête : ce n’est pas le bon appui pour toi, et ça ne dit rien de plus.
+> Écrire, si ça te soulage — Écris-lui une fois la lettre que tu n’enverras pas. Si ça te fait tourner en rond, arrête : ça ne marche pas pour tout le monde.
 
 ```
 A woman in her fifties with deep brown skin and short grey natural hair writes at a kitchen table under a lamp, pen pressed to a completely blank page, her brows drawn together in concentration, her lips slightly parted, one tear on her cheek, her free hand steadying the paper. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.

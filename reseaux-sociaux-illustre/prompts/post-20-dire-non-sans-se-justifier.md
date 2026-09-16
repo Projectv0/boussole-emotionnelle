@@ -1,6 +1,6 @@
 # Post 20 — « NON MERCI » EST UNE PHRASE COMPLÈTE
 
-*Chaque oui forcé est un non adressé à autre chose.*
+*Dire oui sans en avoir envie te coûte toujours quelque chose.*
 
 **Émotions** : culpabilite, anxiete, fierte  
 **Illustrations à générer** : voir ci-dessous  
@@ -34,7 +34,7 @@ A woman in her seventies with warm brown skin and short white curls sits in an a
 
 ## 4. `non-differe.png`
 
-> Le non différé — « Je regarde et je te réponds demain. » À froid, sans témoin, tu peux enfin consulter ce que tu veux. Quand le rapport de force est réel — un supérieur, quelqu’un dont tu dépends — c’est le différé qui protège le mieux : il te laisse choisir la forme.
+> Réponds plus tard — « Je regarde et je te réponds demain. » Quand personne n’est plus en face de toi, tu décides beaucoup plus facilement.
 
 ```
 A woman in her forties with pale freckled skin and auburn hair tied back stands in a kitchen doorway, phone in hand just after a request. Her eyebrows are level, her eyes clear and unhurried, her mouth speaking one short sentence, her free hand resting open and steady on the door frame. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -42,7 +42,7 @@ A woman in her forties with pale freckled skin and auburn hair tied back stands 
 
 ## 5. `non-alternative.png`
 
-> Le non + alternative — « Pas samedi, mais dimanche matin. » Tu dis non à la demande, pas à la personne.
+> Propose autre chose — « Pas samedi, mais dimanche matin si tu veux. » Tu refuses le moment proposé, et tu montres que la personne compte quand même pour toi.
 
 ```
 Two friends on a doorstep. A man in his twenties with deep brown skin and short braids gestures with two fingers as he offers a different option, his eyebrows raised in friendly openness, his smile warm and direct. His friend, a woman in her thirties with light tan skin and a messy bun, nods with relaxed eyebrows and a small accepting smile. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -50,7 +50,7 @@ Two friends on a doorstep. A man in his twenties with deep brown skin and short 
 
 ## 6. `petits-enjeux.png`
 
-> Les petits enjeux — Le sondage, la carte de fidélité, le second verre : deux mots, et c’est réglé.
+> Les petites demandes — Pour le sondage, la carte de fidélité ou le deuxième verre, deux mots suffisent : « non merci ».
 
 ```
 A man in his sixties with East Asian features and short grey hair stands at a shop counter, declining a loyalty card held out by a partly visible hand across the till. His face is entirely relaxed, an everyday polite smile on his lips, his eyebrows level, his head in a small kind shake, one hand lifted briefly. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -58,7 +58,7 @@ A man in his sixties with East Asian features and short grey hair stands at a sh
 
 ## 7. `non-court.png`
 
-> Désolée, c’est compliqué en ce moment… — Non, je ne peux pas cette fois
+> Désolé, c’est compliqué… — Non, je ne peux pas cette fois
 
 ```
 The same young woman with medium brown skin and long dark braids, a moment later, standing still with both feet planted and her hands quiet at her sides. Her eyebrows are level, her gaze steady on the other person, her mouth just closed after a short sentence, her shoulders low and easy. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -66,7 +66,7 @@ The same young woman with medium brown skin and long dark braids, a moment later
 
 ## 8. `samedi-evapore.png`
 
-> La facture cachée — Le oui qu’on n’a pas choisi se paie ailleurs : en fatigue, en samedis évaporés, parfois en rancune envers ceux qui demandent.
+> Ce que ça te coûte — Ce oui-là revient plus tard. Tu le paies en fatigue, en samedis perdus, et parfois en rancune contre quelqu’un qui n’y est pour rien.
 
 ```
 A man in his forties with fair skin and short dark hair sits alone at a kitchen table on a Saturday morning, still in his coat, car keys still in one hand, looking at a stack of moving boxes and a borrowed drill by the door. His eyebrows are pulled together, his mouth slack with fatigue, his eyes dull and fixed, his other hand hanging heavy over the back of the chair, his shoulders slumped forward. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.

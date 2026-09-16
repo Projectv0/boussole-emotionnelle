@@ -1,6 +1,6 @@
-# Post 10 — MÂCHOIRES SERRÉES : UNE COLÈRE SANS PHRASE
+# Post 10 — TON CORPS LE SAIT AVANT TOI
 
-*Cinq signaux du corps et ce qu’ils disent le plus souvent*
+*Cinq signaux du corps et ce qu’ils disent le plus souvent.*
 
 **Émotions** : anxiete, colere, tristesse, peur  
 **Illustrations à générer** : voir ci-dessous  
@@ -26,7 +26,7 @@ A woman in her twenties with fair freckled skin and long red wavy hair sits on t
 
 ## 3. `machoires-reunion.png`
 
-> Mâchoires serrées — Souvent une colère qui n’a pas trouvé de phrase. Le corps retient à ta place, et il tient longtemps.
+> Mâchoires serrées — C’est souvent une colère que tu n’as pas dite. Ton corps la retient à ta place.
 
 ```
 A woman in her forties with fair skin and dark hair in a ponytail sits in a meeting listening to a decision she disagrees with, a pen still in her hand. The muscles at the hinge of her jaw stand out, her lips are closed in a straight line, her gaze is level and unmoving and her free hand curls into a loose fist on the table. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -34,7 +34,7 @@ A woman in her forties with fair skin and dark hair in a ponytail sits in a meet
 
 ## 4. `ventre-file-attente.png`
 
-> Ventre noué — Le plus souvent l’anxiété, parfois la tristesse. C’est le signal qui arrive avant la pensée.
+> Ventre noué — Le plus souvent, c’est l’anxiété, parfois la tristesse. Ton ventre réagit avant que tu comprennes pourquoi.
 
 ```
 A young man in his twenties with medium brown skin and short curly hair stands in a queue at a bakery, one hand pressed flat against his stomach under his open jacket. His eyebrows are drawn together, his eyes move around without settling, his shoulders are lifted with the ribcage held high and his other hand fiddles with his phone. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -42,7 +42,7 @@ A young man in his twenties with medium brown skin and short curly hair stands i
 
 ## 5. `gorge-couloir.png`
 
-> Gorge serrée — Quelque chose voudrait sortir et ne sort pas : des larmes, une phrase, un refus.
+> Gorge serrée — Quelque chose veut sortir et reste bloqué : des larmes, une phrase, un refus que tu n’oses pas dire.
 
 ```
 A woman in her thirties with pale skin and long light brown hair stands in a hallway just after a phone call, one hand at the base of her throat. Her chin dimples, she swallows hard, the inner ends of her eyebrows lift high and her lips are parted as if a sentence stopped halfway. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -50,7 +50,7 @@ A woman in her thirties with pale skin and long light brown hair stands in a hal
 
 ## 6. `epaules-open-space.png`
 
-> Épaules remontées — La posture de quelqu’un qui attend un choc. Elle s’installe en pleine journée et personne ne la remarque.
+> Épaules remontées — Tes épaules montent comme si tu attendais un coup. Tu peux rester comme ça des heures sans t’en rendre compte.
 
 ```
 A man in his fifties with deep brown skin and short grey hair sits at a desk in an open-plan office, screen light on his face, his shoulders lifted almost to his ears without him noticing. His brow is furrowed, his eyes are narrowed in concentration, his neck has disappeared into his collar and both hands hover over the keyboard. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -58,7 +58,7 @@ A man in his fifties with deep brown skin and short grey hair sits at a desk in 
 
 ## 7. `reveil-nuit.png`
 
-> Sommeil léger — Réveils à 4 h, sommeil en surface : parfois un système d’alerte qui n’a pas reçu l’ordre de s’éteindre.
+> Sommeil léger — Tu te réveilles à 4 h et tu dors mal le reste de la nuit. Ton corps reste sur ses gardes même en dormant.
 
 ```
 A woman in her forties with light olive skin and dark wavy hair lies on her side in bed in the small hours, eyes wide open in the dark. Her eyebrows are slightly raised and tense, her mouth is closed and still, one hand is tucked under her cheek and her whole body is curled and rigid. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -66,7 +66,7 @@ A woman in her forties with light olive skin and dark wavy hair lies on her side
 
 ## 8. `avant-entretien.png`
 
-> Ventre noué, anxiété — Avant un examen, un entretien, un appel. Le corps se prépare à quelque chose qui n’est pas encore là.
+> Ventre noué, anxiété — Ça arrive avant un examen, avant un entretien, avant un appel. Ton corps se prépare à quelque chose qui n’a pas encore eu lieu.
 
 ```
 A woman in her forties with deep brown skin and braided hair pulled back sits on a chair in a waiting room, a folder on her knees, minutes before an interview. Her eyes flick toward a closed door, her eyebrows are slightly raised, she chews the inside of her cheek and one hand is pressed flat on her stomach. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -74,7 +74,7 @@ A woman in her forties with deep brown skin and braided hair pulled back sits on
 
 ## 9. `dimanche-soir.png`
 
-> Ventre noué, tristesse — Un dimanche soir, une chaise vide, un message qui ne viendra pas. Le corps répond à ce qui manque.
+> Ventre noué, tristesse — Ça arrive un dimanche soir, devant une chaise vide, quand le message n’arrive pas. Ton corps réagit à ce qui te manque.
 
 ```
 A man in his thirties with pale skin and short sandy hair sits at the end of a sofa on a Sunday evening, a cold cup of tea in front of him, looking at an empty armchair. His gaze is still and heavy, the inner ends of his eyebrows lift, his mouth turns down slightly at the corners and one hand rests on his stomach. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -82,7 +82,7 @@ A man in his thirties with pale skin and short sandy hair sits at the end of a s
 
 ## 10. `dix-secondes-escalier.png`
 
-> Dans les dix secondes — Desserre la mâchoire, pose les épaules, souffle plus longtemps que tu n’inspires. Le corps redescend avant la pensée.
+> Dans les dix secondes — Desserre la mâchoire, laisse tomber les épaules, et souffle lentement par la bouche. Ton corps se calme avant tes pensées.
 
 ```
 A man in his forties with pale skin and a short dark beard stands alone in a stairwell just outside a meeting room, one hand flat against the wall, taking ten seconds for himself. His jaw has come unclenched and his lips are slightly parted, his shoulders sit low and well below his ears, his eyelids are half closed and his forehead is smooth. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.

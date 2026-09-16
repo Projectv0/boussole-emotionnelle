@@ -1,6 +1,6 @@
 # Post 06 — LES 4 DÉGUISEMENTS DE LA HONTE
 
-*Elle sort rarement sous son nom : voici ses costumes*
+*Quatre façons de la vivre sans jamais la reconnaître.*
 
 **Émotions** : honte, anxiete, culpabilite  
 **Illustrations à générer** : voir ci-dessous  
@@ -26,7 +26,7 @@ A man in his thirties with light brown skin and short dark hair sits on the edge
 
 ## 3. `blague-salle-pause.png`
 
-> L’humour qui mord — Tu te moques de toi avant les autres.
+> Rire de toi d’abord — Tu te moques de toi avant que les autres le fassent. Ça fait moins mal quand ça vient de toi.
 
 ```
 A young man in his early twenties with light brown skin and short curly auburn hair leans against a break-room counter holding a coffee cup, performing a joke at his own expense for a colleague standing in the doorway. His grin is exaggerated and lopsided, his eyebrows are pushed high, his eyes flick sideways to check the reaction of the colleague and one shoulder lifts in a shrug. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -36,7 +36,7 @@ A young man in his early twenties with light brown skin and short curly auburn h
 
 ## 4. `relecture-tard.png`
 
-> Le perfectionnisme — Rien ne part tant que ce n’est pas impeccable.
+> Le perfectionnisme — Tu ne rends rien tant que ce n’est pas parfait. Comme ça, personne ne peut rien te reprocher.
 
 ```
 A woman in her thirties with East Asian features and dark brown hair loosely tied back sits alone at a desk late at night, rereading the same message on a laptop for the fourth time. Her jaw is set, her brow is furrowed, one index finger hovers above the trackpad without pressing and her other hand is pressed flat against her lips. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -44,7 +44,7 @@ A woman in her thirties with East Asian features and dark brown hair loosely tie
 
 ## 5. `changer-de-trottoir.png`
 
-> L’évitement — Tu annules la veille.
+> Annuler la veille — Tu attends la veille pour annuler le rendez-vous. Sur le moment, c’est un vrai soulagement.
 
 ```
 A man in his fifties with tanned skin and greying wavy hair walks along a street holding a bakery bag, having just spotted someone he knows further ahead. His head turns sharply away, his eyes drop to the pavement, the inner ends of his eyebrows lift and his free hand pulls his jacket collar closer to his cheek. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -52,7 +52,7 @@ A man in his fifties with tanned skin and greying wavy hair walks along a street
 
 ## 6. `silence-reunion.png`
 
-> Le silence — Tu as un avis, il reste dedans.
+> Garder ça pour toi — Tu as quelque chose à dire et tu le gardes pour toi. Tu te dis que ça n’intéressera personne.
 
 ```
 A woman in her forties with pale freckled skin and auburn curls sits at a meeting table holding a pen tightly with both hands. Her mouth stays closed with the lips rolled slightly inward, her eyes are lowered to a notebook, her collarbones stand out with the ribcage held high and her shoulders are drawn up toward her ears. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -60,7 +60,7 @@ A woman in her forties with pale freckled skin and auburn curls sits at a meetin
 
 ## 7. `culpabilite-reparer.png`
 
-> La culpabilité — J’ai mal agi. Un acte, une date, quelque chose à réparer.
+> La culpabilité — Tu te dis « j’ai mal agi ». Tu parles d’un geste précis, et un geste, ça peut se réparer.
 
 ```
 A woman in her fifties with deep brown skin and short grey-streaked coils stands on a doorstep facing a neighbour in his thirties, holding out a replacement for something she broke. Her eyebrows are raised together in the middle, her eyes stay on his face, her chin is level and one hand is open toward him. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -68,7 +68,7 @@ A woman in her fifties with deep brown skin and short grey-streaked coils stands
 
 ## 8. `honte-fond-de-salle.png`
 
-> La honte — Je suis mauvais. Une personne entière, rien à réparer, juste à cacher.
+> La honte — Tu te dis « je ne vaux rien ». Là, tu ne parles plus d’un geste, tu parles de toi. Alors tu as envie de disparaître.
 
 ```
 A man in his sixties with tanned skin and thin white hair stands at the back of a living room during a small gathering, half turned away toward a bookshelf with a glass in one hand while another guest talks further off. His chin is tucked into his collar, his gaze slides down to the floor, his shoulders round forward and his free hand presses flat against his chest. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -76,7 +76,7 @@ A man in his sixties with tanned skin and thin white hair stands at the back of 
 
 ## 9. `souvenir-canape.png`
 
-> Le secret la nourrit — Les quatre ont le même but : que personne ne voie. Ce sont des comportements que d’autres émotions empruntent aussi — ce qui signe la honte, c’est l’envie de disparaître qui va avec. Et ce qu’on cache prend du volume dans le noir.
+> Tant que personne ne sait — Ces quatre habitudes ont toutes le même but : que personne ne voie ce qui te gêne. Mais ce qu’on cache ne s’efface pas, ça prend encore plus de place.
 
 ```
 A man in his twenties with medium brown skin and dark wavy hair sits alone on a sofa at night, his phone face-down on the cushion beside him, caught by an old memory. His eyes are squeezed shut, his nose wrinkles in a grimace, one hand covers his mouth and his knees are pulled up toward his chest. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.

@@ -1,6 +1,6 @@
-# Post 28 — FOUILLER SON TÉLÉPHONE CALME UNE MINUTE
+# Post 28 — FOUILLER SON TÉLÉPHONE TE CALME UNE MINUTE
 
-*Et ça nourrit le doute pendant l’heure qui suit.*
+*Après, le doute revient, un peu plus fort qu’avant.*
 
 **Émotions** : jalousie, peur, amour, colere  
 **Illustrations à générer** : voir ci-dessous  
@@ -26,7 +26,7 @@ A man in his forties with light olive skin and dark wavy hair standing in a door
 
 ## 3. `salle-de-bain-nuit.png`
 
-> LA POMPE — Vérifier soulage une minute. Puis le doute revient avec une exigence de plus : vérifier mieux, plus souvent, plus finement.
+> LE CALME RETOMBE VITE — Fouiller te calme une minute. Ton cerveau retient que ça marche, alors il te redemandera de recommencer demain.
 
 ```
 A young adult man with medium brown skin and dark curly hair sitting on a bathroom floor late at night, scrolling a phone whose light falls blue on his face. His eyes are narrowed and scanning, jaw clenched, one hand gripping his own knee, back curled forward, the door shut behind him. Single character in frame. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -34,7 +34,7 @@ A young adult man with medium brown skin and dark curly hair sitting on a bathro
 
 ## 4. `voiture-enquete.png`
 
-> AVANT — L’enquête ouvre un procès : l’autre ne peut plus que se défendre, ou attaquer à son tour.
+> AVANT, TU INTERROGES — Tu enchaînes les questions comme dans un interrogatoire. L’autre se braque, et ta peur est toujours là.
 
 ```
 A woman in her thirties with light brown skin and dark curly hair at the wheel of a parked car at night, both hands locked on the wheel, head turned sharply toward the passenger, jaw set, eyes narrowed, eyebrows low and pulled together, mouth open mid-sentence. The passenger, a man in his thirties with pale freckled skin and auburn waves, presses back against the door, shoulders raised, chin tucked, eyes lowered. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -44,7 +44,7 @@ A woman in her thirties with light brown skin and dark curly hair at the wheel o
 
 ## 5. `voiture-aveu.png`
 
-> MAINTENANT — La peur dite ouvre une conversation : elle demande à être rassurée, pas à être jugée.
+> MAINTENANT, TU EXPLIQUES — Tu dis ta peur directement, avec tes mots. L’autre peut te rassurer, au lieu de se justifier.
 
 ```
 The same two people in the same parked car at night, both now turned toward each other: she has light brown skin and dark curly hair and is still at the wheel, he has pale freckled skin and auburn waves and is still in the passenger seat. She has let go of the wheel and holds her own elbow, eyes lowering then lifting, eyebrows raised in the middle, mouth soft and unsteady. His shoulders come down off the door, his eyebrows rise, one hand reaching to rest on her arm. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
@@ -54,7 +54,7 @@ The same two people in the same parked car at night, both now turned toward each
 
 ## 6. `fenetre-seule.png`
 
-> CE N’EST PLUS DE LA JALOUSIE — Géolocalisation imposée, comptes surveillés, sorties empêchées : ce n’est plus de la jalousie, c’est du contrôle. Deux numéros gratuits et anonymes : le 3919 et le 116 006. Appelle depuis un téléphone auquel personne d’autre n’a accès.
+> LÀ, C’EST DU CONTRÔLE — Si l’autre lit tes messages, surveille où tu es et t’empêche de sortir, ce n’est plus de la jalousie. Appelle le 3919, un numéro d’aide gratuit et anonyme.
 
 ```
 A man in his thirties with light tan skin and dark wavy hair standing alone by a window at dusk, holding a phone he is not looking at. His shoulders are tight and squared, his eyes flat and tired, his mouth a thin closed line. Seen from a little further back than the other scenes, with a lot of quiet empty space around him, the room behind him bare and still, a single character in frame. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.

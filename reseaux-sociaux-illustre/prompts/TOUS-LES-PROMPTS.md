@@ -3,7 +3,7 @@
 Chaque bloc est prêt à coller dans Nano Banana. Le nom de fichier attendu est en titre.
 Le suffixe de style est déjà inclus : **ne le modifie pas**, c'est lui qui assure la cohérence.
 
-## Post 01 — J’AI FAIT UNE ERREUR OU JE SUIS L’ERREUR (12 illustrations)
+## Post 01 — J’AI MAL AGI, OU C’EST MOI LE PROBLÈME ? (12 illustrations)
 
 **`bureau-regard-baisse.png`**
 
@@ -77,7 +77,7 @@ A man in his thirties with South Asian features and short dark hair turns his fa
 A woman in her forties with East Asian features and dark hair in a loose bun stands mid-sentence in a small meeting room, one hand half-raised, her mouth open on a word that will not come, her eyes flicking toward a colleague. Her shoulders are lifted toward her ears and her other hand grips the edge of the table. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 02 — LA PEUR RETOMBE, L’ANXIÉTÉ TOURNE (11 illustrations)
+## Post 02 — LA PEUR RETOMBE, L’ANXIÉTÉ TOURNE EN ROND (11 illustrations)
 
 **`feu-rouge-freinage.png`**
 
@@ -423,7 +423,7 @@ A man in his twenties with medium brown skin and dark wavy hair sits alone on a 
 The same woman in her thirties with fair skin and long dark wavy hair now sits at a kitchen table writing a few lines in a small notebook, a mug beside her. Her shoulders sit low and well below her ears, her jaw is loose, her lips are slightly parted and her eyes rest calmly on the page. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 07 — LA PORTE QU’ON REFERME TROP DOUCEMENT (9 illustrations)
+## Post 07 — LA COLÈRE QU’ON NE DIT PAS SORT AILLEURS (9 illustrations)
 
 **`porte-chambre.png`**
 
@@ -591,7 +591,7 @@ A man in his sixties with deep brown skin and close-cropped white hair sits alon
 The woman in her twenties with pale skin and short bleached hair now sits on a bench beside her friend in her fifties with light brown skin and grey-streaked hair, turned toward her with her hands resting still on her knees. Her eyebrows are level and her gaze is steady and open on the face of her friend, while the shoulders of the older woman have dropped and her mouth softens at one corner. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 10 — MÂCHOIRES SERRÉES : UNE COLÈRE SANS PHRASE (10 illustrations)
+## Post 10 — TON CORPS LE SAIT AVANT TOI (10 illustrations)
 
 **`cover-machoire-voiture.png`**
 
@@ -789,7 +789,7 @@ A man in his thirties with East Asian features and straight dark hair sits sidew
 A woman in her forties with deep brown skin and short curly hair closes a laptop with both hands and lets out a long breath, eyelids lowered, jaw unclenched, the corners of her mouth lifting slightly, shoulders settling down and back, a closed blank notebook beside her. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 13 — LU, ET PAS DE RÉPONSE (8 illustrations)
+## Post 13 — LU, ET TOUJOURS RIEN (8 illustrations)
 
 **`telephone-la-nuit.png`**
 
@@ -1105,7 +1105,7 @@ A person in their fifties with pale skin and grey-blond wavy hair sits at a kitc
 Two friends on a park bench in autumn light. A man in his thirties with olive skin and dark wavy hair turns toward the other and says something appreciative, one hand briefly touching his own chest, his smile easy and direct, his eyes steady. A woman in her seventies with light skin and short white curls receives it with her eyebrows lifted, her eyes shining, one hand pressed to her mouth in touched surprise, her shoulders lowering. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 18 — ON N’APPREND PAS À NAGER LE JOUR DE LA TEMPÊTE (10 illustrations)
+## Post 18 — APPRENDS À RESPIRER AVANT LA CRISE (10 illustrations)
 
 **`main-sur-la-poignee.png`**
 
@@ -1267,7 +1267,7 @@ The same young woman with medium brown skin and long dark braids, a moment later
 A man in his forties with fair skin and short dark hair sits alone at a kitchen table on a Saturday morning, still in his coat, car keys still in one hand, looking at a stack of moving boxes and a borrowed drill by the door. His eyebrows are pulled together, his mouth slack with fatigue, his eyes dull and fixed, his other hand hanging heavy over the back of the chair, his shoulders slumped forward. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 21 — « OK. » ET TU RELIS TROIS FOIS (8 illustrations)
+## Post 21 — « OK. » ET TU RELIS TROIS FOIS (8 illustrations)
 
 **`couv-message-relu.png`**
 
@@ -1317,7 +1317,7 @@ A woman in her twenties with brown skin and box braids sits at a meeting table, 
 A man in his forties with olive skin and thick eyebrows walks fast through an office doorway, patting his coat pocket, a coffee cup in his other hand. His eyes search downward and his mouth is tight; behind him a woman with dark skin and locs watches him pass, eyebrows lifted, uncertain. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 22 — CE QU’ON AVALE RESSORT DE TRAVERS (9 illustrations)
+## Post 22 — TU TE TAIS, ET ÇA RESSORT PLUS TARD (9 illustrations)
 
 **`couv-colere-table.png`**
 
@@ -1435,7 +1435,7 @@ A young man with brown skin and short curly hair stands just outside a building 
 A woman in her thirties with medium brown skin and curly hair sits on the edge of a bed, a notebook on her knees and a pen paused in her hand. Her eyebrows are drawn together in thought, her gaze is slightly off camera and her other hand rests on her chest. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 24 — LES PHRASES QUI EFFACENT TA PART (10 illustrations)
+## Post 24 — LES PHRASES QUI EFFACENT CE QUE TU AS FAIT (10 illustrations)
 
 **`couv-compliment-esquive.png`**
 
@@ -1609,7 +1609,7 @@ A man in his forties with deep brown skin and short curly hair passing a woman i
 A man in his forties with warm brown skin and short curly hair and a woman in her forties with pale freckled skin and auburn waves still seated at either end of a dining table after a meal, plates pushed aside. Each looks off in a different direction; he holds a cold cup with both hands, her palm lies flat on the tablecloth. Both faces show the same quiet bewilderment: brows knitted, lips slightly parted, tired eyes, shoulders sunk. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 27 — LA PASSION N’EST PAS LA PREUVE (10 illustrations)
+## Post 27 — LA PASSION N’EST PAS LA PREUVE DE L’AMOUR (10 illustrations)
 
 **`nuit-message.png`**
 
@@ -1671,7 +1671,7 @@ A woman in her thirties with medium brown skin and dark curly hair leaning forwa
 A man in his forties with deep brown skin and short curly hair sitting with a laptop on his knees, lifting his eyes from the screen as his partner, a woman in her forties with light olive skin and dark wavy hair, comes through the door. His face opens toward her, eyebrows rising, a small welcoming smile; she stops, shoulders dropping, surprised and pleased. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 28 — FOUILLER SON TÉLÉPHONE CALME UNE MINUTE (6 illustrations)
+## Post 28 — FOUILLER SON TÉLÉPHONE TE CALME UNE MINUTE (6 illustrations)
 
 **`telephone-retourne.png`**
 
@@ -1709,7 +1709,7 @@ The same two people in the same parked car at night, both now turned toward each
 A man in his thirties with light tan skin and dark wavy hair standing alone by a window at dusk, holding a phone he is not looking at. His shoulders are tight and squared, his eyes flat and tired, his mouth a thin closed line. Seen from a little further back than the other scenes, with a lot of quiet empty space around him, the room behind him bare and still, a single character in frame. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 29 — RECEVOIR SANS REMBOURSER (6 illustrations)
+## Post 29 — RECEVOIR SANS RIEN RENDRE EN ÉCHANGE (6 illustrations)
 
 **`openspace-compliment.png`**
 
@@ -1747,7 +1747,7 @@ A man in his twenties with light olive skin and dark wavy hair at a bistro table
 A woman in her fifties with medium brown skin and dark curly hair at the corner of a kitchen table across from her grown son, a man in his twenties with medium brown skin and short curly hair, no one else in frame. Both her hands rest still on the tablecloth and she looks directly at him, eyes warm and slightly wet, eyebrows relaxed, an unguarded small smile, shoulders dropped, chin level. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 ```
 
-## Post 30 — TROIS QUESTIONS AVANT D’ÉTEINDRE (7 illustrations)
+## Post 30 — TROIS QUESTIONS AVANT D’ÉTEINDRE LA LUMIÈRE (7 illustrations)
 
 **`miroir-gorge.png`**
 
