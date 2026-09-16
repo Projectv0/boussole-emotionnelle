@@ -555,9 +555,16 @@ def principal():
     manquantes, total = [], 0
     for p in posts:
         for s in p["slides"]:
-            for it in s["items"]:
-                nom = it.get("illustration")
-                if nom and vignette(nom, 64) is None:
+            for k, it in enumerate(s["items"]):
+                # un item sans identifiant laisse lui aussi un cadre pointillé :
+                # le signaler, sinon le bilan annonce « tout est présent » alors
+                # qu'une case de la diapositive est vide.
+                nom = it.get("illustration") or (f"p{p['numero']:02d}-c{k+1}"
+                                                 if s["gabarit"] == "couverture" else "")
+                if not nom:
+                    manquantes.append(f"(sans identifiant) post {p['numero']:02d} · "
+                                      f"{s.get('titre') or s['gabarit']} · {it.get('etiquette', '')}")
+                elif vignette(nom, 64) is None:
                     manquantes.append(nom)
         dossier, n = composer(p)
         total += n
