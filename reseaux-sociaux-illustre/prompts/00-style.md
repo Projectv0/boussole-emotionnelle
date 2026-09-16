@@ -30,23 +30,27 @@ the image. Not cartoon, not 3D, not photorealistic, not vector flat.
 3. **Nomme le fichier exactement** comme indiqué dans le fichier de prompts du post (`p03-02.png` = post 3, illustration 2). L'assembleur ne trouve rien sans ça.
 4. Dépose tout dans `illustrations/`. Le format PNG ou JPG, au moins 1024 × 1024.
 
-## Les cinq réglages qui font la différence
+## Les six réglages qui font la différence
 
 - **Nomme l'émotion sur le visage, jamais l'étiquette abstraite.** « sourcils légèrement froncés, regard qui fuit, épaules rentrées » fonctionne ; « elle ressent de la honte » ne donne rien.
 - **Deux personnages maximum.** Au-delà, les visages se dégradent.
+- **Donne un propriétaire à chaque main.** C'est la règle la plus rentable du dossier : sur 287 illustrations, tous les bras fantômes venaient d'un prompt qui parlait d'« une main sur son épaule » sans dire de qui. Écris toujours « sa main à elle », « l'une de ses deux mains », et compte les mains de la scène avant de lancer.
 - **Décris les mains** quand elles portent la scène (une main qui se lève, qui tient une tasse, qui repose sur le bras de l'autre).
 - **Interdis le texte explicitement** — c'est la première cause d'image inutilisable, le modèle ajoute spontanément des mots déformés.
 - **Si une bulle de dialogue est prévue**, ne la demande PAS à Nano Banana : l'assembleur la dessine proprement avec du vrai texte français.
 
 ## Si une illustration rate
 
-Les trois ratés classiques et leur correction :
+Les ratés classiques et leur correction :
 
 | Symptôme | Correction à ajouter au prompt |
 |---|---|
-| Du texte apparaît | `absolutely no text, no signage, no writing of any kind` |
-| Visage déformé | réduire à **un seul** personnage, ajouter `clear detailed face, looking slightly off-camera` |
+| Du texte apparaît | `absolutely no text, no signage, no writing of any kind, no numbers, any screen is blank and dark` |
+| Visage déformé, œil manquant | réduire à **un seul** personnage, ajouter `clear detailed face, both eyes clearly visible, open and symmetrical` |
+| Main fondue, doigts en trop, bras sans personne | `Each character has exactly two arms and two hands; every visible hand connects to a visible arm and shoulder that are themselves in frame, with exactly five clearly separated fingers and no extra hand anywhere` |
 | Fond coloré ou décor envahissant | `completely plain flat cream background, subject isolated, minimal props` |
+
+**Ce qu'il ne sert à rien de demander.** Une heure précise sur une horloge : le modèle dessine des aiguilles au hasard et ajoute une main de plus à chaque tentative. Si la scène a besoin d'une heure, change la scène — c'est le regard qui doit dire la fin de journée, pas un cadran.
 
 ## Variété des personnages
 
