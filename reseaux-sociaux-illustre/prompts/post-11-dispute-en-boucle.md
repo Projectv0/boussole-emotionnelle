@@ -76,7 +76,7 @@ A woman in her forties with medium brown skin and dark wavy hair sits on a sofa 
 
 ## 9. `repere-peur.png`
 
-> Quand c’est de la peur — Dans une dispute, on est en colère. Si tu as surtout peur de l’autre, appelle le 3919 : c’est le numéro d’écoute pour les violences, gratuit et anonyme.
+> Quand c’est de la peur — Dans une dispute, on est en colère l’un contre l’autre. Si tu as surtout peur de l’autre, ce n’est plus une dispute, et tu mérites d’en parler à quelqu’un.
 
 ```
 A woman in her thirties with light brown skin and dark hair pulled back sits alone on the edge of a bed in lamplight, listening toward the next room, her whole body still: lower eyelids tight, eyes wide and unmoving, breath held, one hand closed around the other in her lap, head slightly retracted between her shoulders. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.

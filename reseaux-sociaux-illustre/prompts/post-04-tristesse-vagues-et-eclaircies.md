@@ -90,7 +90,7 @@ A young man in his twenties with South Asian features and thick dark hair sits i
 
 ## 11. `table-ecoute.png`
 
-> Où demander de l’aide — Si plus rien ne te fait de bien depuis des semaines, parles-en à un médecin. Si tu penses à te faire du mal, appelle le 3114, gratuit jour et nuit.
+> Où demander de l’aide — Si plus rien ne te fait de bien depuis des semaines, ce n’est pas un manque de volonté. Parles-en à un médecin ou à un psychologue.
 
 ```
 Two people at a kitchen table with tea: a man in his sixties with deep brown skin and short white hair leans in and rests one hand lightly on the forearm of a woman in her twenties with pale skin and auburn curls. His brows are raised in attention and his eyes hold hers; her eyes are lowered but her shoulders have let go. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.

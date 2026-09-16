@@ -54,7 +54,7 @@ The same two people in the same parked car at night, both now turned toward each
 
 ## 6. `fenetre-seule.png`
 
-> LÀ, C’EST DU CONTRÔLE — Si l’autre lit tes messages, surveille où tu es et t’empêche de sortir, ce n’est plus de la jalousie. Appelle le 3919, un numéro d’aide gratuit et anonyme.
+> LÀ, C’EST DU CONTRÔLE — Si l’autre lit tes messages, surveille où tu es et t’empêche de sortir, ce n’est plus de la jalousie. Tu as le droit d’en parler à quelqu’un de confiance.
 
 ```
 A man in his thirties with light tan skin and dark wavy hair standing alone by a window at dusk, holding a phone he is not looking at. His shoulders are tight and squared, his eyes flat and tired, his mouth a thin closed line. Seen from a little further back than the other scenes, with a lot of quiet empty space around him, the room behind him bare and still, a single character in frame. Style: soft digital illustration, colored pencil and light watercolor texture, visible pencil linework, gentle grain, warm diffused lighting, no harsh shadows. Semi-realistic young adult characters with very expressive faces and carefully drawn hands, slightly stylized proportions. Cozy knitwear in muted tones: sage green, dusty rose, lavender, mustard, slate blue, cream, terracotta. Minimal setting suggested with just a few elements. Plain warm cream background #F7F3EC, no frame, no border, the vignette floats on the background. Square composition, characters framed from the waist up. NO text, NO letters, NO words, NO watermark, NO logo anywhere in the image. Not cartoon, not 3D, not photorealistic, not vector flat.

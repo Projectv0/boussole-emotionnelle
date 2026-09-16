@@ -371,8 +371,8 @@
    ],
    "phraseFinale": "Une vague qui revient n’efface pas les jours où tu allais mieux.",
    "question": "Qu’est-ce qui te fait encore du bien, même les mauvais jours ?",
-   "legende": "La tristesse n’est pas une panne à réparer : c’est la façon dont on absorbe une perte, et elle avance par vagues plutôt qu’en ligne droite. Entre deux vagues, un rire, un bon repas ou une chanson te font encore du bien. Être triste sans savoir pourquoi, ça arrive. Ce qui doit t’alerter, c’est quand plus aucun bon moment n’arrive pendant des semaines. Là, ce n’est pas un manque de volonté : un médecin ou un psychologue peut vraiment aider. Et si tu penses à te faire du mal, appelle le 3114, gratuit jour et nuit, ou le 15 en cas d’urgence. Rien ici ne remplace l’avis d’un professionnel de santé, et l’article complet t’attend dans le guide.",
-   "hashtags": "#tristesse #chagrin #deuil #émotions #santémentale #prendresoindesoi #3114 #boussoleémotionnelle",
+   "legende": "La tristesse n’est pas une panne à réparer : c’est la façon dont on absorbe une perte, et elle avance par vagues plutôt qu’en ligne droite. Entre deux vagues, un rire, un bon repas ou une chanson te font encore du bien. Être triste sans savoir pourquoi, ça arrive. Ce qui doit t’alerter, c’est quand plus aucun bon moment n’arrive pendant des semaines. Là, ce n’est pas un manque de volonté : un médecin ou un psychologue peut vraiment aider. Rien ici ne remplace l’avis d’un professionnel de santé, et l’article complet t’attend dans le guide.",
+   "hashtags": "#tristesse #chagrin #deuil #émotions #santémentale #prendresoindesoi #boussoleémotionnelle",
    "lienGuide": "tristesse.html",
    "slides": [
     {
@@ -464,7 +464,7 @@
      "items": [
       {
        "etiquette": "Où demander de l’aide",
-       "texte": "Si plus rien ne te fait de bien depuis des semaines, parles-en à un médecin. Si tu penses à te faire du mal, appelle le 3114, gratuit jour et nuit.",
+       "texte": "Si plus rien ne te fait de bien depuis des semaines, ce n’est pas un manque de volonté. Parles-en à un médecin ou à un psychologue.",
        "illustration": "table-ecoute",
        "prompt": "Two people at a kitchen table with tea: a man in his sixties with deep brown skin and short white hair leans in and rests one hand lightly on the forearm of a woman in her twenties with pale skin and auburn curls. His brows are raised in attention and his eyes hold hers; her eyes are lowered but her shoulders have let go."
       }
@@ -485,7 +485,7 @@
    ],
    "phraseFinale": "Quand plus rien ne te touche, ce n’est pas une panne. C’est une protection contre ce qui faisait trop mal.",
    "question": "Est-ce qu’une bonne nouvelle te fait encore plaisir ?",
-   "legende": "Le calme, on ne le remarque pas : ce qui dérange se voit tout de suite, alors qu’un moment paisible passe souvent sans qu’on le voie. Dans le vrai calme, tout te traverse encore : la peine, la colère et la joie montent, puis elles redescendent. Quand tu ne sens plus rien, plus rien ne te secoue, mais plus rien ne te touche non plus, même les bonnes nouvelles. Ce n’est pas une panne : c’est une protection, parce que ressentir a fait trop mal trop longtemps. Si c’est comme ça depuis des semaines, parles-en à un médecin ou à un psychologue, et si des idées noires s’en mêlent, appelle le 3114 : c’est gratuit et ça répond jour et nuit. L’article complet t’attend dans le guide.",
+   "legende": "Le calme, on ne le remarque pas : ce qui dérange se voit tout de suite, alors qu’un moment paisible passe souvent sans qu’on le voie. Dans le vrai calme, tout te traverse encore : la peine, la colère et la joie montent, puis elles redescendent. Quand tu ne sens plus rien, plus rien ne te secoue, mais plus rien ne te touche non plus, même les bonnes nouvelles. Ce n’est pas une panne : c’est une protection, parce que ressentir a fait trop mal trop longtemps. Si c’est comme ça depuis des semaines, parles-en à un médecin ou à un psychologue. L’article complet t’attend dans le guide.",
    "hashtags": "#sérénité #calme #émotions #ralentir #pleineconscience #santémentale #développementpersonnel #boussoleémotionnelle",
    "lienGuide": "ne-plus-rien-ressentir.html",
    "slides": [
@@ -1187,7 +1187,7 @@
      "items": [
       {
        "etiquette": "Quand c’est de la peur",
-       "texte": "Dans une dispute, on est en colère. Si tu as surtout peur de l’autre, appelle le 3919 : c’est le numéro d’écoute pour les violences, gratuit et anonyme.",
+       "texte": "Dans une dispute, on est en colère l’un contre l’autre. Si tu as surtout peur de l’autre, ce n’est plus une dispute, et tu mérites d’en parler à quelqu’un.",
        "illustration": "repere-peur",
        "prompt": "A woman in her thirties with light brown skin and dark hair pulled back sits alone on the edge of a bed in lamplight, listening toward the next room, her whole body still: lower eyelids tight, eyes wide and unmoving, breath held, one hand closed around the other in her lap, head slightly retracted between her shoulders."
       },
@@ -1541,7 +1541,7 @@
    ],
    "phraseFinale": "Tu vas mieux quand tu recommences à faire des choses, même si tu as encore de la peine.",
    "question": "Et toi, qu’est-ce qui t’a manqué en premier ?",
-   "legende": "Le désordre qui suit une rupture ne veut pas dire que tu t’y prends mal. La colère qui revient sur tout ce qui s’est passé, l’amour qui remonte au pire moment, la jalousie quand l’autre avance : tout ça arrive en même temps, et c’est normal. Le manque mesure la place que cette relation prenait dans tes journées, mais il ne dit pas si c’était la bonne histoire. Il n’y a pas de délai officiel, mais les vagues s’espacent peu à peu et les bons moments s’allongent. Et si tu as des idées noires, au point de penser à en finir, ce n’est pas de la faiblesse : parles-en à ton médecin, ou appelle le 3114, gratuit et ouvert jour et nuit.",
+   "legende": "Le désordre qui suit une rupture ne veut pas dire que tu t’y prends mal. La colère qui revient sur tout ce qui s’est passé, l’amour qui remonte au pire moment, la jalousie quand l’autre avance : tout ça arrive en même temps, et c’est normal. Le manque mesure la place que cette relation prenait dans tes journées, mais il ne dit pas si c’était la bonne histoire. Il n’y a pas de délai officiel, mais les vagues s’espacent peu à peu et les bons moments s’allongent. Et si tu ne vois pas le bout depuis longtemps, en parler à ton médecin ou à un psychologue n’a rien d’une faiblesse.",
    "hashtags": "#rupture #tristesse #deuil #émotions #amour #reconstruction #développementpersonnel #boussoleémotionnelle",
    "lienGuide": "apres-la-rupture.html",
    "slides": [
@@ -2903,7 +2903,7 @@
      "items": [
       {
        "etiquette": "LÀ, C’EST DU CONTRÔLE",
-       "texte": "Si l’autre lit tes messages, surveille où tu es et t’empêche de sortir, ce n’est plus de la jalousie. Appelle le 3919, un numéro d’aide gratuit et anonyme.",
+       "texte": "Si l’autre lit tes messages, surveille où tu es et t’empêche de sortir, ce n’est plus de la jalousie. Tu as le droit d’en parler à quelqu’un de confiance.",
        "illustration": "fenetre-seule",
        "prompt": "A man in his thirties with light tan skin and dark wavy hair standing alone by a window at dusk, holding a phone he is not looking at. His shoulders are tight and squared, his eyes flat and tired, his mouth a thin closed line. Seen from a little further back than the other scenes, with a lot of quiet empty space around him, the room behind him bare and still, a single character in frame."
       }

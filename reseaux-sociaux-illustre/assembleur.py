@@ -422,7 +422,7 @@ def slide_appel(post):
     y += 150
     y = ecrire(d, post["question"], W / 2, y, F(SANS, 46, DEMI), ENCRE, W - 2 * MARGE - 40, 1.32)
     y = ecrire(d, "Le test de la Boussole émotionnelle : 14 émotions, une note sur 10 pour chacune, "
-                  "une analyse personnalisée. Rien n’est enregistré.",
+                  "et une analyse personnalisée à la fin.",
                W / 2, y + 34, F(SANS, 33, REG), GRIS, W - 2 * MARGE - 60, 1.42)
     t = "boussole-emotionnelle.fr"
     f = F(SANS, 44, DEMI)
@@ -458,7 +458,7 @@ def composer(post):
     # légende
     txt = (f"=== LÉGENDE ===\n{post['legende']}\n\n"
            f"Le test complet est sur boussole-emotionnelle.fr (lien en bio) : 14 émotions, "
-           f"une note sur 10 pour chacune. Rien n’est enregistré.\n\n"
+           f"une note sur 10 pour chacune.\n\n"
            f"=== HASHTAGS ===\n{post['hashtags']}\n\n"
            f"=== PUBLIER ===\nInstagram : carrousel, les {len(slides)} images dans l’ordre.\n"
            f"TikTok : mode Photo, mêmes images, ajouter un son doux en tendance.\n")
