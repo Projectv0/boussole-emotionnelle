@@ -208,11 +208,13 @@ def slide_couverture(post):
         cols = 2
         t = int(min((dispo - 26) / 2, (W - 2 * MARGE - 34) / 2))
         ecart = 34
-        rangs = (min(4, n) + 1) // 2
-        x0 = (W - (t * cols + ecart)) / 2
+        nb = min(4, n)
+        rangs = (nb + 1) // 2
         y0 = y + (dispo - (t * rangs + 26 * (rangs - 1))) / 2
         for k, it in enumerate(items[:4]):
             r, c = divmod(k, cols)
+            surRang = min(cols, nb - r * cols)          # dernière rangée parfois incomplète
+            x0 = (W - (t * surRang + ecart * (surRang - 1))) / 2
             poser_illu(img, it.get("illustration", f"p{post['numero']:02d}-c{k+1}"),
                        x0 + c * (t + ecart), y0 + r * (t + 26), t)
     pied(img)
@@ -249,8 +251,9 @@ def slide_liste(post, s):
         y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 62, maxLignes=2) + 30
     items = s["items"][:5]
     dispo = H - y - 150
-    hcase = dispo / len(items)
-    t = int(min(hcase * .8, 210))
+    hcase = min(dispo / len(items), 300)
+    y += min((dispo - hcase * len(items)) / 2, 70)
+    t = int(min(hcase * .88, 255))
     for it in items:
         poser_illu(img, it.get("illustration", ""), MARGE, y + (hcase - t) / 2, t)
         xt = MARGE + t + 38
@@ -295,7 +298,9 @@ def slide_avant_apres(post, s):
     if s.get("titre"):
         y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + 26
     items = s["items"][:2]
-    hcase = (H - y - 150) / max(1, len(items))
+    dispo = H - y - 150
+    hcase = min(dispo / max(1, len(items)), 430)
+    y += min((dispo - hcase * len(items)) / 2, 70)
     for k, it in enumerate(items):
         t = int(min(hcase * .72, 290))
         yy = y + k * hcase
@@ -320,7 +325,9 @@ def slide_etapes(post, s):
     if s.get("titre"):
         y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + 30
     items = s["items"][:4]
-    hcase = (H - y - 150) / len(items)
+    dispo = H - y - 150
+    hcase = min(dispo / len(items), 330)
+    y += min((dispo - hcase * len(items)) / 2, 70)
     t = int(min(hcase * .82, 250))
     for k, it in enumerate(items):
         yy = y + k * hcase + (hcase - t) / 2 - 10
@@ -350,17 +357,27 @@ def slide_remplace(post, s):
     if s.get("titre"):
         y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + 30
     items = s["items"][:3]
-    hcase = (H - y - 150) / len(items)
+    dispo = H - y - 150
+    hcase = min(dispo / len(items), 380)
+    y += min((dispo - hcase * len(items)) / 2, 70)
+    fav, fap, fno = F(SERIF, 34, IT), F(SERIF, 37, SB), F(SANS, 26, REG)
     for k, it in enumerate(items):
         yy = y + k * hcase
-        t = int(min(hcase * .82, 280))
-        poser_illu(img, it.get("illustration", ""), W - MARGE - t, yy + (hcase - t) / 2 - 12, t)
+        t = int(min(hcase * .72, 250))
+        poser_illu(img, it.get("illustration", ""), W - MARGE - t, yy + (hcase - t) / 2 - 8, t)
         maxw = W - 2 * MARGE - t - 44
-        yt = yy + (hcase - 190) / 2
+        note = (it.get("note") or "").strip()
+        nav = len(couper("« " + it["etiquette"] + " »", fav, maxw))
+        nap = len(couper("« " + it["texte"] + " »", fap, maxw))
+        nno = len(couper(note, fno, maxw)) if note else 0
+        hbloc = 30 + nav * 34 * 1.26 + 44 + nap * 37 * 1.26 + (14 + nno * 26 * 1.34 if note else 0)
+        yt = yy + (hcase - hbloc) / 2
         d.text((MARGE, yt), "AU LIEU DE", font=F(SANS, 23, DEMI), fill=GRIS)
-        yt = ecrire(d, "« " + it["etiquette"] + " »", MARGE, yt + 30, F(SERIF, 36, IT), GRIS, maxw, 1.26, "gauche")
+        yt = ecrire(d, "« " + it["etiquette"] + " »", MARGE, yt + 30, fav, GRIS, maxw, 1.26, "gauche")
         d.text((MARGE, yt + 14), "DIS PLUTÔT", font=F(SANS, 23, DEMI), fill=TERRE)
-        ecrire(d, "« " + it["texte"] + " »", MARGE, yt + 44, F(SERIF, 38, SB), ENCRE, maxw, 1.26, "gauche")
+        yt = ecrire(d, "« " + it["texte"] + " »", MARGE, yt + 44, fap, ENCRE, maxw, 1.26, "gauche")
+        if note:
+            ecrire(d, note, MARGE, yt + 14, fno, GRIS, maxw, 1.34, "gauche")
         if k < len(items) - 1:
             d.line([(MARGE, yy + hcase - 16), (W - MARGE, yy + hcase - 16)], fill=TRAIT, width=1)
     pied(img)
@@ -377,7 +394,9 @@ def slide_grand(post, s):
     poser_illu(img, it.get("illustration", ""), (W - t) / 2, y, t)
     yy = y + t + 34
     yy = ecrire(d, it["etiquette"], W / 2, yy, F(SANS, 46, DEMI), TERRE, W - 2 * MARGE, 1.2)
-    ecrire(d, it["texte"], W / 2, yy + 12, F(SANS, 34, REG), GRIS, W - 2 * MARGE - 40, 1.4)
+    yy = ecrire(d, it["texte"], W / 2, yy + 12, F(SANS, 34, REG), GRIS, W - 2 * MARGE - 40, 1.4)
+    if it.get("bulle"):
+        bulle(img, it["bulle"], MARGE + 40, yy + 24, 420)
     pied(img)
     return img
 
