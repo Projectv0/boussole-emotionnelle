@@ -12,8 +12,10 @@ const ORIGINES = [
   "https://www.boussole-emotionnelle.fr",
 ];
 
-/* seuil en centimes : 500 sépare la formule Résultats (199) du Dossier (999) */
-const SEUIL_DOSSIER = 500;
+/* Seuil en centimes séparant la formule Résultats (199) du Dossier (599).
+   À revoir si les prix changent : c'est le montant payé qui décide du palier. */
+const SEUIL_DOSSIER = 400;
+const DEVISE = "eur";
 
 export default {
   async fetch(req, env) {
@@ -34,8 +36,11 @@ export default {
 
     let s;
     try {
+      /* On demande le paiement complet : sans lui, une session remboursée ou
+         contestée reste « paid » et continuerait d'ouvrir l'accès indéfiniment. */
       const r = await fetch(
-        `https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(id)}`,
+        `https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(id)}`
+          + "?expand[]=payment_intent.latest_charge",
         { headers: { Authorization: `Bearer ${env.STRIPE_CLE}` } }
       );
       if (!r.ok) return json({ valide: false }, 200, cors);
@@ -44,7 +49,13 @@ export default {
       return json({ valide: false, erreur: "stripe injoignable" }, 502, cors);
     }
 
-    const paye = s.payment_status === "paid";
+    const charge = s.payment_intent && s.payment_intent.latest_charge;
+    const rembourse = !!(charge && (charge.refunded || (charge.amount_refunded | 0) > 0));
+    const conteste = !!(charge && charge.disputed);
+    const bonneDevise = (s.currency || "").toLowerCase() === DEVISE;
+    const paye = s.payment_status === "paid" && bonneDevise && !rembourse && !conteste;
+
+    /* Le palier suit le montant réellement encaissé, dans la devise attendue. */
     const niveau = (s.amount_total | 0) >= SEUIL_DOSSIER ? "dossier" : "resultats";
     return json({ valide: paye, niveau: paye ? niveau : null }, 200, cors);
   },

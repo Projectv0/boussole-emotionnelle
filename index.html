@@ -2741,6 +2741,7 @@ function ouvrirPaywall(){
 function appliquerAcces(niveau){
   niveauAcces = niveau;
   paywallEnAttente = false;
+  effacerBrouillon();   /* les résultats s'ouvrent : le brouillon a fait son office */
   $("#paywallOverlay").hidden = true;
   $("#rapportOverlay").hidden = true;
   if(!lastNotes) return;
@@ -2863,9 +2864,12 @@ function lienAvecSuivi(url){
 /* ————— Journal des émotions (stocké uniquement sur l'appareil, jamais envoyé) ————— */
 /* ————— Brouillon du test en cours (reprise après fermeture de l'onglet) ————— */
 const BROUILLON_KEY = "boussole.brouillon.v2";
+const BROUILLON_VERSION = 2;   /* à incrémenter dès que SITUATIONS ou ROTATIONS bouge :
+   la sélection est faite d'indices bruts, un ancien brouillon pointerait ailleurs. */
 function sauverBrouillon(){
   try{
     localStorage.setItem(BROUILLON_KEY, JSON.stringify({
+      v: BROUILLON_VERSION,
       d: new Date().toISOString(),
       i: state.i,
       answers: state.answers,
@@ -2878,14 +2882,19 @@ function chargerBrouillon(){
   try{
     const b = JSON.parse(localStorage.getItem(BROUILLON_KEY) || "null");
     if(!b || !Array.isArray(b.answers) || !Array.isArray(b.selection) || !b.selection.length) return null;
+    if(b.v !== BROUILLON_VERSION) return null;
+    if(!b.selection.every(k => SITUATIONS[k])) return null;
     /* un brouillon de plus de 7 jours n'a plus de sens */
     if(Date.now() - new Date(b.d).getTime() > 7 * 864e5) return null;
     const faites = b.selection.filter(k => {
       const a = b.answers[k];
       return a && SITUATIONS[k].emos.every(id => a[id] != null);
     }).length;
-    if(faites === 0 || faites >= b.selection.length) return null;
-    return { ...b, faites };
+    if(faites === 0) return null;
+    /* un brouillon terminé est conservé, pas jeté : c'est celui de la personne qui a
+       tout rempli, vu la pop-up de paiement et fermé son onglet. Sans lui, payer
+       obligeait à refaire les seize situations. */
+    return { ...b, faites, complet: faites >= b.selection.length };
   }catch(_){ return null; }
 }
 function effacerBrouillon(){
@@ -2904,8 +2913,14 @@ function majBandeauReprise(){
   const box = $("#repriseBox");
   if(!b){ box.hidden = true; return; }
   box.hidden = false;
-  $("#repriseTexte").innerHTML = `<strong>Tu avais commencé un test.</strong> ${b.faites} situation${b.faites > 1 ? "s" : ""} sur ${b.selection.length} déjà remplie${b.faites > 1 ? "s" : ""} — tu peux reprendre là où tu t’étais arrêté·e.`;
-  $("#btnReprendre").onclick = () => reprendreBrouillon(b);
+  if(b.complet){
+    $("#repriseTexte").innerHTML = `<strong>Ton test est terminé.</strong> Les ${b.selection.length} situations sont remplies — tes résultats t’attendent, sans avoir à recommencer.`;
+    $("#btnReprendre").textContent = "Voir mes résultats";
+    $("#btnReprendre").onclick = () => { reprendreBrouillon(b); finish(); };
+  }else{
+    $("#repriseTexte").innerHTML = `<strong>Tu avais commencé un test.</strong> ${b.faites} situation${b.faites > 1 ? "s" : ""} sur ${b.selection.length} déjà remplie${b.faites > 1 ? "s" : ""} — tu peux reprendre là où tu t’étais arrêté·e.`;
+    $("#btnReprendre").onclick = () => reprendreBrouillon(b);
+  }
   $("#btnAbandonner").onclick = () => { effacerBrouillon(); majBandeauReprise(); };
 }
 
@@ -3403,8 +3418,11 @@ let lastNotes = null;
 function finish(){
   lastNotes = computeScores(state.answers, state.reelles, state.selection);
   resultatsGardesCe = false;
-  effacerBrouillon();
+  /* Le brouillon n'est effacé qu'une fois les résultats réellement ouverts. Effacé
+     ici, il laissait celui qui part payer — donc qui change d'onglet — sans rien à
+     retrouver au retour : seize situations à refaire après avoir payé. */
   if(paywallActif() && niveauAcces === "aucun"){ ouvrirPaywall(); return; }
+  effacerBrouillon();
   renderResults(lastNotes);
   showView("v-resultats");
 }
