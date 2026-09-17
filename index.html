@@ -586,6 +586,18 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
   text-transform:uppercase; color:#fff; background:linear-gradient(135deg,#47907D,var(--sage-deep));
   padding:.32rem .75rem; border-radius:999px;
 }
+.paywall-appli{
+  max-width:30rem; margin:0 auto 1.3rem; padding:.85rem 1rem; text-align:left;
+  background:var(--card-soft, rgba(63,130,113,.06)); border:1px solid var(--hairline);
+  border-radius:14px;
+}
+.paywall-appli p{ font-size:.85rem; color:var(--muted); margin:0 0 .55rem; }
+.paywall-appli label{
+  display:flex; gap:.6rem; align-items:flex-start; cursor:pointer;
+  font-size:.85rem; color:var(--ink); line-height:1.45;
+}
+.paywall-appli input{ margin-top:.18rem; width:1.05rem; height:1.05rem; flex:none; accent-color:var(--sage, #3f8271); }
+.paywall-appli .detail{ display:block; font-size:.74rem; color:var(--faint); margin-top:.2rem; }
 .skip-zone{ margin-top:1.2rem; padding-top:1.1rem; border-top:1px dashed var(--hairline-strong); }
 .skip-zone p{ font-size:.74rem; color:var(--faint); margin-top:.6rem; }
 .paywall-foot{ margin-top:1.1rem; font-size:.84rem; color:var(--faint); display:flex; gap:.6rem; justify-content:center; align-items:center; flex-wrap:wrap; }
@@ -1082,8 +1094,8 @@ footer p + p{ margin-top:.3rem; }
             <p class="vente-note">Comme le test, le dossier est généré <b>dans ton navigateur</b> : tes réponses ne sont jamais envoyées. Après le paiement, cet onglet se débloque tout seul — <b>garde-le ouvert</b>, c’est lui qui contient tes réponses.</p>
           </div>
           <div class="vente-cta">
-            <span class="offre-badge">Offre de lancement · −50 %</span>
-            <div class="vente-prix" id="ventePrix">9,99 € <s>20 €</s></div>
+            <span class="offre-badge" id="venteBadge">Offre de lancement · −70 %</span>
+            <div class="vente-prix" id="ventePrix">5,99 € <s>20 €</s></div>
             <div class="vente-prix-note">paiement unique · TVA incluse</div>
             <a class="btn btn-primary" id="btnAcheter" target="_blank" rel="noopener">Obtenir mon dossier <span class="ico" aria-hidden="true">→</span></a>
             <button class="btn btn-ghost" id="btnDejaCle">J’ai déjà payé <span class="ico" aria-hidden="true">🔑</span></button>
@@ -1110,6 +1122,15 @@ footer p + p{ margin-top:.3rem; }
         <div class="paywall-glyphs" id="paywallGlyphs" aria-hidden="true"></div>
         <h3 class="paywall-titre">Tes résultats sont prêts ✨</h3>
         <p class="paywall-sous">Parcours terminé, 14 émotions passées au crible : ta boussole intérieure est calculée — tes trois émotions dominantes t’attendent juste derrière. Choisis ta formule pour la découvrir.</p>
+        <div class="paywall-appli">
+          <p>Merci pour ton soutien 💛 Une application est en cours de développement, et ton aide nous fait vraiment avancer.</p>
+          <label>
+            <input type="checkbox" id="pwAppli">
+            <span>Préviens-moi quand elle sort.
+              <span class="detail">On utilisera seulement l’adresse e-mail que tu donneras à Stripe au moment du paiement, et uniquement pour t’annoncer la sortie.</span>
+            </span>
+          </label>
+        </div>
         <div class="offres">
           <div class="offre">
             <h4>Tes résultats</h4>
@@ -1123,9 +1144,9 @@ footer p + p{ margin-top:.3rem; }
             <a class="btn btn-ghost" id="btnPayerResultats" target="_blank" rel="noopener">Voir mes résultats <span class="ico" aria-hidden="true">→</span></a>
           </div>
           <div class="offre offre-star">
-            <span class="offre-badge">Offre de lancement · −50 %</span>
+            <span class="offre-badge" id="pwBadgeDossier">Offre de lancement · −70 %</span>
             <h4>Résultats + Dossier complet</h4>
-            <div class="offre-prix" id="pwPrixDossier">9,99 € <s>20 €</s></div>
+            <div class="offre-prix" id="pwPrixDossier">5,99 € <s>20 €</s></div>
             <ul>
               <li><b>Tout ce qui précède</b>, et en plus :</li>
               <li>14 fiches approfondies · 42 pratiques</li>
@@ -1554,7 +1575,7 @@ const SITUATIONS = [
 /* ————— Réglages ————— */
 const URL_SITE = "boussole-emotionnelle.fr";
 /* ————— Modèle payant —————
-   Deux liens de paiement Stripe : « Résultats » (1,99 €) et « Résultats + Dossier » (9,99 €).
+   Deux liens de paiement Stripe : « Résultats » (1,99 €) et « Résultats + Dossier » (5,99 €).
    Le verrou (pop-up en fin de test, aucun résultat sans paiement) s'active automatiquement
    quand `actif` est true ET que les deux liens d'achat sont renseignés.
    Chaque lien Stripe doit rediriger, après paiement, vers :
@@ -1569,8 +1590,10 @@ const VENTE = {
   prixResultats: "1,99 €",
   lienResultats: "https://buy.stripe.com/test_9B68wI5BQ11M8Mg00oc7u00",
   produitResultats: "",
-  prixDossier: "9,99 €",
+  prixDossier: "5,99 €",
   prixDossierRef: "20 €",
+  /* Remise affichée sur le badge, recalculée à la main si les prix bougent. */
+  remiseDossier: "−70 %",
   lienDossier: "https://buy.stripe.com/test_4gM00cggueSC1jObJ6c7u01",
   produitDossier: "",
   /* Adresse d'une éventuelle fonction de vérification côté serveur.
@@ -2673,9 +2696,24 @@ function ouvrirPaywall(){
   const aR = $("#btnPayerResultats"), aD = $("#btnPayerDossier");
   $("#pwPrixResultats").textContent = VENTE.prixResultats;
   $("#pwPrixDossier").innerHTML = `${VENTE.prixDossier} <s>${VENTE.prixDossierRef}</s>`;
+  if(VENTE.remiseDossier) $("#pwBadgeDossier").textContent = `Offre de lancement · ${VENTE.remiseDossier}`;
+  const caseAppli = $("#pwAppli");
+  if(caseAppli){
+    caseAppli.checked = veutAppli();
+    caseAppli.onchange = () => {
+      noterAppli(caseAppli.checked);
+      /* les liens sont réécrits tout de suite : la case peut être cochée après
+         que la pop-up s'est ouverte, et le href doit suivre */
+      if(VENTE.lienResultats && VENTE.lienDossier){
+        aR.href = lienAvecSuivi(VENTE.lienResultats);
+        aD.href = lienAvecSuivi(VENTE.lienDossier);
+      }
+      majVenteBox();
+    };
+  }
   if(VENTE.lienResultats && VENTE.lienDossier){
-    aR.href = VENTE.lienResultats; aR.onclick = null;
-    aD.href = VENTE.lienDossier; aD.onclick = null;
+    aR.href = lienAvecSuivi(VENTE.lienResultats); aR.onclick = null;
+    aD.href = lienAvecSuivi(VENTE.lienDossier); aD.onclick = null;
   }else{
     /* mode aperçu sans liens configurés : les boutons débloquent directement */
     aR.removeAttribute("href"); aD.removeAttribute("href");
@@ -2698,6 +2736,7 @@ function appliquerAcces(niveau){
 function majVenteBox(){
   const box = $("#venteBox"), a = $("#btnAcheter");
   $("#ventePrix").innerHTML = `${VENTE.prixDossier} <s>${VENTE.prixDossierRef}</s>`;
+  if(VENTE.remiseDossier && $("#venteBadge")) $("#venteBadge").textContent = `Offre de lancement · ${VENTE.remiseDossier}`;
   a.onclick = null;
   if(niveauAcces === "dossier"){
     box.hidden = false;
@@ -2707,7 +2746,7 @@ function majVenteBox(){
   }else if(paywallActif()){
     box.hidden = false;
     a.innerHTML = 'Passer au dossier complet <span class="ico" aria-hidden="true">→</span>';
-    if(VENTE.lienDossier){ a.href = VENTE.lienDossier; }
+    if(VENTE.lienDossier){ a.href = lienAvecSuivi(VENTE.lienDossier); }
     else{ a.removeAttribute("href"); a.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); }; }
   }else{
     box.hidden = true;
@@ -2764,6 +2803,31 @@ function lireAcces(){
     const a = JSON.parse(localStorage.getItem(ACCES_KEY) || "null");
     return a && (a.niveau === "dossier" || a.niveau === "resultats") ? a.niveau : null;
   }catch(_){ return null; }
+}
+
+/* ————— « Préviens-moi quand l'appli sort » —————
+   Le site n'a pas de serveur et ne reçoit aucune adresse. Le souhait voyage donc
+   avec le paiement : coché, il ajoute client_reference_id=appli-oui au lien Stripe,
+   que Stripe rattache à la session et affiche dans le tableau de bord à côté de
+   l'adresse e-mail que la personne a saisie elle-même. Rien n'est stocké ici hormis
+   la case, pour qu'elle reste cochée si la personne revient. */
+const APPLI_KEY = "boussole.appli.v1";
+const REF_APPLI = "appli-oui";
+function veutAppli(){
+  try{ return localStorage.getItem(APPLI_KEY) === "1"; }catch(_){ return false; }
+}
+function noterAppli(oui){
+  try{ oui ? localStorage.setItem(APPLI_KEY, "1") : localStorage.removeItem(APPLI_KEY); }catch(_){}
+}
+function lienAvecSuivi(url){
+  if(!url || !veutAppli()) return url;
+  try{
+    const u = new URL(url);
+    u.searchParams.set("client_reference_id", REF_APPLI);
+    return u.toString();
+  }catch(_){
+    return url + (url.includes("?") ? "&" : "?") + "client_reference_id=" + REF_APPLI;
+  }
 }
 
 /* ————— Journal des émotions (stocké uniquement sur l'appareil, jamais envoyé) ————— */

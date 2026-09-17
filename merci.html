@@ -55,6 +55,11 @@
     <li>À la fin, clique sur <b>« J’ai déjà ma clé »</b> et colle la référence ci-dessus.</li>
   </ul>
 
+  <div class="encart doux" id="appli" hidden>
+    <strong>On te préviendra pour l’application</strong>
+    Elle est en cours de développement, et ton achat y contribue directement. On t’écrira à l’adresse de ton paiement le jour de la sortie, et pour rien d’autre.
+  </div>
+
   <a class="bouton" href="./" id="btnRetour">Revenir au test <span aria-hidden="true">→</span></a>
 </main>
 
@@ -82,6 +87,8 @@ if(!formule){
 }else{
   const libelle = formule === "dossier" ? "Résultats + dossier complet" : "Tes résultats";
   $("#sous").textContent = `Formule « ${libelle} » activée. `;
+  /* la case « préviens-moi » a été cochée dans la pop-up, sur cette même origine */
+  try{ if(localStorage.getItem("boussole.appli.v1") === "1") $("#appli").hidden = false; }catch(_){}
   let enregistre = false;
   try{
     localStorage.setItem(ACCES_KEY, JSON.stringify({ niveau: formule, session, d: new Date().toISOString() }));
