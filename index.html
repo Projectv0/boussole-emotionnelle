@@ -2721,6 +2721,54 @@ function enLien(a, href){
   a.onkeydown = null;
 }
 
+/* ————— Comportement des groupes de boutons radio —————
+   Les échelles de notation portaient déjà role="radiogroup" et aria-checked, mais
+   pas le comportement qui va avec : les cinq crans de chacune des quatorze émotions
+   faisaient soixante-dix arrêts de tabulation par situation, et les flèches ne
+   servaient à rien. On applique la règle attendue — un seul arrêt par groupe, les
+   flèches pour circuler — sans toucher au rendu, via un observateur qui normalise
+   les groupes dès qu'ils réapparaissent à l'écran. */
+function normaliserRadios(racine){
+  (racine.matches && racine.matches('[role="radiogroup"]') ? [racine]
+    : [...racine.querySelectorAll('[role="radiogroup"]')]).forEach(g => {
+    const radios = [...g.querySelectorAll('[role="radio"]')];
+    if(!radios.length) return;
+    const actif = radios.find(r => r.getAttribute("aria-checked") === "true") || radios[0];
+    radios.forEach(r => r.tabIndex = r === actif ? 0 : -1);
+  });
+}
+document.addEventListener("keydown", e => {
+  const r = e.target.closest && e.target.closest('[role="radio"]');
+  if(!r) return;
+  const g = r.closest('[role="radiogroup"]');
+  if(!g) return;
+  const radios = [...g.querySelectorAll('[role="radio"]')];
+  const i = radios.indexOf(r);
+  let j = null;
+  if(e.key === "ArrowRight" || e.key === "ArrowDown") j = (i + 1) % radios.length;
+  else if(e.key === "ArrowLeft" || e.key === "ArrowUp") j = (i - 1 + radios.length) % radios.length;
+  else if(e.key === "Home") j = 0;
+  else if(e.key === "End") j = radios.length - 1;
+  if(j === null) return;
+  e.preventDefault();
+  const etiquette = g.getAttribute("aria-label");
+  radios[j].focus();
+  radios[j].click();
+  /* Choisir une valeur redessine le bloc : sans cette reprise, le focus retombait
+     sur le corps de page et il fallait retabuler depuis le début à chaque cran.
+     Le groupe est retrouvé par son étiquette, qui est unique et survit au rendu. */
+  requestAnimationFrame(() => {
+    if(document.activeElement && document.activeElement.closest('[role="radio"]')) return;
+    const gg = document.querySelector(`[role="radiogroup"][aria-label="${CSS.escape(etiquette || "")}"]`);
+    const rr = gg && gg.querySelectorAll('[role="radio"]')[j];
+    if(rr){ rr.tabIndex = 0; rr.focus(); }
+  });
+});
+new MutationObserver(m => m.forEach(x => x.addedNodes.forEach(n => {
+  if(n.nodeType === 1) normaliserRadios(n);
+}))).observe(document.body, { childList: true, subtree: true });
+normaliserRadios(document.body);
+
 /* ————— Pop-up de fin de questionnaire (le verrou) ————— */
 function ouvrirPaywall(){
   const tri = [...EMOTIONS].sort((a, b) => lastNotes[b.id] - lastNotes[a.id]).slice(0, 3);
