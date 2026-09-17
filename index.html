@@ -1600,7 +1600,12 @@ const VENTE = {
      Laissée vide : le déblocage se fait alors sur la seule référence Stripe. */
   verification: ""
 };
-const APERCU = new URLSearchParams(location.search).has("apercu");
+/* ?apercu=1 sert à regarder la pop-up sans faire le test. C'était une seconde porte,
+   indépendante de modeTest : passer modeTest à false ne la fermait pas, et le bouton
+   « Passer le paiement » restait accessible à qui connaissait l'adresse. Elle est
+   désormais adossée à l'interrupteur — le jour de la mise en vente, elle se ferme
+   d'elle-même, sans geste à ne pas oublier. */
+const APERCU = VENTE.modeTest && new URLSearchParams(location.search).has("apercu");
 let niveauAcces = "aucun"; /* "aucun" | "resultats" | "dossier" — pour la session en cours */
 const paywallActif = () => APERCU || VENTE.modeTest || (VENTE.actif && !!VENTE.lienResultats && !!VENTE.lienDossier);
 
@@ -2725,7 +2730,7 @@ function ouvrirPaywall(){
     aR.onclick = e => { e.preventDefault(); appliquerAcces("resultats"); };
     aD.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); };
   }
-  $("#skipZone").hidden = !(VENTE.modeTest || APERCU);
+  $("#skipZone").hidden = !VENTE.modeTest;
   $("#paywallOverlay").hidden = false;
 }
 function appliquerAcces(niveau){
@@ -2769,8 +2774,12 @@ async function validerCle(){
   }
   st.textContent = "Vérification…";
   const niveau = await verifierAchat(ref);
+  if(niveau === "indisponible"){
+    st.textContent = "La vérification est momentanément indisponible — ta référence n’est pas en cause. Réessaie dans un moment, ou écris-nous à contact@boussole-emotionnelle.fr et on débloque à la main.";
+    return;
+  }
   if(!niveau){
-    st.textContent = "Impossible de valider cette référence. Écris-nous à contact@boussole-emotionnelle.fr, on débloque à la main.";
+    st.textContent = "Cette référence n’a pas été reconnue comme un paiement valide. Vérifie que tu as bien collé celle affichée après ton paiement, ou écris-nous à contact@boussole-emotionnelle.fr.";
     return;
   }
   enregistrerAcces(niveau, ref);
@@ -2789,13 +2798,23 @@ async function validerCle(){
    la référence. Si tu déploies un jour une petite fonction de vérification
    (Cloudflare Worker par exemple), renseigne VENTE.verification et elle sera
    interrogée — le contrôle devient alors incontournable. */
+/* Renvoie le niveau réellement acheté, ou null si on ne peut pas le prouver.
+
+   Sans vérification serveur, cette fonction renvoyait « dossier » pour n'importe
+   quelle chaîne au bon format : taper cs_live_aaaaaaaaaa suffisait à débloquer la
+   formule la plus chère, et un acheteur honnête à 1,99 € qui collait sa vraie
+   référence recevait lui aussi le dossier. On échoue désormais franchement plutôt
+   que d'accorder à l'aveugle — et le niveau renvoyé est celui que le serveur dit,
+   jamais le plus élevé par défaut. */
 async function verifierAchat(ref){
-  if(!VENTE.verification) return "dossier";
+  if(!VENTE.verification) return "indisponible";
   try{
     const r = await fetch(VENTE.verification + "?session_id=" + encodeURIComponent(ref));
+    if(!r.ok) return r.status >= 500 ? "indisponible" : null;
     const d = await r.json();
-    return d && d.valide ? (d.niveau === "resultats" ? "resultats" : "dossier") : null;
-  }catch(_){ return null; }
+    if(!d || !d.valide) return null;
+    return d.niveau === "dossier" ? "dossier" : d.niveau === "resultats" ? "resultats" : null;
+  }catch(_){ return "indisponible"; }   /* réseau coupé, service arrêté : la référence n'y est pour rien */
 }
 
 /* Accès enregistré sur l'appareil, pour survivre à la fermeture de l'onglet */

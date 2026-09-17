@@ -83,11 +83,31 @@
    On enregistre l'accès sur l'appareil ; l'onglet du test, s'il est encore
    ouvert, l'apprend immédiatement par l'événement « storage » et se débloque. */
 const ACCES_KEY = "boussole.acces.v1";
+
+/* Adresse du Worker de vérification. DOIT rester identique à VENTE.verification
+   dans index.html — les deux pages accordent le même accès et doivent le prouver
+   de la même façon. Tant qu'elle est vide, aucun accès n'est accordé ici : sans
+   serveur, cette page ne peut rien vérifier, et « ?formule=dossier » suffirait
+   sinon à débloquer les 5,99 € sans être jamais passé par Stripe. */
+const VERIFICATION = "";
+
 const p = new URLSearchParams(location.search);
 const formule = p.get("formule") === "dossier" ? "dossier" : p.get("formule") === "resultats" ? "resultats" : null;
 const session = p.get("session_id") || "";
 
 const $ = s => document.querySelector(s);
+
+/* Le niveau accordé est celui que le serveur confirme, jamais celui que l'URL réclame. */
+async function niveauVerifie(){
+  if(!VERIFICATION || !session) return null;
+  try{
+    const r = await fetch(VERIFICATION + "?session_id=" + encodeURIComponent(session));
+    if(!r.ok) return null;
+    const d = await r.json();
+    if(!d || !d.valide) return null;
+    return d.niveau === "dossier" ? "dossier" : d.niveau === "resultats" ? "resultats" : null;
+  }catch(_){ return null; }
+}
 
 if(!formule){
   $("#titre").textContent = "Page de confirmation";
@@ -97,11 +117,33 @@ if(!formule){
   $("#sous").textContent = `Formule « ${libelle} » activée. `;
   /* la case « préviens-moi » a été cochée dans la pop-up, sur cette même origine */
   try{ if(localStorage.getItem("boussole.appli.v1") === "1") $("#appli").hidden = false; }catch(_){}
+  /* Le niveau vient du serveur quand il est branché ; sinon on retombe sur le
+     paramètre d'URL, ce qui n'est acceptable que tant qu'aucune vente n'a lieu. */
   let enregistre = false;
-  try{
-    localStorage.setItem(ACCES_KEY, JSON.stringify({ niveau: formule, session, d: new Date().toISOString() }));
-    enregistre = true;
-  }catch(_){}
+  (async () => {
+    const verifie = await niveauVerifie();
+    const niveau = VERIFICATION ? verifie : formule;
+    if(!niveau){
+      $("#titre").textContent = "Paiement non confirmé";
+      $("#sous").textContent = "Nous n’avons pas pu confirmer ce paiement. Si tu as bien été débité, écris-nous à contact@boussole-emotionnelle.fr avec la référence ci-dessous : on débloque à la main.";
+      $("#retour").hidden = true;
+      $("#refaire").hidden = true;
+      return;
+    }
+    try{
+      localStorage.setItem(ACCES_KEY, JSON.stringify({ niveau, session, d: new Date().toISOString() }));
+      enregistre = true;
+    }catch(_){}
+    const libelleReel = niveau === "dossier" ? "Résultats + dossier complet" : "Tes résultats";
+    $("#sous").textContent = `Formule « ${libelleReel} » activée. `;
+    if(enregistre){
+      $("#retour").hidden = false;
+      $("#refaire").hidden = false;
+    }else{
+      /* stockage indisponible : l'accès ne peut pas être mémorisé, on explique la reprise */
+      $("#etapes").hidden = false;
+    }
+  })();
 
   /* La référence est la seule trace que l'acheteur emporte : elle s'affiche
      toujours, et pas seulement quand l'enregistrement échoue. Sans elle, celui dont
@@ -121,13 +163,6 @@ if(!formule){
     }
   };
 
-  if(enregistre){
-    $("#retour").hidden = false;
-    $("#refaire").hidden = false;
-  }else{
-    /* stockage indisponible : l'accès ne peut pas être mémorisé, on explique la reprise */
-    $("#etapes").hidden = false;
-  }
 }
 </script>
 
