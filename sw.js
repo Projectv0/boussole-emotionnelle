@@ -1,8 +1,11 @@
 /* Service worker — met le site en cache pour un usage hors connexion.
    Stratégie : réseau d'abord (pour recevoir les mises à jour), cache en secours. */
-const CACHE = "boussole-v19";
+const CACHE = "boussole-v20";
 const ESSENTIELS = ["./", "./index.html", "./merci.html", "./manifest.webmanifest",
-                    "./icone-192.png", "./icone-512.png"];
+                    "./icone-192.png", "./icone-512.png",
+                    /* les polices sont désormais hébergées ici : sans elles en cache,
+                       la page hors connexion retomberait sur les polices système */
+                    "/polices/polices.css"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ESSENTIELS)).then(() => self.skipWaiting()));
