@@ -1,0 +1,22 @@
+# Ce que GitHub Pages ne doit pas publier.
+#
+# Le dépôt est public et tout ce qu'il contient était servi sur le domaine :
+# publication.py, calendrier.json, README.md et le code du Worker répondaient en 200
+# sur boussole-emotionnelle.fr. Ce sont des fichiers de travail ; les laisser en
+# ligne encombre l'indexation et donne à lire l'outillage du site sans raison.
+#
+# Ils restent versionnés dans le dépôt : seule leur publication est coupée.
+exclude:
+  - "*.py"
+  - "*.md"
+  - "*.json"
+  - worker/
+  - reseaux-sociaux/
+  - reseaux-sociaux-illustre/
+  - publication/
+  - societe/
+
+# Le manifeste PWA et le sitemap sont du JSON ou du XML utiles au public :
+# on les remet explicitement après l'exclusion large ci-dessus.
+include:
+  - manifest.webmanifest
