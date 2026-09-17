@@ -16,8 +16,29 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 ILLUS = os.path.join(BASE, "illustrations")
 SORTIE = os.path.join(BASE, "sortie")
 
+# Deux formats, comme le dossier typographique : Instagram en 4:5, TikTok en 9:16.
+# La largeur ne change pas, seule la hauteur — donc à corps de texte égal, le TikTok
+# paraîtrait plus petit sur un écran de téléphone. ECH grossit la typographie pour que
+# les deux formats se lisent pareil ; tout le calcul de mise en page passe par E() et
+# suit le même facteur, sinon les hauteurs de bloc ne correspondraient plus au texte.
+FORMATS = {
+    "instagram": dict(W=1080, H=1350, MARGE=78, HAUT=128, BAS=150, PIED=78, ECH=1.00),
+    "tiktok":    dict(W=1080, H=1920, MARGE=84, HAUT=250, BAS=300, PIED=205, ECH=1.16),
+}
 W, H = 1080, 1350
-MARGE = 78
+MARGE, HAUT, BAS, PIED, ECH = 78, 128, 150, 78, 1.00
+
+def format_actif(nom):
+    """Bascule le module sur un format. Les gabarits lisent ces variables à l'exécution."""
+    global W, H, MARGE, HAUT, BAS, PIED, ECH, _cache
+    f = FORMATS[nom]
+    W, H, MARGE = f["W"], f["H"], f["MARGE"]
+    HAUT, BAS, PIED, ECH = f["HAUT"], f["BAS"], f["PIED"], f["ECH"]
+    _cache = {}                  # les vignettes sont mises en cache par taille en pixels
+
+def E(n):
+    """Taille de corps mise à l'échelle du format — la même valeur que celle que F() utilisera."""
+    return int(n * ECH)
 
 CREME = (247, 243, 236)
 ENCRE = (43, 38, 34)
@@ -34,9 +55,10 @@ REG, MED, DEMI, HEAVY = 7, 5, 2, 8   # Avenir Next
 
 _f = {}
 def F(chemin, taille, idx):
-    cle = (chemin, int(taille), idx)
+    t = int(taille * ECH)
+    cle = (chemin, t, idx)
     if cle not in _f:
-        _f[cle] = ImageFont.truetype(chemin, int(taille), index=idx)
+        _f[cle] = ImageFont.truetype(chemin, t, index=idx)
     return _f[cle]
 
 _m = ImageDraw.Draw(Image.new("RGB", (8, 8)))
@@ -69,9 +91,12 @@ def police_ajustee(t, chemin, taille, poids, maxw, hmax, il=1.3, mini=21):
     passe par-dessus le pied de page — le seul défaut de composition que la
     relecture ait trouvé en série.
     """
-    while taille > mini and len(couper(t, F(chemin, taille, poids), maxw)) * taille * il > hmax:
+    while taille > mini:
+        f = F(chemin, taille, poids)
+        if len(couper(t, f, maxw)) * f.size * il <= hmax:
+            return f
         taille -= 1
-    return F(chemin, taille, poids)
+    return F(chemin, mini, poids)
 
 def ecrire(d, t, x, y, f, col, maxw, il=1.3, align="centre"):
     for l in couper(t, f, maxw):
@@ -88,7 +113,7 @@ def fond():
     d = ImageDraw.Draw(ov)
     for x, y, r, col, a in [(120, 150, 520, (184, 74, 49), .05),
                             (W - 80, 520, 560, (233, 182, 142), .07),
-                            (W // 2, H - 90, 620, (63, 130, 113), .05)]:
+                            (W // 2, H - 90, int(620 * H / 1350), (63, 130, 113), .05)]:
         for i in range(22, 0, -1):
             rr = int(r * i / 22)
             d.ellipse([x - rr, y - rr, x + rr, y + rr],
@@ -221,7 +246,7 @@ def titre_couverture(img, titre, accents, y, taille=86, maxLignes=None):
             col = TERRE if mot.strip(",.;:!?«» ") in mots_accent else ENCRE
             d.text((x, y), mot, font=f, fill=col)
             x += larg(mot + " ", f)
-        y += int(taille * 1.12)
+        y += int(f.size * 1.12)
     return y
 
 # ————— gabarits —————
@@ -230,10 +255,10 @@ def slide_couverture(post):
     d = ImageDraw.Draw(img)
     items = post["slides"][0]["items"] if post["slides"] and post["slides"][0]["gabarit"] == "couverture" else []
     n = max(1, min(4, len(items)))
-    y = titre_couverture(img, post["titre"], post.get("titreAccent", ""), 138, 88, maxLignes=3)
+    y = titre_couverture(img, post["titre"], post.get("titreAccent", ""), HAUT + 10, 88, maxLignes=3)
     if post.get("sousTitre"):
-        y = ecrire(d, post["sousTitre"], W / 2, y + 22, F(SANS, 37, MED), GRIS, W - 2 * MARGE - 40, 1.32)
-    dispo = H - y - 130
+        y = ecrire(d, post["sousTitre"], W / 2, y + E(22), F(SANS, 37, MED), GRIS, W - 2 * MARGE - 40, 1.32)
+    dispo = H - y - BAS + 20
     if n <= 2:
         ecart = 32
         t = int(min(dispo - 30, (W - 2 * MARGE - ecart) / max(1, n)))
@@ -265,13 +290,13 @@ def slide_couverture(post):
 def slide_grille(post, s):
     img = fond()
     d = ImageDraw.Draw(img)
-    y = 128
+    y = HAUT
     if s.get("titre"):
-        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 62, maxLignes=2) + 22
+        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 62, maxLignes=2) + E(22)
     items = s["items"][:6]
     cols = 2
     rangs = (len(items) + cols - 1) // cols
-    dispo = H - y - 150
+    dispo = H - y - BAS
     hcase = dispo / rangs
     wetq, wtxt = (W - 2 * MARGE) / cols - 20, (W - 2 * MARGE) / cols - 16
     fetq = F(SANS, 38, DEMI)
@@ -279,8 +304,8 @@ def slide_grille(post, s):
     # quatre cases gardent ainsi la même image et le même corps.
     netq = max(len(couper(it["etiquette"], fetq, wetq)) for it in items)
     ntxt = max(len(couper(it["texte"], F(SANS, 30, REG), wtxt)) for it in items)
-    htexte = 14 + netq * 38 * 1.2 + 6 + ntxt * 30 * 1.34 + 18
-    t = int(min(hcase * .52, (W - 2 * MARGE - 60) / cols * .78, max(168, hcase - htexte)))
+    htexte = 14 + netq * E(38) * 1.2 + 6 + ntxt * E(30) * 1.34 + 18
+    t = int(min(hcase * .52, (W - 2 * MARGE - 60) / cols * .78, max(E(168), hcase - htexte)))
     for k, it in enumerate(items):
         r, c = divmod(k, cols)
         cx = MARGE + (W - 2 * MARGE) * (c + .5) / cols
@@ -295,19 +320,19 @@ def slide_grille(post, s):
 def slide_liste(post, s):
     img = fond()
     d = ImageDraw.Draw(img)
-    y = 128
+    y = HAUT
     if s.get("titre"):
-        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 62, maxLignes=2) + 30
+        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 62, maxLignes=2) + E(30)
     items = s["items"][:5]
-    dispo = H - y - 150
-    hcase = min(dispo / len(items), 300)
-    y += min((dispo - hcase * len(items)) / 2, 70)
-    t = int(min(hcase * .88, 255))
+    dispo = H - y - BAS
+    hcase = min(dispo / len(items), E(300))
+    y += max(0, (dispo - hcase * len(items)) / 2)
+    t = int(min(hcase * .88, E(255)))
     for it in items:
         poser_illu(img, it.get("illustration", ""), MARGE, y + (hcase - t) / 2, t)
         xt = MARGE + t + 38
         maxw = W - MARGE - xt
-        bloc = 40 * 1.18 + 32 * 1.34 * len(couper(it["texte"], F(SANS, 32, REG), maxw))
+        bloc = E(40) * 1.18 + E(32) * 1.34 * len(couper(it["texte"], F(SANS, 32, REG), maxw))
         yy = y + (hcase - bloc) / 2
         yy = ecrire(d, it["etiquette"], xt, yy, F(SANS, 40, DEMI), TERRE, maxw, 1.18, "gauche")
         ecrire(d, it["texte"], xt, yy + 6, F(SANS, 32, REG), GRIS, maxw, 1.34, "gauche")
@@ -318,23 +343,23 @@ def slide_liste(post, s):
 def slide_duo(post, s):
     img = fond()
     d = ImageDraw.Draw(img)
-    y = 128
+    y = HAUT
     if s.get("titre"):
-        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + 24
+        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + E(24)
     g, dr = (s["items"] + s["items"])[:2]
     colw = (W - 2 * MARGE - 46) / 2
-    dispo = H - y - 140
+    dispo = H - y - BAS + 10
     fe, ft = F(SANS, 44, HEAVY), F(SANS, 32, REG)
     nEtq = max(len(couper(it["etiquette"], fe, colw)) for it in (g, dr))
     nTxt = max(len(couper(it["texte"], ft, colw - 10)) for it in (g, dr))
-    hTexte = nEtq * 44 * 1.18 + 16 + 36 + nTxt * 32 * 1.4
+    hTexte = nEtq * E(44) * 1.18 + 16 + 36 + nTxt * E(32) * 1.4
     t = int(min(colw * .96, dispo - hTexte))
     y0 = y + (dispo - (hTexte + t)) / 2
     d.line([(W / 2, y0), (W / 2, y0 + hTexte + t)], fill=TRAIT, width=2)
     for k, it in enumerate((g, dr)):
         cx = MARGE + colw / 2 + k * (colw + 46)
         yy = ecrire(d, it["etiquette"], cx, y0, fe, TERRE if k == 0 else SAUGE, colw, 1.18)
-        yy = y0 + nEtq * 44 * 1.18
+        yy = y0 + nEtq * E(44) * 1.18
         poser_illu(img, it.get("illustration", ""), cx - t / 2, yy + 16, t)
         ecrire(d, it["texte"], cx, yy + t + 36, ft, GRIS, colw - 10, 1.4)
     pied(img)
@@ -343,15 +368,15 @@ def slide_duo(post, s):
 def slide_avant_apres(post, s):
     img = fond()
     d = ImageDraw.Draw(img)
-    y = 128
+    y = HAUT
     if s.get("titre"):
-        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + 26
+        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + E(26)
     items = s["items"][:2]
-    dispo = H - y - 150
-    hcase = min(dispo / max(1, len(items)), 430)
-    y += min((dispo - hcase * len(items)) / 2, 70)
+    dispo = H - y - BAS
+    hcase = min(dispo / max(1, len(items)), E(430))
+    y += max(0, (dispo - hcase * len(items)) / 2)
     for k, it in enumerate(items):
-        t = int(min(hcase * .72, 290))
+        t = int(min(hcase * .72, E(290)))
         yy = y + k * hcase
         poser_illu(img, it.get("illustration", ""), MARGE, yy + (hcase - t) / 2, t)
         xt = MARGE + t + 40
@@ -363,21 +388,21 @@ def slide_avant_apres(post, s):
         d.text((xt + 17, yy + (hcase - t) / 2 + 10), etq, font=f, fill=BLANC)
         ecrire(d, it["texte"], xt, yy + (hcase - t) / 2 + 68, F(SANS, 34, REG), ENCRE, maxw, 1.38, "gauche")
         if it.get("bulle"):
-            bulle(img, it["bulle"], xt, yy + (hcase - t) / 2 + 68 + 34 * 1.38 * len(couper(it["texte"], F(SANS, 34, REG), maxw)) + 16, min(maxw, 380))
+            bulle(img, it["bulle"], xt, yy + (hcase - t) / 2 + 68 + E(34) * 1.38 * len(couper(it["texte"], F(SANS, 34, REG), maxw)) + 16, min(maxw, 380))
     pied(img)
     return img
 
 def slide_etapes(post, s):
     img = fond()
     d = ImageDraw.Draw(img)
-    y = 128
+    y = HAUT
     if s.get("titre"):
-        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + 30
+        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + E(30)
     items = s["items"][:4]
-    dispo = H - y - 150
-    hcase = min(dispo / len(items), 330)
-    y += min((dispo - hcase * len(items)) / 2, 70)
-    t = int(min(hcase * .82, 250))
+    dispo = H - y - BAS
+    hcase = min(dispo / len(items), E(330))
+    y += max(0, (dispo - hcase * len(items)) / 2)
+    t = int(min(hcase * .82, E(250)))
     for k, it in enumerate(items):
         yy = y + k * hcase + (hcase - t) / 2 - 10
         dia = 60
@@ -390,7 +415,7 @@ def slide_etapes(post, s):
         xt = xi + t + 30
         maxw = W - MARGE - xt
         fe, ft = F(SANS, 38, DEMI), F(SANS, 31, REG)
-        hbloc = 38 * 1.2 * len(couper(it["etiquette"], fe, maxw)) + 6 + 31 * 1.36 * len(couper(it["texte"], ft, maxw))
+        hbloc = E(38) * 1.2 * len(couper(it["etiquette"], fe, maxw)) + 6 + E(31) * 1.36 * len(couper(it["texte"], ft, maxw))
         yt = yy + (t - hbloc) / 2
         yt = ecrire(d, it["etiquette"], xt, yt, fe, ENCRE, maxw, 1.2, "gauche")
         ecrire(d, it["texte"], xt, yt + 6, ft, GRIS, maxw, 1.36, "gauche")
@@ -414,9 +439,9 @@ def remplace_seul(img, d, it, y, dispo):
     av, ap = "« " + it["etiquette"] + " »", "« " + it["texte"] + " »"
     nav, nap = len(couper(av, fav, maxw)), len(couper(ap, fap, maxw))
     nno = len(couper(note, fno, maxw)) if note else 0
-    t = 360 if nav + nap + nno <= 7 else 300
-    hbloc = (36 + nav * 42 * 1.26 + 22 + 34 + nap * 50 * 1.26
-             + (20 + nno * 31 * 1.34 if note else 0) + 44 + t)
+    t = E(360) if nav + nap + nno <= 7 else E(300)
+    hbloc = (36 + nav * E(42) * 1.26 + 22 + 34 + nap * E(50) * 1.26
+             + (20 + nno * E(31) * 1.34 if note else 0) + 44 + t)
     yt = y + max(0, (dispo - hbloc) / 2)
     d.text((MARGE, yt), "AU LIEU DE", font=flab, fill=GRIS)
     yt = ecrire(d, av, MARGE, yt + 36, fav, GRIS, maxw, 1.26, "gauche")
@@ -431,26 +456,26 @@ def remplace_seul(img, d, it, y, dispo):
 def slide_remplace(post, s):
     img = fond()
     d = ImageDraw.Draw(img)
-    y = 128
+    y = HAUT
     if s.get("titre"):
-        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + 30
+        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 60, maxLignes=2) + E(30)
     items = s["items"][:3]
-    dispo = H - y - 150
+    dispo = H - y - BAS
     if len(items) == 1:
         return remplace_seul(img, d, s["items"][0], y, dispo)
-    hcase = min(dispo / len(items), 380)
+    hcase = min(dispo / len(items), E(380))
     y += max(0, (dispo - hcase * len(items)) / 2)
     fav, fap, fno = F(SERIF, 34, IT), F(SERIF, 37, SB), F(SANS, 26, REG)
     for k, it in enumerate(items):
         yy = y + k * hcase
-        t = int(min(hcase * .72, 250))
+        t = int(min(hcase * .72, E(250)))
         poser_illu(img, it.get("illustration", ""), W - MARGE - t, yy + (hcase - t) / 2 - 8, t)
         maxw = W - 2 * MARGE - t - 44
         note = (it.get("note") or "").strip()
         nav = len(couper("« " + it["etiquette"] + " »", fav, maxw))
         nap = len(couper("« " + it["texte"] + " »", fap, maxw))
         nno = len(couper(note, fno, maxw)) if note else 0
-        hbloc = 30 + nav * 34 * 1.26 + 44 + nap * 37 * 1.26 + (14 + nno * 26 * 1.34 if note else 0)
+        hbloc = 30 + nav * E(34) * 1.26 + 44 + nap * E(37) * 1.26 + (14 + nno * E(26) * 1.34 if note else 0)
         yt = yy + (hcase - hbloc) / 2
         d.text((MARGE, yt), "AU LIEU DE", font=F(SANS, 23, DEMI), fill=GRIS)
         yt = ecrire(d, "« " + it["etiquette"] + " »", MARGE, yt + 30, fav, GRIS, maxw, 1.26, "gauche")
@@ -467,10 +492,10 @@ def slide_grand(post, s):
     img = fond()
     d = ImageDraw.Draw(img)
     it = s["items"][0]
-    y = 130
+    y = HAUT
     if s.get("titre"):
-        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 62, maxLignes=2) + 20
-    t = 560
+        y = titre_couverture(img, s["titre"], post.get("titreAccent", ""), y, 62, maxLignes=2) + E(20)
+    t = int(min(560 * ECH, H - y - BAS - 260))
     poser_illu(img, it.get("illustration", ""), (W - t) / 2, y, t)
     yy = y + t + 34
     yy = ecrire(d, it["etiquette"], W / 2, yy, F(SANS, 46, DEMI), TERRE, W - 2 * MARGE, 1.2)
@@ -485,10 +510,10 @@ def slide_phrase(post):
     d = ImageDraw.Draw(img)
     f = F(SERIF, 72, IT)
     lignes = couper(post["phraseFinale"], f, W - 2 * MARGE - 40)
-    y = (H - len(lignes) * 72 * 1.3) / 2 - 40
+    y = (H - len(lignes) * E(72) * 1.3) / 2 - 40
     for l in lignes:
         d.text(((W - larg(l, f)) / 2, y), l, font=f, fill=TERRE)
-        y += int(72 * 1.3)
+        y += int(E(72) * 1.3)
     d.line([(W / 2 - 60, y + 30), (W / 2 + 60, y + 30)], fill=TRAIT, width=2)
     pied(img)
     return img
@@ -496,10 +521,10 @@ def slide_phrase(post):
 def slide_appel(post):
     img = fond()
     d = ImageDraw.Draw(img)
-    y = 330
+    y = int(H * .245)
     f = F(SERIF, 96, IT)
     d.text(((W - larg("Et toi ?", f)) / 2, y), "Et toi ?", font=f, fill=ENCRE)
-    y += 150
+    y += int(150 * ECH)
     y = ecrire(d, post["question"], W / 2, y, F(SANS, 46, DEMI), ENCRE, W - 2 * MARGE - 40, 1.32)
     y = ecrire(d, "Le test de la Boussole émotionnelle : 14 émotions, une note sur 10 pour chacune, "
                   "et une analyse personnalisée à la fin.",
@@ -515,7 +540,7 @@ def pied(img):
     d = ImageDraw.Draw(img)
     f = F(SANS, 26, MED)
     t = "boussole-emotionnelle.fr"
-    d.text(((W - larg(t, f)) / 2, H - 78), t, font=f, fill=SAUGE)
+    d.text(((W - larg(t, f)) / 2, H - PIED), t, font=f, fill=SAUGE)
 
 GABARITS = {
     "grille": slide_grille, "liste": slide_liste, "duo": slide_duo,
@@ -523,9 +548,8 @@ GABARITS = {
     "remplace": slide_remplace, "grand": slide_grand,
 }
 
-def composer(post):
-    dossier = os.path.join(SORTIE, f"{post['numero']:02d}-{post['slug']}")
-    os.makedirs(dossier, exist_ok=True)
+def diapositives(post):
+    """Compose les diapositives du post dans le format actif."""
     slides = [slide_couverture(post)]
     for s in post["slides"]:
         if s["gabarit"] == "couverture":
@@ -533,19 +557,36 @@ def composer(post):
         slides.append(GABARITS.get(s["gabarit"], slide_grand)(post, s))
     slides.append(slide_phrase(post))
     slides.append(slide_appel(post))
-    for i, im in enumerate(slides, 1):
-        im.save(os.path.join(dossier, f"{i:02d}.jpg"), quality=92)
-    # légende
-    txt = (f"=== LÉGENDE ===\n{post['legende']}\n\n"
+    return slides
+
+def legende(post, n):
+    txt = (f"=== LÉGENDE (TikTok et Instagram) ===\n{post['legende']}\n\n"
            f"Le test complet est sur boussole-emotionnelle.fr (lien en bio) : 14 émotions, "
            f"une note sur 10 pour chacune.\n\n"
            f"=== HASHTAGS ===\n{post['hashtags']}\n\n"
-           f"=== PUBLIER ===\nInstagram : carrousel, les {len(slides)} images dans l’ordre.\n"
-           f"TikTok : mode Photo, mêmes images, ajouter un son doux en tendance.\n")
+           f"=== CÔTÉ TIKTOK ===\nPublier en mode Photo (les {n} images du dossier tiktok/ dans "
+           f"l'ordre), et choisir un son doux dans les tendances (lo-fi, piano).\n\n"
+           f"=== CÔTÉ INSTAGRAM ===\nPublier en carrousel avec les {n} images du dossier "
+           f"instagram/ (format 4:5), dans l'ordre.\n")
     if post.get("lienGuide"):
         txt += f"\nArticle lié : boussole-emotionnelle.fr/guide/{post['lienGuide']}\n"
-    open(os.path.join(dossier, "legende.txt"), "w", encoding="utf-8").write(txt)
-    return dossier, len(slides)
+    return txt
+
+def composer(post):
+    """Écrit le post dans les deux formats : instagram/ en 4:5, tiktok/ en 9:16."""
+    dossier = os.path.join(SORTIE, f"{post['numero']:02d}-{post['slug']}")
+    n = 0
+    for nom in ("instagram", "tiktok"):
+        format_actif(nom)
+        sous = os.path.join(dossier, nom)
+        os.makedirs(sous, exist_ok=True)
+        slides = diapositives(post)
+        n = len(slides)
+        for i, im in enumerate(slides, 1):
+            im.save(os.path.join(sous, f"{i:02d}.jpg"), quality=92)
+    format_actif("instagram")
+    open(os.path.join(dossier, "legende.txt"), "w", encoding="utf-8").write(legende(post, n))
+    return dossier, n
 
 def principal():
     posts = json.load(open(os.path.join(BASE, "contenus.json"), encoding="utf-8"))["posts"]
