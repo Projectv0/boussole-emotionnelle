@@ -586,6 +586,10 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
   text-transform:uppercase; color:#fff; background:linear-gradient(135deg,#47907D,var(--sage-deep));
   padding:.32rem .75rem; border-radius:999px;
 }
+.hero-prix{
+  max-width:34rem; margin:.9rem auto 0; text-align:center;
+  font-size:.86rem; color:var(--muted);
+}
 .paywall-appli{
   max-width:30rem; margin:0 auto 1.3rem; padding:.85rem 1rem; text-align:left;
   background:var(--card-soft, rgba(63,130,113,.06)); border:1px solid var(--hairline);
@@ -754,6 +758,7 @@ footer p + p{ margin-top:.3rem; }
         <span>⏳ 10 à 20 minutes</span>
         <span>🔒 Tes réponses restent dans ton navigateur</span>
       </div>
+      <p class="hero-prix reveal" id="heroPrix" hidden></p>
       <div class="callout callout-privacy reveal" id="repriseBox" hidden style="max-width:38rem; margin:2rem auto 0; text-align:left">
         <span class="emo" aria-hidden="true">⏳</span>
         <div style="flex:1">
@@ -3511,6 +3516,18 @@ $("#btnComparer").addEventListener("click", validerCodeAmi);
 $("#compCode").addEventListener("keydown", e => { if(e.key === "Enter") validerCodeAmi(); });
 $("#btnRappel").addEventListener("click", creerRappel);
 $("#btnInstaller").addEventListener("click", installerApp);
+
+/* Le prix se dit avant le test, pas après seize situations. La phrase n'apparaît
+   qu'une fois la vente réellement active : l'afficher pendant la phase de test
+   annoncerait un prix que personne ne paie. Elle se rend depuis VENTE, donc elle
+   suit les tarifs sans qu'on ait à y penser. */
+(function annoncerPrix(){
+  const p = $("#heroPrix");
+  if(!p || VENTE.modeTest || !VENTE.actif || !VENTE.lienResultats) return;
+  p.textContent = `Le test est libre. Les résultats détaillés sont payants : ${VENTE.prixResultats}, `
+                + `ou ${VENTE.prixDossier} avec le dossier complet.`;
+  p.hidden = false;
+})();
 
 /* Un achat déjà effectué sur cet appareil rouvre l'accès sans rien redemander */
 const accesEnregistre = lireAcces();
