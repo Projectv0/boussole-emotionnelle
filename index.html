@@ -2702,6 +2702,25 @@ function ouvrirRapport(){
   showView("v-rapport");
 }
 
+/* Un <a> privé de son href n'est plus focusable ni annoncé comme actionnable.
+   Ces liens deviennent des boutons à part entière, clavier compris — la touche
+   Entrée et la barre d'espace déclenchent alors le même geste que le clic. */
+function enBouton(a){
+  a.removeAttribute("href");
+  a.setAttribute("role", "button");
+  a.setAttribute("tabindex", "0");
+  a.onkeydown = e => {
+    if(e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault(); a.click();
+  };
+}
+function enLien(a, href){
+  a.href = href;
+  a.removeAttribute("role");
+  a.removeAttribute("tabindex");
+  a.onkeydown = null;
+}
+
 /* ————— Pop-up de fin de questionnaire (le verrou) ————— */
 function ouvrirPaywall(){
   const tri = [...EMOTIONS].sort((a, b) => lastNotes[b.id] - lastNotes[a.id]).slice(0, 3);
@@ -2730,11 +2749,11 @@ function ouvrirPaywall(){
     };
   }
   if(VENTE.lienResultats && VENTE.lienDossier){
-    aR.href = lienAvecSuivi(VENTE.lienResultats); aR.onclick = null;
-    aD.href = lienAvecSuivi(VENTE.lienDossier); aD.onclick = null;
+    enLien(aR, lienAvecSuivi(VENTE.lienResultats)); aR.onclick = null;
+    enLien(aD, lienAvecSuivi(VENTE.lienDossier)); aD.onclick = null;
   }else{
     /* mode aperçu sans liens configurés : les boutons débloquent directement */
-    aR.removeAttribute("href"); aD.removeAttribute("href");
+    enBouton(aR); enBouton(aD);
     aR.onclick = e => { e.preventDefault(); appliquerAcces("resultats"); };
     aD.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); };
   }
@@ -2762,14 +2781,14 @@ function majVenteBox(){
   a.onclick = null;
   if(niveauAcces === "dossier"){
     box.hidden = false;
-    a.removeAttribute("href");
+    enBouton(a);
     a.innerHTML = 'Ouvrir mon dossier <span class="ico" aria-hidden="true">→</span>';
     a.onclick = e => { e.preventDefault(); ouvrirRapport(); };
   }else if(paywallActif()){
     box.hidden = false;
     a.innerHTML = 'Passer au dossier complet <span class="ico" aria-hidden="true">→</span>';
-    if(VENTE.lienDossier){ a.href = lienAvecSuivi(VENTE.lienDossier); }
-    else{ a.removeAttribute("href"); a.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); }; }
+    if(VENTE.lienDossier){ enLien(a, lienAvecSuivi(VENTE.lienDossier)); }
+    else{ enBouton(a); a.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); }; }
   }else{
     box.hidden = true;
   }
@@ -3185,6 +3204,11 @@ function importerJournal(fichier){
 
 /* ————— Pont test ↔ journal (résultats gardés sur l'appareil, opt-in) ————— */
 const TESTS_KEY = "boussole.tests.v1";
+/* Version du barème. Les situations ont été rééquilibrées : comparer une note
+   d'avant à une note d'après revient à comparer deux échelles différentes et à
+   présenter comme une évolution ce qui n'est qu'un changement de règle du jeu.
+   À incrémenter à chaque modification de SITUATIONS ou des intensités. */
+const BAREME = 2;
 let resultatsGardesCe = false;
 const nomEmo = id => { const e = EMOTIONS.find(x => x.id === id); return e ? e.art + e.nom.toLowerCase() : id; };
 function chargerTests(){
@@ -3207,7 +3231,11 @@ function majGardeBox(){
   const passages = t.passages;
   const ref = resultatsGardesCe ? passages[passages.length - 2] : passages[passages.length - 1];
   const evo = $("#gardeEvo");
-  if(ref){
+  if(ref && (ref.bareme || 1) !== BAREME){
+    /* passage enregistré avec un autre barème : on le dit plutôt que de montrer
+       un écart qui ne veut rien dire */
+    evo.innerHTML = `<span class="j-tag ctx">Ton passage du ${new Date(ref.d).toLocaleDateString("fr-FR")} a été fait avec une version précédente du test : les deux notes ne se comparent pas. Le prochain passage servira de nouveau point de départ.</span>`;
+  }else if(ref){
     const deltas = EMOTIONS
       .map(e => ({ e, delta: Math.round((lastNotes[e.id] - ref.notes[e.id]) * 10) / 10 }))
       .filter(x => Math.abs(x.delta) >= 1)
@@ -3230,7 +3258,7 @@ function majGardeBox(){
 function garderResultats(){
   const t = chargerTests();
   if(!t || !lastNotes) return;
-  t.passages.push({ d: new Date().toISOString(), notes: { ...lastNotes } });
+  t.passages.push({ d: new Date().toISOString(), bareme: BAREME, notes: { ...lastNotes } });
   if(sauverTests(t)){ resultatsGardesCe = true; majGardeBox(); }
 }
 /* Croisement test ↔ vécu, affiché dans les motifs du journal */
