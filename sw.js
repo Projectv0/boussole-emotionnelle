@@ -1,7 +1,8 @@
 /* Service worker — met le site en cache pour un usage hors connexion.
    Stratégie : réseau d'abord (pour recevoir les mises à jour), cache en secours. */
-const CACHE = "boussole-v15";
-const ESSENTIELS = ["./", "./index.html", "./manifest.webmanifest", "./icone-192.png", "./icone-512.png"];
+const CACHE = "boussole-v16";
+const ESSENTIELS = ["./", "./index.html", "./merci.html", "./manifest.webmanifest",
+                    "./icone-192.png", "./icone-512.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ESSENTIELS)).then(() => self.skipWaiting()));
@@ -24,6 +25,11 @@ self.addEventListener("fetch", e => {
         }
         return rep;
       })
-      .catch(() => caches.match(e.request).then(r => r || caches.match("./index.html")))
+      /* Le repli sur index.html ne vaut que pour une navigation. Appliqué à toute
+         requête échouée, il servait la page du test en réponse à une image ou à un
+         script manquant — et à merci.html, qui revenait alors du cache en page de
+         test au lieu de confirmer le paiement. */
+      .catch(() => caches.match(e.request).then(r =>
+        r || (e.request.mode === "navigate" ? caches.match("./index.html") : Response.error())))
   );
 });

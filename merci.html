@@ -19,6 +19,12 @@
     font-size:.9rem; word-break:break-all; color:var(--muted);
   }
   .cle-boite b{ display:block; color:var(--ink); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.5rem; }
+  .cle-boite small{ display:block; margin-top:.7rem; font-size:.78rem; color:var(--faint); word-break:normal; }
+  .copier{
+    margin-top:.8rem; padding:.4rem .9rem; border-radius:.7rem; cursor:pointer;
+    border:1px solid var(--hairline-strong); background:var(--card); color:var(--ink);
+    font:inherit; font-size:.82rem;
+  }
   .etapes{ text-align:left; margin:1.6rem 0; }
   .etapes li{ margin-bottom:.6rem; }
 </style>
@@ -47,12 +53,14 @@
   <div class="cle-boite" id="cleBoite" hidden>
     <b>Ta référence d’achat</b>
     <span id="cleTexte"></span>
+    <button class="copier" id="btnCopier" type="button">Copier</button>
+    <small>Garde-la : c’est elle qui rouvre ton accès si tu changes d’appareil ou si ton navigateur efface ses données.</small>
   </div>
 
   <ul class="etapes" id="etapes" hidden>
     <li>Ouvre le site sur l’appareil où tu veux lire tes résultats.</li>
     <li>Fais le test (ou reprends-le).</li>
-    <li>À la fin, clique sur <b>« J’ai déjà ma clé »</b> et colle la référence ci-dessus.</li>
+    <li>À la fin, clique sur <b>« J’ai déjà payé »</b> et colle la référence ci-dessus.</li>
   </ul>
 
   <div class="encart doux" id="appli" hidden>
@@ -95,13 +103,29 @@ if(!formule){
     enregistre = true;
   }catch(_){}
 
+  /* La référence est la seule trace que l'acheteur emporte : elle s'affiche
+     toujours, et pas seulement quand l'enregistrement échoue. Sans elle, celui dont
+     le paiement se termine dans le navigateur intégré d'Instagram a payé et n'a rien. */
+  $("#cleBoite").hidden = !session;
+  $("#cleTexte").textContent = session;
+  $("#btnCopier").onclick = async () => {
+    try{
+      await navigator.clipboard.writeText(session);
+      $("#btnCopier").textContent = "Copié ✓";
+    }catch(_){
+      /* presse-papiers refusé : on sélectionne le texte, la personne copie elle-même */
+      const r = document.createRange();
+      r.selectNodeContents($("#cleTexte"));
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      $("#btnCopier").textContent = "Sélectionnée — copie-la";
+    }
+  };
+
   if(enregistre){
     $("#retour").hidden = false;
     $("#refaire").hidden = false;
   }else{
-    /* stockage indisponible : on donne la référence à saisir à la main */
-    $("#cleBoite").hidden = false;
-    $("#cleTexte").textContent = session || "(référence indisponible)";
+    /* stockage indisponible : l'accès ne peut pas être mémorisé, on explique la reprise */
     $("#etapes").hidden = false;
   }
 }

@@ -6,11 +6,11 @@
 <title>Boussole émotionnelle · Comprendre la place de tes émotions</title>
 <link rel="canonical" href="https://boussole-emotionnelle.fr/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Boussole émotionnelle","url":"https://boussole-emotionnelle.fr/","description":"Test par mises en situation : des scènes du quotidien et tes moments vécus pour mesurer la place de 14 émotions dans ta vie, avec une analyse personnalisée. Tes réponses ne quittent jamais ton navigateur.","applicationCategory":"LifestyleApplication","operatingSystem":"Web","inLanguage":"fr","isAccessibleForFree":false,"offers":{"@type":"Offer","price":"1.99","priceCurrency":"EUR"}}</script>
-<meta name="description" content="Un test bienveillant par mises en situation pour comprendre la place de 14 émotions dans ta vie. 100 % dans ton navigateur, aucune donnée collectée.">
+<meta name="description" content="Un test bienveillant par mises en situation pour comprendre la place de 14 émotions dans ta vie. 100 % dans ton navigateur : tes réponses n'en sortent jamais.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://boussole-emotionnelle.fr/">
 <meta property="og:title" content="Boussole émotionnelle">
-<meta property="og:description" content="Des situations du quotidien et tes moments vécus pour découvrir la place de 14 émotions dans ta vie. 100 % dans ton navigateur, aucune donnée collectée.">
+<meta property="og:description" content="Des situations du quotidien et tes moments vécus pour découvrir la place de 14 émotions dans ta vie. 100 % dans ton navigateur : tes réponses n'en sortent jamais.">
 <meta property="og:image" content="https://boussole-emotionnelle.fr/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="manifest.webmanifest">
@@ -752,7 +752,7 @@ footer p + p{ margin-top:.3rem; }
       <div class="hero-meta reveal">
         <span>🕊️ 16 situations du quotidien</span>
         <span>⏳ 10 à 20 minutes</span>
-        <span>🔒 Aucune donnée collectée</span>
+        <span>🔒 Tes réponses restent dans ton navigateur</span>
       </div>
       <div class="callout callout-privacy reveal" id="repriseBox" hidden style="max-width:38rem; margin:2rem auto 0; text-align:left">
         <span class="emo" aria-hidden="true">⏳</span>
@@ -2095,7 +2095,7 @@ function buildCopyText(notes){
     `Émotions dominantes : ${tri.slice(0, 3).map(e => e.nom).join(", ")}.`,
     `Équilibre : agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.`,
     "",
-    "Test indicatif par mises en situation, réalisé 100 % dans mon navigateur (aucune donnée collectée).",
+    "Test indicatif par mises en situation, réalisé 100 % dans mon navigateur : mes réponses n'en sont jamais sorties.",
     "Ce n’est pas un diagnostic médical ou psychologique."
   ].join("\n");
 }
@@ -2519,7 +2519,7 @@ function archetype(notes, tri){
     phrase:"Aucune émotion n’écrase les autres chez toi : tes réactions s’ajustent au contexte plutôt que de suivre un pli unique. C’est une souplesse précieuse, même si elle rend le portrait moins spectaculaire." };
 }
 
-/* ————— Les trois leviers à activer en premier ————— */
+/* ————— Les leviers à activer en premier (deux ou trois selon le profil) ————— */
 function leviers(notes, tri){
   const out = [];
   const desTri = DESAGREABLES.map(id => EMOTIONS.find(e => e.id === id)).sort((a, b) => notes[b.id] - notes[a.id]);
@@ -2612,7 +2612,7 @@ function renderRapport(notes){
       <h3>Ce que tu vas trouver ici</h3>
       <ol class="rap-somm">
         <li><b>Ton profil en un coup d’œil</b> — les quatorze notes, classées.</li>
-        <li><b>Tes trois leviers</b> — par quoi commencer, concrètement.</li>
+        <li><b>${lev.length === 3 ? "Tes trois leviers" : "Tes leviers"}</b> — par quoi commencer, concrètement.</li>
         ${moments ? "<li><b>Tes moments, relus</b> — ce que tu as exprimé avant le test.</li>" : ""}
         <li><b>Les quatorze fiches</b> — une par émotion, avec pratiques et question de réflexion.</li>
         <li><b>Tes croisements</b> — ce que tes émotions racontent ensemble.</li>
@@ -2632,7 +2632,7 @@ function renderRapport(notes){
     </div>
 
     <div class="rap-bloc">
-      <h3>Tes trois leviers</h3>
+      <h3>${lev.length === 3 ? "Tes trois leviers" : "Tes leviers"}</h3>
       <p>Quarante-deux pratiques t’attendent dans les fiches — mais on ne change pas tout à la fois. Voici par quoi commencer, dans cet ordre.</p>
       ${lev.map((l, i) => `<div class="rap-levier">
         <span class="rang" style="background:${rgba(l.emo.color,.15)}; color:${l.emo.color}">${i + 1}</span>
@@ -2699,7 +2699,12 @@ function ouvrirPaywall(){
   if(VENTE.remiseDossier) $("#pwBadgeDossier").textContent = `Offre de lancement · ${VENTE.remiseDossier}`;
   const caseAppli = $("#pwAppli");
   if(caseAppli){
-    caseAppli.checked = veutAppli();
+    /* toujours décochée à l'ouverture : un consentement ne se pré-coche pas, même
+       avec le choix que la personne avait fait la dernière fois. La clé reste en
+       localStorage — et pas en sessionStorage — parce que merci.html s'ouvre dans
+       l'onglet de Stripe et doit pouvoir la relire. */
+    caseAppli.checked = false;
+    noterAppli(false);
     caseAppli.onchange = () => {
       noterAppli(caseAppli.checked);
       /* les liens sont réécrits tout de suite : la case peut être cochée après
@@ -2810,7 +2815,8 @@ function lireAcces(){
    avec le paiement : coché, il ajoute client_reference_id=appli-oui au lien Stripe,
    que Stripe rattache à la session et affiche dans le tableau de bord à côté de
    l'adresse e-mail que la personne a saisie elle-même. Rien n'est stocké ici hormis
-   la case, pour qu'elle reste cochée si la personne revient. */
+   le fait que la case a été cochée, le temps d'aller payer : merci.html s'ouvre dans
+   l'onglet de Stripe et la relit pour confirmer. Elle repart décochée à chaque visite. */
 const APPLI_KEY = "boussole.appli.v1";
 const REF_APPLI = "appli-oui";
 function veutAppli(){
