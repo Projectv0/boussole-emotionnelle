@@ -1,0 +1,96 @@
+{
+ "strategie": "Un carrousel qui double un post fixe de sa semaine ne se publie jamais la veille de ce post : soit il ouvre le mardi ce que le mercredi tranchera, soit il revient le samedi en écho après la pratique, soit il change de semaine. Le mardi porte l'émotion de la semaine, le jeudi ouvre la porte de la pratique du vendredi. Les quatre semaines à trois carrousels sont celles que le vivier désigne — anxiété, colère, culpabilité, amour. Les semaines 12 et 13, sans carrousel sur leur émotion, reçoivent les pièces les plus transversales choisies pour leur axe.",
+ "semaines": [
+  {
+   "numero": 1,
+   "mardi": 13,
+   "jeudi": 14,
+   "samedi": 18,
+   "justification": "13 ouvre la saison sur la scène la plus reconnaissable, un message lu et la tête qui invente ; 14 déplace la même anxiété dans le corps, la veille de la respiration du vendredi ; 18 arrive samedi comme l'après-pratique — le jour où ça va mal, c'est trop tard pour commencer."
+  },
+  {
+   "numero": 2,
+   "mardi": 7,
+   "jeudi": 11,
+   "samedi": 16,
+   "justification": "7 montre les quatre sorties de secours de la colère tue, 11 installe la boucle de la dispute qui revient — exactement ce que la pause annoncée du vendredi vient casser — et 16 ajoute samedi ce que le vendredi ne dit pas : comment sortir de la pièce sans que l'autre croie que c'est fini."
+  },
+  {
+   "numero": 3,
+   "mardi": 1,
+   "jeudi": 6,
+   "samedi": null,
+   "justification": "1 pose la confusion « j'ai mal agi / c'est moi le problème » que le mercredi viendra trancher, et 6 fait reconnaître la honte sous ses quatre déguisements — on ne peut desserrer vendredi que le secret qu'on a d'abord su nommer."
+  },
+  {
+   "numero": 4,
+   "mardi": 9,
+   "jeudi": 20,
+   "samedi": 19,
+   "justification": "9 donne le symptôme en scène, 20 donne la frontière qui manque — réparer n'est pas s'effacer — et 19 passe au samedi, après la structure du vendredi, pour montrer le mot de trois lettres qui annule tout."
+  },
+  {
+   "numero": 5,
+   "mardi": 15,
+   "jeudi": 4,
+   "samedi": null,
+   "justification": "15 nomme tout ce qu'on perd en plus de la personne, et 4 décrit le mouvement du chagrin par vagues : le carrousel décrit la vague, le vendredi apprend à en traverser une."
+  },
+  {
+   "numero": 6,
+   "mardi": 3,
+   "jeudi": 28,
+   "samedi": null,
+   "justification": "3 ouvre sur le mot mal choisi et amorce la distinction du mercredi au lieu de la recopier, puis 28 descend dans la scène la plus concrète — fouiller le téléphone calme une minute — ce qui rend indispensable le « traduire au lieu de vérifier » du vendredi."
+  },
+  {
+   "numero": 7,
+   "mardi": 25,
+   "jeudi": 5,
+   "samedi": null,
+   "justification": "25 pose le problème — tes petites joies ne laissent aucune trace — et prend le mardi pour ne pas lâcher les vingt secondes la veille du vendredi ; 5 demande jeudi si quelque chose te touche encore, la question qui rend la joie notée nécessaire."
+  },
+  {
+   "numero": 8,
+   "mardi": 26,
+   "jeudi": 22,
+   "samedi": 27,
+   "justification": "26 met la scène du déséquilibre que la question du vendredi viendra régler, 22 montre ce qu'on apprend à taire dans un couple, et 27 apaise samedi : la passion est l'âge le plus court, la tendresse le plus long."
+  },
+  {
+   "numero": 9,
+   "mardi": 29,
+   "jeudi": 17,
+   "samedi": null,
+   "justification": "29 ouvre sur le cadeau qu'on transforme en facture et amorce le mercredi gratitude/dette, puis 17 change de terrain avec les phrases de tous les jours — merci plutôt que désolé — avant les trois du soir."
+  },
+  {
+   "numero": 10,
+   "mardi": 23,
+   "jeudi": 24,
+   "samedi": null,
+   "justification": "23 entre par ce que l'agacement protège quand on te retire ta part, et 24 liste les quatre phrases par lesquelles tu offres ta réussite à quelqu'un d'autre — le problème exact que la minute de crédit du vendredi vient réparer."
+  },
+  {
+   "numero": 11,
+   "mardi": 30,
+   "jeudi": 12,
+   "samedi": null,
+   "justification": "30 donne un visage à l'émotion qui ne crie pas, une minute le soir au calme, et 12 montre l'endroit précis où elle fuit — dimanche 17 h, le week-end déjà contaminé — la transition que le sas du vendredi vient poser."
+  },
+  {
+   "numero": 12,
+   "mardi": 21,
+   "jeudi": 10,
+   "samedi": null,
+   "justification": "Aucun carrousel ne couvre la surprise : la semaine prend son axe réel, ta carte du monde vient de se tromper. 21 montre les quatre silences qu'on prend mal, 10 donne les cinq signaux du corps qui sait avant toi — la seule prise concrète pour agrandir la seconde de suspension."
+  },
+  {
+   "numero": 13,
+   "mardi": 2,
+   "jeudi": 8,
+   "samedi": null,
+   "justification": "Le dégoût n'a aucun carrousel : la clôture est construite sur la durée et le mal-nommé. 2 oppose ce qui retombe et ce qui tourne en rond, 8 referme sur les habitudes qu'on prend pour un défaut de caractère — tu crois que c'est toi, c'est une émotion que tu n'as pas nommée."
+  }
+ ]
+}

@@ -1,5 +1,7 @@
 # Plan éditorial — 13 semaines, 39 carrousels
 
+> **Pour publier, va dans `publication/`** — les deux dossiers d'atelier y sont fusionnés en 13 semaines de cinq à six publications, avec les deux formats et les légendes. Voir `PUBLICATION.md` à la racine. Ce fichier-ci ne décrit plus que l'atelier.
+
 **Rythme : 3 publications par semaine** — lundi, mercredi, vendredi — sur TikTok **et** Instagram
 (les mêmes posts, chacun dans son format : `tiktok/` en 1080×1920, `instagram/` en 4:5).
 

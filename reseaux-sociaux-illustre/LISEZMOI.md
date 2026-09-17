@@ -1,5 +1,7 @@
 # Carrousels illustrés — mode d'emploi
 
+> **Pour publier, va dans `publication/`** — les deux dossiers d'atelier y sont fusionnés en 13 semaines de cinq à six publications, avec les deux formats et les légendes. Voir `PUBLICATION.md` à la racine. Ce fichier-ci ne décrit plus que l'atelier.
+
 30 carrousels Instagram et TikTok dans le style de **@betterwithclara** : personnages illustrés,
 fond crème, titres percutants — appliqué aux 14 émotions de la Boussole.
 

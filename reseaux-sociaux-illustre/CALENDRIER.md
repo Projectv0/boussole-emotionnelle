@@ -1,5 +1,7 @@
 # Calendrier de publication — carrousels illustrés
 
+> **Pour publier, va dans `publication/`** — les deux dossiers d'atelier y sont fusionnés en 13 semaines de cinq à six publications, avec les deux formats et les légendes. Voir `PUBLICATION.md` à la racine. Ce fichier-ci ne décrit plus que l'atelier.
+
 30 carrousels, trois par semaine : **dix semaines** de lundi à vendredi.
 Chaque ligne donne le dossier à ouvrir dans `sortie/`, le nombre de diapositives
 et l'article du guide vers lequel la légende renvoie.

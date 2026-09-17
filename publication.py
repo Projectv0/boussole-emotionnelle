@@ -96,7 +96,7 @@ def plan(cal, illus, compte):
                 nom, titre = f"{RANG[e['jour']]}-{e['slug']}", e["slug"]
             else:
                 p = illus[e["numero"]]
-                nom = f"{RANG[e['jour']]}-{e['jour']}-{p['slug']}"
+                nom = f"{RANG[e['jour']]}-{e['jour']}-illustre-{p['slug']}"
                 titre = p["titre"][0] + p["titre"][1:].lower()
             fmt = "typographique" if e["type"] == "typographique" else "**illustré**"
             L.append(f"| {e['jour']} | {fmt} | `{nom}` | {compte.get(nom + str(sem['numero']), '')} |")
@@ -131,7 +131,11 @@ def principal():
             else:
                 p = illus[entree["numero"]]
                 source = os.path.join(ILLU, f"{p['numero']:02d}-{p['slug']}")
-                nom = f"{RANG[jour]}-{jour}-{p['slug']}"
+                # « illustre » dans le nom : sans lui, le samedi illustré de la
+                # semaine 1 s'appellerait « 6-samedi-expiration-longue » juste sous
+                # « 5-vendredi-respiration-expiration-longue » et passerait pour un
+                # doublon, alors que l'un donne le geste et l'autre dit pourquoi il agit.
+                nom = f"{RANG[jour]}-{jour}-illustre-{p['slug']}"
             k = copier(source, os.path.join(dossier_sem, nom))
             compte[nom + str(n)] = k
             total_images += k
