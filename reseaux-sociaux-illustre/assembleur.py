@@ -239,15 +239,32 @@ def titre_couverture(img, titre, accents, y, taille=86, maxLignes=None):
         else:
             cour = essai
     lignes.append(cour)
-    for ligne in lignes:
+    for i, ligne in enumerate(lignes):
         total = larg(" ".join(ligne), f)
         x = (W - total) / 2
         for mot in ligne:
             col = TERRE if mot.strip(",.;:!?«» ") in mots_accent else ENCRE
             d.text((x, y), mot, font=f, fill=col)
             x += larg(mot + " ", f)
-        y += int(f.size * 1.12)
+        y += avance_titre(d, f, ligne, lignes[i + 1] if i + 1 < len(lignes) else None)
     return y
+
+def avance_titre(d, f, ligne, suivante):
+    """Interligne du titre, mesuré sur les glyphes réellement dessinés.
+
+    Un interligne fixe est soit trop serré, soit trop lâche : à 1,12 la cédille de
+    « FAÇONS » se soudait au circonflexe de « MÊME » sur la ligne d'en dessous, et
+    l'ouvrir partout aurait relâché tous les titres sans accents. On ne desserre donc
+    que les paires de lignes qui en ont besoin, en mesurant la descente de l'une et
+    la montée de l'autre.
+    """
+    serre = int(f.size * 1.12)
+    if not suivante:
+        return serre
+    bas = d.textbbox((0, 0), " ".join(ligne), font=f)[3]
+    haut = d.textbbox((0, 0), " ".join(suivante), font=f)[1]
+    return max(serre, int(bas - haut + f.size * .16))
+
 
 # ————— gabarits —————
 def slide_couverture(post):
