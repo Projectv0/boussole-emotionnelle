@@ -121,7 +121,7 @@
           "bulles": [
             {
               "texte": "Il a toujours quelque chose à me reprocher.",
-              "zone": "hg",
+              "zone": "hd",
               "type": "pense"
             }
           ],
@@ -1040,12 +1040,12 @@
           "bulles": [
             {
               "texte": "Tu as le droit d'être triste, tu sais, papa.",
-              "zone": "hd",
+              "zone": "hg",
               "type": "dit"
             },
             {
               "texte": "Elle a six ans, et c'est elle qui me console.",
-              "zone": "hg",
+              "zone": "hd",
               "type": "pense"
             }
           ],
@@ -1150,7 +1150,7 @@
           "bulles": [
             {
               "texte": "Il me paraît plus petit à chaque visite.",
-              "zone": "hg",
+              "zone": "hd",
               "type": "pense"
             }
           ],
@@ -1506,7 +1506,7 @@
           "bulles": [
             {
               "texte": "Est-ce que ça fait de moi un mauvais ami, d'être soulagé ?",
-              "zone": "hd",
+              "zone": "hg",
               "type": "pense"
             }
           ],
@@ -2113,7 +2113,7 @@
           "bulles": [
             {
               "texte": "Ah, enfin une soirée rien qu'à moi.",
-              "zone": "hg",
+              "zone": "hd",
               "type": "dit"
             }
           ],
@@ -2245,14 +2245,14 @@
               "type": "dit"
             },
             {
-              "texte": "Je peux rester un moment avec toi, si tu veux.",
-              "zone": "mg",
-              "type": "dit"
-            },
-            {
               "texte": "Ça y est, elle va me dire quoi faire.",
               "zone": "hd",
               "type": "pense"
+            },
+            {
+              "texte": "Je peux rester un moment avec toi, si tu veux.",
+              "zone": "mg",
+              "type": "dit"
             }
           ],
           "narrateur": "ELLE S'ASSOIT SUR UNE CAISSE À CÔTÉ DE LUI. / ELLE NE PROPOSE AUCUNE SOLUTION."

@@ -76,21 +76,88 @@ def couper(t, f, maxw):
     return lignes
 
 # ————— illustrations —————
+def chemin_illustration(nom):
+    for ext in (".jpg", ".jpeg", ".png", ".webp"):
+        p = os.path.join(ILLUS, nom + ext)
+        if os.path.exists(p):
+            return p
+    return None
+
+def _bord_dessine(sombres, unies, moyennes, limite):
+    """Où s'arrête la marge, en partant d'un bord : juste après le liseré du cadre.
+
+    Le cadre que le générateur dessine a une signature précise : une marge claire
+    d'une seule teinte, un trait sombre fin, puis le dessin. Les trois conditions
+    comptent — sans la marge claire, toutes les scènes de nuit passaient pour
+    encadrées, et un tiers de l'image y perdait sa tête.
+    """
+    for i in range(3, limite):
+        # on s'arrête trois lignes avant le trait : celle qui le précède est un
+        # dégradé d'anticrénelage, jamais parfaitement unie.
+        m = max(3, i - 3)
+        if sombres[i] <= .80 or not all(unies[:m]) or min(moyennes[:m]) < 150:
+            continue
+        j = i
+        while j < limite and sombres[j] > .55:
+            j += 1
+        if j - i > 14 or j + 8 >= limite:       # un trait fin, pas une zone sombre
+            return 0
+        if all(unies[j:j + 8]):                 # du dessin doit commencer après
+            return 0
+        return j
+    return 0
+
+_source = {}
+def source(nom):
+    """L'illustration, débarrassée du cadre que le générateur dessine parfois.
+
+    Cinq images sur cent cinquante portent un liseré noir et une marge crème autour
+    du dessin. Les bulles se posaient dans cette marge, détachées de la scène, et la
+    queue mourait sur le trait du cadre sans jamais rejoindre une tête. On rogne donc
+    jusqu'à l'intérieur du panneau. Le rognage est mémorisé : visages() doit appliquer
+    exactement le même, sinon les têtes sont décalées d'autant.
+    """
+    if nom in _source:
+        return _source[nom]
+    chemin = chemin_illustration(nom or "")
+    if chemin is None:
+        _source[nom] = None
+        return None
+    im = Image.open(chemin).convert("RGB")
+    g = im.convert("L")
+    px = g.load()
+    w, h = g.size
+    def bande(indices, taille, horizontale):
+        sombres, unies, moyennes = [], [], []
+        for k in indices:
+            vals = [px[j, k] if horizontale else px[k, j] for j in range(0, taille, 3)]
+            sombres.append(sum(1 for v in vals if v < 90) / len(vals))
+            mo = sum(vals) / len(vals)
+            moyennes.append(mo)
+            unies.append((sum((v - mo) ** 2 for v in vals) / len(vals)) ** .5 < 6)
+        return sombres, unies, moyennes
+    lim_v, lim_h = int(h * .35), int(w * .35)
+    haut = _bord_dessine(*bande(range(lim_v), w, True), lim_v)
+    bas = _bord_dessine(*bande(range(h - 1, h - lim_v - 1, -1), w, True), lim_v)
+    gauche = _bord_dessine(*bande(range(lim_h), h, False), lim_h)
+    droite = _bord_dessine(*bande(range(w - 1, w - lim_h - 1, -1), h, False), lim_h)
+    boite = (gauche, haut, w - droite, h - bas)
+    if boite != (0, 0, w, h):
+        im = im.crop(boite)
+    _source[nom] = (im, boite, (w, h))
+    return _source[nom]
+
 _cache = {}
 def illustration(nom):
     """Charge illustrations/<nom>.*, recadre pour remplir la page sans déformer."""
     cle = (nom, W, H)
     if cle in _cache:
         return _cache[cle]
-    chemin = None
-    for ext in (".jpg", ".jpeg", ".png", ".webp"):
-        p = os.path.join(ILLUS, nom + ext)
-        if os.path.exists(p):
-            chemin = p; break
-    if chemin is None:
+    src = source(nom)
+    if src is None:
         _cache[cle] = None
         return None
-    im = Image.open(chemin).convert("RGB")
+    im = src[0]
     # recadrage « cover » : on remplit, on rogne ce qui dépasse, on garde le haut
     # de l'image car c'est là que se trouvent les visages.
     r = max(W / im.width, H / im.height)
@@ -135,32 +202,45 @@ try:
 except FileNotFoundError:
     VISAGES = {}
 
+# Vision est entraîné sur des photos : il ne voit rien sur vingt-quatre illustrations,
+# personnages de trois quarts, de dos ou en contre-jour. Leurs têtes sont relevées à
+# l'œil dans ce fichier, en fractions du panneau — donc après rognage du cadre.
+try:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                           "file", "tetes-manuelles.json"), encoding="utf-8") as _fm:
+        TETES_MANUELLES = {k: v for k, v in json.load(_fm).items() if not k.startswith("_")}
+except FileNotFoundError:
+    TETES_MANUELLES = {}
+
 # Position de repli quand aucun visage n'a été détecté sur l'illustration.
 TETES = {"gauche": (.27, .52), "droite": (.73, .52)}
 
 def visages(nom):
-    """Les visages de l'illustration, en pixels du cadre composé, triés de gauche à droite.
+    """Les têtes de l'illustration, en pixels du cadre composé, triées de gauche à droite.
 
-    Reprend exactement le recadrage « cover » de illustration() : sans ça les
-    coordonnées seraient justes sur l'image d'origine et fausses sur la page.
+    Le détecteur donne des fractions de l'image d'origine. On leur applique d'abord
+    le rognage du cadre dessiné, puis le recadrage « cover » de illustration() :
+    sans ça les coordonnées seraient justes sur le fichier et fausses sur la page.
     """
-    bruts = VISAGES.get(nom or "", [])
-    if not bruts:
+    src = source(nom)
+    if src is None:
         return []
-    chemin = None
-    for ext in (".jpg", ".jpeg", ".png", ".webp"):
-        p = os.path.join(ILLUS, nom + ext)
-        if os.path.exists(p):
-            chemin = p; break
-    if chemin is None:
-        return []
-    with Image.open(chemin) as im:
-        iw, ih = im.size
+    im, (cg, ch, _, _), (ow, oh) = src
+    iw, ih = im.size
     r = max(W / iw, H / ih)
     nw, nh = max(W, int(iw * r)), max(H, int(ih * r))
+    sx, sy = nw / iw, nh / ih
     dx, dy = (nw - W) // 2, min((nh - H) // 2, int(nh * .12))
-    out = [{"x": v["x"] * nw - dx, "y": v["y"] * nh - dy,
-            "l": v["l"] * nw, "h": v["h"] * nh} for v in bruts]
+    bruts = VISAGES.get(nom or "", [])
+    if bruts:
+        # coordonnées du détecteur : fractions du fichier d'origine
+        out = [{"x": (v["x"] * ow - cg) * sx - dx, "y": (v["y"] * oh - ch) * sy - dy,
+                "l": v["l"] * ow * sx, "h": v["h"] * oh * sy} for v in bruts]
+    else:
+        # relevé manuel : fractions du panneau, le cadre déjà retiré
+        out = [{"x": v["x"] * iw * sx - dx, "y": v["y"] * ih * sy - dy,
+                "l": v["l"] * iw * sx, "h": v["h"] * ih * sy}
+               for v in TETES_MANUELLES.get(nom or "", [])]
     return sorted(out, key=lambda v: v["x"])
 
 # Quand elle vaut une liste, chaque bulle y dépose sa géométrie : de quoi contrôler
@@ -198,6 +278,10 @@ def attribuer_tetes(bulles, faces):
             choix[c] = faces[fi]
     return [choix.get(c) for c in cotes]
 
+def _aire_commune(r, autre):
+    return (max(0, min(r[2], autre[2]) - max(r[0], autre[0]))
+            * max(0, min(r[3], autre[3]) - max(r[1], autre[1])))
+
 def _chevauche(r, autre, marge=0):
     return (r[0] < autre[2] + marge and r[2] > autre[0] - marge
             and r[1] < autre[3] + marge and r[3] > autre[1] - marge)
@@ -207,26 +291,62 @@ def _boite_visage(v):
     return (v["x"] - v["l"] * .55, v["y"] - v["h"] * .75,
             v["x"] + v["l"] * .55, v["y"] + v["h"] * .70)
 
-def poser_bulles(img, bulles, nom_illu, depuis=0):
-    """Pose toutes les bulles d'une diapositive : têtes visées, et rien sur un visage."""
+def plancher_lecture(prec, g):
+    """Hauteur minimale de `g` pour qu'elle se lise après `prec`.
+
+    En bande dessinée, l'œil prend la bulle la plus haute en premier, et à hauteur
+    égale celle de gauche. Les bulles de `contenus.json` sont dans l'ordre où on
+    les prononce : une réplique qui répond depuis la gauche doit donc descendre,
+    sinon elle se lit avant la question. Deux bulles à la même hauteur, la première
+    à droite : on lisait la réponse avant la question sur vingt-six diapositives.
+
+    De gauche à droite, rien à faire — la même ligne se lit déjà dans le bon sens.
+    """
+    if prec is None:
+        return None
+    cx_p = prec["x"] + prec["bw"] / 2
+    cx_g = g["x"] + g["bw"] / 2
+    if cx_g > cx_p + E(20):
+        return prec["y"] - E(10)
+    return prec["y"] + max(E(60), int(prec["bh"] * .55))
+
+def poser_bulles(img, bulles, nom_illu, depuis=0, texte_narrateur=""):
+    """Pose toutes les bulles d'une diapositive : dans l'ordre de lecture, têtes
+    visées, et rien ni sur un visage ni sur le bandeau du narrateur."""
+    limite = min(H - E(120), haut_du_narrateur(texte_narrateur) - E(16))
     faces = visages(nom_illu)
     tetes = attribuer_tetes(bulles, faces)
     boites = [_boite_visage(v) for v in faces]
     occupe = []
+    prec = None
     for b, cible in zip(bulles, tetes):
         genre = b.get("type", "dit")
         g = mesurer_bulle(b["texte"], genre, b["zone"], depuis)
+        plafond = limite - g["bh"]              # au-dessus du bandeau du narrateur
+        pl = plancher_lecture(prec, g)
+        bas = max(depuis + E(10), pl if pl is not None else 0)
+        bas = min(bas, plafond)                 # le cadre l'emporte sur le décalage
         # La zone fixe tombait parfois pile sur une figure. On glisse alors la bulle
-        # à la verticale, d'abord vers le haut, jusqu'à dégager le visage.
-        for dy in (0, -E(70), E(80), -E(150), E(170), -E(230), E(250)):
-            y = max(depuis + E(10), min(g["y"] + dy, H - g["bh"] - E(120)))
+        # à la verticale, sans jamais remonter au-dessus de la bulle précédente.
+        depart = max(bas, g["y"])
+        obstacles = occupe + boites
+        essais = []
+        for d in (0, E(80), -E(70), E(170), -E(150), E(260), -E(230), E(350), E(440)):
+            y = min(max(bas, depart + d), plafond)
             r = (g["x"], y, g["x"] + g["bw"], y + g["bh"])
-            if not any(_chevauche(r, o, E(14)) for o in occupe + boites):
+            if not any(_chevauche(r, o, E(14)) for o in obstacles):
                 g["y"] = y
                 break
+            essais.append((sum(_aire_commune(r, o) for o in obstacles), len(essais), y))
+        else:
+            # Aucune position libre — un gros plan où le visage occupe tout le cadre.
+            # On prend alors celle qui en couvre le moins, plutôt que de laisser la
+            # bulle à sa place de repos, c'est-à-dire en plein sur la figure.
+            g["y"] = min(essais)[2]
         r = (g["x"], g["y"], g["x"] + g["bw"], g["y"] + g["bh"])
         bulle(img, g, genre, cible, voisines=list(occupe))
         occupe.append(r)
+        prec = g
 
 def _sortie_du_cadre(x, y, bw, bh, vers_x, vers_y):
     """Où la queue perce le cadre de la bulle, en allant vers (vers_x, vers_y)."""
@@ -268,13 +388,14 @@ def mesurer_bulle(texte, genre, zone, depuis=0):
     return dict(x=x, y=y, bw=int(bw), bh=bh, lignes=lignes, f=f, lh=lh, pad=pad,
                 align=align, zone=zone, texte=texte, depuis=depuis)
 
-def _avant_la_voisine(bx, by, ux, uy, longueur, voisines):
-    """Raccourcit la queue pour qu'elle n'entre pas dans une bulle voisine.
+def _arret_avant(bx, by, ux, uy, longueur, boites, marge):
+    """Raccourcit la queue pour qu'elle s'arrête avant d'entrer dans une de ces boîtes.
 
-    Deux bulles empilées du même côté visent la même tête : sans ça, la queue de
-    celle du haut traversait celle du bas.
+    Sert deux fois : devant la tête visée, pour que la pointe ne touche pas le visage ;
+    et devant une bulle voisine, car deux bulles empilées du même côté visent la même
+    tête et la queue de celle du haut traversait celle du bas.
     """
-    for x0, y0, x1, y1 in voisines:
+    for x0, y0, x1, y1 in boites:
         ts = []
         for p, d, a, b in ((bx, ux, x0, x1), (by, uy, y0, y1)):
             if d == 0:
@@ -288,7 +409,7 @@ def _avant_la_voisine(bx, by, ux, uy, longueur, voisines):
             continue
         deb, fin = max(ts[0][0], ts[1][0]), min(ts[0][1], ts[1][1])
         if deb <= fin and fin > 0:
-            longueur = min(longueur, max(0, deb - E(18)))
+            longueur = min(longueur, max(0, deb - marge))
     return longueur
 
 def bulle(img, g, genre, cible=None, voisines=()):
@@ -329,14 +450,18 @@ def bulle(img, g, genre, cible=None, voisines=()):
     vx, vy = tete_x - base_x, tete_y - base_y
     dist = math.hypot(vx, vy) or 1.0
     ux, uy = vx / dist, vy / dist
-    # elle tend vers la tête mais s'arrête avant : une queue qui touche le visage
-    # se lit comme un trait de crayon en travers de la figure.
-    # tete_h est la hauteur du visage seul : les cheveux montent bien au-dessus,
-    # d'où la marge large. Trois ronds blancs posés sur une chevelure se voient
-    # de loin, et c'est exactement ce qu'ils faisaient.
-    longueur = max(E(30), min(dist - (tete_h * .95 + E(30)), E(130)))
-    longueur = _avant_la_voisine(base_x, base_y, ux, uy, longueur, voisines)
-    if longueur < E(14):
+    # Elle tend vers la tête et s'arrête net devant : une queue qui touche le visage
+    # se lit comme un trait de crayon en travers de la figure, et trois ronds blancs
+    # posés sur une chevelure se voient de loin. On s'arrête sur la boîte de la tête
+    # plutôt que sur une marge calculée depuis son centre : quand le détecteur
+    # surestime la taille d'une tête, cette marge mangeait toute la queue.
+    boite = _boite_visage(cible) if cible else (tete_x - E(90), tete_y - E(110),
+                                               tete_x + E(90), tete_y + E(110))
+    longueur = max(E(28), _arret_avant(base_x, base_y, ux, uy, E(130), [boite], E(34)))
+    # Deux bulles du même personnage, empilées du même côté : la queue de celle du
+    # haut butait dans celle du bas et s'y terminait en moignon tronqué. Dès qu'une
+    # voisine la raccourcit, on la supprime — c'est celle du bas qui désigne la tête.
+    if _arret_avant(base_x, base_y, ux, uy, longueur, voisines, E(18)) < longueur - E(2):
         return _texte_bulle(d, g)
     pointe_x, pointe_y = base_x + ux * longueur, base_y + uy * longueur
 
@@ -350,13 +475,19 @@ def bulle(img, g, genre, cible=None, voisines=()):
         d.line([(base_x + px - ux * E(2), base_y + py - uy * E(2)),
                 (base_x - px - ux * E(2), base_y - py - uy * E(2))], fill=BLANC, width=E(7))
     else:
-        # Chaîne de ronds courte et orientée vers la tête : plus longue, elle descendait
-        # sur les cheveux et les visages, et trois ronds blancs percés dans un crâne se
-        # voient de loin.
-        for t, r in ((.28, E(10)), (.60, E(7)), (.90, E(5))):
-            cx = base_x + (pointe_x - base_x) * t
-            cy = base_y + (pointe_y - base_y) * t
-            d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=BLANC, outline=ENCRE, width=E(3))
+        # Chaîne de ronds orientée vers la tête. Le nombre de ronds suit la longueur
+        # disponible : à trois ronds imposés sur une chaîne courte, ils se chevauchaient
+        # en un pâté blanc collé sous la bulle. Mieux vaut un seul rond bien posé.
+        # Elle reste courte : plus longue, elle descend sur les cheveux, et trois ronds
+        # blancs percés dans un crâne se voient de loin.
+        n = max(1, min(3, int(longueur / E(24))))
+        pas = longueur / (n + .4)
+        for i, r in enumerate((E(10), E(7), E(5))[:n]):
+            r = min(r, pas * .45)
+            t = (i + 1) * pas
+            cx, cy = base_x + ux * t, base_y + uy * t
+            d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=BLANC, outline=ENCRE,
+                      width=max(2, E(3)))
 
     _texte_bulle(d, g)
 
@@ -368,22 +499,36 @@ def _texte_bulle(d, g):
         d.text((lx, ty), l, font=g["f"], fill=ENCRE)
         ty += g["lh"]
 
+def _bandeau_narrateur(texte):
+    """Les lignes et la taille du bandeau, avant de le dessiner.
+
+    Mesuré à part parce que les bulles ont besoin de savoir où il commence : elles
+    descendent maintenant pour respecter l'ordre de lecture, et sans ça rien ne les
+    empêcherait de finir dessus.
+    """
+    f = F(CONDENSE, 34, LOURD)
+    # Un « / » dans le texte du narrateur marque une coupure voulue entre deux
+    # phrases : il était rendu tel quel, au milieu du bandeau. On le traduit en
+    # retour à la ligne, et couper() respecte déjà les sauts de ligne.
+    lignes = couper(re.sub(r"\s*/\s*", "\n", texte).upper(), f, int(W * .74))
+    lh = int(f.size * 1.2)
+    pad = E(20)
+    bw = max(larg(l, f) for l in lignes) + pad * 2
+    bh = len(lignes) * lh + pad * 2 - E(8)
+    return f, lignes, lh, pad, int(bw), bh
+
+def haut_du_narrateur(texte):
+    """Le bord haut du bandeau, ou le bas du cadre s'il n'y a pas de narrateur."""
+    if not texte:
+        return H
+    return H - BAS - _bandeau_narrateur(texte)[5]
+
 def narrateur(img, texte, bas=True):
     """La phrase du narrateur : capitales, bandeau sombre, posée en bas de l'image."""
     if not texte:
         return
     d = ImageDraw.Draw(img)
-    f = F(CONDENSE, 34, LOURD)
-    maxw = int(W * .74)
-    # Un « / » dans le texte du narrateur marque une coupure voulue entre deux
-    # phrases : il était rendu tel quel, au milieu du bandeau. On le traduit en
-    # retour à la ligne, et couper() respecte déjà les sauts de ligne.
-    texte = re.sub(r"\s*/\s*", "\n", texte)
-    lignes = couper(texte.upper(), f, maxw)
-    lh = int(f.size * 1.2)
-    tw = max(larg(l, f) for l in lignes)
-    pad = E(20)
-    bw, bh = tw + pad * 2, len(lignes) * lh + pad * 2 - E(8)
+    f, lignes, lh, pad, bw, bh = _bandeau_narrateur(texte)
     x = int((W - bw) / 2)
     y = H - BAS - bh if bas else int(H * .07)
     d.rounded_rectangle([x, y, x + bw, y + bh], radius=E(14), fill=ENCRE)
@@ -424,14 +569,16 @@ def slide_titre(post):
         y += lh
     sous_titre = y + E(40)
     poser_bulles(img, post["slides"][0].get("bulles", []),
-                 post["slides"][0].get("illustration"), depuis=sous_titre)
+                 post["slides"][0].get("illustration"), depuis=sous_titre,
+                 texte_narrateur=post["slides"][0].get("narrateur", ""))
     narrateur(img, post["slides"][0].get("narrateur", ""))
     return img
 
 def slide_scene(s):
     img = illustration(s["illustration"]) or fond_manquant(s["illustration"])
     img = img.copy()
-    poser_bulles(img, s.get("bulles", []), s.get("illustration"))
+    poser_bulles(img, s.get("bulles", []), s.get("illustration"),
+                 texte_narrateur=s.get("narrateur", ""))
     narrateur(img, s.get("narrateur", ""))
     return img
 

@@ -80,6 +80,14 @@ d'un prompt qui parlait d'une main sans dire à qui elle était.
 **De la place pour les bulles.** Les personnages se tiennent plutôt dans le bas du cadre, le
 haut reste calme. Sans ça, une bulle finit sur un visage.
 
+**L'œil lit la bulle la plus haute en premier.** À hauteur égale, il prend celle de gauche.
+Les bulles de `contenus.json` sont dans l'ordre où on les prononce : quand c'est le personnage
+de droite qui parle en premier, la réponse de gauche doit descendre d'un cran, sinon on lit la
+réponse avant la question. C'est un petit décalage, pas une chute — la moitié de la hauteur de
+la bulle précédente suffit à faire l'escalier. `plancher_lecture()` s'en charge, mais la règle
+vaut aussi à l'écriture : **l'ordre des bulles dans le fichier est l'ordre de la parole**, et
+une pensée qui réagit à une réplique se place entre les deux, pas à la fin.
+
 **Une bulle se place du côté où son personnage est dessiné, pas du côté prévu.** Le
 générateur ne respecte pas l'ordre du prompt : d'une diapositive à l'autre d'une même scène,
 les deux personnages changent parfois de place. Écrire « à gauche » dans le prompt ne suffit
@@ -87,6 +95,15 @@ donc pas — il faut regarder l'image. `detecter-visages.swift` situe les têtes
 pas laquelle est laquelle : le côté de chaque bulle se relit à l'œil, planche par planche.
 Une bulle du mauvais côté est le défaut le plus visible de la série, parce que la queue,
 elle, pointe juste — et désigne alors la mauvaise personne.
+
+**Une seule queue par personnage et par diapositive.** Quand deux bulles du même
+personnage sont empilées, seule celle du bas porte une queue : celle du haut butait dans
+celle du bas et s'y terminait en moignon. L'assembleur la supprime tout seul.
+
+**Le générateur dessine parfois un cadre** — un liseré noir et une marge crème autour de la
+scène. La bulle se posait alors dans la marge, détachée du dessin, et la queue mourait sur le
+trait. `source()` détecte ce cadre et le rogne ; l'illustration remplit de nouveau la page.
+Trente et une images sur cent cinquante en portaient un.
 
 **Ne demande jamais une heure précise sur une horloge.** Le modèle dessine des aiguilles au
 hasard et ajoute une main à chaque tentative. Si la scène a besoin d'une heure, c'est le titre

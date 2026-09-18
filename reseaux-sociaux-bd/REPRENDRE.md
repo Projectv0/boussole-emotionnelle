@@ -112,10 +112,29 @@ python3 assembleur.py 17 29 30
 dit où sont les visages ; l'assembleur y pointe les queues de bulles. Une image remplacée
 sans redétection garde les coordonnées de l'ancienne, et les queues désignent le vide.
 
+Si une image ressort **sans aucune tête** — Vision est entraîné sur des photos et rate les
+personnages de trois quarts, de dos ou très stylisés —, relever la position à l'œil dans
+`file/tetes-manuelles.json`. Le fichier explique son propre format ; attention, il est en
+fractions du **panneau**, donc après rognage du cadre, alors que `file/visages.json` est en
+fractions du fichier d'origine. Pour vérifier qu'aucune bulle ne se retrouve sans tête :
+
+```bash
+cd "/Users/cavalier/Dev/Site Emotion/reseaux-sociaux-bd"
+python3 -c "
+import json, sys; sys.path.insert(0,'.')
+import assembleur as A; A.format_actif('instagram')
+d=json.load(open('contenus.json',encoding='utf-8'))
+manque=[(p['numero'],i) for p in d['posts'] for i,s in enumerate(p['slides'],1)
+        if s.get('bulles') and not A.visages(s.get('illustration'))]
+print(manque or 'toutes les bulles ont une tête à viser')
+"
+```
+
 Puis **rouvrir les trois posts et vérifier de quel côté chaque personnage est dessiné** : le
 côté des bulles a été relu à l'œil pour les vingt-sept autres, et les neuf images refaites
-peuvent très bien inverser les personnages par rapport à l'ancienne version. Voir la règle
-dans `GUIDE-STYLE.md`.
+peuvent très bien inverser les personnages par rapport à l'ancienne version. Une bulle qui
+change de côté change aussi l'ordre de lecture — l'assembleur décale alors la réponse vers le
+bas tout seul, mais il faut regarder le résultat. Les deux règles sont dans `GUIDE-STYLE.md`.
 
 ## Étape 3 — Relire
 
@@ -170,7 +189,8 @@ traduit en retour à la ligne.
 | `suffixe-style.txt` | le suffixe collé à la fin de chaque prompt. |
 | `assembleur.py` | compose illustrations + bulles + narrateur, dans les deux formats. |
 | `detecter-visages.swift` | repère les têtes sur les illustrations, pour que les queues de bulles pointent vers elles. À relancer après toute régénération. |
-| `file/visages.json` | sa sortie : une tête = x, y, largeur, hauteur, en fractions de l'image. |
+| `file/visages.json` | sa sortie : une tête = x, y, largeur, hauteur, en fractions du fichier d'origine. |
+| `file/tetes-manuelles.json` | les têtes que Vision ne voit pas, relevées à l'œil, en fractions du panneau. |
 | `aspirer.sh` | télécharge un lot depuis le CDN, au format `nom\|fichier` sur l'entrée standard. |
 | `file/a-generer.json` | les 150 prompts complets, prêts à envoyer. |
 | `file/a-refaire.json` | les neuf qui restent. |
