@@ -80,6 +80,14 @@ d'un prompt qui parlait d'une main sans dire à qui elle était.
 **De la place pour les bulles.** Les personnages se tiennent plutôt dans le bas du cadre, le
 haut reste calme. Sans ça, une bulle finit sur un visage.
 
+**Une bulle se place du côté où son personnage est dessiné, pas du côté prévu.** Le
+générateur ne respecte pas l'ordre du prompt : d'une diapositive à l'autre d'une même scène,
+les deux personnages changent parfois de place. Écrire « à gauche » dans le prompt ne suffit
+donc pas — il faut regarder l'image. `detecter-visages.swift` situe les têtes, mais il ne dit
+pas laquelle est laquelle : le côté de chaque bulle se relit à l'œil, planche par planche.
+Une bulle du mauvais côté est le défaut le plus visible de la série, parce que la queue,
+elle, pointe juste — et désigne alors la mauvaise personne.
+
 **Ne demande jamais une heure précise sur une horloge.** Le modèle dessine des aiguilles au
 hasard et ajoute une main à chaque tentative. Si la scène a besoin d'une heure, c'est le titre
 qui la donne.

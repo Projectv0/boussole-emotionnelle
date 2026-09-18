@@ -12,7 +12,7 @@ Contrairement au dossier reseaux-sociaux-illustre/, l'illustration occupe ici to
 page : les bulles et le narrateur se posent dessus. C'est l'assembleur qui les dessine,
 en vrai français — on ne les demande jamais au générateur d'images, qui déforme les mots.
 """
-import json, os, re, sys
+import itertools, json, math, os, re, sys
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -120,29 +120,190 @@ ZONES = {   # (ancre x en fraction de W, ancre y en fraction de H, alignement)
     "bg": (.06, .60, "gauche"), "bd": (.94, .60, "droite"),
 }
 
-def bulle(img, texte, zone, genre, depuis=0):
-    """Dessine une bulle de dialogue ou de pensée, avec sa queue vers le centre bas.
+# ————— vers qui la queue pointe —————
+# Les visages sont détectés une fois pour toutes sur les illustrations d'origine
+# (voir `detecter-visages.sh`) et rangés dans file/visages.json, en coordonnées
+# normalisées, origine en haut à gauche.
+#
+# Avant, la queue visait une ancre fixe — le quart ou les trois quarts de la largeur.
+# Sur une illustration où le personnage est au centre, ou décalé, elle pointait donc
+# à côté de lui. Elle vise maintenant sa tête.
+try:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "file", "visages.json"),
+              encoding="utf-8") as _fv:
+        VISAGES = json.load(_fv)
+except FileNotFoundError:
+    VISAGES = {}
 
-    Le texte est écrit ici, en français, par l'assembleur : jamais par le générateur
-    d'images, qui déforme systématiquement les mots.
+# Position de repli quand aucun visage n'a été détecté sur l'illustration.
+TETES = {"gauche": (.27, .52), "droite": (.73, .52)}
+
+def visages(nom):
+    """Les visages de l'illustration, en pixels du cadre composé, triés de gauche à droite.
+
+    Reprend exactement le recadrage « cover » de illustration() : sans ça les
+    coordonnées seraient justes sur l'image d'origine et fausses sur la page.
     """
-    d = ImageDraw.Draw(img)
+    bruts = VISAGES.get(nom or "", [])
+    if not bruts:
+        return []
+    chemin = None
+    for ext in (".jpg", ".jpeg", ".png", ".webp"):
+        p = os.path.join(ILLUS, nom + ext)
+        if os.path.exists(p):
+            chemin = p; break
+    if chemin is None:
+        return []
+    with Image.open(chemin) as im:
+        iw, ih = im.size
+    r = max(W / iw, H / ih)
+    nw, nh = max(W, int(iw * r)), max(H, int(ih * r))
+    dx, dy = (nw - W) // 2, min((nh - H) // 2, int(nh * .12))
+    out = [{"x": v["x"] * nw - dx, "y": v["y"] * nh - dy,
+            "l": v["l"] * nw, "h": v["h"] * nh} for v in bruts]
+    return sorted(out, key=lambda v: v["x"])
+
+# Quand elle vaut une liste, chaque bulle y dépose sa géométrie : de quoi contrôler
+# après coup qu'aucune ne couvre un visage. Voir controle-bulles.py.
+CONTROLE = None
+
+def attribuer_tetes(bulles, faces):
+    """À chaque bulle, la tête qu'elle désigne — choisie par proximité.
+
+    Une diapositive a au plus deux locuteurs, un par côté : on attribue donc une
+    tête par côté, et toutes les bulles d'un même côté la partagent. Attribuer une
+    tête par bulle envoyait la deuxième bulle d'un même personnage — sa pensée —
+    vers le visage d'en face.
+    """
+    if not faces or not bulles:
+        return [None] * len(bulles)
+    cotes = [ZONES.get(b["zone"], ZONES["hg"])[2] for b in bulles]
+    presents = [c for c in ("gauche", "droite") if c in cotes]
+    reps = {"gauche": W * .25, "droite": W * .75}
+    k = min(len(faces), len(presents))
+    meilleur = None
+    for gs in itertools.combinations(range(len(presents)), k):
+        for fs in itertools.permutations(range(len(faces)), k):
+            cout = sum(abs(reps[presents[g]] - faces[f]["x"]) for g, f in zip(gs, fs))
+            if meilleur is None or cout < meilleur[0]:
+                meilleur = (cout, dict(zip(gs, fs)))
+    # Une tête franchement du mauvais côté n'est pas celle qui parle : c'est le
+    # cas quand le détecteur n'a vu que l'interlocuteur, ou qu'il a pris un reflet
+    # pour un visage. On préfère alors l'ancre de repli, du bon côté.
+    seuil = W * .42
+    choix = {}
+    for gi, fi in meilleur[1].items():
+        c = presents[gi]
+        if abs(reps[c] - faces[fi]["x"]) < seuil:
+            choix[c] = faces[fi]
+    return [choix.get(c) for c in cotes]
+
+def _chevauche(r, autre, marge=0):
+    return (r[0] < autre[2] + marge and r[2] > autre[0] - marge
+            and r[1] < autre[3] + marge and r[3] > autre[1] - marge)
+
+def _boite_visage(v):
+    """Le visage un peu élargi : cheveux au-dessus, menton en dessous."""
+    return (v["x"] - v["l"] * .55, v["y"] - v["h"] * .75,
+            v["x"] + v["l"] * .55, v["y"] + v["h"] * .70)
+
+def poser_bulles(img, bulles, nom_illu, depuis=0):
+    """Pose toutes les bulles d'une diapositive : têtes visées, et rien sur un visage."""
+    faces = visages(nom_illu)
+    tetes = attribuer_tetes(bulles, faces)
+    boites = [_boite_visage(v) for v in faces]
+    occupe = []
+    for b, cible in zip(bulles, tetes):
+        genre = b.get("type", "dit")
+        g = mesurer_bulle(b["texte"], genre, b["zone"], depuis)
+        # La zone fixe tombait parfois pile sur une figure. On glisse alors la bulle
+        # à la verticale, d'abord vers le haut, jusqu'à dégager le visage.
+        for dy in (0, -E(70), E(80), -E(150), E(170), -E(230), E(250)):
+            y = max(depuis + E(10), min(g["y"] + dy, H - g["bh"] - E(120)))
+            r = (g["x"], y, g["x"] + g["bw"], y + g["bh"])
+            if not any(_chevauche(r, o, E(14)) for o in occupe + boites):
+                g["y"] = y
+                break
+        r = (g["x"], g["y"], g["x"] + g["bw"], g["y"] + g["bh"])
+        bulle(img, g, genre, cible, voisines=list(occupe))
+        occupe.append(r)
+
+def _sortie_du_cadre(x, y, bw, bh, vers_x, vers_y):
+    """Où la queue perce le cadre de la bulle, en allant vers (vers_x, vers_y)."""
+    cx, cy = x + bw / 2, y + bh / 2
+    dx, dy = vers_x - cx, vers_y - cy
+    if not dx and not dy:
+        return cx, y + bh, "bas"
+    ts = []
+    if dx > 0: ts.append(((x + bw - cx) / dx, "droite"))
+    if dx < 0: ts.append(((x - cx) / dx, "gauche"))
+    if dy > 0: ts.append(((y + bh - cy) / dy, "bas"))
+    if dy < 0: ts.append(((y - cy) / dy, "haut"))
+    t, cote = min(ts)
+    px, py = cx + dx * t, cy + dy * t
+    # on écarte des coins, sinon la queue naît sur l'arrondi et se décolle du cadre
+    m = E(34)
+    if cote in ("bas", "haut"):
+        px = min(max(px, x + m), x + bw - m)
+    else:
+        py = min(max(py, y + m), y + bh - m)
+    return px, py, cote
+
+def mesurer_bulle(texte, genre, zone, depuis=0):
+    """Taille et place de repos d'une bulle, avant d'éviter les visages."""
     fx, fy, align = ZONES.get(zone, ZONES["hg"])
     f = F(CONDENSE, 38, DEMI)
-    maxw = int(W * .40)
-    lignes = couper(texte.upper() if genre == "dit" else texte, f, maxw)
+    lignes = couper(texte.upper() if genre == "dit" else texte, f, int(W * .40))
     lh = int(f.size * 1.16)
-    tw = max(larg(l, f) for l in lignes)
     pad = E(22)
-    bw, bh = tw + pad * 2, len(lignes) * lh + pad * 2 - E(6)
+    bw = max(larg(l, f) for l in lignes) + pad * 2
+    bh = len(lignes) * lh + pad * 2 - E(6)
 
     x = int(W * fx) if align == "gauche" else int(W * fx) - bw
     # « depuis » réserve le haut de la page : sur la diapositive de titre, les bulles
     # se posaient par-dessus le titre. Les zones glissent alors sous lui.
-    utile = H - depuis
-    y = depuis + int(utile * fy)
+    y = depuis + int((H - depuis) * fy)
     x = max(E(18), min(x, W - bw - E(18)))
     y = max(depuis + E(10), min(y, H - bh - E(120)))
+    return dict(x=x, y=y, bw=int(bw), bh=bh, lignes=lignes, f=f, lh=lh, pad=pad,
+                align=align, zone=zone, texte=texte, depuis=depuis)
+
+def _avant_la_voisine(bx, by, ux, uy, longueur, voisines):
+    """Raccourcit la queue pour qu'elle n'entre pas dans une bulle voisine.
+
+    Deux bulles empilées du même côté visent la même tête : sans ça, la queue de
+    celle du haut traversait celle du bas.
+    """
+    for x0, y0, x1, y1 in voisines:
+        ts = []
+        for p, d, a, b in ((bx, ux, x0, x1), (by, uy, y0, y1)):
+            if d == 0:
+                if not (a <= p <= b):
+                    ts = None; break
+                ts.append((-1e9, 1e9))
+            else:
+                t0, t1 = (a - p) / d, (b - p) / d
+                ts.append((min(t0, t1), max(t0, t1)))
+        if ts is None:
+            continue
+        deb, fin = max(ts[0][0], ts[1][0]), min(ts[0][1], ts[1][1])
+        if deb <= fin and fin > 0:
+            longueur = min(longueur, max(0, deb - E(18)))
+    return longueur
+
+def bulle(img, g, genre, cible=None, voisines=()):
+    """Dessine une bulle de dialogue ou de pensée, sa queue pointée vers celui qui parle.
+
+    Le texte est écrit ici, en français, par l'assembleur : jamais par le générateur
+    d'images, qui déforme systématiquement les mots.
+    """
+    x, y, bw, bh = g["x"], g["y"], g["bw"], g["bh"]
+    lignes, f, lh, pad, align = g["lignes"], g["f"], g["lh"], g["pad"], g["align"]
+    d = ImageDraw.Draw(img)
+
+    if CONTROLE is not None:
+        CONTROLE.append({"zone": g["zone"], "rect": (x, y, x + bw, y + bh), "cible": cible,
+                         "texte": g["texte"]})
 
     # ombre portée douce, pour détacher la bulle de l'illustration
     ombre = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -155,27 +316,57 @@ def bulle(img, texte, zone, genre, depuis=0):
     d.rounded_rectangle([x, y, x + bw, y + bh], radius=E(26), fill=BLANC,
                         outline=ENCRE, width=E(4))
 
-    # la queue part vers le bas, du côté du centre de l'image
-    qx = x + bw - E(52) if align == "gauche" else x + E(52)
-    if genre == "dit":
-        vers = qx + (E(34) if align == "gauche" else -E(34))
-        d.polygon([(qx, y + bh - E(4)), (qx + E(30), y + bh - E(4)), (vers, y + bh + E(34))],
-                  fill=BLANC, outline=ENCRE)
-        d.line([(qx + 2, y + bh - E(3)), (qx + E(28), y + bh - E(3))], fill=BLANC, width=E(5))
+    # La queue pointe vers la tête de celui qui parle. Quand le visage a été détecté on
+    # vise sa tête réelle ; sinon on retombe sur l'ancre approximative du côté.
+    if cible:
+        tete_x, tete_y, tete_h = cible["x"], cible["y"], cible["h"]
     else:
-        # Chaîne de ronds volontairement courte : plus longue, elle descendait sur les
-        # cheveux et les visages quand le générateur plaçait une tête plus haut que prévu,
-        # et trois ronds blancs percés dans un crâne se voient de loin.
-        for i, (dx, r) in enumerate(((0, E(10)), (E(18), E(7)), (E(32), E(5)))):
-            cx = qx + (dx if align == "gauche" else -dx)
-            cy = y + bh + E(11) + i * E(10)
+        tx, ty_t = TETES[align]
+        tete_x, tete_y = W * tx, max(y + bh + E(150), H * ty_t)
+        tete_h = E(180)
+
+    base_x, base_y, _ = _sortie_du_cadre(x, y, bw, bh, tete_x, tete_y)
+    vx, vy = tete_x - base_x, tete_y - base_y
+    dist = math.hypot(vx, vy) or 1.0
+    ux, uy = vx / dist, vy / dist
+    # elle tend vers la tête mais s'arrête avant : une queue qui touche le visage
+    # se lit comme un trait de crayon en travers de la figure.
+    # tete_h est la hauteur du visage seul : les cheveux montent bien au-dessus,
+    # d'où la marge large. Trois ronds blancs posés sur une chevelure se voient
+    # de loin, et c'est exactement ce qu'ils faisaient.
+    longueur = max(E(30), min(dist - (tete_h * .95 + E(30)), E(130)))
+    longueur = _avant_la_voisine(base_x, base_y, ux, uy, longueur, voisines)
+    if longueur < E(14):
+        return _texte_bulle(d, g)
+    pointe_x, pointe_y = base_x + ux * longueur, base_y + uy * longueur
+
+    if genre == "dit":
+        demi = E(15)
+        # la base est un segment posé sur le cadre, perpendiculaire à la direction
+        px, py = -uy * demi, ux * demi
+        d.polygon([(base_x + px, base_y + py), (base_x - px, base_y - py),
+                   (pointe_x, pointe_y)], fill=BLANC, outline=ENCRE)
+        # on recouvre le trait du cadre sous la base pour souder la queue à la bulle
+        d.line([(base_x + px - ux * E(2), base_y + py - uy * E(2)),
+                (base_x - px - ux * E(2), base_y - py - uy * E(2))], fill=BLANC, width=E(7))
+    else:
+        # Chaîne de ronds courte et orientée vers la tête : plus longue, elle descendait
+        # sur les cheveux et les visages, et trois ronds blancs percés dans un crâne se
+        # voient de loin.
+        for t, r in ((.28, E(10)), (.60, E(7)), (.90, E(5))):
+            cx = base_x + (pointe_x - base_x) * t
+            cy = base_y + (pointe_y - base_y) * t
             d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=BLANC, outline=ENCRE, width=E(3))
 
-    ty = y + pad - E(3)
-    for l in lignes:
-        lx = x + pad if align == "gauche" else x + bw - pad - larg(l, f)
-        d.text((lx, ty), l, font=f, fill=ENCRE)
-        ty += lh
+    _texte_bulle(d, g)
+
+def _texte_bulle(d, g):
+    ty = g["y"] + g["pad"] - E(3)
+    for l in g["lignes"]:
+        lx = (g["x"] + g["pad"] if g["align"] == "gauche"
+              else g["x"] + g["bw"] - g["pad"] - larg(l, g["f"]))
+        d.text((lx, ty), l, font=g["f"], fill=ENCRE)
+        ty += g["lh"]
 
 def narrateur(img, texte, bas=True):
     """La phrase du narrateur : capitales, bandeau sombre, posée en bas de l'image."""
@@ -232,16 +423,15 @@ def slide_titre(post):
         d.text(((W - larg(t, f)) / 2, y), t, font=f, fill=col)
         y += lh
     sous_titre = y + E(40)
-    for b in post["slides"][0].get("bulles", []):
-        bulle(img, b["texte"], b["zone"], b.get("type", "dit"), depuis=sous_titre)
+    poser_bulles(img, post["slides"][0].get("bulles", []),
+                 post["slides"][0].get("illustration"), depuis=sous_titre)
     narrateur(img, post["slides"][0].get("narrateur", ""))
     return img
 
 def slide_scene(s):
     img = illustration(s["illustration"]) or fond_manquant(s["illustration"])
     img = img.copy()
-    for b in s.get("bulles", []):
-        bulle(img, b["texte"], b["zone"], b.get("type", "dit"))
+    poser_bulles(img, s.get("bulles", []), s.get("illustration"))
     narrateur(img, s.get("narrateur", ""))
     return img
 

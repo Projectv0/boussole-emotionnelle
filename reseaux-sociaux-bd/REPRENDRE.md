@@ -90,7 +90,7 @@ Suivre avec `window.__etat()`. Quand `file` tombe à 0, récolter avec `window._
 **Le préfixe CDN peut changer** si le compte change. Il se lit dans n'importe quelle URL
 renvoyée : c'est tout ce qui précède le nom de fichier.
 
-## Étape 2 — Télécharger et recomposer
+## Étape 2 — Télécharger, redétecter les têtes, recomposer
 
 Coller la sortie de `__lot` dans le script de téléchargement, qui remplace les fichiers en
 place :
@@ -104,8 +104,18 @@ python3 -c "import json;[print(n) for n in json.load(open('file/a-refaire.json')
 nom-de-l-illustration|1789...-uuid.jpeg
 …
 EOF
+swift detecter-visages.swift illustrations/*.jpg > file/visages.json
 python3 assembleur.py 17 29 30
 ```
+
+**La détection des têtes est à refaire dès qu'une illustration change.** `file/visages.json`
+dit où sont les visages ; l'assembleur y pointe les queues de bulles. Une image remplacée
+sans redétection garde les coordonnées de l'ancienne, et les queues désignent le vide.
+
+Puis **rouvrir les trois posts et vérifier de quel côté chaque personnage est dessiné** : le
+côté des bulles a été relu à l'œil pour les vingt-sept autres, et les neuf images refaites
+peuvent très bien inverser les personnages par rapport à l'ancienne version. Voir la règle
+dans `GUIDE-STYLE.md`.
 
 ## Étape 3 — Relire
 
@@ -159,6 +169,8 @@ traduit en retour à la ligne.
 | `contenus.json` | les 30 scènes : titres, bulles, narrateurs, prompts, fiches de personnages. La source de tout. |
 | `suffixe-style.txt` | le suffixe collé à la fin de chaque prompt. |
 | `assembleur.py` | compose illustrations + bulles + narrateur, dans les deux formats. |
+| `detecter-visages.swift` | repère les têtes sur les illustrations, pour que les queues de bulles pointent vers elles. À relancer après toute régénération. |
+| `file/visages.json` | sa sortie : une tête = x, y, largeur, hauteur, en fractions de l'image. |
 | `aspirer.sh` | télécharge un lot depuis le CDN, au format `nom\|fichier` sur l'entrée standard. |
 | `file/a-generer.json` | les 150 prompts complets, prêts à envoyer. |
 | `file/a-refaire.json` | les neuf qui restent. |
