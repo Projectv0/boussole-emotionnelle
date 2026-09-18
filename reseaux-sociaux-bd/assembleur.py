@@ -12,7 +12,7 @@ Contrairement au dossier reseaux-sociaux-illustre/, l'illustration occupe ici to
 page : les bulles et le narrateur se posent dessus. C'est l'assembleur qui les dessine,
 en vrai français — on ne les demande jamais au générateur d'images, qui déforme les mots.
 """
-import json, os, sys
+import json, os, re, sys
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -184,6 +184,10 @@ def narrateur(img, texte, bas=True):
     d = ImageDraw.Draw(img)
     f = F(CONDENSE, 34, LOURD)
     maxw = int(W * .74)
+    # Un « / » dans le texte du narrateur marque une coupure voulue entre deux
+    # phrases : il était rendu tel quel, au milieu du bandeau. On le traduit en
+    # retour à la ligne, et couper() respecte déjà les sauts de ligne.
+    texte = re.sub(r"\s*/\s*", "\n", texte)
     lignes = couper(texte.upper(), f, maxw)
     lh = int(f.size * 1.2)
     tw = max(larg(l, f) for l in lignes)
