@@ -163,9 +163,12 @@ def bulle(img, texte, zone, genre, depuis=0):
                   fill=BLANC, outline=ENCRE)
         d.line([(qx + 2, y + bh - E(3)), (qx + E(28), y + bh - E(3))], fill=BLANC, width=E(5))
     else:
-        for i, (dx, r) in enumerate(((0, E(13)), (E(26), E(9)), (E(46), E(6)))):
+        # Chaîne de ronds volontairement courte : plus longue, elle descendait sur les
+        # cheveux et les visages quand le générateur plaçait une tête plus haut que prévu,
+        # et trois ronds blancs percés dans un crâne se voient de loin.
+        for i, (dx, r) in enumerate(((0, E(10)), (E(18), E(7)), (E(32), E(5)))):
             cx = qx + (dx if align == "gauche" else -dx)
-            cy = y + bh + E(16) + i * E(14)
+            cy = y + bh + E(11) + i * E(10)
             d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=BLANC, outline=ENCRE, width=E(3))
 
     ty = y + pad - E(3)
@@ -258,11 +261,16 @@ def slide_appel(post):
     img = Image.new("RGB", (W, H), CREME)
     d = ImageDraw.Draw(img)
     f = F(CONDENSE, 62, LOURD)
-    lignes = couper(post["question"], f, W - E(150))
+    # La question est mesurée en capitales, pas en minuscules : mesurer avant de
+    # passer en majuscules faisait déborder la ligne, les capitales étant plus larges.
+    lignes = couper(post["question"].upper(), f, W - E(150))
+    while len(lignes) > 3 and f.size > E(40):
+        f = F(CONDENSE, int(f.size / ECH) - 4, LOURD)
+        lignes = couper(post["question"].upper(), f, W - E(150))
     lh = int(f.size * 1.16)
     y = int(H * .30)
     for l in lignes:
-        d.text(((W - larg(l, f)) / 2, y), l.upper(), font=f, fill=ENCRE)
+        d.text(((W - larg(l, f)) / 2, y), l, font=f, fill=ENCRE)
         y += lh
     g = F(SANS, 30, S_REG)
     sous = ("Le test de la Boussole émotionnelle : 14 émotions, une note sur 10 pour "
