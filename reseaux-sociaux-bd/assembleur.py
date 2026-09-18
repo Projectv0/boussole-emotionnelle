@@ -330,19 +330,29 @@ def poser_bulles(img, bulles, nom_illu, depuis=0, texte_narrateur=""):
         # à la verticale, sans jamais remonter au-dessus de la bulle précédente.
         depart = max(bas, g["y"])
         obstacles = occupe + boites
-        essais = []
+        essais, pose = [], None
         for d in (0, E(80), -E(70), E(170), -E(150), E(260), -E(230), E(350), E(440)):
             y = min(max(bas, depart + d), plafond)
-            r = (g["x"], y, g["x"] + g["bw"], y + g["bh"])
-            if not any(_chevauche(r, o, E(14)) for o in obstacles):
-                g["y"] = y
+            for dx in (0, -E(60), E(60), -E(130), E(130)):
+                x = min(max(E(18), g["x"] + dx), W - g["bw"] - E(18))
+                # elle glisse, mais sans changer de moitié : une bulle qui traverse
+                # le cadre se met à désigner l'autre personnage.
+                milieu = x + g["bw"] / 2
+                if (milieu > W * .56) if g["align"] == "gauche" else (milieu < W * .44):
+                    continue
+                r = (x, y, x + g["bw"], y + g["bh"])
+                if not any(_chevauche(r, o, E(14)) for o in obstacles):
+                    pose = (x, y); break
+                essais.append((sum(_aire_commune(r, o) for o in obstacles), len(essais), x, y))
+            if pose:
                 break
-            essais.append((sum(_aire_commune(r, o) for o in obstacles), len(essais), y))
+        if pose:
+            g["x"], g["y"] = pose
         else:
             # Aucune position libre — un gros plan où le visage occupe tout le cadre.
             # On prend alors celle qui en couvre le moins, plutôt que de laisser la
             # bulle à sa place de repos, c'est-à-dire en plein sur la figure.
-            g["y"] = min(essais)[2]
+            _, _, g["x"], g["y"] = min(essais)
         r = (g["x"], g["y"], g["x"] + g["bw"], g["y"] + g["bh"])
         bulle(img, g, genre, cible, voisines=list(occupe))
         occupe.append(r)
@@ -457,11 +467,15 @@ def bulle(img, g, genre, cible=None, voisines=()):
     # surestime la taille d'une tête, cette marge mangeait toute la queue.
     boite = _boite_visage(cible) if cible else (tete_x - E(90), tete_y - E(110),
                                                tete_x + E(90), tete_y + E(110))
-    longueur = max(E(28), _arret_avant(base_x, base_y, ux, uy, E(130), [boite], E(34)))
+    mini = E(42) if genre != "dit" else E(28)   # trois ronds ont besoin d'un peu de course
+    longueur = max(mini, _arret_avant(base_x, base_y, ux, uy, E(130), [boite], E(34)))
     # Deux bulles du même personnage, empilées du même côté : la queue de celle du
     # haut butait dans celle du bas et s'y terminait en moignon tronqué. Dès qu'une
     # voisine la raccourcit, on la supprime — c'est celle du bas qui désigne la tête.
-    if _arret_avant(base_x, base_y, ux, uy, longueur, voisines, E(18)) < longueur - E(2):
+    # On teste contre les voisines élargies de la demi-largeur de la queue : le rayon
+    # passait à côté de la boîte alors que le triangle, lui, mordait dedans.
+    larges = [(a - E(20), b - E(20), c + E(20), e + E(20)) for a, b, c, e in voisines]
+    if _arret_avant(base_x, base_y, ux, uy, longueur, larges, E(18)) < longueur - E(2):
         return _texte_bulle(d, g)
     pointe_x, pointe_y = base_x + ux * longueur, base_y + uy * longueur
 
@@ -475,15 +489,14 @@ def bulle(img, g, genre, cible=None, voisines=()):
         d.line([(base_x + px - ux * E(2), base_y + py - uy * E(2)),
                 (base_x - px - ux * E(2), base_y - py - uy * E(2))], fill=BLANC, width=E(7))
     else:
-        # Chaîne de ronds orientée vers la tête. Le nombre de ronds suit la longueur
-        # disponible : à trois ronds imposés sur une chaîne courte, ils se chevauchaient
-        # en un pâté blanc collé sous la bulle. Mieux vaut un seul rond bien posé.
+        # Chaîne de ronds orientée vers la tête. Toujours trois : un rond isolé ne se
+        # lit plus comme une pensée. Leur rayon est plafonné par l'écart entre eux,
+        # sinon ils se chevauchaient en un pâté blanc collé sous la bulle.
         # Elle reste courte : plus longue, elle descend sur les cheveux, et trois ronds
         # blancs percés dans un crâne se voient de loin.
-        n = max(1, min(3, int(longueur / E(24))))
-        pas = longueur / (n + .4)
-        for i, r in enumerate((E(10), E(7), E(5))[:n]):
-            r = min(r, pas * .45)
+        pas = longueur / 3.4
+        for i, r in enumerate((E(10), E(7), E(5))):
+            r = max(E(3), min(r, pas * .45))
             t = (i + 1) * pas
             cx, cy = base_x + ux * t, base_y + uy * t
             d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=BLANC, outline=ENCRE,
@@ -538,12 +551,18 @@ def narrateur(img, texte, bas=True):
         ty += lh
 
 # ————— diapositives —————
-def voile_haut(img, hauteur):
-    """Dégradé crème du haut vers le bas, pour asseoir le titre sur l'illustration."""
+def voile_haut(img, hauteur, force=1.6):
+    """Dégradé crème du haut vers le bas, pour asseoir le titre sur l'illustration.
+
+    `force` retarde la disparition du crème. Sur les trois scènes où un personnage
+    est cadré très haut, le titre lui passait sur le front ; un voile plus couvrant
+    le transforme en bandeau franc, ce qui se lit et se regarde mieux qu'un texte
+    posé sur une figure.
+    """
     v = Image.new("L", (1, hauteur))
     for i in range(hauteur):
         t = i / max(1, hauteur - 1)
-        v.putpixel((0, i), int(255 * max(0, 1 - t ** 1.6)))
+        v.putpixel((0, i), int(255 * max(0, 1 - t ** force)))
     masque = v.resize((W, hauteur))
     creme = Image.new("RGB", (W, hauteur), CREME)
     haut = img.crop((0, 0, W, hauteur))
@@ -559,7 +578,11 @@ def slide_titre(post):
         taille -= 3
         f = F(CONDENSE, taille, LOURD)
     lh = int(f.size * 1.08)
-    voile_haut(img, HAUT + lh * len(lignes) + E(90))
+    bas_titre = HAUT + lh * len(lignes)
+    sur_une_tete = any(y0 < bas_titre and y1 > HAUT
+                       for y0, y1 in ((_boite_visage(v)[1], _boite_visage(v)[3])
+                                      for v in visages(post["slides"][0].get("illustration"))))
+    voile_haut(img, bas_titre + E(90), 3.0 if sur_une_tete else 1.6)
     d = ImageDraw.Draw(img)
     y = HAUT
     for i, l in enumerate(lignes):
