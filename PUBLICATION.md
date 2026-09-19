@@ -1,64 +1,74 @@
 # Publier — par où commencer
 
-Tout ce qui se publie est dans **`publication/`**. Ouvre `publication/PLAN.md` et suis les
-semaines : c'est le seul document nécessaire. Les deux autres dossiers sont des ateliers,
-pas des dossiers de publication.
+Tout ce qui se publie est dans **`publication/`**. Deux documents suffisent : `LISEZMOI.md`
+pour savoir comment poster, `PLAN.md` pour savoir quoi poster et quand. Les trois autres
+dossiers sont des ateliers, pas des dossiers de publication.
 
 ```
 publication/              ← ce que tu publies
-  PLAN.md                 ← les 13 semaines, semaine par semaine
+  LISEZMOI.md             ← comment poster, et les réglages à faire une seule fois
+  PLAN.md                 ← les 17 semaines, semaine par semaine
+  calendrier.csv          ← une ligne par publication, pour un tableur
   semaine-01/
-    1-lundi-comprendre-anxiete/
-      instagram/   6 images en 1080 × 1350
+    SEMAINE.md            ← les six posts de la semaine, légendes comprises
+    1-lundi-fiche-comprendre-anxiete/
+      instagram/   les images en 1080 × 1350
       tiktok/      les mêmes en 1080 × 1920
       legende.txt  légende, hashtags, rappels
-    2-mardi-illustre-message-sans-reponse/
-    3-mercredi-peur-ou-anxiete/
-    4-jeudi-illustre-boule-au-ventre-lundi/
-    5-vendredi-respiration-expiration-longue/
-    6-samedi-illustre-expiration-longue/
+    2-mardi-bd-lundi-matin-boule-au-ventre/
+    3-mercredi-illustre-peur-et-anxiete/
+    4-jeudi-fiche-peur-ou-anxiete/
+    5-vendredi-bd-reunion-personne-ne-dit-rien/
+    6-samedi-illustre-deguisements-anxiete/
 ```
 
-**69 publications, 13 semaines, cinq à six par semaine**, en alternant un jour sur deux les
-deux formats : typographique le lundi, le mercredi et le vendredi, illustré le mardi, le jeudi,
-et le samedi quatre semaines sur treize.
+**99 publications, 17 semaines, six par semaine**, du lundi au samedi. Trois genres, qui
+alternent sans jamais se répéter deux jours de suite :
 
-Le chiffre en tête force le bon ordre dans le Finder — sans lui, « jeudi » passerait avant
-« lundi ». Le mot `illustre` distingue les deux formats quand ils traitent le même geste :
-en semaine 1, le vendredi donne la respiration à expiration longue et le samedi explique
-pourquoi elle agit et pourquoi il faut s'y entraîner avant d'en avoir besoin.
+| Genre | Combien | Ce que c'est |
+|---|---|---|
+| **Fiche** | 39 | texte et pictogrammes — comprendre, distinguer, pratiquer |
+| **Illustré** | 30 | personnages dessinés, une idée déroulée écran par écran |
+| **BD** | 30 | une scène vécue, bulles et narrateur, la chute à la fin |
 
----
+Les trois séries n'ont pas la même taille. Un tour de rôle fixe les ferait finir à trois
+dates différentes, et les dernières semaines n'offriraient plus qu'un seul genre : elles
+sont donc entrelacées proportionnellement, et s'épuisent ensemble. La dernière semaine est
+courte — trois publications.
 
-## Les deux ateliers
+Le fil est tenu par les fiches, qui gardent leur ordre : treize émotions, trois fiches
+chacune. Chaque carrousel est ensuite posé près des fiches dont il partage l'émotion, pour
+qu'une semaine parle d'une même chose sous trois formes.
+
+Le chiffre en tête de chaque dossier force le bon ordre dans le Finder — sans lui,
+« jeudi » passerait avant « lundi ».
+
+## Les trois ateliers
 
 | | |
 |---|---|
-| **`reseaux-sociaux/`** | les 39 carrousels typographiques. Textes dans `contenus.py`, mise en page dans `generateur.py`. |
-| **`reseaux-sociaux-illustre/`** | les 30 carrousels illustrés. Textes et prompts dans `contenus.json`, mise en page dans `assembleur.py`, 287 illustrations dans `illustrations/`. |
+| `reseaux-sociaux/` | les fiches typographiques — `contenus.py`, `generateur.py` |
+| `reseaux-sociaux-illustre/` | les carrousels illustrés — `contenus.json`, `assembleur.py` |
+| `reseaux-sociaux-bd/` | les scènes de bande dessinée — `contenus.json`, `assembleur.py` |
 
-## Tout reconstruire
+Chacun produit ses images dans son propre dossier de sortie. Les images sont hors dépôt :
+elles pèsent deux cents mégaoctets.
+
+## Remonter le dossier
+
+Après une modification dans l'un des trois ateliers :
 
 ```bash
-python3 reseaux-sociaux/generateur.py          # 39 posts typographiques, 2 formats
-python3 reseaux-sociaux-illustre/assembleur.py # 30 carrousels illustrés, 2 formats
-python3 calendrier.py                          # vérifie la répartition, écrit calendrier.json
-python3 publication.py                         # monte publication/
+cd "/Users/cavalier/Dev/Site Emotion"
+python3 publication.py
 ```
 
-`calendrier.py` refuse d'écrire si un carrousel illustré est oublié ou placé deux fois : dans
-un fichier de treize semaines, l'erreur ne se voit pas à l'œil, mais elle se voit tout de suite
-une fois les images copiées.
+Le script efface `publication/` et le remonte entièrement. Il refuse de le faire si le
+compte ne tombe pas juste — un carrousel oublié, copié deux fois, ou deux publications du
+même genre à la suite.
 
-## Changer la répartition
+## Ce qui reste à faire
 
-`repartition.json` dit, pour chaque semaine, quel carrousel illustré tombe le mardi, le jeudi
-et le samedi (`null` quand la semaine n'en a que deux). Modifie-le, relance `calendrier.py`
-puis `publication.py`. Les contraintes : les 30 carrousels placés une fois chacun, et
-exactement quatre semaines avec un samedi — quatre fois trois plus neuf fois deux font trente.
-
-## Après ces treize semaines
-
-Le rythme d'un jour sur deux est fait pour tenir. Si tu veux ralentir, garde lundi, mercredi et
-vendredi et publie les illustrés une semaine sur deux : tu tiendras alors près de six mois avec
-le même dossier.
+Neuf illustrations de la série BD datent de la première passe : les crédits nanobanana
+étaient épuisés au moment de les refaire. Elles touchent les posts 17, 29 et 30 de cette
+série. La marche à suivre est dans `reseaux-sociaux-bd/REPRENDRE.md`.
