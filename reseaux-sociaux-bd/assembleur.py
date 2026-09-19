@@ -359,7 +359,11 @@ def poser_bulles(img, bulles, nom_illu, depuis=0, texte_narrateur=""):
         # La zone fixe tombait parfois pile sur une figure. On glisse alors la bulle
         # à la verticale, sans jamais remonter au-dessus de la bulle précédente.
         depart = max(bas, g["y"])
-        obstacles = occupe + boites
+        # On écarte davantage des visages que des bulles : il faut non seulement ne pas
+        # couvrir la tête, mais laisser devant elle la place d'une queue. Trop serrée,
+        # la bulle se retrouvait sans queue du tout, donc sans locuteur désigné.
+        obstacles = occupe + [(a - E(30), b - E(30), c + E(30), e + E(30))
+                              for a, b, c, e in boites]
         essais, pose = [], None
         for d in (0, E(80), -E(70), E(170), -E(150), E(260), -E(230), E(350), E(440)):
             y = min(max(bas, depart + d), plafond)
@@ -384,7 +388,7 @@ def poser_bulles(img, bulles, nom_illu, depuis=0, texte_narrateur=""):
             # bulle à sa place de repos, c'est-à-dire en plein sur la figure.
             _, _, g["x"], g["y"] = min(essais)
         r = (g["x"], g["y"], g["x"] + g["bw"], g["y"] + g["bh"])
-        bulle(img, g, genre, cible, voisines=list(occupe))
+        bulle(img, g, genre, cible, voisines=list(occupe), tetes=boites)
         occupe.append(r)
         prec = g
 
@@ -452,7 +456,7 @@ def _arret_avant(bx, by, ux, uy, longueur, boites, marge):
             longueur = min(longueur, max(0, deb - marge))
     return longueur
 
-def bulle(img, g, genre, cible=None, voisines=()):
+def bulle(img, g, genre, cible=None, voisines=(), tetes=()):
     """Dessine une bulle de dialogue ou de pensée, sa queue pointée vers celui qui parle.
 
     Le texte est écrit ici, en français, par l'assembleur : jamais par le générateur
@@ -464,7 +468,7 @@ def bulle(img, g, genre, cible=None, voisines=()):
 
     if CONTROLE is not None:
         CONTROLE.append({"zone": g["zone"], "rect": (x, y, x + bw, y + bh), "cible": cible,
-                         "texte": g["texte"]})
+                         "texte": g["texte"], "genre": genre})
 
     # ombre portée douce, pour détacher la bulle de l'illustration
     ombre = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -495,13 +499,23 @@ def bulle(img, g, genre, cible=None, voisines=()):
     # posés sur une chevelure se voient de loin. On s'arrête sur la boîte de la tête
     # plutôt que sur une marge calculée depuis son centre : quand le détecteur
     # surestime la taille d'une tête, cette marge mangeait toute la queue.
-    boite = _boite_visage(cible) if cible else (tete_x - E(90), tete_y - E(110),
-                                               tete_x + E(90), tete_y + E(110))
-    mini = E(42) if genre != "dit" else E(28)   # trois ronds ont besoin d'un peu de course
-    # Le plafond était à 130 px : la queue s'arrêtait en plein mur, laissant parfois
-    # deux cents pixels de vide entre sa pointe et le personnage. Elle peut aller plus
-    # loin sans risque, puisque _arret_avant la stoppe net devant la boîte de la tête.
-    longueur = max(mini, _arret_avant(base_x, base_y, ux, uy, E(240), [boite], E(34)))
+    #
+    # Et sur TOUTES les têtes de la scène, pas seulement celle qu'on vise : la queue
+    # traversait le crâne d'un personnage sur son chemin vers un autre.
+    obstacles = list(tetes)
+    if not obstacles:
+        obstacles = [_boite_visage(cible)] if cible else \
+                    [(tete_x - E(90), tete_y - E(110), tete_x + E(90), tete_y + E(110))]
+    # Une chaîne de pensée reste courte — trois ronds espacés de soixante-dix pixels
+    # ne se lisent plus comme une pensée. Une queue de dialogue peut aller chercher un
+    # personnage éloigné, à condition de s'élargir d'autant (voir `demi` plus bas).
+    plafond_q = E(230) if genre == "dit" else E(150)
+    # Aucune longueur minimale : elle passait outre l'arrêt devant la tête et plantait
+    # la pointe dans le crâne. Quand il n'y a pas la place, il n'y a pas de queue — la
+    # bulle touche alors presque le personnage, et se lit très bien ainsi.
+    longueur = _arret_avant(base_x, base_y, ux, uy, plafond_q, obstacles, E(34))
+    if longueur < E(16):
+        return _texte_bulle(d, g)
     # Deux bulles du même personnage, empilées du même côté : la queue de celle du
     # haut butait dans celle du bas et s'y terminait en moignon tronqué. Dès qu'une
     # voisine la raccourcit, on la supprime — c'est celle du bas qui désigne la tête.
@@ -511,9 +525,14 @@ def bulle(img, g, genre, cible=None, voisines=()):
     if _arret_avant(base_x, base_y, ux, uy, longueur, larges, E(18)) < longueur - E(2):
         return _texte_bulle(d, g)
     pointe_x, pointe_y = base_x + ux * longueur, base_y + uy * longueur
+    if CONTROLE is not None:
+        CONTROLE[-1]["queue"] = (base_x, base_y, pointe_x, pointe_y)
 
     if genre == "dit":
-        demi = E(15)
+        # La base s'élargit avec la longueur. À base fixe, une queue allongée devenait
+        # une aiguille : un filet de quatre pixels sur deux cents de long, qui se lit
+        # comme une rayure et non comme l'appendice d'une bulle.
+        demi = int(min(max(longueur * .20, E(13)), E(32)))
         # la base est un segment posé sur le cadre, perpendiculaire à la direction
         px, py = -uy * demi, ux * demi
         a = (base_x + px, base_y + py)
@@ -532,8 +551,10 @@ def bulle(img, g, genre, cible=None, voisines=()):
         # sinon ils se chevauchaient en un pâté blanc collé sous la bulle.
         # Elle reste courte : plus longue, elle descend sur les cheveux, et trois ronds
         # blancs percés dans un crâne se voient de loin.
-        pas = longueur / 3.4
-        for i, r in enumerate((E(10), E(7), E(5))):
+        # Le nombre de ronds suit la place : trois serrés sur vingt pixels font un pâté.
+        n = 3 if longueur >= E(56) else (2 if longueur >= E(32) else 1)
+        pas = longueur / (n + .4)
+        for i, r in enumerate((E(10), E(7), E(5))[:n]):
             r = max(E(3), min(r, pas * .45))
             t = (i + 1) * pas
             cx, cy = base_x + ux * t, base_y + uy * t
