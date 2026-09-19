@@ -602,7 +602,7 @@
         "culpabilite"
       ],
       "phraseFinale": "La honte grandit quand tout reste flou. Raconte ce qui s’est vraiment passé, et elle perd de sa force.",
-      "question": "Et toi, tu te reconnais dans lequel des quatre ?",
+      "question": "Tu te reconnais dans lequel des quatre ?",
       "legende": "La honte donne envie de disparaître, alors on la voit rarement telle quelle. Ce qu’on remarque, c’est la blague qu’on lance sur soi, le message relu dix fois, le rendez-vous annulé la veille. Une différence aide beaucoup : la culpabilité dit « j’ai mal agi », la honte dit « je ne vaux rien ». La première parle d’un geste que tu peux réparer, la seconde parle de qui tu es, et c’est pour ça qu’elle pousse à se cacher. L’article « Comprendre la honte » explique comment ça marche et donne trois choses simples à essayer.",
       "hashtags": "#honte #émotions #intelligenceémotionnelle #développementpersonnel #connaissancedesoi #psychologie #bienêtre #boussoleémotionnelle",
       "lienGuide": "honte.html",
@@ -712,7 +712,7 @@
         "honte"
       ],
       "phraseFinale": "Une colère qu’on retient ne disparaît pas. Elle ressort ailleurs, souvent au mauvais moment.",
-      "question": "Et toi, ta colère sort par où quand tu ne la dis pas ?",
+      "question": "Ta colère sort par où, quand tu ne la dis pas ?",
       "legende": "Être en colère, ce n’est pas être agressif : la colère, c’est ce que tu ressens, l’agressivité, c’est ce que tu fais. Tu peux bouillir à l’intérieur et parler calmement. Quand la colère ne sort pas directement, elle trouve un autre chemin : l’ironie, les oublis, la distance polie, la fatigue du soir. L’article « Comprendre la colère » propose une façon simple de la dire : ce qui s’est passé, l’effet que ça a eu sur toi, et ce que tu demandes. Et si dire ton désaccord risque de se retourner contre toi, te taire n’est pas un échec, c’est une protection.",
       "hashtags": "#colère #émotions #communication #relations #intelligenceémotionnelle #développementpersonnel #connaissancedesoi #boussoleémotionnelle",
       "lienGuide": "colere.html",
@@ -809,7 +809,7 @@
         "colere"
       ],
       "phraseFinale": "L’anxiété se voit rarement. Tu la reconnais à tout ce que tu fais pour l’éviter.",
-      "question": "Et toi, tu la reconnais à quoi, le plus souvent ?",
+      "question": "Tu la reconnais à quoi, le plus souvent ?",
       "legende": "L’anxiété n’est pas un défaut de fabrication : c’est une alarme intérieure qui se déclenche un peu trop souvent. Il y a une anxiété qui aide et une anxiété qui épuise. La différence, ce n’est pas sa force : c’est qu’elle te fait décider quelque chose, ou qu’elle te fait tourner en rond. L’article « Reconnaître l’anxiété » montre comment elle se manifeste en même temps dans le corps, dans les pensées et dans les gestes, et ce qui l’apaise vraiment. Si ces signaux durent des semaines et abîment ton sommeil, ton travail ou tes relations, en parler à un médecin ou à un psychologue aide souvent.",
       "hashtags": "#anxiété #stress #émotions #chargementale #développementpersonnel #connaissancedesoi #bienêtre #boussoleémotionnelle",
       "lienGuide": "anxiete.html",
@@ -905,7 +905,7 @@
         "anxiete"
       ],
       "phraseFinale": "La culpabilité te montre un geste à faire. Elle ne dit pas que tu es quelqu’un de mauvais.",
-      "question": "Et toi, laquelle de ces phrases te vient le plus vite ?",
+      "question": "Laquelle de ces phrases te vient le plus vite ?",
       "legende": "La culpabilité est une des rares émotions désagréables qui rapprochent des autres au lieu d’en éloigner : elle te pousse vers un geste, pas vers la fuite. Encore faut-il qu’elle serve à quelque chose. Se sentir coupable ne prouve pas que tu as mal agi, et les personnes qui culpabilisent le plus sont rarement celles qui ont le plus de raisons de le faire. L’article « Comprendre la culpabilité » propose de faire la part des choses : tu notes tout ce qui a joué, le contexte, la fatigue, ce que tu ne savais pas encore, puis tu regardes ce qui dépendait vraiment de toi.",
       "hashtags": "#culpabilité #direnon #émotions #relations #chargementale #développementpersonnel #connaissancedesoi #boussoleémotionnelle",
       "lienGuide": "culpabilite.html",
@@ -1010,7 +1010,7 @@
         "peur"
       ],
       "phraseFinale": "Ton corps te prévient avant ta tête. Il te dit qu’il se passe quelque chose, sans dire quoi.",
-      "question": "Et toi, ton corps t’envoie quoi en premier ?",
+      "question": "Ton corps t’envoie quoi en premier ?",
       "legende": "Un signal du corps ne correspond pas à une seule émotion : un ventre noué, c’est de l’anxiété chez l’un, de la tristesse chez l’autre, et parfois les deux le même jour. Se tromper est normal, et plus tu prends l’habitude de mettre un mot sur ce que tu ressens, plus tu tombes juste. La bonne question n’est pas « qu’est-ce que je devrais ressentir », mais « qu’est-ce qui s’est passé juste avant ». L’article « Reconnaître l’anxiété » revient sur ces signaux et sur les gestes simples qui les calment. Dernier point : tout ne vient pas des émotions, donc si un signal s’installe ou t’inquiète, parles-en à un médecin avant d’interpréter.",
       "hashtags": "#émotions #corps #anxiété #stress #intelligenceémotionnelle #connaissancedesoi #bienêtre #boussoleémotionnelle",
       "lienGuide": "anxiete.html",
@@ -1114,7 +1114,7 @@
         "culpabilite"
       ],
       "phraseFinale": "Une dispute qui revient ne veut pas dire que votre couple va mal. Elle dit que l’un de vous n’a pas été entendu.",
-      "question": "Et toi, qu’est-ce qui revient toujours dans vos disputes ?",
+      "question": "Qu’est-ce qui revient toujours dans vos disputes ?",
       "legende": "On croit se disputer pour une éponge ou un retard. En vrai, on se dispute pour autre chose : être vu, compter, sentir que l’autre est encore là. Parfois les tâches sont vraiment mal réparties, et il faut les repartager pour de bon. Mais si personne n’entend ce qu’il y a derrière, la même dispute revient à la prochaine occasion. Les couples qui durent ne sont pas ceux qui ne se disputent jamais : ce sont ceux qui reviennent se parler une fois calmés.",
       "hashtags": "#émotions #couple #dispute #communication #colère #viedecouple #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "dispute-en-boucle.html",
@@ -1230,7 +1230,7 @@
         "serenite"
       ],
       "phraseFinale": "Ton dimanche soir est encore à toi. Lundi commencera demain matin, pas ce soir.",
-      "question": "Et toi, à quel moment ton dimanche s’arrête ?",
+      "question": "À quel moment ton dimanche s’arrête ?",
       "legende": "Ce pincement du dimanche soir est très courant, même chez des gens qui aiment leur travail. Il ne dit pas que tu es fragile : il dit que le passage du repos au travail est brutal. En semaine, préparer la suite te sert vraiment, mais un dimanche soir tu ne peux rien faire de ce que tu prépares. C’est pour ça que ça se joue avant : dix minutes le vendredi pour écrire ce qui t’attend lundi, et ta tête n’a plus besoin de retenir la liste. Entre dix minutes de pincement et une soirée entière gâchée, il y a une sacrée différence.",
       "hashtags": "#anxiété #dimanchesoir #émotions #travail #repos #sérénité #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "angoisse-dimanche-soir.html",
@@ -1335,7 +1335,7 @@
         "colere"
       ],
       "phraseFinale": "Un silence ne dit rien du tout. C’est toi qui inventes la réponse, et tu choisis souvent la pire.",
-      "question": "Et toi, qu’est-ce que ta tête raconte quand l’autre ne répond pas ?",
+      "question": "Qu’est-ce que ta tête raconte quand l’autre ne répond pas ?",
       "legende": "Un message lu sans réponse ne dit rien de toi. Il te manque juste une information, et comme on supporte mal le silence, on écrit la suite tout seul en choisissant presque toujours le pire. La plupart du temps, l’explication est banale : un métro, une réunion, une casserole sur le feu. Parfois, c’est vrai, un silence veut dire quelque chose, et c’est une raison de plus pour poser la question au lieu de la deviner. Deux gestes changent tout : pose ton téléphone hors de vue, et au bout d’un jour ou deux, demande simplement.",
       "hashtags": "#anxiété #émotions #messages #relations #amitié #communication #introspection #boussoleémotionnelle",
       "lienGuide": "",
@@ -1428,7 +1428,7 @@
         "tristesse"
       ],
       "phraseFinale": "Ta tête dit que ça va. Ton ventre, lui, dit autre chose.",
-      "question": "Et toi, à quel moment exact la boule se serre ?",
+      "question": "À quel moment exact la boule se serre ?",
       "legende": "Le ventre parle en premier. En cas d’alerte, le corps met la digestion en pause pour envoyer l’énergie ailleurs, ça se serre, et tu le sens bien avant de trouver les mots. C’est de la peur, en version discrète : il n’y a aucun danger devant toi, c’est la journée qui t’attend qui inquiète ton corps. Pendant deux semaines, note l’heure exacte où la boule arrive, avant quoi et avec qui : on ne peut rien faire contre « le travail » en général, mais on peut faire beaucoup pour une réunion précise. Et si elle ne te lâche jamais, même en vacances, parles-en à un médecin plutôt que de la garder pour toi.",
       "hashtags": "#bouleauventre #travail #anxiété #émotions #lundi #santéautravail #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "boule-au-ventre-travail.html",
@@ -1544,7 +1544,7 @@
         "jalousie"
       ],
       "phraseFinale": "Tu vas mieux quand tu recommences à faire des choses, même si tu as encore de la peine.",
-      "question": "Et toi, qu’est-ce qui t’a manqué en premier ?",
+      "question": "Qu’est-ce qui t’a manqué en premier ?",
       "legende": "Le désordre qui suit une rupture ne veut pas dire que tu t’y prends mal. La colère qui revient sur tout ce qui s’est passé, l’amour qui remonte au pire moment, la jalousie quand l’autre avance : tout ça arrive en même temps, et c’est normal. Le manque mesure la place que cette relation prenait dans tes journées, mais il ne dit pas si c’était la bonne histoire. Il n’y a pas de délai officiel, mais les vagues s’espacent peu à peu et les bons moments s’allongent. Et si tu ne vois pas le bout depuis longtemps, en parler à ton médecin ou à un psychologue n’a rien d’une faiblesse.",
       "hashtags": "#rupture #tristesse #deuil #émotions #amour #reconstruction #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "apres-la-rupture.html",
@@ -1652,7 +1652,7 @@
         "serenite"
       ],
       "phraseFinale": "Annoncer une pause, ce n’est pas fuir. C’est dire à l’autre que tu reviens.",
-      "question": "Et toi, quand la colère monte, tu claques la porte ou tu dis que tu reviens ?",
+      "question": "Quand la colère monte, tu claques la porte ou tu dis que tu reviens ?",
       "legende": "La colère n’est pas de la violence : elle arrive quand quelqu’un est allé trop loin avec toi. Ce que tu as à dire est souvent juste. C’est le moment où tu le dis qui pose problème : dans les premières minutes, tu n’as aucun recul et les mots dépassent ce que tu voulais dire. Vingt minutes plus tard, tu dis la même chose en mieux, et l’autre arrive à l’écouter. Et si la même colère revient toujours au même endroit, c’est qu’il te manque quelque chose, et que tu n’en parles jamais avant d’exploser.",
       "hashtags": "#colère #gestiondelacolère #émotions #communication #disputedecouple #relations #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "colere.html",
@@ -1756,7 +1756,7 @@
         "honte"
       ],
       "phraseFinale": "Tu n’as pas à t’excuser d’exister. Tu peux dire merci à ceux qui prennent du temps pour toi.",
-      "question": "Et toi, combien de fois tu dis « désolé » dans une journée ?",
+      "question": "Combien de fois tu dis « désolé » dans une journée ?",
       "legende": "La culpabilité te prévient que tu as peut-être fait du mal. Elle ne prouve pas que tu es quelqu’un de mauvais, et elle se déclenche souvent chez les gens les plus attentifs aux autres. Les « désolé » à répétition obligent l’autre à te rassurer, et tu te sens encore un peu fautif après. Avec un merci, tu rends quelque chose à l’autre au lieu de demander qu’on te pardonne d’exister. C’est la même situation et le même début de phrase, et pourtant tout change entre vous.",
       "hashtags": "#culpabilité #gratitude #émotions #confianceensoi #communication #relations #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "culpabilite.html",
@@ -1865,7 +1865,7 @@
         "serenite"
       ],
       "phraseFinale": "Entraîne-toi trois minutes les jours où tout va bien. C’est ce qui marche le jour où ça va mal.",
-      "question": "Et toi, tu essaies de te calmer seulement quand c’est déjà la panique ?",
+      "question": "Tu essaies de te calmer seulement quand c’est déjà la panique ?",
       "legende": "L’anxiété n’est pas un défaut chez toi : c’est une alarme qui te prévient d’un danger, même quand il n’y en a pas. Se raisonner ne suffit pas. Ce qui la calme, c’est ce que tu fais avec ton corps. Quand tu expires plus longtemps que tu inspires, ton cœur ralentit tout seul, et peu de gestes agissent aussi vite sur toi. Et comme n’importe quel geste, ça s’apprend : les jours où tu n’en as pas besoin comptent autant que les autres.",
       "hashtags": "#anxiété #respiration #stress #calme #émotions #sérénité #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "anxiete.html",
@@ -1967,7 +1967,7 @@
         "amour"
       ],
       "phraseFinale": "Tu t’excuses sans rien attendre en retour. L’autre a le droit de ne pas te pardonner tout de suite.",
-      "question": "Et toi, quand tu culpabilises, tu vas t’excuser ou tu y repenses toute la nuit ?",
+      "question": "Quand tu culpabilises, tu vas t’excuser ou tu y repenses toute la nuit ?",
       "legende": "La culpabilité sert à quelque chose de très concret : elle te met mal à l’aise jusqu’à ce que tu ailles réparer, puis elle retombe une fois le geste fait. Si elle reste après coup, ce n’est pas que tu t’y es mal pris : elle vient d’ailleurs, d’une histoire plus ancienne. Et quand tu ne répares jamais, tu tournes en rond dans ta tête à la place, alors que te punir ne change rien pour la personne à qui tu as fait mal. Une excuse qui répare est courte, précise, et ne demande rien en retour. Et quand plus rien n’est réparable, il te reste deux choses : écrire ce que tu aurais voulu dire, et faire autrement la prochaine fois.",
       "hashtags": "#culpabilité #excuses #réparation #communication #relations #émotions #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "culpabilite.html",
@@ -2059,7 +2059,7 @@
         "fierte"
       ],
       "phraseFinale": "Quand tu sais dire non, tes oui deviennent de vrais oui.",
-      "question": "Et toi, ça t’a coûté quoi, le dernier oui que tu n’avais pas envie de dire ?",
+      "question": "Ça t’a coûté quoi, le dernier oui que tu n’avais pas envie de dire ?",
       "legende": "Si refuser te coûte autant, c’est souvent que tu crois une chose depuis longtemps : si tu rends service, on t’aime, et si tu refuses, on t’aime moins. Avec cette idée en tête, refuser un dîner ne ressemble pas à un petit refus, mais à un risque de perdre quelqu’un. Cette peur se trompe souvent : elle réagit aussi fort pour un dîner refusé que pour une vraie trahison. Et elle faiblit un peu à chaque fois que tu dis non quand même. Quand la personne en face a du pouvoir sur toi, ton chef par exemple, le « je te réponds demain » reste la réponse la plus sûre.",
       "hashtags": "#direnon #culpabilité #poserseslimites #émotions #relations #estimedesoi #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "culpabilite-de-dire-non.html",

@@ -147,24 +147,60 @@ def source(nom):
     _source[nom] = (im, boite, (w, h))
     return _source[nom]
 
+def tetes_du_panneau(nom):
+    """Les têtes en fractions du panneau, d'où qu'elles viennent.
+
+    file/visages.json est relatif au fichier d'origine, file/tetes-manuelles.json au
+    panneau : on ramène tout à la même échelle avant de s'en servir.
+    """
+    src = source(nom)
+    if src is None:
+        return []
+    im, (cg, ch, _, _), (ow, oh) = src
+    brutes = VISAGES.get(nom or "", [])
+    if brutes:
+        return [{"x": (v["x"] * ow - cg) / im.width, "y": (v["y"] * oh - ch) / im.height,
+                 "l": v["l"] * ow / im.width, "h": v["h"] * oh / im.height} for v in brutes]
+    return list(TETES_MANUELLES.get(nom or "", []))
+
+def cadrage(nom):
+    """Le recadrage « cover » : dimensions après agrandissement, et le coin rogné.
+
+    Le décalage horizontal était toujours centré, ce qui tranchait un personnage
+    assis au bord du panneau — on ne voyait plus qu'une demi-joue sans œil. On le
+    glisse maintenant du minimum nécessaire pour que toutes les têtes tiennent.
+    """
+    src = source(nom)
+    if src is None:
+        return None
+    im = src[0]
+    r = max(W / im.width, H / im.height)
+    nw, nh = max(W, int(im.width * r)), max(H, int(im.height * r))
+    # on garde le haut de l'image : c'est là que se trouvent les visages
+    dy = min((nh - H) // 2, int(nh * .12))
+    dx = (nw - W) // 2
+    tetes = tetes_du_panneau(nom)
+    if tetes and nw > W:
+        gauche = min((t["x"] - t["l"] * .7) * nw for t in tetes)
+        droite = max((t["x"] + t["l"] * .7) * nw for t in tetes)
+        bas, haut = droite - W + E(12), gauche - E(12)
+        if bas <= haut:                      # tout tient : on ne bouge qu'au besoin
+            dx = int(min(max(dx, bas), haut))
+        dx = max(0, min(dx, nw - W))
+    return im, nw, nh, dx, dy
+
 _cache = {}
 def illustration(nom):
     """Charge illustrations/<nom>.*, recadre pour remplir la page sans déformer."""
     cle = (nom, W, H)
     if cle in _cache:
         return _cache[cle]
-    src = source(nom)
-    if src is None:
+    c = cadrage(nom)
+    if c is None:
         _cache[cle] = None
         return None
-    im = src[0]
-    # recadrage « cover » : on remplit, on rogne ce qui dépasse, on garde le haut
-    # de l'image car c'est là que se trouvent les visages.
-    r = max(W / im.width, H / im.height)
-    im = im.resize((max(W, int(im.width * r)), max(H, int(im.height * r))), Image.LANCZOS)
-    x = (im.width - W) // 2
-    y = min((im.height - H) // 2, int(im.height * .12))
-    im = im.crop((x, y, x + W, y + H))
+    im, nw, nh, dx, dy = c
+    im = im.resize((nw, nh), Image.LANCZOS).crop((dx, dy, dx + W, dy + H))
     _cache[cle] = im
     return im
 
@@ -216,31 +252,14 @@ except FileNotFoundError:
 TETES = {"gauche": (.27, .52), "droite": (.73, .52)}
 
 def visages(nom):
-    """Les têtes de l'illustration, en pixels du cadre composé, triées de gauche à droite.
-
-    Le détecteur donne des fractions de l'image d'origine. On leur applique d'abord
-    le rognage du cadre dessiné, puis le recadrage « cover » de illustration() :
-    sans ça les coordonnées seraient justes sur le fichier et fausses sur la page.
-    """
-    src = source(nom)
-    if src is None:
+    """Les têtes, en pixels du cadre composé, triées de gauche à droite."""
+    tetes = tetes_du_panneau(nom)
+    c = cadrage(nom)
+    if not tetes or c is None:
         return []
-    im, (cg, ch, _, _), (ow, oh) = src
-    iw, ih = im.size
-    r = max(W / iw, H / ih)
-    nw, nh = max(W, int(iw * r)), max(H, int(ih * r))
-    sx, sy = nw / iw, nh / ih
-    dx, dy = (nw - W) // 2, min((nh - H) // 2, int(nh * .12))
-    bruts = VISAGES.get(nom or "", [])
-    if bruts:
-        # coordonnées du détecteur : fractions du fichier d'origine
-        out = [{"x": (v["x"] * ow - cg) * sx - dx, "y": (v["y"] * oh - ch) * sy - dy,
-                "l": v["l"] * ow * sx, "h": v["h"] * oh * sy} for v in bruts]
-    else:
-        # relevé manuel : fractions du panneau, le cadre déjà retiré
-        out = [{"x": v["x"] * iw * sx - dx, "y": v["y"] * ih * sy - dy,
-                "l": v["l"] * iw * sx, "h": v["h"] * ih * sy}
-               for v in TETES_MANUELLES.get(nom or "", [])]
+    _, nw, nh, dx, dy = c
+    out = [{"x": t["x"] * nw - dx, "y": t["y"] * nh - dy,
+            "l": t["l"] * nw, "h": t["h"] * nh} for t in tetes]
     return sorted(out, key=lambda v: v["x"])
 
 # Quand elle vaut une liste, chaque bulle y dépose sa géométrie : de quoi contrôler
@@ -468,7 +487,10 @@ def bulle(img, g, genre, cible=None, voisines=()):
     boite = _boite_visage(cible) if cible else (tete_x - E(90), tete_y - E(110),
                                                tete_x + E(90), tete_y + E(110))
     mini = E(42) if genre != "dit" else E(28)   # trois ronds ont besoin d'un peu de course
-    longueur = max(mini, _arret_avant(base_x, base_y, ux, uy, E(130), [boite], E(34)))
+    # Le plafond était à 130 px : la queue s'arrêtait en plein mur, laissant parfois
+    # deux cents pixels de vide entre sa pointe et le personnage. Elle peut aller plus
+    # loin sans risque, puisque _arret_avant la stoppe net devant la boîte de la tête.
+    longueur = max(mini, _arret_avant(base_x, base_y, ux, uy, E(240), [boite], E(34)))
     # Deux bulles du même personnage, empilées du même côté : la queue de celle du
     # haut butait dans celle du bas et s'y terminait en moignon tronqué. Dès qu'une
     # voisine la raccourcit, on la supprime — c'est celle du bas qui désigne la tête.
@@ -483,11 +505,16 @@ def bulle(img, g, genre, cible=None, voisines=()):
         demi = E(15)
         # la base est un segment posé sur le cadre, perpendiculaire à la direction
         px, py = -uy * demi, ux * demi
-        d.polygon([(base_x + px, base_y + py), (base_x - px, base_y - py),
-                   (pointe_x, pointe_y)], fill=BLANC, outline=ENCRE)
-        # on recouvre le trait du cadre sous la base pour souder la queue à la bulle
-        d.line([(base_x + px - ux * E(2), base_y + py - uy * E(2)),
-                (base_x - px - ux * E(2), base_y - py - uy * E(2))], fill=BLANC, width=E(7))
+        a = (base_x + px, base_y + py)
+        b = (base_x - px, base_y - py)
+        d.polygon([a, b, (pointe_x, pointe_y)], fill=BLANC)
+        # on efface le trait du cadre sous la base, pour souder la queue à la bulle
+        d.line([(a[0] - ux * E(2), a[1] - uy * E(2)),
+                (b[0] - ux * E(2), b[1] - uy * E(2))], fill=BLANC, width=E(7))
+        # puis les deux flancs, à l'épaisseur du cadre : dessinés par polygon(outline),
+        # ils ne faisaient qu'un pixel contre quatre, et la queue ressemblait à une
+        # rayure sur le mur plutôt qu'à un appendice de la bulle.
+        d.line([a, (pointe_x, pointe_y), b], fill=ENCRE, width=E(4), joint="curve")
     else:
         # Chaîne de ronds orientée vers la tête. Toujours trois : un rond isolé ne se
         # lit plus comme une pensée. Leur rayon est plafonné par l'écart entre eux,
@@ -505,11 +532,15 @@ def bulle(img, g, genre, cible=None, voisines=()):
     _texte_bulle(d, g)
 
 def _texte_bulle(d, g):
+    """Le texte, centré dans la bulle.
+
+    Il était ferré vers le bord extérieur du cadre : une dernière ligne courte
+    collait à une paroi en laissant un blanc de la moitié de la bulle en face.
+    En bande dessinée, le texte d'une bulle se centre.
+    """
     ty = g["y"] + g["pad"] - E(3)
     for l in g["lignes"]:
-        lx = (g["x"] + g["pad"] if g["align"] == "gauche"
-              else g["x"] + g["bw"] - g["pad"] - larg(l, g["f"]))
-        d.text((lx, ty), l, font=g["f"], fill=ENCRE)
+        d.text((g["x"] + (g["bw"] - larg(l, g["f"])) / 2, ty), l, font=g["f"], fill=ENCRE)
         ty += g["lh"]
 
 def _bandeau_narrateur(texte):
