@@ -194,7 +194,7 @@
             },
             {
               "etiquette": "Demander qu’on te rassure",
-              "texte": "La réponse te calme une minute, et tu as déjà envie de reposer la question juste après.",
+              "texte": "La réponse te calme une minute, et tu as déjà envie de reposer la question.",
               "illustration": "boucle-rassurer",
               "prompt": "Close framing, chest up: a man in his thirties with light olive skin and dark stubble leans toward a friend in a stairwell, both hands open in front of him as he asks the same question again, his eyebrows raised and pinched, his eyes searching her face; the friend, a woman in her thirties with brown skin and a headwrap, answers with a patient half-smile and a small nod."
             },
@@ -489,7 +489,7 @@
       ],
       "phraseFinale": "Quand plus rien ne te touche, ce n’est pas une panne. C’est une protection contre ce qui faisait trop mal.",
       "question": "Est-ce qu’une bonne nouvelle te fait encore plaisir ?",
-      "legende": "Le calme, on ne le remarque pas : ce qui dérange se voit tout de suite, alors qu’un moment paisible passe souvent sans qu’on le voie. Dans le vrai calme, tout te traverse encore : la peine, la colère et la joie montent, puis elles redescendent. Quand tu ne sens plus rien, plus rien ne te secoue, mais plus rien ne te touche non plus, même les bonnes nouvelles. Ce n’est pas une panne : c’est une protection, parce que ressentir a fait trop mal trop longtemps. Si c’est comme ça depuis des semaines, parles-en à un médecin ou à un psychologue. L’article complet t’attend dans le guide.",
+      "legende": "Le calme, on ne le remarque pas : ce qui dérange se voit tout de suite, alors qu’un moment paisible passe sans bruit. Dans le vrai calme, tout te traverse encore : la peine, la colère et la joie montent, puis elles redescendent. Quand tu ne sens plus rien, plus rien ne te secoue, mais plus rien ne te touche non plus, même les bonnes nouvelles. Ce n’est pas une panne : c’est une protection, parce que ressentir a fait trop mal trop longtemps. Si c’est comme ça depuis des semaines, parles-en à un médecin ou à un psychologue. L’article complet t’attend dans le guide.",
       "hashtags": "#sérénité #calme #émotions #ralentir #pleineconscience #santémentale #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "ne-plus-rien-ressentir.html",
       "slides": [
@@ -564,7 +564,7 @@
             },
             {
               "etiquette": "Ce qui t’agaçait",
-              "texte": "Ce qui t’énervait avant ne te fait plus rien non plus. Ce n’est donc pas seulement la joie qui a disparu.",
+              "texte": "Ça ne te fait plus rien non plus. Ce n’est donc pas seulement la joie qui a disparu.",
               "illustration": "arret-de-bus-sans-agacement",
               "prompt": "A man in his seventies with light skin and white hair waits at a bus stop in the rain as a bus passes without stopping; he watches it go, his face unchanged and his shoulders still, while beside him a young woman throws both hands up in exasperation."
             }
@@ -759,7 +759,7 @@
             },
             {
               "etiquette": "La fatigue du soir",
-              "texte": "Il ne s’est rien passé de spécial et tu es à plat. Te retenir toute la journée, ça fatigue énormément.",
+              "texte": "Il ne s’est rien passé de spécial et tu es à plat. Te retenir toute la journée, ça épuise.",
               "illustration": "fatigue-bus",
               "prompt": "A man in his forties with deep brown skin and short-cropped hair sits on a bus seat at the end of the day, a bag on his lap and his head resting against the window. His eyelids are heavy, his eyebrows are slack, his mouth hangs slightly open and his hands rest lifelessly on the bag."
             }
@@ -789,7 +789,7 @@
           "items": [
             {
               "etiquette": "Quand on va trop loin",
-              "texte": "La colère arrive quand quelqu’un va trop loin avec toi. Quand tu n’arrives pas à le dire, elle ressort autrement.",
+              "texte": "La colère arrive quand quelqu’un dépasse tes limites. Si tu ne dis rien, elle ressort autrement.",
               "illustration": "frontiere-reunion",
               "prompt": "A man in his sixties with fair skin, a short grey beard and glasses sits in a meeting room as a decision is announced without him, his hands folded on the table. His jaw shifts to one side, his eyebrows are low and level, his gaze stays fixed on a point on the table and his folded hands press hard against each other."
             }
@@ -906,7 +906,7 @@
       ],
       "phraseFinale": "La culpabilité te montre un geste à faire. Elle ne dit pas que tu es quelqu’un de mauvais.",
       "question": "Laquelle de ces phrases te vient le plus vite ?",
-      "legende": "La culpabilité est une des rares émotions désagréables qui rapprochent des autres au lieu d’en éloigner : elle te pousse vers un geste, pas vers la fuite. Encore faut-il qu’elle serve à quelque chose. Se sentir coupable ne prouve pas que tu as mal agi, et les personnes qui culpabilisent le plus sont rarement celles qui ont le plus de raisons de le faire. L’article « Comprendre la culpabilité » propose de faire la part des choses : tu notes tout ce qui a joué, le contexte, la fatigue, ce que tu ne savais pas encore, puis tu regardes ce qui dépendait vraiment de toi.",
+      "legende": "La culpabilité est une des rares émotions désagréables qui te rapprochent des autres au lieu de t’en éloigner : elle te pousse vers un geste, pas vers la fuite. Encore faut-il qu’elle serve à quelque chose. Se sentir coupable ne prouve pas que tu as mal agi, et les personnes qui culpabilisent le plus sont rarement celles qui ont le plus de raisons de le faire. L’article « Comprendre la culpabilité » propose de faire la part des choses : tu notes tout ce qui a joué, le contexte, la fatigue, ce que tu ne savais pas encore, puis tu regardes ce qui dépendait vraiment de toi.",
       "hashtags": "#culpabilité #direnon #émotions #relations #chargementale #développementpersonnel #connaissancedesoi #boussoleémotionnelle",
       "lienGuide": "culpabilite.html",
       "slides": [
@@ -931,7 +931,7 @@
         },
         {
           "gabarit": "liste",
-          "titre": "Cinq phrases qui en disent long",
+          "titre": "Cinq réflexes qui en disent long",
           "items": [
             {
               "etiquette": "Dire oui sans envie",
@@ -1044,7 +1044,7 @@
             },
             {
               "etiquette": "Ventre noué",
-              "texte": "Le plus souvent, c’est l’anxiété, parfois la tristesse. Ton ventre réagit avant que tu comprennes pourquoi.",
+              "texte": "La plupart du temps, c’est l’anxiété, parfois la tristesse. Ton ventre réagit avant que tu comprennes pourquoi.",
               "illustration": "ventre-file-attente",
               "prompt": "A young man in his twenties with medium brown skin and short curly hair stands in a queue at a bakery, one hand pressed flat against his stomach under his open jacket. His eyebrows are drawn together, his eyes move around without settling, his shoulders are lifted with the ribcage held high and his other hand fiddles with his phone."
             },
@@ -1080,7 +1080,7 @@
             },
             {
               "etiquette": "Ventre noué, tristesse",
-              "texte": "Ça arrive un dimanche soir, devant une chaise vide, quand le message n’arrive pas. Ton corps réagit à ce qui te manque.",
+              "texte": "Ça arrive un dimanche soir, devant une chaise vide, quand le message ne vient pas. Ton corps réagit à ce qui te manque.",
               "illustration": "dimanche-soir",
               "prompt": "A man in his thirties with pale skin and short sandy hair sits at the end of a sofa on a Sunday evening, a cold cup of tea in front of him, looking at an empty armchair. His gaze is still and heavy, the inner ends of his eyebrows lift, his mouth turns down slightly at the corners and one hand rests on his stomach."
             }
@@ -1160,7 +1160,7 @@
             },
             {
               "etiquette": "Derrière le téléphone",
-              "texte": "Pendant tout le repas, son téléphone reste posé sur la table. Tu voudrais juste sentir que l’autre est là, avec toi.",
+              "texte": "Pendant tout le repas, son écran reste posé sur la table. Tu voudrais juste sentir que l’autre est là, avec toi.",
               "illustration": "ecran-a-table",
               "prompt": "Two people at a dinner table seen from the side: a woman in her thirties with dark skin and braided hair looks down at a phone that lights her face from below, absorbed, lips slightly parted; across from her a man in his thirties with East Asian features holds his fork motionless above his plate, eyes fixed on her, the corners of his mouth drawn down, blinking slowly, his free hand flat on the tablecloth."
             },
@@ -1178,7 +1178,7 @@
           "items": [
             {
               "etiquette": "Quand ça déborde",
-              "texte": "Ton cœur s’accélère et tes phrases deviennent sèches. À partir de là, vous avez beau parler, plus personne n’écoute.",
+              "texte": "Ton cœur s’accélère et tes phrases deviennent sèches. À partir de là, vous avez beau parler, plus rien ne passe.",
               "bulle": "Je n’écoute plus, je prépare ma réponse.",
               "illustration": "salon-tendu",
               "prompt": "A woman in her forties with medium brown skin and dark wavy hair sits on a sofa mid-argument, body angled forward, one hand chopping the air, mouth open on a fast sentence, chin pushed forward and nostrils flared; at the other end of the sofa a man in his forties with pale skin and chestnut hair sits with closed fists on his knees, eyes locked on the floor, jaw clenched, one knee bouncing, his lips moving silently as if rehearsing his reply."
@@ -1197,7 +1197,7 @@
             },
             {
               "etiquette": "La pause annoncée",
-              "texte": "Avant de sortir, dis-le : « je suis à cran, je reviens dans vingt minutes. » L’autre sait alors que tu pars pour te calmer, pas pour claquer la porte.",
+              "texte": "Avant de sortir, dis-le : « Je suis à cran, je reviens dans vingt minutes. » L’autre sait alors que tu pars pour te calmer, pas pour claquer la porte.",
               "illustration": "pause-annoncee",
               "prompt": "A man in his twenties with deep brown skin and short twists stands in a doorway with one open hand raised softly, eyes meeting the other person’s, eyebrows level, mouth shaped on a calm short sentence, breathing out through slightly parted lips; a woman in her twenties with light skin and red wavy hair looks up at him from the sofa, eyebrows raised high and mouth just opening, caught mid-surprise."
             },
@@ -1222,7 +1222,7 @@
       "slug": "angoisse-dimanche-soir",
       "titre": "DIMANCHE 17 H, LUNDI EST DÉJÀ LÀ",
       "titreAccent": "DÉJÀ LÀ",
-      "sousTitre": "Tu es encore en week-end, mais ta tête est déjà à lundi matin",
+      "sousTitre": "Tu es encore en week-end, mais ta tête a repris le travail",
       "emotions": [
         "anxiete",
         "peur",
@@ -1295,7 +1295,7 @@
             },
             {
               "etiquette": "Le réveil que tu règles",
-              "texte": "Tu mets ton réveil à 22 h. À ce moment-là, lundi a déjà commencé dans ta tête, et tu n’es même pas couché.",
+              "texte": "Il est 22 h et tu mets ton réveil. À ce moment-là, lundi a déjà commencé dans ta tête, et tu n’es même pas couché.",
               "illustration": "reveil-du-soir",
               "prompt": "A woman in her thirties with deep brown skin and short coiled hair sits on the edge of her bed in lamplight, one finger setting an alarm clock on the nightstand, looking at it sideways, the corner of her mouth pulled down, her free hand resting on the duvet, her body already turned away toward the pillow."
             }
@@ -1313,7 +1313,7 @@
             },
             {
               "etiquette": "Avec dix minutes le vendredi",
-              "texte": "Vendredi, tu notes en dix minutes ce qui t’attend lundi. Dimanche, tu cuisines ou tu sors marcher, et tu récupères ta soirée.",
+              "texte": "Vendredi, tu notes ce qui t’attend lundi. Dimanche, tu cuisines ou tu sors marcher, et tu récupères ta soirée.",
               "illustration": "laptop-referme",
               "prompt": "A woman in her forties with deep brown skin and short curly hair closes a laptop with both hands and lets out a long breath, eyelids lowered, jaw unclenched, the corners of her mouth lifting slightly, shoulders settling down and back, a closed blank notebook beside her."
             }
@@ -1326,7 +1326,7 @@
       "slug": "message-sans-reponse",
       "titre": "LU, ET TOUJOURS RIEN",
       "titreAccent": "TOUJOURS RIEN",
-      "sousTitre": "Ce que ta tête invente pendant que l’autre fait autre chose",
+      "sousTitre": "Ce que ta tête invente pendant que l’autre vit sa journée",
       "emotions": [
         "anxiete",
         "peur",
@@ -1334,7 +1334,7 @@
         "honte",
         "colere"
       ],
-      "phraseFinale": "Un silence ne dit rien du tout. C’est toi qui inventes la réponse, et tu choisis souvent la pire.",
+      "phraseFinale": "Un silence ne dit rien de toi. C’est toi qui inventes la réponse, et tu choisis souvent la pire.",
       "question": "Qu’est-ce que ta tête raconte quand l’autre ne répond pas ?",
       "legende": "Un message lu sans réponse ne dit rien de toi. Il te manque juste une information, et comme on supporte mal le silence, on écrit la suite tout seul en choisissant presque toujours le pire. La plupart du temps, l’explication est banale : un métro, une réunion, une casserole sur le feu. Parfois, c’est vrai, un silence veut dire quelque chose, et c’est une raison de plus pour poser la question au lieu de la deviner. Deux gestes changent tout : pose ton téléphone hors de vue, et au bout d’un jour ou deux, demande simplement.",
       "hashtags": "#anxiété #émotions #messages #relations #amitié #communication #introspection #boussoleémotionnelle",
@@ -1428,7 +1428,7 @@
         "tristesse"
       ],
       "phraseFinale": "Ta tête dit que ça va. Ton ventre, lui, dit autre chose.",
-      "question": "À quel moment exact la boule se serre ?",
+      "question": "À quel moment exact la boule arrive ?",
       "legende": "Le ventre parle en premier. En cas d’alerte, le corps met la digestion en pause pour envoyer l’énergie ailleurs, ça se serre, et tu le sens bien avant de trouver les mots. C’est de la peur, en version discrète : il n’y a aucun danger devant toi, c’est la journée qui t’attend qui inquiète ton corps. Pendant deux semaines, note l’heure exacte où la boule arrive, avant quoi et avec qui : on ne peut rien faire contre « le travail » en général, mais on peut faire beaucoup pour une réunion précise. Et si elle ne te lâche jamais, même en vacances, parles-en à un médecin plutôt que de la garder pour toi.",
       "hashtags": "#bouleauventre #travail #anxiété #émotions #lundi #santéautravail #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "boule-au-ventre-travail.html",
@@ -1590,7 +1590,7 @@
             },
             {
               "etiquette": "Les gestes du quotidien",
-              "texte": "Il te manque le message du matin, ton côté du lit, le « à ce soir » qu’on dit sans y penser. Ton corps les cherche encore.",
+              "texte": "Il te manque le message du matin, son côté du lit, le « à ce soir » qu’on dit sans y penser. Ton corps les cherche encore.",
               "illustration": "deux-tasses",
               "prompt": "A man in his twenties with brown skin and short curls stands in a kitchen having automatically taken two mugs from the shelf, freezing as he notices the second one, his mouth opening slightly, his raised hand staying in mid-air, his jaw going loose. Single character in frame. Clear detailed face, both eyes clearly visible, open and symmetrical. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             }
@@ -1598,7 +1598,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Le manque, et les moments où ça va",
+          "titre": "Deux jours ne se ressemblent pas",
           "items": [
             {
               "etiquette": "Le manque qui revient",
@@ -1626,7 +1626,7 @@
             },
             {
               "etiquette": "Remettre du rythme",
-              "texte": "Couche-toi à peu près à la même heure et sors marcher un peu. Mange de vrais repas même sans faim, et vise juste le minimum.",
+              "texte": "Couche-toi à peu près à la même heure et sors marcher un peu. Mange de vrais repas même sans faim, quitte à faire au plus simple.",
               "illustration": "marche-du-matin",
               "prompt": "A man in his sixties with light skin and short white hair walks outdoors in cool morning light wearing a coat, hands in his pockets, gaze lifted toward the horizon, his breath faintly visible, his face tired but his step even and steady."
             },
@@ -1730,7 +1730,7 @@
           "items": [
             {
               "etiquette": "Une porte qui claque",
-              "texte": "L’autre reste seul avec une seule question en tête : est-ce que tu vas revenir ? Personne ne lui a dit quand.",
+              "texte": "L’autre reste seul avec une question en tête : est-ce que tu vas revenir ? Personne ne lui a dit quand.",
               "illustration": "porte-claquee",
               "prompt": "A young woman with medium brown skin and dark curly hair sits alone on the edge of a sofa in a living room, facing a closed door suggested in a few lines. Her arms are wrapped around her own ribs, her eyebrows are raised and pulled together in the middle, her eyes are wide and fixed on the door, her lips are parted, her whole body leaning slightly forward as if waiting for a sound."
             },
@@ -1757,7 +1757,7 @@
       ],
       "phraseFinale": "Tu n’as pas à t’excuser d’exister. Tu peux dire merci à ceux qui prennent du temps pour toi.",
       "question": "Combien de fois tu dis « désolé » dans une journée ?",
-      "legende": "La culpabilité te prévient que tu as peut-être fait du mal. Elle ne prouve pas que tu es quelqu’un de mauvais, et elle se déclenche souvent chez les gens les plus attentifs aux autres. Les « désolé » à répétition obligent l’autre à te rassurer, et tu te sens encore un peu fautif après. Avec un merci, tu rends quelque chose à l’autre au lieu de demander qu’on te pardonne d’exister. C’est la même situation et le même début de phrase, et pourtant tout change entre vous.",
+      "legende": "La culpabilité te prévient que tu as peut-être fait du mal. Elle ne prouve pas que tu es quelqu’un de mauvais, et elle se déclenche souvent chez les gens les plus attentifs aux autres. Les « désolé » à répétition obligent l’autre à te rassurer, et tu te sens encore un peu fautif après. Avec un merci, tu rends quelque chose à l’autre au lieu de demander qu’on te pardonne d’exister. C’est la même situation, et pourtant tout change entre vous.",
       "hashtags": "#culpabilité #gratitude #émotions #confianceensoi #communication #relations #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "culpabilite.html",
       "slides": [
@@ -1821,7 +1821,7 @@
             },
             {
               "etiquette": "Désolé pour ce pavé",
-              "texte": "« Merci d’avoir lu jusqu’au bout. » Tu remercies l’autre d’avoir pris le temps, au lieu de t’excuser d’avoir écrit.",
+              "texte": "« Merci d’avoir lu jusqu’au bout. » Écrire longuement, ce n’est pas une faute.",
               "illustration": "long-message",
               "prompt": "A man in his forties with deep brown skin and short curly hair sits on the corner of a sofa at night, phone held in both hands, having just sent a very long message. His shoulders are curled forward, his eyebrows are pulled up and together, his eyes are fixed on the screen, one thumb hovering, his mouth pulled to one side in a worried grimace."
             },
@@ -1866,7 +1866,7 @@
       ],
       "phraseFinale": "Entraîne-toi trois minutes les jours où tout va bien. C’est ce qui marche le jour où ça va mal.",
       "question": "Tu essaies de te calmer seulement quand c’est déjà la panique ?",
-      "legende": "L’anxiété n’est pas un défaut chez toi : c’est une alarme qui te prévient d’un danger, même quand il n’y en a pas. Se raisonner ne suffit pas. Ce qui la calme, c’est ce que tu fais avec ton corps. Quand tu expires plus longtemps que tu inspires, ton cœur ralentit tout seul, et peu de gestes agissent aussi vite sur toi. Et comme n’importe quel geste, ça s’apprend : les jours où tu n’en as pas besoin comptent autant que les autres.",
+      "legende": "L’anxiété n’est pas un défaut chez toi : c’est une alarme qui te prévient d’un danger, même quand il n’y en a pas. Se raisonner ne suffit pas. Ce qui la calme, c’est ce que tu fais avec ton corps. Quand tu expires plus longtemps que tu inspires, ton cœur ralentit tout seul, et peu de choses agissent aussi vite. Et comme n’importe quel geste, ça s’apprend : les jours où tu n’en as pas besoin comptent autant que les autres.",
       "hashtags": "#anxiété #respiration #stress #calme #émotions #sérénité #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "anxiete.html",
       "slides": [
@@ -1960,7 +1960,7 @@
       "slug": "excuse-qui-repare",
       "titre": "LE MOT QUI ANNULE TES EXCUSES",
       "titreAccent": "ANNULE",
-      "sousTitre": "Trois phrases qui réparent, et un mot de trois lettres qui efface tout.",
+      "sousTitre": "Trois phrases qui réparent, et un mot de quatre lettres qui efface tout.",
       "emotions": [
         "culpabilite",
         "honte",
@@ -2205,7 +2205,7 @@
             {
               "etiquette": "Il me laisse tomber",
               "texte": "Dis-moi : tu as une semaine chargée, ou il y a un souci entre nous ?",
-              "note": "Poser la question prend dix secondes, alors qu’y penser toute la semaine te prend des jours.",
+              "note": "Poser la question prend dix secondes, alors qu’y penser te prend des jours.",
               "illustration": "question-posee",
               "prompt": "A man in his thirties with warm brown skin and a close cropped beard sits on a beige sofa in a grey knitted jumper, holding his phone up in both hands as he types a short message. His eyebrows are raised in an open question, his mouth is relaxed, his chin is lifted and his shoulders have come down."
             }
@@ -2343,7 +2343,7 @@
       ],
       "phraseFinale": "Ta colère n’est pas ton ennemie. Elle te montre ce qui compte vraiment pour toi.",
       "question": "La dernière fois que la colère est montée, qu’est-ce qu’on n’avait pas respecté ?",
-      "legende": "C’est la suite du post de mardi, sur les émotions qu’on apprend à taire. Une colère arrive rarement pour rien : elle te signale que quelqu’un vient de dépasser une limite qui compte pour toi. La nommer n’a rien de brutal, et ça t’évite de la faire sortir plus tard en petites piques ou en silence. Parfois, sous la colère, il y a surtout de la peine ou de la peur : demande-toi quand même ce qu’elle essaie de protéger. L’article « La colère » du guide déroule les valeurs qu’elle défend le plus souvent, et le test te dit la place qu’elle prend chez toi en ce moment.",
+      "legende": "Une colère arrive rarement pour rien : elle te signale que quelqu’un vient de dépasser une limite qui compte pour toi. La nommer n’a rien de brutal, et ça t’évite de la faire sortir plus tard en petites piques ou en silence. Parfois, sous la colère, il y a surtout de la peine ou de la peur : demande-toi quand même ce qu’elle essaie de protéger. L’article « La colère » du guide déroule les valeurs qu’elle défend le plus souvent, et le test te dit la place qu’elle prend chez toi en ce moment.",
       "hashtags": "#colère #colere #émotions #emotions #limites #communication #psychologie #développementpersonnel #developpementpersonnel #connaissancedesoi",
       "lienGuide": "colere.html",
       "slides": [
@@ -2424,7 +2424,7 @@
           "items": [
             {
               "etiquette": "NOMME LA LIMITE",
-              "texte": "Demande-toi ce que l’autre vient de ne pas respecter. Ton temps, ta parole, le partage des efforts ?",
+              "texte": "Demande-toi ce que l’autre n’a pas respecté. Ton temps, ta parole, le partage des efforts ?",
               "illustration": "carnet-sur-les-genoux",
               "prompt": "A woman in her thirties with medium brown skin and curly hair sits on the edge of a bed, a notebook on her knees and a pen paused in her hand. Her eyebrows are drawn together in thought, her gaze is slightly off camera and her other hand rests on her chest."
             },
@@ -2436,7 +2436,7 @@
             },
             {
               "etiquette": "DIS CE QUI COMPTE",
-              "texte": "Dis « j’ai besoin de finir mes phrases » plutôt qu’un reproche général. Ça passe beaucoup mieux.",
+              "texte": "Préfère « j’ai besoin de finir mes phrases » à un reproche général. Ça passe beaucoup mieux.",
               "bulle": "« J’ai besoin de finir mes phrases. »",
               "illustration": "dire-ce-qui-compte",
               "prompt": "A woman in her thirties with deep brown skin and short coiled hair sits across a kitchen table from a man in his thirties with pale freckled skin and auburn hair, one of her hands open and flat on the table as she speaks. Her eyebrows are level, her mouth calm and deliberate, no tension in her shoulders; he listens with his head tilted and his eyes on her. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
@@ -2612,7 +2612,7 @@
             },
             {
               "etiquette": "LA PORTE QUI S’OUVRE",
-              "texte": "La porte s’ouvre et c’est quelqu’un que tu aimes qui rentre. Tu lèves à peine les yeux de ton écran.",
+              "texte": "C’est quelqu’un que tu aimes qui rentre. Tu lèves à peine les yeux de ton écran.",
               "illustration": "porte-qui-claque",
               "prompt": "A woman in her thirties with medium brown skin and braided hair looks up from a sofa towards the hallway where the front door has just banged shut. Her eyebrows are lifted, a wide unguarded smile breaks over her face and both hands push off the cushions."
             }
@@ -2624,7 +2624,7 @@
           "items": [
             {
               "etiquette": "COMPTE JUSQU’À VINGT",
-              "texte": "Quand un bon moment arrive, reste dessus vingt secondes : regarde, écoute, ne fais rien d’autre. C’est comme ça qu’il reste dans ta mémoire.",
+              "texte": "Quand un bon moment arrive, attarde-toi dessus vingt secondes : regarde, écoute, ne fais rien d’autre. C’est comme ça qu’il reste dans ta mémoire.",
               "illustration": "vingt-secondes-parking",
               "prompt": "A man in his forties with olive skin and short dark hair stands still in a supermarket car park holding a bag of groceries, his head tipped back towards the evening sky. His eyes are wide and soft, his lips are slightly parted and his shoulders have come down."
             }
@@ -2875,10 +2875,10 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Pourquoi vérifier une fois ne suffit jamais",
+          "titre": "Pourquoi vérifier ne suffit jamais",
           "items": [
             {
-              "etiquette": "LE CALME RETOMBE VITE",
+              "etiquette": "LE SOULAGEMENT NE DURE PAS",
               "texte": "Fouiller te calme une minute. Ton cerveau retient que ça marche, alors il te redemandera de recommencer demain.",
               "illustration": "salle-de-bain-nuit",
               "prompt": "A young adult man with medium brown skin and dark curly hair sitting on a bathroom floor late at night, scrolling a phone whose light falls blue on his face. His eyes are narrowed and scanning, jaw clenched, one hand gripping his own knee, back curled forward, the door shut behind him. Single character in frame."
@@ -2920,14 +2920,14 @@
       ],
       "phraseFinale": "Tu fouilles pour protéger ton couple. En vrai, c’est la confiance qui le protège, pas la surveillance.",
       "question": "La dernière fois que tu as résisté, l’envie de vérifier a duré combien de temps ?",
-      "legende": "Son prénom revient souvent dans vos conversations, son téléphone est posé à l’envers, et te voilà en alerte. Vérifier te calme une minute, puis ton cerveau retient que le doute s’apaise en fouillant, alors il te redemandera de recommencer. Si quelque chose ne va vraiment pas, tu l’apprendras dans une conversation, pas dans un téléphone. La prochaine fois, attends dix minutes avant de regarder, et vois ce que devient l’envie. Si l’angoisse devient trop forte, en parler à un professionnel change tout, et l’article du guide explique aussi la différence entre montrer son téléphone parce qu’on en a envie et devoir le montrer parce que l’autre l’exige.",
+      "legende": "Un prénom revient souvent dans vos conversations, le téléphone de l’autre est posé à l’envers, et te voilà en alerte. Vérifier te calme une minute, puis ton cerveau retient que le doute s’apaise en fouillant, alors il te redemandera de recommencer. Si quelque chose ne va vraiment pas, tu l’apprendras dans une conversation, pas dans un téléphone. La prochaine fois, attends dix minutes avant de regarder, et vois ce que devient l’envie. Si l’angoisse devient trop forte, en parler à un professionnel change tout, et l’article du guide explique aussi la différence entre montrer son téléphone parce qu’on en a envie et devoir le montrer parce que l’autre l’exige.",
       "hashtags": "#jalousie #couple #confiance #peurdeperdre #relations #communication #émotions",
       "lienGuide": "jalousie-dans-le-couple.html"
     },
     {
       "numero": 29,
       "slug": "recevoir-sans-rembourser",
-      "titre": "RECEVOIR SANS RIEN RENDRE EN ÉCHANGE",
+      "titre": "RECEVOIR SANS RIEN DONNER EN ÉCHANGE",
       "titreAccent": "EN ÉCHANGE",
       "sousTitre": "Quand tu rends tout de suite, un cadeau devient une dette.",
       "emotions": [
@@ -2973,7 +2973,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Quand tu rends dans l’heure",
+          "titre": "Rendre dans l’heure",
           "items": [
             {
               "etiquette": "LE RÉFLEXE DE RENDRE",
@@ -2999,7 +2999,7 @@
       ],
       "phraseFinale": "Accepter un cadeau sans rien rendre, c’est déjà faire plaisir à l’autre.",
       "question": "La dernière fois qu’on t’a fait un compliment, tu as répondu quoi ?",
-      "legende": "Quand on te donne quelque chose, l’autre a fait un pas et toi pas encore : ça met mal à l’aise pendant deux secondes, puis ça passe tout seul. Beaucoup de gens n’ont jamais appris à tenir cette seconde-là. Ils minimisent, ils plaisantent, ou ils rendent aussitôt, et chacun se met à compter ce qu’il doit à l’autre. Rendre vite n’est pas un défaut, mais ça empêche l’autre de voir que son geste t’a touché. Écoute, dis merci, puis dis ce que ça te fait : l’article du guide montre comment dire merci en nommant précisément ce qui t’a touché.",
+      "legende": "Quand on te donne quelque chose, l’autre a fait un pas et toi pas encore : ça met mal à l’aise pendant deux secondes, puis ça passe tout seul. Beaucoup de gens n’ont jamais appris à tenir cette seconde-là. Ils minimisent, ils plaisantent, ou ils rendent aussitôt, et chacun se met à compter ce qu’il doit à l’autre. Rendre vite n’est pas un défaut, mais ça empêche l’autre de voir que son geste t’a touché. Écoute, dis merci, puis dis ce que ça te fait : l’article du guide montre comment nommer précisément ce qui t’a touché.",
       "hashtags": "#gratitude #recevoir #compliment #lien #relations #émotions #bienveillance #connaissancedesoi",
       "lienGuide": "gratitude.html"
     },
@@ -3051,7 +3051,7 @@
             },
             {
               "etiquette": "DE QUOI TU AS BESOIN",
-              "texte": "Derrière l’énervement, il y a souvent de la fatigue. Et derrière l’angoisse, il y a souvent le besoin qu’on te rassure.",
+              "texte": "Derrière l’énervement, il y a souvent de la fatigue. Et derrière l’angoisse, le besoin qu’on te rassure.",
               "illustration": "fauteuil-relache",
               "prompt": "A man with warm brown skin and short grey curly hair sitting back in an armchair by a window, head resting against the back of the chair, eyes closed, face finally loosening after a long day. His hands lie open on his thighs, jaw unclenched, shoulders melted down. He is clearly in his fifties: deep lines at the eyes, greying stubble, heavier features. Single character in frame."
             }
@@ -3063,7 +3063,7 @@
           "items": [
             {
               "etiquette": "LE BON MOT",
-              "texte": "Quand tu poses le mot juste sur ce que tu ressens, l’émotion devient souvent moins forte. Et si elle reste forte, c’est normal : il faut juste plus de temps.",
+              "texte": "Quand tu poses le mot juste sur ce que tu ressens, l’émotion devient souvent moins forte. Et si elle reste forte, c’est normal : il faut simplement plus de temps.",
               "illustration": "voiture-garee",
               "prompt": "A woman in her forties with deep brown skin and dark braided hair sitting in a parked car, both hands resting on the wheel, speaking quietly to herself, her lips parted mid-syllable. Her jaw unclenches, her eyebrows lift, a long exhale escapes, her shoulders drop away from her ears. Single character in frame."
             }

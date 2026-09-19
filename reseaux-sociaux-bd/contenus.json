@@ -3,7 +3,7 @@
     {
       "numero": 1,
       "slug": "meme-geste-pas-le-meme-soir",
-      "titre": "22 H 40.|IL SE RAPPROCHE. COMME TOUS LES SOIRS.",
+      "titre": "22 H 40.|IL SE RAPPROCHE.",
       "emotions": [
         "amour",
         "tristesse",
@@ -81,7 +81,7 @@
           "narrateur": "ELLE S’EST RAPPROCHÉE DANS SON SOMMEIL./SA MAIN S’ARRÊTE À QUELQUES CENTIMÈTRES DE LA MAIN DE SON MARI."
         }
       ],
-      "revelation": "Ce n’est pas lui qu’elle repousse ce soir-là : c’est sa journée de travail, qui n’est pas encore redescendue et qui occupe encore tout son corps. Lui n’a aucun moyen de le deviner, parce que personne ne le lui a dit. Une main écartée, ce n’est pas toujours un « non » à la personne ; c’est souvent un « pas maintenant » que le corps dit tout seul.",
+      "revelation": "Ce n’est pas lui qu’elle repousse ce soir-là : c’est sa journée de travail, qui n’est pas encore redescendue et qui occupe tout son corps. Lui n’a aucun moyen de le deviner, parce que personne ne le lui a dit. Une main écartée, ce n’est pas toujours un « non » à la personne ; c’est souvent un « pas maintenant » que le corps dit tout seul.",
       "question": "Et toi, à quelle heure ton corps rentre vraiment à la maison le soir ?",
       "legende": "Il tend la main comme il l’a fait mille fois, tu réponds que tu es fatiguée, et il comprend que c’est lui que tu repousses. Personne ne ment et personne n’a tort : il manque juste une phrase entre vous, celle qui dirait ce qui se passe vraiment dans ton corps à cette heure-là. Ce n’est pas la tendresse qui était de trop, c’est le moment qui tombait mal. Dire « laisse-moi vingt minutes et je viens contre toi » n’est pas un refus, c’est un rendez-vous.",
       "hashtags": "#émotions #couple #amour #tendresse #psychologie #connaissancedesoi #relations #santémentale",
@@ -103,7 +103,7 @@
           "prompt": "Bright Saturday morning light, muted ochre and sage palette, gentle grain. A small kitchen: on the left a slim man in his mid-thirties with warm brown skin and shoulder-length locs stands at the sink holding a wet sponge, turned toward his partner; on the right a stockier man of the same age with light tan skin, a round face and straight black hair leans against the counter holding a coffee mug, shoulders loose and relaxed. Above the counter a wall shelf tilts noticeably to one side, its jars all slid to the low end. Both men stand in the lower two thirds of the frame; the upper wall is plain, pale and bare. Each visible hand belongs to a visible person and has five fingers.",
           "bulles": [
             {
-              "texte": "Tu devais fixer cette étagère samedi dernier.",
+              "texte": "Tu devais fixer cette étagère.",
               "zone": "hg",
               "type": "dit"
             },
@@ -161,7 +161,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "IL RESTE SEUL DEVANT L’ÉTAGÈRE DE TRAVERS,/SANS COMPRENDRE POURQUOI LA MATINÉE A TOURNÉ COMME ÇA."
+          "narrateur": "IL RESTE SEUL DEVANT L’ÉTAGÈRE DE TRAVERS,/SANS COMPRENDRE POURQUOI LA MATINÉE A TOURNÉ."
         }
       ],
       "revelation": "La colère ne portait pas sur l’étagère : elle portait sur les treize demandes d’avant, celles que personne n’a comptées à voix haute. Quand tu dois répéter la même chose pendant des mois, ce n’est plus la tâche que tu réclames, c’est la preuve qu’on te prend au sérieux.",
@@ -220,7 +220,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "IL N’EST PAS FÂCHÉ CONTRE ELLE :/IL A HONTE DE S’ÊTRE SENTI DE TROP TOUTE LA SOIRÉE."
+          "narrateur": "IL N’EST PAS FÂCHÉ CONTRE ELLE :/IL A HONTE DE S’ÊTRE SENTI DE TROP."
         },
         {
           "illustration": "voiture-feu-rouge",
@@ -262,7 +262,7 @@
     {
       "numero": 4,
       "slug": "la-jalousie-qu-on-ose-pas-nommer",
-      "titre": "21 H 10.|ELLE RIT TOUTE SEULE, À SON TÉLÉPHONE.",
+      "titre": "21 H 10.|ELLE RIT TOUTE SEULE, DEVANT SON TÉLÉPHONE.",
       "emotions": [
         "jalousie",
         "honte",
@@ -308,7 +308,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "SA COMPAGNE GARDE UN VISAGE PARFAITEMENT CALME ET NE POSE PAS LA QUESTION SUIVANTE."
+          "narrateur": "SA COMPAGNE GARDE UN VISAGE PARFAITEMENT CALME ET NE POSE PAS LA QUESTION."
         },
         {
           "illustration": "canape-epaule-abandon",
@@ -332,7 +332,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "IL EST DEUX HEURES DU MATIN./SA COMPAGNE DORT CONTRE ELLE ET ELLE REGARDE LE PLAFOND."
+          "narrateur": "IL EST DEUX HEURES DU MATIN./LA FEMME BLONDE DORT CONTRE SA COMPAGNE, QUI REGARDE LE PLAFOND."
         }
       ],
       "revelation": "La jalousie n’est pas la preuve qu’il se passe quelque chose : c’est une information sur ce à quoi tu tiens et sur la peur de le perdre. Tant que tu ne la dis pas, elle ne s’en va pas. Elle se transforme en surveillance silencieuse, et c’est ça qui abîme la soirée, bien plus que la question posée.",
@@ -367,7 +367,7 @@
               "type": "dit"
             }
           ],
-          "narrateur": "ELLE PART TROIS JOURS CHEZ LEUR FILLE./SON MARI A COMMENCÉ CE PLAT À SEPT HEURES CE MATIN."
+          "narrateur": "SON MARI A COMMENCÉ CE PLAT À SEPT HEURES CE MATIN."
         },
         {
           "illustration": "dimanche-regard-qui-hesite",
@@ -379,7 +379,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "IL EST SUR LE POINT DE LUI DIRE QUE TROIS JOURS SANS ELLE, ÇA LUI FAIT PEUR."
+          "narrateur": "IL EST SUR LE POINT DE LUI DIRE QUE ÇA LUI FAIT PEUR."
         },
         {
           "illustration": "dimanche-conseil-de-route",
@@ -403,7 +403,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "ELLE S’EN VA AVEC UN CONSEIL DE PRUDENCE DANS LA TÊTE,/SANS AVOIR ENTENDU CE QU’IL VOULAIT VRAIMENT LUI DIRE."
+          "narrateur": "ELLE S’EN VA AVEC UN CONSEIL DANS LA TÊTE,/SANS AVOIR ENTENDU CE QU’IL VOULAIT LUI DIRE."
         },
         {
           "illustration": "dimanche-la-chaise-vide",
@@ -587,7 +587,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "ELLE LE REMERCIE EN SOURIANT. / LUI SE DIT QU’IL VIENT DE MANQUER DE COURAGE."
+          "narrateur": "ELLE LE FÉLICITE EN SOURIANT. / LUI SE DIT QU’IL VIENT DE MANQUER DE COURAGE."
         },
         {
           "illustration": "couloir-apres-reunion-dossier-contre-soi",
@@ -645,7 +645,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "ELLE N’A TOUJOURS PAS OUVERT LE MESSAGE. / DANS SA TÊTE, ELLE A DÉJÀ IMAGINÉ DIX VERSIONS DU MESSAGE."
+          "narrateur": "ELLE N’A TOUJOURS PAS OUVERT LE MESSAGE. / DANS SA TÊTE, ELLE A DÉJÀ IMAGINÉ DIX VERSIONS."
         },
         {
           "illustration": "cuisine-samedi-salade-distraite",
@@ -887,7 +887,7 @@
       "slides": [
         {
           "illustration": "table-dimanche-la-remarque",
-          "prompt": "A Sunday family lunch in a modest French dining room. A South Asian woman of about sixty, grey-streaked black hair in a low bun, round build, leans toward her thirty-five-year-old son, slim, short black hair, trimmed beard, and serves him a ladle of stew from a heavy casserole dish. He holds his plate up politely, shoulders slightly hunched. Both seated low in the frame, calm beige wall and a curtained window empty above them. Warm hand-drawn comic illustration, soft gouache texture, muted ochre palette, expressive simple faces; every visible hand has five fingers and belongs to a visible person.",
+          "prompt": "A Sunday family lunch in a modest French dining room. A South Asian woman of about sixty, grey-streaked black hair in a low bun, round build, leans toward her thirty-five-year-old son, slim, short black hair, trimmed beard, and serves him a ladle of creamy white veal stew with carrots from a heavy casserole dish. He holds his plate up politely, shoulders slightly hunched. Both seated low in the frame, calm beige wall and a curtained window empty above them. Warm hand-drawn comic illustration, soft gouache texture, muted ochre palette, expressive simple faces; every visible hand has five fingers and belongs to a visible person.",
           "bulles": [
             {
               "texte": "Tu as encore maigri, non ? Tu ne manges pas assez.",
@@ -971,7 +971,7 @@
           "narrateur": "ILS S’AIMENT TOUS LES DEUX, / ET AUCUN NE VOIT LE MAL QUE SES MOTS FONT À L’AUTRE."
         }
       ],
-      "revelation": "Ce qui fait mal, ce n’est pas la remarque elle-même : c’est l’enfant que tu redeviens en l’entendant, celui qui essaie encore de rassurer sa mère. Elle croit sincèrement s’inquiéter pour ta santé, et toi tu entends qu’elle te trouve en défaut. Vous parlez de deux choses différentes à la même table.",
+      "revelation": "Ce qui fait mal, ce n’est pas la remarque elle-même : c’est l’enfant que tu redeviens en l’entendant, celui qui essaie encore de rassurer sa mère. Elle s’inquiète sincèrement pour ta santé, et toi tu entends qu’elle te trouve en défaut. Vous parlez de deux choses différentes à la même table.",
       "question": "Quelle phrase, dans ta famille, te fait encore redevenir un enfant ?",
       "legende": "Il y a des phrases qui ne sont pas méchantes et qui te rapetissent quand même. Tu as trente-cinq ans, un travail, une vie entière, et une remarque sur ton assiette suffit à te faire retomber en enfance. Ce n’est pas la remarque qui fait mal, c’est ce qu’elle réveille : toutes les fois où tu as eu l’impression de ne pas faire assez bien. Et en face, il y a une mère qui s’inquiète et qui croit vraiment bien faire. Tu n’as pas à choisir entre lui en vouloir et faire semblant : tu peux simplement lui dire ce que cette phrase te fait.",
       "hashtags": "#honte #repasdefamille #famille #emotions #relationsfamiliales #boussoleemotionnelle #bienveillance #sedirelesvraieschoses",
@@ -1020,7 +1020,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "DEPUIS UNE SEMAINE, ELLE L’ENTEND SOUPIRER DANS LA CUISINE, / ET ELLE A COMPRIS QUE QUELQUE CHOSE N’ALLAIT PAS."
+          "narrateur": "DEPUIS UNE SEMAINE, ELLE L’ENTEND SOUPIRER DANS LA CUISINE, ET ELLE A COMPRIS / QUE QUELQUE CHOSE N’ALLAIT PAS."
         },
         {
           "illustration": "chambre-enfant-bord-du-lit",
@@ -1360,12 +1360,12 @@
           "prompt": "Late evening in a small living room. A woman in her early thirties with curly dark hair and warm brown skin sits cross-legged low in the frame on a worn green sofa, a phone held flat in both hands, five fingers on each, the phone tilted away from the viewer, her thumb completely still. Her gaze is fixed and slightly absent. One warm lamp beside her. The upper third is a plain calm wall in soft shadow. Warm hand-drawn comic illustration, soft clean linework, muted natural palette, gentle grain.",
           "bulles": [
             {
-              "texte": "Elle a lu mon message à 20 h 07, et elle n’a pas répondu.",
+              "texte": "Elle a lu mon message, et elle n’a pas répondu.",
               "zone": "hd",
               "type": "pense"
             }
           ],
-          "narrateur": "IL EST 22 H 10. / ELLE ATTEND DEPUIS DEUX HEURES LA RÉPONSE D’UNE AMIE, POUR UN MESSAGE SANS IMPORTANCE."
+          "narrateur": "ELLE ATTEND DEPUIS DEUX HEURES LA RÉPONSE D’UNE AMIE, POUR UN MESSAGE SANS IMPORTANCE."
         },
         {
           "illustration": "canape-defilement-nocturne",
@@ -1377,7 +1377,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "ELLE REGARDE LES PHOTOS DE SON AMIE DEPUIS VINGT MINUTES / ET SE DIT QUE C’EST POUR SE RASSURER."
+          "narrateur": "ELLE REGARDE LES PHOTOS DE SON AMIE / DEPUIS VINGT MINUTES ET SE DIT QUE C’EST POUR SE RASSURER."
         },
         {
           "illustration": "cuisine-nuit-message-hesitant",
@@ -1452,7 +1452,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "IL EST DÉJÀ HABILLÉ QUAND SON AMI LUI ÉCRIT POUR ANNULER LE DÎNER DE CE SOIR. / IL RELIT TROIS FOIS."
+          "narrateur": "IL EST DÉJÀ HABILLÉ QUAND LE MESSAGE ARRIVE. / IL RELIT TROIS FOIS."
         },
         {
           "illustration": "entree-epaules-qui-tombent",
@@ -1481,7 +1481,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "IL A REMIS SON MANTEAU AU PORTEMANTEAU ET FAIT CHAUFFER DE L’EAU. / IL SOURIT TOUT SEUL."
+          "narrateur": "IL A RACCROCHÉ SON MANTEAU ET FAIT CHAUFFER DE L’EAU. / IL SOURIT TOUT SEUL."
         },
         {
           "illustration": "salon-canape-compagne-amusee",
@@ -1545,7 +1545,7 @@
               "type": "dit"
             }
           ],
-          "narrateur": "ILS DÉJEUNENT EN TERRASSE. SON AMI VIENT D’ÊTRE PRIS POUR UN POSTE, ET ELLE EST VRAIMENT CONTENTE POUR LUI."
+          "narrateur": "ILS DÉJEUNENT EN TERRASSE. ELLE LE PENSE VRAIMENT."
         },
         {
           "illustration": "terrasse-sourire-qui-tient",
@@ -1792,7 +1792,7 @@
     {
       "numero": 21,
       "slug": "miroir-du-matin",
-      "titre": "7 H 10.|TROISIÈME HAUT ESSAYÉ. AUCUN NE VA.",
+      "titre": "7 H 10.|PREMIER HAUT ESSAYÉ. ÇA NE VA PAS.",
       "emotions": [
         "degout",
         "honte",
@@ -1830,7 +1830,7 @@
             {
               "texte": "Allez, il faut que j’y aille maintenant.",
               "zone": "hg",
-              "type": "dit"
+              "type": "pense"
             },
             {
               "texte": "J’ai pas le temps de me regarder comme ça tous les matins.",
@@ -1886,7 +1886,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "TOUS LES DIMANCHES SOIR, IL S’ASSOIT À LA CUISINE ET ÉCRIT LA LISTE DE CE QU’IL DOIT FAIRE."
+          "narrateur": "TOUS LES DIMANCHES SOIR, IL S’ASSOIT À LA MÊME PLACE, DANS LA CUISINE."
         },
         {
           "illustration": "liste-dimanche-stylo-suspendu",
@@ -1933,7 +1933,7 @@
           "illustration": "liste-dimanche-interrupteur",
           "prompt": "Soft flat colors. Same man, early sixties, grey hair, glasses, standing alone in the kitchen doorway in the lower half of the frame, one hand raised to a light switch on the wall, five fingers visible, the other hand holding the closed notebook against his hip. He glances back at the empty table over his shoulder, expression unreadable and a little sad. Warm lamplight on one side, dark hallway on the other. The upper part of the frame is a plain quiet wall.",
           "bulles": [],
-          "narrateur": "IL ÉTEINT LA LUMIÈRE, SON CARNET SOUS LE BRAS. / CETTE SEMAINE, IL A FAIT QUATORZE CHOSES SANS EN COMPTER AUCUNE."
+          "narrateur": "IL ÉTEINT LA LUMIÈRE. / CETTE SEMAINE, IL A FAIT QUATORZE CHOSES SANS EN COMPTER AUCUNE."
         }
       ],
       "revelation": "Sa liste ne contient que ce qui manque : il n’y a aucune ligne pour ce qu’il a déjà fait. Alors il repeint une chambre le samedi et s’endort le dimanche en se disant qu’il n’a rien fait de son week-end. Tant que tu ne regardes que ce qui reste, tu ne peux pas sentir que tu avances.",
@@ -1963,7 +1963,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "IL EST 23 H 40 ET SON RÉVEIL SONNE À 6 H 30. / ELLE REGARDE ENCORE SON TÉLÉPHONE AU LIT."
+          "narrateur": "SON RÉVEIL SONNE À 6 H 30."
         },
         {
           "illustration": "telephone-noir-pouce-immobile",
@@ -2011,10 +2011,10 @@
               "type": "pense"
             }
           ],
-          "narrateur": "ELLE ATTEND UNE RÉPONSE QUI NE VIENDRA PAS CETTE NUIT. / SON CORPS RÉAGIT COMME S’IL Y AVAIT UN DANGER."
+          "narrateur": "ELLE ATTEND UNE RÉPONSE QUI NE VIENDRA PAS. / SON CORPS RÉAGIT COMME S’IL Y AVAIT UN DANGER."
         }
       ],
-      "revelation": "Elle ne relisait pas son message pour le comprendre, elle le relisait pour être rassurée. Chaque relecture la calme dix secondes, puis rallume l’alarme un cran plus haut. Et en face, il n’y avait aucun message caché : quelqu’un a lu, puis s’est endormi.",
+      "revelation": "Elle ne relisait pas son message pour le comprendre, elle le relisait pour être rassurée. Chaque relecture la calmait dix secondes, puis rallumait l’alarme un cran plus haut. Et en face, il n’y avait aucun message caché : quelqu’un a lu, puis s’est endormi.",
       "question": "Quel message est-ce que tu as relu dix fois, le soir, en attendant une réponse ?",
       "legende": "Ton corps ne fait pas la différence entre un danger et une question restée sans réponse. Tant que quelque chose reste ouvert, il reste ouvert aussi : allongée, dans le noir, épuisée, mais en alerte. C’est pour ça que « j’y penserai demain » ne marche presque jamais le soir. Ce n’est pas ta tête qui refuse de lâcher, c’est ton système d’alerte qui n’a pas reçu le signal de fin. Tu n’as pas besoin d’une réponse cette nuit. Tu as besoin d’un geste qui dise à ton corps que la garde est levée.",
       "hashtags": "#émotions #psychologie #développementpersonnel #bienêtre #connaissancedesoi #santémentale #anxiété #sommeil",
@@ -2040,7 +2040,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "IL EST 11 H, C’EST SAMEDI, ET IL SE RÉVEILLE AUSSI FATIGUÉ QU’HIER SOIR."
+          "narrateur": "IL SE RÉVEILLE AUSSI FATIGUÉ QU’HIER SOIR."
         },
         {
           "illustration": "fatigue-canape-tasse-froide",
@@ -2117,7 +2117,7 @@
               "type": "dit"
             }
           ],
-          "narrateur": "IL RENTRE CHEZ LUI, IL N’Y A PERSONNE D’AUTRE CE SOIR. / IL ATTENDAIT CETTE SOIRÉE DEPUIS LUNDI."
+          "narrateur": "IL RENTRE CHEZ LUI, IL N’Y A PERSONNE CE SOIR. / IL ATTENDAIT CETTE SOIRÉE DEPUIS LUNDI."
         },
         {
           "illustration": "calme-soir-assis-trop-droit",
@@ -2147,7 +2147,7 @@
           "illustration": "calme-soir-fenetre-ouverte",
           "prompt": "Soft flat colors. Same man, thirties, olive skin, short beard, t-shirt, seen from behind and slightly to the side in the lower half of the frame, leaning both forearms on the sill of an open window, five fingers visible on each hand, head lowered between his shoulders. His shoulders have visibly dropped. Cool blue night air and a few distant lit windows outside. The upper part of the frame is open dark sky, calm and uncluttered.",
           "bulles": [],
-          "narrateur": "ACCOUDÉ À LA FENÊTRE, IL SOUPIRE POUR LA DEUXIÈME FOIS. / SES ÉPAULES COMMENCENT ENFIN À REDESCENDRE."
+          "narrateur": "ACCOUDÉ À LA FENÊTRE, IL SOUPIRE / POUR LA DEUXIÈME FOIS. / SES ÉPAULES COMMENCENT ENFIN À REDESCENDRE."
         },
         {
           "illustration": "calme-soir-assis-par-terre",
@@ -2162,7 +2162,7 @@
           "narrateur": "IL EST RENTRÉ IL Y A QUARANTE MINUTES. / IL VIENT SEULEMENT DE SE POSER POUR DE BON."
         }
       ],
-      "revelation": "En rentrant, son corps était encore en mode journée de travail : il a tourné en rond, rangé un coussin, envisagé de travailler alors que personne ne le lui demandait. Il lui a fallu quarante minutes pour se poser vraiment. Le calme n’arrive pas à la seconde où le bruit s’arrête : il descend lentement, et il a besoin de ce temps-là.",
+      "revelation": "Quand il est rentré, son corps était encore en mode journée de travail : il a tourné en rond, rangé un coussin, envisagé de travailler alors que personne ne le lui demandait. Il lui a fallu quarante minutes pour se poser vraiment. Le calme n’arrive pas à la seconde où le bruit s’arrête : il descend lentement, et il a besoin de ce temps-là.",
       "question": "Combien de temps il te faut, à toi, pour te poser vraiment ?",
       "legende": "Une soirée libre ne se transforme pas en repos toute seule. Il y a d’abord ce moment bizarre où tu tournes en rond, où tu ranges des choses qui n’en avaient pas besoin, où tu envisages sérieusement de bosser un mardi soir. Ce n’est pas que tu ne saurais pas te reposer : c’est que ton système d’alerte n’a pas encore reçu l’information que la journée est finie. Il lui faut vingt, trente, parfois quarante minutes. Si tu connais ce délai, tu arrêtes de le prendre pour un échec. Tu attends, et ça descend.",
       "hashtags": "#émotions #psychologie #développementpersonnel #bienêtre #connaissancedesoi #santémentale #sérénité #repos",
@@ -2277,7 +2277,7 @@
       ],
       "revelation": "Sa peur n’a pas bougé d’un centimètre : l’atelier fermera peut-être quand même en janvier. Ce qui s’est allégé, c’est tout le travail qu’il faisait pour la cacher. Se sentir mieux, ce n’est pas avoir résolu le problème, c’est arrêter de faire semblant qu’il n’existe pas.",
       "question": "Et toi, à qui est-ce que tu réponds « ça va » alors que ça ne va pas ?",
-      "legende": "Tu attends d’avoir trouvé la solution avant de t’autoriser à en parler. Alors tu réponds « ça va » et tu gardes tout. Ce qui se passe dans cet atelier est très simple : il finit par dire à voix haute qu’il a peur de mettre la clé sous la porte en janvier, et son apprentie s’assoit à côté de lui. Elle ne répare rien, elle ne donne aucun conseil, elle reste. Le problème est toujours là, entier. Mais il ne dépense plus ses journées à le cacher, et ça pèse déjà beaucoup moins lourd. Le test des 14 émotions est dans la bio.",
+      "legende": "Tu attends d’avoir trouvé la solution avant de t’autoriser à en parler. Alors tu réponds « ça va » et tu gardes tout. Ce qui se passe dans cet atelier est très simple : il finit par dire à voix haute qu’il a peur de mettre la clé sous la porte en janvier, et son apprentie s’assoit à côté de lui. Elle ne répare rien, elle ne donne aucun conseil, elle reste. Le problème est toujours là, entier. Mais il ne passe plus ses journées à le cacher, et ça pèse déjà beaucoup moins lourd.",
       "hashtags": "#sérénité #émotions #çava #santémentale #boussoleémotionnelle #scènedevie #respirer #tuespasseul",
       "lienGuide": "serenite.html",
       "fiche": "CHARACTERS (keep strictly identical in every image): THE MAN — fifties, dark brown skin, short grey hair, grey-flecked beard, wearing a faded navy work apron over a rust-orange t-shirt. THE APPRENTICE — late twenties, pale freckled skin, short auburn hair under a red beanie, wearing a cream sweatshirt and dark denim dungarees."
@@ -2324,7 +2324,7 @@
               "type": "dit"
             },
             {
-              "texte": "Il s’excuse pour tout depuis qu’il a emménagé ici.",
+              "texte": "J’aimerais juste qu’il se sente chez lui.",
               "zone": "md",
               "type": "pense"
             }
@@ -2388,9 +2388,9 @@
           "narrateur": "IL MANGE LENTEMENT. / ELLE ÉPLUCHE UNE CLÉMENTINE À CÔTÉ DU LIT, SANS RIEN DEMANDER."
         }
       ],
-      "revelation": "Quand il dit « désolé », il demande pardon d’occuper une place qu’il croit ne pas mériter, et il met l’autre dehors. Quand il dit « merci », il reconnaît simplement que quelqu’un lui a donné quelque chose. C’est le même bol de soupe, mais dans le deuxième cas il a le droit d’être là.",
+      "revelation": "Quand il dit « désolé », il demande pardon d’occuper une place qu’il croit ne pas mériter, et il met l’autre à distance. Quand il dit « merci », il reconnaît simplement que quelqu’un lui a donné quelque chose. C’est le même bol de soupe, mais dans le deuxième cas il a le droit d’être là.",
       "question": "Et toi, ton dernier « désolé » — est-ce qu’il ne voulait pas dire « merci » ?",
-      "legende": "À force de s’excuser d’exister, on ne s’entend même plus le faire. Pourtant la personne qui t’apporte la soupe n’a rien à te pardonner : la plupart du temps, elle n’a même pas remarqué qu’elle aurait pu t’en vouloir. Essaie cet exercice cette semaine : garde « désolé » pour les fois où tu as vraiment fait du tort à quelqu’un, et mets « merci » partout ailleurs. Les trois premières fois, c’est inconfortable, tu vas buter dessus. Ensuite, c’est la façon dont les gens te reçoivent qui change. Ton test des 14 émotions est en bio.",
+      "legende": "À force de s’excuser d’exister, on ne s’entend même plus le faire. Pourtant la personne qui t’apporte la soupe n’a rien à te pardonner : la plupart du temps, elle n’a même pas remarqué qu’elle aurait pu t’en vouloir. Essaie cet exercice cette semaine : garde « désolé » pour les fois où tu as vraiment fait du tort à quelqu’un, et mets « merci » partout ailleurs. Les trois premières fois, c’est inconfortable, tu vas buter dessus. Ensuite, c’est la façon dont les gens te reçoivent qui change.",
       "hashtags": "#gratitude #merci #émotions #colocation #santémentale #boussoleémotionnelle #scènedevie #prendresaplace",
       "lienGuide": "gratitude.html",
       "fiche": "CHARACTERS (keep strictly identical in every image): THE MAN — mid-twenties, light tan skin, black hair flattened by the pillow, red nose from the cold, wearing a washed-out grey t-shirt under a thick oatmeal blanket. THE FLATMATE — thirties, deep brown skin, generous build, long black braids, wearing a mustard-yellow jumper and dark grey leggings."
@@ -2459,7 +2459,7 @@
               "type": "dit"
             }
           ],
-          "narrateur": "LA NAGEUSE PLUS ÂGÉE NE CHANGE PAS DE SUJET : ELLE POSE UNE DEUXIÈME QUESTION."
+          "narrateur": "LA NAGEUSE LA PLUS ÂGÉE NE CHANGE PAS DE SUJET : ELLE POSE UNE DEUXIÈME QUESTION."
         },
         {
           "illustration": "piscine-la-question-de-trop",
@@ -2508,7 +2508,7 @@
       ],
       "revelation": "Ta joie n’était pas petite : c’est toi qui l’as annoncée en t’excusant, et elle a rétréci en sortant de ta bouche. Quand quelqu’un pose une deuxième question au lieu de passer à autre chose, elle reprend toute sa taille. Elle avait le droit d’exister avant, mais c’est beaucoup plus facile de la sentir quand on te croit.",
       "question": "Et toi, ta dernière bonne nouvelle, tu l’as annoncée comment ?",
-      "legende": "« Bof », « c’est rien », « j’ai juste » : tu as tellement appris à emballer les bonnes nouvelles en tout petit que tu ne sais plus les laisser exister en entier. Une joie annoncée à voix basse ne dérange personne, c’est vrai. Elle meurt juste plus vite. La prochaine fois, donne le chiffre. Dis d’où tu pars, parce que c’est là qu’est toute l’histoire : six longueurs en janvier, quarante aujourd’hui. Et si quelqu’un te pose une deuxième question, ne change surtout pas de sujet — c’est exactement le moment où ta joie devient réelle. Tes 14 émotions notées sur 10, le test est en bio.",
+      "legende": "« Bof », « c’est rien », « j’ai juste » : tu as tellement appris à emballer les bonnes nouvelles en tout petit que tu ne sais plus les laisser exister en entier. Une joie annoncée à voix basse ne dérange personne, c’est vrai. Elle meurt juste plus vite. La prochaine fois, donne le chiffre. Dis d’où tu pars, parce que c’est là qu’est toute l’histoire : six longueurs en janvier, quarante aujourd’hui. Et si quelqu’un te pose une deuxième question, ne change surtout pas de sujet — c’est exactement le moment où ta joie devient réelle.",
       "hashtags": "#joie #fierté #bonnenouvelle #émotions #natation #boussoleémotionnelle #scènedevie #petitesvictoires",
       "lienGuide": "joie.html",
       "fiche": "CHARACTERS (keep strictly identical in every image): THE WOMAN — fifties, pale skin, full figure, wet dark brown bob streaked with grey, wearing a navy swimsuit under a cream towel held around her shoulders. THE SWIMMER — seventies, deep brown skin, short white hair with a pale yellow swim cap pushed back off it, wearing a teal swimsuit with a striped towel over one arm."
@@ -2712,7 +2712,7 @@
               "type": "pense"
             }
           ],
-          "narrateur": "SON FRÈRE HAUSSE LES ÉPAULES ET PARLE D’AUTRE CHOSE. / IL N’EST MÊME PAS CONTRARIÉ."
+          "narrateur": "SON FRÈRE HAUSSE LES ÉPAULES ET PARLE D’AUTRE CHOSE."
         },
         {
           "illustration": "palier-elle-referme-la-porte",
@@ -2734,7 +2734,7 @@
       ],
       "revelation": "Cette chaleur qui monte dans ta poitrine juste après un refus qui n’a blessé personne, ça s’appelle la fierté. Tu la sens si rarement dans ces moments-là que tu la prends d’abord pour de la gêne ou de la culpabilité.",
       "question": "Et toi, ton dernier « non » : combien de semaines à y penser, et combien de secondes le jour venu ?",
-      "legende": "Un « non » dure une seconde. La peur de dire non, elle, peut durer trois semaines. C’est ce décalage qui te coûte le plus cher : pas le refus lui-même, mais tout l’entraînement avant. Et la plupart du temps, l’autre n’attendait même pas de justification — il posait une question, c’est tout, et il ira demander ailleurs sans drame ni rancune. Poser une limite, ce n’est pas fermer la porte à quelqu’un, c’est arrêter de te cacher derrière une excuse. Si tu veux savoir laquelle de tes 14 émotions parle le plus fort en ce moment, le test est en bio.",
+      "legende": "Un « non » dure une seconde. La peur de dire non, elle, peut durer trois semaines. C’est ce décalage qui te coûte le plus cher : pas le refus lui-même, mais tout l’entraînement d’avant. Et la plupart du temps, l’autre n’attend même pas de justification — il pose une question, c’est tout, et il ira demander ailleurs sans drame ni rancune. Poser une limite, ce n’est pas fermer la porte à quelqu’un, c’est arrêter de te cacher derrière une excuse. Si tu veux savoir laquelle de tes 14 émotions parle le plus fort en ce moment, le test est en bio.",
       "hashtags": "#fierté #direnon #limites #émotions #culpabilité #boussoleémotionnelle #scènedevie #chargementale",
       "lienGuide": "fierte.html",
       "fiche": "CHARACTERS (keep strictly identical in every image): THE WOMAN — forties, warm brown skin, long dark brown hair in a single braid over one shoulder, wearing a rust-orange jumper with the sleeves pushed up and a blue checked tea towel on her shoulder. THE BROTHER — mid-thirties, light brown skin, short dark hair and light stubble, wearing a blue denim jacket over a grey t-shirt with an olive canvas bag on his shoulder."

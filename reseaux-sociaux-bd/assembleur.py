@@ -673,7 +673,15 @@ def slide_titre(post):
     sur_une_tete = any(y0 < bas_titre and y1 > HAUT
                        for y0, y1 in ((_boite_visage(v)[1], _boite_visage(v)[3])
                                       for v in visages(post["slides"][0].get("illustration"))))
-    voile_haut(img, bas_titre + E(90), 3.0 if sur_une_tete else 1.6)
+    voile_haut(img, bas_titre + E(90))
+    if sur_une_tete:
+        # Trois scènes cadrent un personnage très haut, et le titre lui passait sur le
+        # front. Un voile plus couvrant a d'abord semblé la réponse : il délavait tout
+        # le haut du crâne, qui ressortait blanc comme effacé. Un bandeau franc derrière
+        # les seules lignes de titre laisse le visage intact juste en dessous.
+        d = ImageDraw.Draw(img)
+        d.rounded_rectangle([E(30), HAUT - E(30), W - E(30), bas_titre + E(16)],
+                            radius=E(22), fill=CREME)
     d = ImageDraw.Draw(img)
     y = HAUT
     for i, l in enumerate(lignes):

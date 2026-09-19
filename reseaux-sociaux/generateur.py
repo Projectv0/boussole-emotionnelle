@@ -35,7 +35,7 @@ FORMATS = {
 SERIES = {
     "comprendre":  dict(jour="lundi",    etiq="COMPRENDRE · ÉPISODE {n}/13"),
     "distinction": dict(jour="mercredi", etiq="DEUX MOTS, DEUX CHOSES · {n}/13"),
-    "pratique":    dict(jour="vendredi", etiq="LA PRATIQUE DU VENDREDI · {n}/13"),
+    "pratique":    dict(jour="vendredi", etiq="LA PRATIQUE · {n}/13"),
 }
 
 _fonts, _vign = {}, {}
