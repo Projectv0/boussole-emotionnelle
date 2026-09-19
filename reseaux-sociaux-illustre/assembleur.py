@@ -84,6 +84,34 @@ def couper(t, f, maxw):
         lignes.append(cour)
     return lignes
 
+def couper_equilibre(t, f, maxw):
+    """Comme couper(), mais sans laisser un mot seul sur la dernière ligne.
+
+    Le retour à la ligne au plus long remplit la première ligne à ras bord et
+    rejette la fin — « non. », « chose », « MINUTES » — seule en dessous. Sur la
+    moitié des sous-titres, la chute de la phrase se retrouvait ainsi orpheline.
+
+    On garde le même nombre de lignes, mais on cherche la largeur la plus étroite
+    qui le permette encore : le texte se répartit alors de lui-même. Chaque
+    paragraphe est traité à part, sinon un saut de ligne voulu — le « / » du
+    narrateur — laissait la première moitié déséquilibrée.
+    """
+    out = []
+    for para in t.split("\n"):
+        lignes = couper(para, f, maxw)
+        if len(lignes) >= 2:
+            bas, haut = int(maxw * .35), int(maxw)
+            while bas < haut:
+                milieu = (bas + haut) // 2
+                if len(couper(para, f, milieu)) <= len(lignes):
+                    haut = milieu
+                else:
+                    bas = milieu + 1
+            lignes = couper(para, f, haut)
+        out += lignes
+    return out
+
+
 def police_ajustee(t, chemin, taille, poids, maxw, hmax, il=1.3, mini=21):
     """Réduit le corps jusqu'à ce que le texte tienne dans hmax.
 
@@ -99,7 +127,7 @@ def police_ajustee(t, chemin, taille, poids, maxw, hmax, il=1.3, mini=21):
     return F(chemin, mini, poids)
 
 def ecrire(d, t, x, y, f, col, maxw, il=1.3, align="centre"):
-    for l in couper(t, f, maxw):
+    for l in couper_equilibre(t, f, maxw):
         w = larg(l, f)
         px = x - w / 2 if align == "centre" else (x - w if align == "droite" else x)
         d.text((px, y), l, font=f, fill=col)

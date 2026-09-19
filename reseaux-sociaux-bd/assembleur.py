@@ -75,6 +75,34 @@ def couper(t, f, maxw):
         lignes.append(cour)
     return lignes
 
+def couper_equilibre(t, f, maxw):
+    """Comme couper(), mais sans laisser un mot seul sur la dernière ligne.
+
+    Le retour à la ligne au plus long remplit la première ligne à ras bord et
+    rejette la fin — « non. », « chose », « MINUTES » — seule en dessous. Sur la
+    moitié des sous-titres, la chute de la phrase se retrouvait ainsi orpheline.
+
+    On garde le même nombre de lignes, mais on cherche la largeur la plus étroite
+    qui le permette encore : le texte se répartit alors de lui-même. Chaque
+    paragraphe est traité à part, sinon un saut de ligne voulu — le « / » du
+    narrateur — laissait la première moitié déséquilibrée.
+    """
+    out = []
+    for para in t.split("\n"):
+        lignes = couper(para, f, maxw)
+        if len(lignes) >= 2:
+            bas, haut = int(maxw * .35), int(maxw)
+            while bas < haut:
+                milieu = (bas + haut) // 2
+                if len(couper(para, f, milieu)) <= len(lignes):
+                    haut = milieu
+                else:
+                    bas = milieu + 1
+            lignes = couper(para, f, haut)
+        out += lignes
+    return out
+
+
 # ————— illustrations —————
 def chemin_illustration(nom):
     for ext in (".jpg", ".jpeg", ".png", ".webp"):
@@ -417,7 +445,7 @@ def mesurer_bulle(texte, genre, zone, depuis=0):
     """Taille et place de repos d'une bulle, avant d'éviter les visages."""
     fx, fy, align = ZONES.get(zone, ZONES["hg"])
     f = F(CONDENSE, 38, DEMI)
-    lignes = couper(texte.upper() if genre == "dit" else texte, f, int(W * .40))
+    lignes = couper_equilibre(texte.upper() if genre == "dit" else texte, f, int(W * .40))
     lh = int(f.size * 1.16)
     pad = E(22)
     bw = max(larg(l, f) for l in lignes) + pad * 2
@@ -586,7 +614,7 @@ def _bandeau_narrateur(texte):
     # Un « / » dans le texte du narrateur marque une coupure voulue entre deux
     # phrases : il était rendu tel quel, au milieu du bandeau. On le traduit en
     # retour à la ligne, et couper() respecte déjà les sauts de ligne.
-    lignes = couper(re.sub(r"\s*/\s*", "\n", texte).upper(), f, int(W * .74))
+    lignes = couper_equilibre(re.sub(r"\s*/\s*", "\n", texte).upper(), f, int(W * .74))
     lh = int(f.size * 1.2)
     pad = E(20)
     bw = max(larg(l, f) for l in lignes) + pad * 2
