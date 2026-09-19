@@ -107,6 +107,13 @@ def _bord_dessine(sombres, unies, moyennes, limite):
         return j
     return 0
 
+# Les rognages décidés à la main, quand la détection ne peut pas trancher.
+# Une bande d'aplat en haut du panneau est presque toujours la zone calme voulue,
+# celle où se posent les bulles : on ne la rogne pas. Sauf quand c'est visiblement
+# une barre noire posée sur la scène, avec une arête franche et une couleur
+# étrangère au décor — ce qui n'arrive qu'ici, sur cent cinquante illustrations.
+A_ROGNER = {"calme-soir-fenetre-ouverte": (0.0, 0.28, 1.0, 1.0)}
+
 _source = {}
 def source(nom):
     """L'illustration, débarrassée du cadre que le générateur dessine parfois.
@@ -142,6 +149,10 @@ def source(nom):
     gauche = _bord_dessine(*bande(range(lim_h), h, False), lim_h)
     droite = _bord_dessine(*bande(range(w - 1, w - lim_h - 1, -1), h, False), lim_h)
     boite = (gauche, haut, w - droite, h - bas)
+    main = A_ROGNER.get(nom)
+    if main:
+        boite = (max(boite[0], int(w * main[0])), max(boite[1], int(h * main[1])),
+                 min(boite[2], int(w * main[2])), min(boite[3], int(h * main[3])))
     if boite != (0, 0, w, h):
         im = im.crop(boite)
     _source[nom] = (im, boite, (w, h))
