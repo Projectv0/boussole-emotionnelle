@@ -1,6 +1,6 @@
 # Ce que tu as à faire
 
-*État au 21 septembre 2026.*
+*État au 21 septembre 2026, mis à jour après la validation Search Console.*
 
 Tout ce qui pouvait être fait dans le dépôt l'est. Ce qui reste demande un compte tiers,
 une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste que ça.
@@ -21,29 +21,27 @@ train de mal tourner. Le bloc B est à faire **avant** de basculer, pas en urgen
 *Aucune dépendance. C'est le bloc le plus rentable et le seul qui soit entièrement entre tes
 mains dès maintenant.*
 
-## A1 · Search Console — 15 minutes, une seule fois
+## ~~A1 · Search Console~~ — ✅ fait le 21 septembre 2026
 
-**Le point de départ de tout le reste.** 59 pages sont en ligne et je n'ai aucun moyen de
-savoir si Google les voit, lesquelles remontent, sur quelles requêtes, ni où les gens
-abandonnent. Tant que ce n'est pas fait, je travaille à l'aveugle.
+Propriété à préfixe d'URL `https://boussole-emotionnelle.fr/`, validée par balise HTML —
+la zone DNS chez IONOS n'a pas été touchée. La balise est dans le `<head>` d'`index.html` :
+**ne la retire jamais**, Google revérifie périodiquement et la propriété se perd avec elle.
 
-1. Va sur <https://search.google.com/search-console> avec ton compte Google.
-2. « Ajouter une propriété » → colonne de **droite**, « Préfixe d'URL ».
-   Saisis exactement `https://boussole-emotionnelle.fr/`
-3. Méthode de validation : choisis **« Balise HTML »**. Google affiche une ligne du type
-   `<meta name="google-site-verification" content="AbC123..." />`
-4. **Copie-la et colle-la-moi ici.** Je l'ajoute à `index.html` et je pousse — deux minutes.
-5. Quand je te dis que c'est en ligne, reviens cliquer « Valider ».
-6. Une fois validé : menu **Sitemaps** → saisis `sitemap.xml` → Envoyer.
+`sitemap.xml` envoyé, **59 URL lues, « Opération effectuée »**. Réexploration demandée pour
+`/guide/`, dont la refonte en six sections date du 19 septembre.
 
-> Prends bien **Préfixe d'URL**, pas **Domaine**. La propriété « Domaine » exige un
-> enregistrement DNS chez IONOS ; la balise HTML m'évite de toucher à ta zone DNS, et le
-> résultat est le même pour ce site (le `www` et le `http` redirigent déjà).
+Ce qu'on sait déjà : l'accueil et `/guide/` **sont indexés**. Le rapport d'indexation complet
+affiche encore « traitement des données en cours » — il faut environ 24 h après validation.
 
-## A2 · Bing Webmaster Tools — 3 minutes, juste après
+> Le compte propriétaire n'est **pas** `mcavalier2011@gmail.com`, qui était connecté en
+> premier dans Chrome. Une propriété non validée traîne sous ce compte-là ; sans effet, à
+> supprimer un jour où tu passes par là.
+
+## A2 · Bing Webmaster Tools — 3 minutes · **c'est le prochain**
 
 <https://www.bing.com/webmasters> → « Importer depuis Google Search Console ». Tout est
-repris automatiquement, y compris le sitemap. Bing alimente aussi DuckDuckGo et Ecosia, et
+repris automatiquement, y compris le sitemap. Search Console étant maintenant validé,
+l'import n'a plus aucun préalable. Bing alimente aussi DuckDuckGo et Ecosia, et
 la concurrence y est bien plus faible que sur Google.
 
 ## A3 · Vérifier que `contact@` arrive vraiment
@@ -266,7 +264,7 @@ carrousels et le dossier `publication/` en une commande.
 
 | Tu me donnes | Je fais |
 |---|---|
-| la balise `google-site-verification` | je l'ajoute et je pousse (2 min) |
+| ~~la balise `google-site-verification`~~ | ✅ en ligne, propriété validée, sitemap envoyé |
 | ton choix de mesure d'audience | j'installe et je pose les cinq repères |
 | les 10 décisions | je complète statuts et pacte |
 | les 7 champs du Kbis + directeur de publication | je publie les trois pages légales SAS |
