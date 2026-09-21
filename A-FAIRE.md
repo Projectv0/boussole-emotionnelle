@@ -1,6 +1,7 @@
 # Ce que tu as à faire
 
-*État au 21 septembre 2026, mis à jour après la validation Search Console.*
+*État au 21 septembre 2026. Search Console et Bing sont faits ; le bloc A est à moitié
+clos, et tout ce qui reste ne dépend plus que de toi.*
 
 Tout ce qui pouvait être fait dans le dépôt l'est. Ce qui reste demande un compte tiers,
 une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste que ça.
@@ -37,14 +38,25 @@ affiche encore « traitement des données en cours » — il faut environ 24 h a
 > premier dans Chrome. Une propriété non validée traîne sous ce compte-là ; sans effet, à
 > supprimer un jour où tu passes par là.
 
-## A2 · Bing Webmaster Tools — 3 minutes · **c'est le prochain**
+## ~~A2 · Bing Webmaster Tools~~ — ✅ fait le 21 septembre 2026
 
-<https://www.bing.com/webmasters> → « Importer depuis Google Search Console ». Tout est
-repris automatiquement, y compris le sitemap. Search Console étant maintenant validé,
-l'import n'a plus aucun préalable. Bing alimente aussi DuckDuckGo et Ecosia, et
-la concurrence y est bien plus faible que sur Google.
+Site ajouté **manuellement** et validé par balise méta, sur le compte `odem-app`. Le
+sitemap est soumis, statut « Traitement », 0 erreur. Bing alimente aussi DuckDuckGo et
+Ecosia, où la concurrence est bien plus faible que sur Google.
 
-## A3 · Vérifier que `contact@` arrive vraiment
+Deux voies ont été écartées, volontairement :
+
+- **l'import depuis Google Search Console**, qui aurait accordé à Microsoft un accès en
+  lecture au Search Console du site ;
+- **la vérification DNS automatique**, que Bing recommandait en première position : il
+  avait détecté que le domaine est chez IONOS et proposait de s'y connecter pour poser un
+  CNAME. On ne donne pas à Microsoft la zone DNS du domaine pour un service de
+  statistiques.
+
+La balise `msvalidate.01` est dans le `<head>` d'`index.html`, à côté de celle de Google.
+**Ne les retire ni l'une ni l'autre** : les deux services revérifient périodiquement.
+
+## A3 · Vérifier que `contact@` arrive vraiment · **c'est le prochain**
 
 Les CGV promettent le service après-vente à `contact@boussole-emotionnelle.fr`, qui redirige
 vers `contact@odem-app.com`. **Envoie un message à l'adresse publique depuis une autre boîte
