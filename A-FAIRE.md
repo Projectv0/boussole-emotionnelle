@@ -56,14 +56,32 @@ Deux voies ont été écartées, volontairement :
 La balise `msvalidate.01` est dans le `<head>` d'`index.html`, à côté de celle de Google.
 **Ne les retire ni l'une ni l'autre** : les deux services revérifient périodiquement.
 
-## A3 · Vérifier que `contact@` arrive vraiment · **c'est le prochain**
+## ~~A3 · La redirection `contact@`~~ — ✅ vérifiée le 21 septembre 2026
 
-Les CGV promettent le service après-vente à `contact@boussole-emotionnelle.fr`, qui redirige
-vers `contact@odem-app.com`. **Envoie un message à l'adresse publique depuis une autre boîte
-et vérifie qu'il arrive.** Si la redirection est cassée, un client qui a payé et n'a rien reçu
-n'a aucun moyen de te joindre — et c'est écrit noir sur blanc dans un document contractuel.
+**La réception marche.** Six messages adressés à `contact@boussole-emotionnelle.fr` sont
+bien dans la boîte `contact@odem-app.com`, le plus récent aujourd'hui à 19 h 01. Ce n'est
+pas un test : c'est de la livraison réelle, déjà arrivée. Les MX des deux domaines pointent
+chez IONOS, avec SPF et DMARC déclarés.
 
-## A4 · Créer les deux comptes réseaux
+**Mais on ne peut pas répondre depuis cette adresse.** La boîte n'a qu'une seule identité
+d'expéditeur — `contact@odem-app.com`, au nom d'affichage « Jimmy Blettner ». Aucun alias,
+et le champ « Répondre à » est vide.
+
+Le scénario que ça produit, et il arrivera : un client écrit à l'adresse du site parce qu'il
+a payé et n'a rien reçu. Il reçoit une réponse de **« Jimmy Blettner » via un domaine qu'il
+n'a jamais vu**, au sujet de son argent. Une partie classera ça en hameçonnage ; ceux qui
+doutent demanderont un remboursement plutôt que de répondre.
+
+Deux corrections possibles, toutes deux dans ton espace IONOS — je ne m'y connecte pas :
+
+1. **La bonne** : ajouter `contact@boussole-emotionnelle.fr` comme adresse d'expéditeur sur
+   cette boîte, si la formule IONOS le permet. La réponse part alors de l'adresse du site.
+2. **La gratuite, en attendant** : renseigner « Répondre à » avec
+   `contact@boussole-emotionnelle.fr` et remplacer le nom d'affichage par « Boussole
+   émotionnelle ». L'expéditeur reste `odem-app.com`, mais le nom et l'adresse de réponse
+   cessent de contredire le site. À décider avec Jimmy : c'est sa boîte.
+
+## A4 · Créer les deux comptes réseaux · **c'est le prochain**
 
 99 publications sont prêtes dans `publication/`, six par semaine sur 17 semaines. Il manque
 les comptes.
