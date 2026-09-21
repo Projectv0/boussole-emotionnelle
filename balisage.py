@@ -120,6 +120,36 @@ def passe(chemin, ecrire):
     return faits
 
 
+def sommaire(ecrire):
+    """Recale les noms de l'ItemList du sommaire sur les <title> réels des pages.
+
+    Cette liste est une copie : renommer un article ne la met pas à jour, et onze
+    entrées annonçaient encore d'anciens titres. Un sommaire qui décrit ses pages
+    autrement qu'elles ne se nomment apprend au moteur à s'en méfier.
+    """
+    chemin = os.path.join(BASE, "guide", "index.html")
+    t = texte = open(chemin, encoding="utf-8").read()
+    ecarts = []
+    for bloc in re.findall(r'<script type="application/ld\+json">(.*?)</script>', t, re.S):
+        if '"ItemList"' not in bloc:
+            continue
+        o = json.loads(bloc)
+        for e in o["mainEntity"]["itemListElement"]:
+            page = os.path.join(BASE, "guide", e["url"].rstrip("/").rsplit("/", 1)[-1])
+            if not os.path.exists(page):
+                continue
+            reel = re.search(r"<title>(.*?)</title>", open(page, encoding="utf-8").read(),
+                             re.S).group(1)
+            if e.get("name") != reel:
+                ecarts.append(e["name"])
+                e["name"] = reel
+        if ecarts:
+            t = t.replace(bloc, json.dumps(o, ensure_ascii=False, indent=1), 1)
+    if ecarts and ecrire:
+        open(chemin, "w", encoding="utf-8").write(t)
+    return ecarts
+
+
 def principal(ecrire=True):
     fichiers = sorted(glob.glob(os.path.join(BASE, "guide", "*.html")))
     n = 0
@@ -131,6 +161,9 @@ def principal(ecrire=True):
                 print("  %-46s %s" % (os.path.basename(f), " · ".join(faits)))
     verbe = "complétées" if ecrire else "à compléter"
     print(f"{n} pages {verbe} sur {len(fichiers)}")
+    ecarts = sommaire(ecrire)
+    print(f"sommaire : {len(ecarts)} entrées recalées sur le titre réel de la page"
+          if ecarts else "sommaire : les 57 entrées nomment les pages comme elles se nomment")
     return 0
 
 
