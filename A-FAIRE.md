@@ -81,19 +81,33 @@ Deux corrections possibles, toutes deux dans ton espace IONOS — je ne m'y conn
    émotionnelle ». L'expéditeur reste `odem-app.com`, mais le nom et l'adresse de réponse
    cessent de contredire le site. À décider avec Jimmy : c'est sa boîte.
 
-## A4 · Créer les deux comptes réseaux · **c'est le prochain**
+## ~~A4 · Les deux comptes réseaux~~ — ✅ fait le 23 septembre 2026
 
-99 publications sont prêtes dans `publication/`, six par semaine sur 17 semaines. Il manque
-les comptes.
+Instagram et TikTok existent. Les 99 publications de `publication/` sont prêtes : six par
+semaine, du lundi au samedi, sur 17 semaines, sans jamais deux fois le même genre deux
+jours de suite. Le mode d'emploi d'une journée tient en deux minutes :
+`publication/LISEZMOI.md`.
 
-- **Instagram** et **TikTok** : même nom, même photo, même bio.
+### Ce qui reste à faire une fois, sur les comptes
+
 - **Lien en bio** sur les deux : `https://boussole-emotionnelle.fr` — toutes les légendes y
-  renvoient et aucune ne peut être cliquable dans le texte.
-- Compte **professionnel/créateur** des deux côtés : c'est ce qui donne accès aux statistiques.
-- Mode d'emploi complet du calendrier : `publication/LISEZMOI.md`.
+  renvoient, et aucune ne peut être cliquable dans le texte.
+- **Compte professionnel ou créateur** des deux côtés : c'est ce qui ouvre les statistiques.
+- **Heures** : 12 h-13 h ou 19 h-21 h. La régularité compte plus que l'heure parfaite.
+- **Les trente premières minutes** : répondre aux commentaires. C'est le signal
+  d'engagement le plus fort sur les deux plateformes.
 
-Tu peux commencer à publier **avant** que la vente soit ouverte. C'est même préférable : le
-temps que l'audience se construise, le parcours d'achat sera prêt.
+### Ce que j'attends de toi pour brancher le site
+
+**Les deux adresses de profil.** Elles me servent à deux choses :
+
+1. le bloc `Organization` de l'accueil attend son tableau `sameAs` — c'est ce qui permet à
+   Google de comprendre que la marque sur les réseaux et le domaine sont une seule entité ;
+2. des liens en pied de page, sur l'accueil et sur le guide.
+
+**Et, dans Search Console**, tu peux maintenant rattacher Instagram et TikTok comme
+« comptes de plate-forme » : tu verras dans un même tableau ce qui vient du site et ce qui
+vient des réseaux. Ça passe par une autorisation que tu accordes toi-même.
 
 ## A5 · Mesure d'audience — **écrite, il ne manque que le branchement**
 
