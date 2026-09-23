@@ -384,6 +384,7 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .eval-legende{ font-size:.8rem; color:var(--muted); margin:-.4rem 0 1rem; }
 .low-chip.absente{ opacity:.55; border-style:dashed; }
 .bar-row.absente, .bal-row.absente{ opacity:.5; }
+.ana.absente > summary{ opacity:.6; }
 .bar-row.absente .bar-track{ background-image:repeating-linear-gradient(90deg, var(--hairline) 0 6px, transparent 6px 12px); }
 .eval-chips{
   display:flex; flex-wrap:wrap; gap:.45rem; justify-content:center;
@@ -906,11 +907,12 @@ footer p + p{ margin-top:.3rem; }
         <h3 style="margin-top:1.6rem">Le parcours, en quatre temps</h3>
         <p style="margin-top:.6rem"><b>1. Les 14 émotions.</b> Le parcours s’ouvre sur une présentation de chaque émotion : à quoi elle sert, comment elle se manifeste. Cinq minutes qui rendent tout le reste plus clair.</p>
         <p style="margin-top:.6rem"><b>2. Tes moments réels.</b> Juste avant le test, ton journal te propose d’exprimer jusqu’à 5 moments vécus. Ils comptent dans le calcul exactement comme les situations imaginées — la matière la plus fiable, c’est ce que tu as réellement vécu.</p>
-        <p style="margin-top:.6rem"><b>3. Les mises en situation.</b> 16 scènes du quotidien (moins si tu as exprimé des moments), variées : travail, famille, couple, argent, imprévus, réseaux, réussites, moments calmes. Pour chacune, tu indiques ce que la scène éveillerait en toi, émotion par émotion, de « pas du tout » à « énormément ».</p>
-        <p style="margin-top:.6rem"><b>4. Le calcul.</b> Chaque cran vaut de 0 à 4. La note d’une émotion, c’est la somme de ses crans divisée par son maximum possible, ramenée sur 10. Une émotion jamais ressentie obtient donc 0, une émotion poussée au maximum partout obtient 10 — deux invariants vérifiés automatiquement à chaque chargement du site. Tes moments réels entrent dans ce calcul pour les seules émotions que tu y as nommées : ne pas nommer une émotion n’équivaut pas à l’avoir notée zéro.</p>
+        <p style="margin-top:.6rem"><b>3. Les mises en situation.</b> 16 scènes du quotidien (moins si tu as exprimé des moments), variées : travail, famille, couple, argent, imprévus, réseaux, réussites, moments calmes. Pour chacune, <b>tu choisis toi-même</b>, parmi les 14, les émotions que la scène ferait monter en toi — trois au minimum — puis tu dis avec quelle force, de « un peu » à « énormément ». Les émotions que tu ne retiens pas ne sont pas comptées comme des zéros : elles ne sont simplement pas mesurées sur cette scène-là.</p>
+        <p style="margin-top:.6rem"><b>4. Le calcul.</b> Chaque cran vaut de 1 à 4. Tu obtiens pour chaque émotion <b>deux informations, et il faut les lire ensemble</b> : une <b>note sur 10</b>, qui est son intensité moyenne <i>quand tu l’as retenue</i> ; et le <b>nombre de scènes</b> où tu l’as retenue, sur le total parcouru. Une émotion retenue une seule fois avec force obtient donc 10 — mais tu liras « retenue 1 fois sur 16 » à côté, et c’est cette seconde information qui dit sa vraie place. L’étiquette (« peu présente », « modérée », « très présente ») est calculée sur la place, pas sur l’intensité. Tes moments réels comptent exactement comme une scène. Ces règles sont vérifiées automatiquement à chaque chargement du site.</p>
 
         <h3 style="margin-top:1.6rem">Pourquoi 14 émotions</h3>
-        <p style="margin-top:.6rem">Six émotions <b>de base</b>, reconnues dans toutes les cultures (joie, tristesse, colère, peur, surprise, dégoût) ; six émotions <b>sociales</b>, qui n’existent que dans le lien aux autres (amour, honte, culpabilité, jalousie, fierté, gratitude) ; et deux <b>états intérieurs</b> qui colorent le fond des journées (anxiété, sérénité). Chaque émotion est évaluée par plusieurs situations différentes, jamais une seule : c’est ce qui rend la note stable.</p>
+        <p style="margin-top:.6rem">Six émotions <b>de base</b>, reconnues dans toutes les cultures (joie, tristesse, colère, peur, surprise, dégoût) ; six émotions <b>sociales</b>, qui n’existent que dans le lien aux autres (amour, honte, culpabilité, jalousie, fierté, gratitude) ; et deux <b>états intérieurs</b> qui colorent le fond des journées (anxiété, sérénité). Les 14 te sont proposées à chaque scène, et c’est toi qui désignes celles qui te parlent.</p>
+        <p style="margin-top:.6rem"><b>Une conséquence à connaître, et elle est importante :</b> puisque tu choisis, certaines émotions ne seront retenues sur aucune scène. Elles apparaissent alors en « <b>non retenue</b> », sans note. Ce n’est pas un zéro et ça ne veut pas dire qu’elles sont absentes de ta vie — seulement que les scènes tirées ne les ont pas appelées. Une note assise sur une ou deux mesures est par ailleurs moins solide qu’une note assise sur douze : c’est aussi pour ça que le nombre de mesures est affiché partout à côté de la note.</p>
 
         <h3 style="margin-top:1.6rem">Les limites, franchement</h3>
         <p style="margin-top:.6rem">Ce test repose sur ce que tu déclares : il mesure la lecture que tu fais de toi-même, qui peut différer de ce que tu vis (c’est d’ailleurs l’un des intérêts de le croiser avec ton journal). Une projection dans une situation imaginée n’égale jamais l’expérience réelle. Les résultats bougent avec la fatigue, l’humeur du jour, la période traversée — refaire le test dans un mois donnera d’autres chiffres, et c’est normal. Enfin, il n’a pas été validé scientifiquement : il s’inspire de l’esprit des tests par mises en situation utilisés en psychologie, sans en reprendre aucun.</p>
@@ -1082,6 +1084,7 @@ footer p + p{ margin-top:.3rem; }
 
       <div class="res-card res-span-7"><div class="shell"><div class="core">
         <div class="res-kicker">Les 14 émotions, de la plus forte à la plus discrète</div>
+        <p class="eval-legende" style="margin:-.2rem 0 .9rem">Deux informations par émotion, à lire ensemble : la <strong>note</strong> est son intensité moyenne quand tu l’as retenue, et le <strong>nombre de scènes</strong> dit sa présence. Une émotion retenue une seule fois peut avoir une note haute sans occuper beaucoup de place.</p>
         <div class="bars" id="barsWrap"></div>
       </div></div></div>
 
@@ -1558,55 +1561,35 @@ serenite:{
    Pour chaque situation, la personne note sur un spectre de 0 (pas du tout)
    à 4 (énormément) chacune des émotions plausibles listées dans `emos`.
    Chaque émotion est évaluée dans au moins 5 situations. */
+/* Chaque situation portait jusqu'au 23/09/2026 un champ `emos` : les quatre à
+   six émotions que la scène imposait de noter. Il a disparu avec le passage au
+   libre choix — les quatorze sont désormais proposées à chaque scène, et c'est
+   la personne qui désigne. Le champ n'était plus lu par rien. */
 const SITUATIONS = [
-{ dom:"Travail", txt:"En réunion, un collègue présente une idée que tu lui avais soufflée la veille, sans te citer. Tout le monde le félicite, et il savoure les compliments sans un regard pour toi.",
-  emos:["colere", "jalousie", "tristesse", "honte", "degout", "fierte"] },
-{ dom:"Famille", txt:"Un mardi soir ordinaire, un membre de ta famille t’appelle « juste comme ça » : il pensait à toi et voulait entendre ta voix. En raccrochant, tu réalises que tu ne lui avais pas donné de nouvelles depuis des semaines.",
-  emos:["joie", "amour", "gratitude", "culpabilite", "serenite", "surprise"] },
-{ dom:"Couple", txt:"Sur le canapé, la personne qui partage ta vie sourit à son téléphone depuis dix minutes. Tu demandes qui c’est : « Personne, un collègue. » Elle range l’appareil dans sa poche sans un mot de plus.",
-  emos:["jalousie", "anxiete", "colere", "peur", "tristesse", "degout"] },
-{ dom:"Imprévu", txt:"Il est trois heures du matin. Un bruit sourd te réveille en sursaut dans ton logement. Tu tends l’oreille : plus un son.",
-  emos:["peur", "surprise", "anxiete", "serenite"] },
-{ dom:"Travail", txt:"En pleine réunion d’équipe, ta responsable met ton travail en avant : « Si ce projet a abouti, c’est en grande partie grâce à toi. »",
-  emos:["joie", "fierte", "honte", "gratitude", "anxiete"] },
-{ dom:"Réseaux sociaux", txt:"En scrollant le soir, tu tombes sur l’album de vacances d’une connaissance : lagon turquoise, bande d’amis, tout le monde rayonne sur chaque photo.",
-  emos:["joie", "jalousie", "tristesse", "degout", "serenite"] },
-{ dom:"Argent", txt:"Ta voiture cale d’un coup en plein carrefour ; tu redémarres de justesse, le cœur battant. Au garage, le verdict tombe : 900 € de réparation, pile le mois où ton budget était déjà bien serré.",
-  emos:["anxiete", "colere", "peur", "surprise"] },
-{ dom:"Fête", txt:"Tu rentres chez toi un soir ordinaire, tu allumes la lumière… et une dizaine de proches surgissent en criant « Joyeux anniversaire ! ».",
-  emos:["joie", "surprise", "amour", "gratitude", "honte"] },
-{ dom:"Amitié & couple", txt:"Tu envoies un long message important à une personne qui compte beaucoup pour toi. Deux jours plus tard : « vu », mais toujours aucune réponse — alors que tu la vois publier des photos chaque soir.",
-  emos:["anxiete", "tristesse", "colere", "culpabilite", "peur", "jalousie"] },
-{ dom:"Maison", txt:"L’évier de la cuisine est bouché depuis trois jours. Après deux tutos en ligne, tu démontes le siphon toi-même : une bouillie noire te coule sur les mains… mais l’eau s’écoule enfin.",
-  emos:["degout", "fierte", "joie", "surprise"] },
-{ dom:"Réussite", txt:"Après des mois d’efforts, tu atteins enfin un objectif qui te tenait vraiment à cœur : une course terminée, un diplôme, un projet abouti… Et les personnes qui ont cru en toi pendant tout ce temps sont là pour fêter ça.",
-  emos:["joie", "fierte", "gratitude", "serenite", "amour"] },
-{ dom:"Travail", txt:"Tu découvres qu’une erreur s’est glissée dans un dossier que tu as rendu, et qu’elle a compliqué la semaine de deux collègues. Personne ne t’en a encore parlé.",
-  emos:["honte", "culpabilite", "anxiete", "peur", "surprise"] },
-{ dom:"Amitié", txt:"C’est ton déménagement. Sans rien demander, deux amis sonnent à ta porte le samedi à 8 h, avec des cartons vides et des croissants chauds.",
-  emos:["joie", "gratitude", "amour", "culpabilite", "surprise", "serenite"] },
-{ dom:"Famille", txt:"Au repas de famille, tout le monde s’extasie sur les fiançailles d’une cousine de ton âge. Puis une tante se tourne vers toi : « Et toi, toujours rien de nouveau ? » Un silence s’installe autour de la table.",
-  emos:["colere", "tristesse", "honte", "jalousie", "surprise"] },
-{ dom:"Calme", txt:"Dimanche matin, tôt. Tu bois une boisson chaude près de la fenêtre. La lumière est douce, la rue silencieuse, et tu n’as strictement rien de prévu.",
-  emos:["serenite", "joie", "gratitude", "tristesse"] },
-{ dom:"Courses", txt:"Au supermarché, tu gardes l’enfant d’une amie. Tu te retournes deux secondes vers un rayon… il n’est plus là. Trois longues minutes plus tard, tu le retrouves assis tranquillement devant les jouets.",
-  emos:["peur", "surprise", "culpabilite", "colere", "gratitude", "amour"] },
-{ dom:"Couple & liens", txt:"En pleine dispute avec la personne qui partage ta vie, tu lâches une phrase que tu sais blessante. Elle se tait, prend son manteau et sort, sans même claquer la porte.",
-  emos:["culpabilite", "colere", "tristesse", "honte", "peur", "degout"] },
-{ dom:"Société", txt:"Dans une file d’attente, quelqu’un double tout le monde sans un mot, puis répond sèchement à la personne âgée qui ose protester.",
-  emos:["colere", "degout", "honte", "culpabilite", "peur"] },
-{ dom:"Santé", txt:"Tu reprends le sport après des mois d’arrêt. Première séance : tu es à la traîne, le souffle court, pendant que les autres enchaînent sans effort. Tu tiens quand même jusqu’au bout de l’heure et tu ressors les jambes lourdes, la tête plus légère.",
-  emos:["honte", "fierte", "culpabilite", "jalousie", "serenite"] },
-{ dom:"Réseaux sociaux", txt:"Tu publies en ligne quelque chose que tu as créé : une photo, un texte, un projet. Le lendemain, un commentaire moqueur s’affiche — et il récolte quelques likes.",
-  emos:["honte", "colere", "tristesse", "degout", "anxiete", "fierte"] },
-{ dom:"Famille", txt:"Un proche de ton âge t’annonce une grande nouvelle : il vient de décrocher exactement le poste dont tu rêves, dans le domaine qui t’attire depuis toujours.",
-  emos:["joie", "fierte", "jalousie", "tristesse", "amour"] },
-{ dom:"Souvenirs", txt:"En triant de vieilles affaires, tu retrouves un objet ayant appartenu à une personne qui a beaucoup compté pour toi, et qui n’est plus dans ta vie.",
-  emos:["tristesse", "amour", "gratitude", "culpabilite", "serenite"] },
-{ dom:"Fête", txt:"Un ami très proche se marie et t’a demandé de prendre la parole au repas, devant quatre-vingts invités. Le micro arrive vers toi ; ton discours, tu l’as répété dix fois.",
-  emos:["anxiete", "peur", "fierte", "joie", "amour", "jalousie"] },
-{ dom:"Soirée", txt:"En soirée, un ami imite avec cruauté un autre ami, absent ce soir-là. Tout le monde rit, et toi aussi, un peu… puis tu te demandes ce qu’on dit de toi quand tu n’es pas là.",
-  emos:["degout", "honte", "culpabilite", "colere", "anxiete"] }
+{ dom:"Travail", txt:"En réunion, un collègue présente une idée que tu lui avais soufflée la veille, sans te citer. Tout le monde le félicite, et il savoure les compliments sans un regard pour toi." },
+{ dom:"Famille", txt:"Un mardi soir ordinaire, un membre de ta famille t’appelle « juste comme ça » : il pensait à toi et voulait entendre ta voix. En raccrochant, tu réalises que tu ne lui avais pas donné de nouvelles depuis des semaines." },
+{ dom:"Couple", txt:"Sur le canapé, la personne qui partage ta vie sourit à son téléphone depuis dix minutes. Tu demandes qui c’est : « Personne, un collègue. » Elle range l’appareil dans sa poche sans un mot de plus." },
+{ dom:"Imprévu", txt:"Il est trois heures du matin. Un bruit sourd te réveille en sursaut dans ton logement. Tu tends l’oreille : plus un son." },
+{ dom:"Travail", txt:"En pleine réunion d’équipe, ta responsable met ton travail en avant : « Si ce projet a abouti, c’est en grande partie grâce à toi. »" },
+{ dom:"Réseaux sociaux", txt:"En scrollant le soir, tu tombes sur l’album de vacances d’une connaissance : lagon turquoise, bande d’amis, tout le monde rayonne sur chaque photo." },
+{ dom:"Argent", txt:"Ta voiture cale d’un coup en plein carrefour ; tu redémarres de justesse, le cœur battant. Au garage, le verdict tombe : 900 € de réparation, pile le mois où ton budget était déjà bien serré." },
+{ dom:"Fête", txt:"Tu rentres chez toi un soir ordinaire, tu allumes la lumière… et une dizaine de proches surgissent en criant « Joyeux anniversaire ! »." },
+{ dom:"Amitié & couple", txt:"Tu envoies un long message important à une personne qui compte beaucoup pour toi. Deux jours plus tard : « vu », mais toujours aucune réponse — alors que tu la vois publier des photos chaque soir." },
+{ dom:"Maison", txt:"L’évier de la cuisine est bouché depuis trois jours. Après deux tutos en ligne, tu démontes le siphon toi-même : une bouillie noire te coule sur les mains… mais l’eau s’écoule enfin." },
+{ dom:"Réussite", txt:"Après des mois d’efforts, tu atteins enfin un objectif qui te tenait vraiment à cœur : une course terminée, un diplôme, un projet abouti… Et les personnes qui ont cru en toi pendant tout ce temps sont là pour fêter ça." },
+{ dom:"Travail", txt:"Tu découvres qu’une erreur s’est glissée dans un dossier que tu as rendu, et qu’elle a compliqué la semaine de deux collègues. Personne ne t’en a encore parlé." },
+{ dom:"Amitié", txt:"C’est ton déménagement. Sans rien demander, deux amis sonnent à ta porte le samedi à 8 h, avec des cartons vides et des croissants chauds." },
+{ dom:"Famille", txt:"Au repas de famille, tout le monde s’extasie sur les fiançailles d’une cousine de ton âge. Puis une tante se tourne vers toi : « Et toi, toujours rien de nouveau ? » Un silence s’installe autour de la table." },
+{ dom:"Calme", txt:"Dimanche matin, tôt. Tu bois une boisson chaude près de la fenêtre. La lumière est douce, la rue silencieuse, et tu n’as strictement rien de prévu." },
+{ dom:"Courses", txt:"Au supermarché, tu gardes l’enfant d’une amie. Tu te retournes deux secondes vers un rayon… il n’est plus là. Trois longues minutes plus tard, tu le retrouves assis tranquillement devant les jouets." },
+{ dom:"Couple & liens", txt:"En pleine dispute avec la personne qui partage ta vie, tu lâches une phrase que tu sais blessante. Elle se tait, prend son manteau et sort, sans même claquer la porte." },
+{ dom:"Société", txt:"Dans une file d’attente, quelqu’un double tout le monde sans un mot, puis répond sèchement à la personne âgée qui ose protester." },
+{ dom:"Santé", txt:"Tu reprends le sport après des mois d’arrêt. Première séance : tu es à la traîne, le souffle court, pendant que les autres enchaînent sans effort. Tu tiens quand même jusqu’au bout de l’heure et tu ressors les jambes lourdes, la tête plus légère." },
+{ dom:"Réseaux sociaux", txt:"Tu publies en ligne quelque chose que tu as créé : une photo, un texte, un projet. Le lendemain, un commentaire moqueur s’affiche — et il récolte quelques likes." },
+{ dom:"Famille", txt:"Un proche de ton âge t’annonce une grande nouvelle : il vient de décrocher exactement le poste dont tu rêves, dans le domaine qui t’attire depuis toujours." },
+{ dom:"Souvenirs", txt:"En triant de vieilles affaires, tu retrouves un objet ayant appartenu à une personne qui a beaucoup compté pour toi, et qui n’est plus dans ta vie." },
+{ dom:"Fête", txt:"Un ami très proche se marie et t’a demandé de prendre la parole au repas, devant quatre-vingts invités. Le micro arrive vers toi ; ton discours, tu l’as répété dix fois." },
+{ dom:"Soirée", txt:"En soirée, un ami imite avec cruauté un autre ami, absent ce soir-là. Tout le monde rit, et toi aussi, un peu… puis tu te demandes ce qu’on dit de toi quand tu n’es pas là." }
 ];
 /* ————— Réglages ————— */
 const URL_SITE = "boussole-emotionnelle.fr";
@@ -1984,6 +1967,36 @@ function computeScores(answers, reelles, selection){
   return notes;
 }
 
+/* LA PLACE qu'occupe une émotion — l'ancien calcul, conservé pour une raison
+   précise. Depuis que la personne choisit ses émotions, la note affichée est une
+   intensité : « quand elle vient, elle vient fort ». Mais les textes
+   d'interprétation, eux, parlent bien d'une place — « la colère semble rare chez
+   toi », « elle est bien présente dans ta vie ». Les choisir d'après l'intensité
+   les rendrait faux : quelqu'un qui retient la colère sur quatorze scènes mais
+   toujours faiblement obtiendrait « la colère semble rare », ce qui est l'inverse
+   de sa réalité.
+   On garde donc les deux : l'intensité s'affiche, la place choisit le texte. */
+function computePlaces(answers, reelles, selection){
+  const totaux = {}, places = {};
+  EMOTIONS.forEach(e => { totaux[e.id] = 0; });
+  const idxs = (selection && selection.length) ? selection : TOUTES;
+  idxs.forEach(k => {
+    const a = answers[k] || {};
+    for(const id in a) if(totaux[id] !== undefined) totaux[id] += a[id];
+  });
+  (reelles || []).forEach(r => {
+    for(const id in (r.emos || {})) if(totaux[id] !== undefined) totaux[id] += r.emos[id];
+  });
+  /* Le dénominateur est le nombre de scènes parcourues, pas celui des scènes où
+     l'émotion a été retenue : c'est ce qui fait la différence entre une place et
+     une intensité. */
+  const scenes = idxs.length + ((reelles || []).length);
+  EMOTIONS.forEach(e => {
+    places[e.id] = scenes ? Math.round((totaux[e.id] / (scenes * 4)) * 100) / 10 : 0;
+  });
+  return places;
+}
+
 /* Combien de fois chaque émotion a été désignée. Indispensable depuis que la
    personne choisit elle-même : une émotion jamais retenue n'a pas une note de
    zéro, elle n'a pas de note du tout, et l'afficher à 0/10 reviendrait à dire
@@ -2032,6 +2045,14 @@ function renderResults(notes){
      affirmer « tu ne ressens pas de fierté » à quelqu'un qui n'a simplement
      jamais coché la fierté. */
   const mesuree = id => !lastMesures || lastMesures[id] > 0;
+  /* Le score dit la force, ce compte dit la présence. Les deux ensemble font
+     « la place » qu'une émotion occupe — le score seul ne la dit pas, puisqu'une
+     émotion retenue une seule fois avec force obtient la même note qu'une
+     émotion retenue partout avec la même force. */
+  const totalScenes = (state.selection ? state.selection.length : TAILLE_TEST)
+                    + (state.reelles ? state.reelles.length : 0);
+  /* La bande vient de la PLACE, pas de l'intensité — voir computePlaces. */
+  const bandePour = id => bandeDe(lastPlaces ? lastPlaces[id] : notes[id]);
   const nonMesurees = tri.filter(e => !mesuree(e.id));
   const basses = tri.filter(e => mesuree(e.id) && notes[e.id] <= 2);
   $("#resLow").innerHTML = (basses.length
@@ -2076,11 +2097,11 @@ function renderResults(notes){
 
   /* Barres */
   $("#barsWrap").innerHTML = tri.map(e => {
-    const b = BANDES[bandeDe(notes[e.id])];
+    const b = BANDES[bandePour(e.id)];
     const nm = mesuree(e.id);
     return `<div class="bar-row${nm ? "" : " absente"}">
       <div class="bar-id"><span class="g"><img src="${ILLUS[e.id]}" alt=""></span>
-        <span><span class="nm">${e.nom}</span><span class="band" style="color:${nm ? b.c : "var(--muted)"}">${nm ? b.lbl : "non retenue"}</span></span></div>
+        <span><span class="nm">${e.nom}</span><span class="band" style="color:${nm ? b.c : "var(--muted)"}">${nm ? `${b.lbl} · retenue ${lastMesures[e.id]} fois sur ${totalScenes}` : "non retenue"}</span></span></div>
       <div class="bar-track">${nm ? `<div class="bar-fill" data-w="${notes[e.id]*10}" style="background:linear-gradient(90deg, ${rgba(e.color,.65)}, ${e.color})"></div>` : ""}</div>
       <div class="bar-score" style="color:${nm ? e.color : "var(--muted)"}">${nm ? fmt(notes[e.id]) : "—"}</div>
     </div>`;
@@ -2088,16 +2109,21 @@ function renderResults(notes){
 
   /* Analyses par émotion */
   $("#analysesWrap").innerHTML = tri.map((e, k) => {
-    const bd = bandeDe(notes[e.id]), b = BANDES[bd];
-    return `<details class="ana"${k < 3 ? " open" : ""}>
+    const bd = bandePour(e.id), b = BANDES[bd], nm = mesuree(e.id);
+    /* Le texte d'analyse d'une bande décrit ce que vit la personne avec cette
+       émotion. Le servir à quelqu'un qui ne l'a jamais retenue reviendrait à lui
+       décrire une vie intérieure qu'on n'a pas mesurée. */
+    const corps = nm ? e.bandes[bd]
+      : `<p>Tu n’as retenu cette émotion sur <strong>aucune</strong> des ${totalScenes} scènes que tu as parcourues. Le test n’a donc rien à en dire — et surtout pas qu’elle serait absente de ta vie : les scènes tirées ne l’ont simplement pas appelée. Si elle compte pour toi, tu la retrouveras en refaisant le test, qui ne tire pas les mêmes situations, ou en notant un moment réel dans ton journal.</p>`;
+    return `<details class="ana${nm ? "" : " absente"}"${k < 3 && nm ? " open" : ""}>
       <summary>
         <span class="emo-glyph" style="border-color:${rgba(e.color,.28)}"><img src="${ILLUS[e.id]}" alt=""></span>
         <span class="ana-name">${e.nom}</span>
-        <span class="ana-band" style="background:${rgba(b.c,.12)}; color:${b.c}">${b.lbl}</span>
-        <span class="ana-score">${fmt(notes[e.id])}</span>
+        <span class="ana-band" style="background:${rgba(nm ? b.c : "#8A8394", .12)}; color:${nm ? b.c : "var(--muted)"}">${nm ? b.lbl : "non retenue"}</span>
+        <span class="ana-score">${nm ? fmt(notes[e.id]) : "—"}</span>
         <span class="ana-chev" aria-hidden="true">▼</span>
       </summary>
-      <div class="ana-body">${e.bandes[bd]}</div>
+      <div class="ana-body">${corps}</div>
     </details>`;
   }).join("");
 
@@ -2154,6 +2180,12 @@ function buildRadar(notes){
 function listeCombos(notes){
   const HI = 5.5, LO = 2;
   const n = id => notes[id];
+  /* Une combinaison qui se déclenche sur une note BASSE doit exiger que
+     l'émotion ait été mesurée. Sans ça, « ta joie et ta sérénité sont au plus
+     bas » s'afficherait chez quelqu'un qui ne les a simplement jamais retenues —
+     un constat inquiétant tiré d'aucune donnée, exactement ce que ce site
+     s'interdit de faire. */
+  const bas = id => (!lastMesures || lastMesures[id] > 0) && notes[id] <= LO;
   return [
     { ok: n("anxiete") >= HI && n("colere") >= HI,
       t:"Ton anxiété et ta colère montent souvent ensemble : ton système d’alarme anticipe le danger et se tient prêt à se défendre — repérer laquelle des deux arrive en premier t’aidera à choisir ta réponse plutôt que de la subir." },
@@ -2173,9 +2205,9 @@ function listeCombos(notes){
       t:"Ta colère et ta fierté racontent la même histoire : une grande sensibilité au respect et à la justice — ta colère défend des valeurs plus qu’elle ne cherche le conflit." },
     { ok: n("degout") >= HI && n("colere") >= HI,
       t:"Ton indignation a deux moteurs, la colère et le rejet moral : c’est le signe de convictions affirmées — veille à ce qu’elles restent une boussole, pas une armure." },
-    { ok: n("serenite") >= HI && n("anxiete") <= LO && n("colere") <= LO,
+    { ok: n("serenite") >= HI && bas("anxiete") && bas("colere"),
       t:"Ta sérénité élevée, adossée à une anxiété et une colère très basses, dessine un fond de calme rare : une ressource précieuse, pour toi comme pour ton entourage." },
-    { ok: n("joie") <= LO && n("serenite") <= LO,
+    { ok: bas("joie") && bas("serenite"),
       t:"Les émotions agréables semblent en veilleuse en ce moment ; ce n’est ni une faute ni une fatalité — remettre dans la semaine de toutes petites sources de plaisir, même minuscules, suffit souvent à relancer doucement la machine." },
     { ok: n("amour") >= HI && n("peur") >= HI,
       t:"Un attachement fort accompagné d’une peur bien présente : tu tiens profondément aux tiens, et cette importance nourrit la crainte de perdre — nommer cette peur à voix haute la rend souvent bien plus légère." },
@@ -2241,7 +2273,7 @@ function buildCopyText(notes){
   const mesuree = id => !lastMesures || lastMesures[id] > 0;
   const gardees = tri.filter(e => mesuree(e.id));
   const absentes = tri.filter(e => !mesuree(e.id));
-  const lignes = gardees.map((e, k) => `${String(k+1).padStart(2, " ")}. ${e.nom} — ${fmt(notes[e.id])}/10 (${BANDES[bandeDe(notes[e.id])].lbl.toLowerCase()})`);
+  const lignes = gardees.map((e, k) => `${String(k+1).padStart(2, " ")}. ${e.nom} — ${fmt(notes[e.id])}/10 (${BANDES[bandeDe((lastPlaces || notes)[e.id])].lbl.toLowerCase()})`);
   if(absentes.length) lignes.push("", `Non retenues sur les situations tirées : ${absentes.map(e => e.nom).join(", ")}.`);
   const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
   return [
@@ -2478,7 +2510,7 @@ async function genererCarteStory(notes){
   ctx.fillText(dom.nom, W / 2, 1112);
   ctx.fillStyle = dom.color; ctx.font = `620 60px ${SERIF}`;
   ctx.fillText(`${fmt(notes[dom.id])} / 10`, W / 2, 1198);
-  const b = BANDES[bandeDe(notes[dom.id])];
+  const b = BANDES[bandeDe((lastPlaces || notes)[dom.id])];
   ctx.font = `700 30px ${SANS}`;
   const bl = b.lbl.toUpperCase(), blw = ctx.measureText(bl).width;
   cheminArrondi(ctx, W / 2 - blw / 2 - 34, 1234, blw + 68, 62, 31);
@@ -2625,7 +2657,12 @@ const QUESTIONS = {
 
 /* ————— Le profil en une phrase (couleur du moment, jamais une étiquette figée) ————— */
 function archetype(notes, tri){
-  const n = id => notes[id];
+  /* La « couleur du moment » décrit une période de vie : elle se lit donc sur la
+     PLACE qu'occupent les émotions, pas sur leur intensité. Sans cela, quelqu'un
+     dont la joie n'a été retenue qu'une seule fois — mais fort — se voyait
+     annoncer « La belle saison : les émotions agréables dominent nettement »,
+     alors que tout le reste de son profil disait l'inverse. */
+  const n = id => (lastPlaces || notes)[id];
   const HAUT = 5.5;
   const haut = id => n(id) >= HAUT;
   const t1 = tri[0].id, t2 = tri[1].id;
@@ -2664,7 +2701,15 @@ function archetype(notes, tri){
   const trouve = regles.find(r => r.ok);
   if(trouve) return trouve;
 
-  const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
+  /* Même précaution que sur la page de résultats : on ne compare que si les deux
+     registres ont été mesurés, et sur la place plutôt que sur l'intensité. */
+  const socle = lastPlaces || notes;
+  const vu = id => !lastMesures || lastMesures[id] > 0;
+  const moy = ids => { const v = ids.filter(vu); return v.length ? v.reduce((s,id)=>s+socle[id],0)/v.length : null; };
+  const mAgr = moy(AGREABLES), mDes = moy(DESAGREABLES);
+  if(mAgr === null || mDes === null) return {
+    titre:"Le portrait partiel",
+    phrase:"Sur les scènes que tu as parcourues, tu n’as retenu qu’un seul registre d’émotions — agréables ou désagréables. Il n’y a donc pas de quoi dessiner une couleur d’ensemble : ce portrait dit ce que ces scènes ont appelé chez toi, pas l’équilibre de ta vie." };
   if(mDes - mAgr >= 1.5) return {
     titre:"La traversée",
     phrase:"Ton profil raconte une période exigeante : les émotions inconfortables occupent plus de place que les autres. Ce n’est pas un état permanent — c’est une saison, et elle demande surtout de la douceur envers toi-même." };
@@ -2706,7 +2751,7 @@ function renderRapport(notes){
 
   /* — tableau récapitulatif des 14 notes — */
   const recap = tri.map(e => {
-    const b = BANDES[bandeDe(notes[e.id])];
+    const b = BANDES[bandeDe((lastPlaces || notes)[e.id])];
     return `<div class="rap-ligne">
       <img src="${ILLUS[e.id]}" alt="">
       <span class="nm">${esc(e.nom)}</span>
@@ -2731,7 +2776,7 @@ function renderRapport(notes){
 
   /* — les fiches, une par émotion — */
   const fiches = tri.map((e, i) => {
-    const bd = bandeDe(notes[e.id]), b = BANDES[bd], d = DOSSIER[e.id];
+    const bd = bandeDe((lastPlaces || notes)[e.id]), b = BANDES[bd], d = DOSSIER[e.id];
     return `<div class="rap-bloc rap-fiche" id="fiche-${e.id}">
       <div class="rap-entete">
         <span class="emo-glyph" style="border-color:${rgba(e.color,.3)}"><img src="${ILLUS[e.id]}" alt=""></span>
@@ -3670,9 +3715,11 @@ let lastNotes = null;
    compte, une émotion jamais retenue s'afficherait à 0/10 — soit « tu ne
    ressens jamais ça », affirmé à partir d'aucune donnée. */
 let lastMesures = null;
+let lastPlaces = null;   /* voir computePlaces : choisit les textes d'interprétation */
 function finish(){
   lastNotes = computeScores(state.answers, state.reelles, state.selection);
   lastMesures = compterMesures(state.answers, state.reelles, state.selection);
+  lastPlaces  = computePlaces(state.answers, state.reelles, state.selection);
   resultatsGardesCe = false;
   mesurer("test-fin");   /* le test est terminé, avant même de savoir s'il y a un verrou */
   /* Le brouillon n'est effacé qu'une fois les résultats réellement ouverts. Effacé
@@ -3783,6 +3830,7 @@ $("#btnRestart").addEventListener("click", () => {
   $("#jNote").value = "";
   lastNotes = null;
   lastMesures = null;
+  lastPlaces = null;
   $("#copyFeedback").textContent = "";
   showView("v-accueil");
 });
