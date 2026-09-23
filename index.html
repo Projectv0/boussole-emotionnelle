@@ -2093,7 +2093,7 @@ function renderResults(notes){
          nombre de fois où l'émotion a été retenue, qui est ce dont il est
          question ici. */
       ? basses.map(e => `<span class="low-chip"><img src="${ILLUS[e.id]}" alt=""> ${e.nom} · ${lastMesures ? lastMesures[e.id] : "?"}&nbsp;fois</span>`).join("")
-      : `<span class="low-chip">✨ Aucune note ≤ 2 parmi celles que tu as retenues</span>`)
+      : `<span class="low-chip">✨ Aucune émotion en retrait parmi celles que tu as retenues</span>`)
     + nonMesurees.map(e => `<span class="low-chip absente"><img src="${ILLUS[e.id]}" alt=""> ${e.nom} · non retenue</span>`).join("");
   $("#resLowNote").textContent = (basses.length
       ? "Ces émotions-là tiennent peu de place dans ce que tu as parcouru — retenues rarement, ou faiblement. Ce n’est pas un manque : elles sont simplement peu sollicitées en ce moment. "
@@ -3703,15 +3703,16 @@ function comparerAvec(autres){
   const proximite = Math.max(0, Math.round((1 - paires.reduce((t, p) => t + p.ecart, 0) / (paires.length * 10)) * 100));
   ph.push(`Sur les ${paires.length} émotion${paires.length > 1 ? "s" : ""} que vous avez retenue${paires.length > 1 ? "s" : ""} tous les deux, vos profils se ressemblent à <b>${proximite} %</b>.`);
   if(horsComparaison.length){
-    ph.push(`${horsComparaison.length} émotion${horsComparaison.length > 1 ? "s ne sont" : " n’est"} pas comparable${horsComparaison.length > 1 ? "s" : ""} : l’un de vous deux ne ${horsComparaison.length > 1 ? "les" : "l’"}a retenue${horsComparaison.length > 1 ? "s" : ""} sur aucune scène.`);
+    const plur = horsComparaison.length > 1;
+    ph.push(`${horsComparaison.length} émotion${plur ? "s ne sont" : " n’est"} pas comparable${plur ? "s" : ""} : l’un de vous deux ne ${plur ? "les a retenues" : "l’a retenue"} sur aucune scène.`);
   }
   if(communes.length){
     ph.push(`Vous partagez ${communes.slice(0, 2).map(p => p.e.art + p.e.nom.toLowerCase()).join(" et ")} — un terrain commun sur lequel vous vous comprenez sans effort.`);
   }
   if(ecarts[0] && ecarts[0].ecart >= 2){
     const p = ecarts[0];
-    const plusFort = p.moi > p.lui ? "toi" : "l’autre";
-    ph.push(`Votre plus grand écart : ${p.e.art}${p.e.nom.toLowerCase()} (${fmt(p.moi)} contre ${fmt(p.lui)}) — c’est ${plusFort} qui la ressent le plus fort, une différence utile à connaître entre vous.`);
+    const jeSuisPlusFort = p.moi > p.lui;
+    ph.push(`Votre plus grand écart : ${p.e.art}${p.e.nom.toLowerCase()} (${fmt(p.moi)} contre ${fmt(p.lui)}) — ${jeSuisPlusFort ? "c’est toi qui la ressens le plus fort" : "c’est l’autre qui la ressent le plus fort"}, une différence utile à connaître entre vous.`);
   }
   ph.push("Rappel : il n’y a pas de bon ou de mauvais profil — juste deux façons différentes de traverser les mêmes situations.");
   $("#compResume").innerHTML = ph.map(p => `<p style="margin-bottom:.6rem">${p}</p>`).join("");
