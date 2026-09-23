@@ -97,13 +97,24 @@ jours de suite. Le mode d'emploi d'une journée tient en deux minutes :
 - **Les trente premières minutes** : répondre aux commentaires. C'est le signal
   d'engagement le plus fort sur les deux plateformes.
 
-### Ce que j'attends de toi pour brancher le site
+### Instagram — configuré le 23 septembre 2026
 
-**Les deux adresses de profil.** Elles me servent à deux choses :
+`instagram.com/boussole.emotionnelle` · nom affiché « Boussole Émotionnelle » · photo de
+profil posée · bio de 140 caractères. Le pseudo généré `contact9393` a été remplacé pendant
+que le compte était encore à zéro publication : plus tard, ça aurait cassé des liens.
 
-1. le bloc `Organization` de l'accueil attend son tableau `sameAs` — c'est ce qui permet à
-   Google de comprendre que la marque sur les réseaux et le domaine sont une seule entité ;
-2. des liens en pied de page, sur l'accueil et sur le guide.
+Le site est branché : `sameAs` dans le balisage `Organization` de l'accueil, et lien en pied
+de page sur les 59 pages.
+
+**Il reste une chose, et elle ne se fait que depuis le téléphone.** Instagram n'autorise la
+modification des liens que dans son application : *Modifier le profil → Liens →*
+`https://boussole-emotionnelle.fr`. Sans ça, la flèche de la bio ne désigne rien, et les 99
+publications n'ont aucun chemin vers le site.
+
+### TikTok
+
+**Donne-moi l'adresse du profil** et je l'ajoute au `sameAs` et aux pieds de page, comme
+Instagram. Vérifie au passage que le pseudo n'est pas, lui aussi, généré automatiquement.
 
 **Et, dans Search Console**, tu peux maintenant rattacher Instagram et TikTok comme
 « comptes de plate-forme » : tu verras dans un même tableau ce qui vient du site et ce qui
