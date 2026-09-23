@@ -113,7 +113,7 @@
    paramètre de campagne, ni un fragment ne peuvent s'y glisser.
    MESURE vide = rien n'est envoyé. Le réglage suit celui de la page d'accueil. */
 (function(){
-  var MESURE = "";
+  var MESURE = "https://boussole.projectv0-0.workers.dev/mesure";
   if(!MESURE) return;
   try{
     var c = JSON.stringify({ e: "article", p: "/guide/peur-de-parler-en-reunion.html" });
