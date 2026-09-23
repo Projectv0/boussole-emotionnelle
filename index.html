@@ -2074,7 +2074,11 @@ function renderResults(notes){
      le plus. */
   const nbMes = ids => ids.filter(id => mesuree(id)).length;
   const nAgr = nbMes(AGREABLES), nDes = nbMes(DESAGREABLES);
-  const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
+  /* Comme la couleur du moment, cet équilibre parle d'une période : il se lit
+     donc sur la place, pas sur l'intensité. Comparer des intensités faisait dire
+     « les émotions agréables dominent nettement » à quelqu'un dont la joie avait
+     été retenue une seule fois, mais fort. */
+  const mAgr = moyenne(AGREABLES, lastPlaces || notes), mDes = moyenne(DESAGREABLES, lastPlaces || notes);
   const ligne = (emo, lbl, n, m, deg) => `
     <div class="bal-row${n ? "" : " absente"}"><div class="bal-head"><span>${emo} ${lbl}</span><span class="v">${n ? fmt(m) + " / 10" : "non mesuré"}</span></div>
       <div class="bal-track">${n ? `<div class="bal-fill" data-w="${m*10}" style="background:linear-gradient(90deg,${deg})"></div>` : ""}</div></div>`;
@@ -2275,7 +2279,7 @@ function buildCopyText(notes){
   const absentes = tri.filter(e => !mesuree(e.id));
   const lignes = gardees.map((e, k) => `${String(k+1).padStart(2, " ")}. ${e.nom} — ${fmt(notes[e.id])}/10 (${BANDES[bandeDe((lastPlaces || notes)[e.id])].lbl.toLowerCase()})`);
   if(absentes.length) lignes.push("", `Non retenues sur les situations tirées : ${absentes.map(e => e.nom).join(", ")}.`);
-  const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
+  const mAgr = moyenne(AGREABLES, lastPlaces || notes), mDes = moyenne(DESAGREABLES, lastPlaces || notes);
   return [
     `🧭 Boussole émotionnelle — mes résultats (${date})`,
     "",
@@ -2744,7 +2748,7 @@ function leviers(notes, tri){
 function renderRapport(notes){
   const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
   const date = new Date().toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
-  const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
+  const mAgr = moyenne(AGREABLES, lastPlaces || notes), mDes = moyenne(DESAGREABLES, lastPlaces || notes);
   const combos = listeCombos(notes);
   const arch = archetype(notes, tri);
   const lev = leviers(notes, tri);
