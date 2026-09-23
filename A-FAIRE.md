@@ -95,22 +95,45 @@ les comptes.
 Tu peux commencer à publier **avant** que la vente soit ouverte. C'est même préférable : le
 temps que l'audience se construise, le parcours d'achat sera prêt.
 
-## A5 · Décider de la mesure d'audience
+## A5 · Mesure d'audience — **écrite, il ne manque que le branchement**
 
-Aujourd'hui les 59 pages n'ont **aucune** mesure. Le jour de la première semaine de vente, si
-zéro commande arrive, rien ne permettra de distinguer « personne n'est venu » de « des gens
-sont venus et ont refusé de payer » — deux diagnostics dont les remèdes sont opposés.
+Tu as choisi le compteur maison sur ton Worker Cloudflare : gratuit, sans cookie, sans
+bannière de consentement, et rien qui parte chez un tiers. **Le code est écrit, testé et
+commité.** Il n'envoie rien tant que tu n'as pas fait les cinq gestes ci-dessous — aucun
+risque à laisser en l'état.
 
-Deux options honnêtes, à trancher :
+Six moments sont comptés : ouverture de l'accueil, ouverture d'une page du guide, début du
+test, fin du test, affichage du choix de formule, départ vers Stripe.
 
-| | Coût | Ce que ça donne | Contrainte |
-|---|---|---|---|
-| **Plausible** ou **Simple Analytics** | abonnement mensuel | interface prête, sans cookie ni bandeau | un compte à créer, un script tiers |
-| **Compteur maison** sur ton Worker Cloudflare | gratuit | uniquement les événements que je code | pas d'interface, je te fais un tableau |
+**Ce qui est enregistré tient en deux informations : le jour et le nom du moment.** Pas
+d'adresse IP, pas de cookie, pas d'identifiant de visite. La contrepartie, à accepter :
+on compte des événements, pas des visiteurs — tu sauras « 300 ouvertures, 12 tests finis,
+2 départs vers Stripe », jamais combien de personnes distinctes.
 
-Dans les deux cas, je pose les mêmes repères : arrivée sur un article, clic « Faire le test »,
-fin du test, ouverture de la pop-up, clic vers Stripe. **Dis-moi laquelle tu veux** — le
-choix est à toi, l'installation est à moi.
+La politique de confidentialité a été corrigée dans le même commit : elle promettait
+« aucun pixel de mesure d'audience ». Elle décrit maintenant ce comptage, mot pour mot.
+
+### Les cinq gestes, quinze minutes
+
+1. **Créer une base D1** nommée `boussole` (Cloudflare → Storage & Databases → D1) et y
+   exécuter le `CREATE TABLE` de `worker/MESURE.md`.
+2. **Lier la base au Worker** sous le nom de variable exact **`MESURE`**.
+3. **Ajouter un secret `MESURE_CLE`** — un mot de passe de ton choix, qui protège la
+   lecture des chiffres.
+4. **Coller `worker/verification.js`** dans le Worker et déployer.
+5. **Me donner l'adresse du Worker.** Je la renseigne dans l'accueil et les 58 pages du
+   guide, et la mesure démarre.
+
+Le pas à pas complet, avec le SQL, est dans **`worker/MESURE.md`**.
+
+> C'est le même Worker que celui de la vente (point B6). Si tu fais les deux en même
+> temps, la mesure démarre tout de suite et la vérification d'achat attendra sa clé Stripe.
+
+### Lire les chiffres
+
+`python3 mesure.py chiffres.json` — l'entonnoir, les pages du guide les plus ouvertes, et
+les quatorze derniers jours. Il désigne l'étape où la chute est la plus brutale, qui est
+celle à reprendre.
 
 ---
 

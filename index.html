@@ -1628,6 +1628,31 @@ const APERCU = VENTE.modeTest && new URLSearchParams(location.search).has("aperc
 let niveauAcces = "aucun"; /* "aucun" | "resultats" | "dossier" — pour la session en cours */
 const paywallActif = () => APERCU || VENTE.modeTest || (VENTE.actif && !!VENTE.lienResultats && !!VENTE.lienDossier);
 
+/* ————— Mesure d'audience —————
+   Six repères, et rien entre eux : un jour, un nom d'événement. Pas de cookie,
+   pas d'identifiant de visite, pas d'adresse IP conservée — donc aucun moyen de
+   relier deux événements à la même personne, et aucune de tes réponses n'est
+   jamais envoyée. C'est ce qui permet au site de continuer à promettre que tes
+   réponses ne quittent pas ton navigateur : c'est littéralement vrai.
+
+   Le prix de ce choix, à connaître : on compte des événements, pas des visiteurs.
+   « 300 arrivées, 12 tests finis, 2 départs vers Stripe » se lit parfaitement ;
+   « combien de personnes différentes » ne se saura pas.
+
+   Tant que MESURE reste vide, rien n'est envoyé nulle part. */
+const MESURE = "";
+function mesurer(e, p){
+  if(!MESURE) return;
+  try{
+    const c = JSON.stringify(p ? { e, p } : { e });
+    /* text/plain : sendBeacon ne sait pas mener de requête préalable, et un
+       content-type JSON en déclencherait une — la mesure serait perdue. */
+    const b = new Blob([c], { type: "text/plain" });
+    if(navigator.sendBeacon && navigator.sendBeacon(MESURE, b)) return;
+    fetch(MESURE, { method: "POST", body: c, keepalive: true, mode: "cors" });
+  }catch(_){}   /* une mesure qui échoue ne doit jamais se voir sur le site */
+}
+
 /* ————— Outils ————— */
 const $ = sel => document.querySelector(sel);
 const N = SITUATIONS.length;
@@ -2782,6 +2807,7 @@ normaliserRadios(document.body);
 
 /* ————— Pop-up de fin de questionnaire (le verrou) ————— */
 function ouvrirPaywall(){
+  mesurer("paywall");
   const tri = [...EMOTIONS].sort((a, b) => lastNotes[b.id] - lastNotes[a.id]).slice(0, 3);
   $("#paywallGlyphs").innerHTML = tri.map(e => `<img src="${ILLUS[e.id]}" alt="">`).join("");
   const aR = $("#btnPayerResultats"), aD = $("#btnPayerDossier");
@@ -3511,6 +3537,7 @@ let lastNotes = null;
 function finish(){
   lastNotes = computeScores(state.answers, state.reelles, state.selection);
   resultatsGardesCe = false;
+  mesurer("test-fin");   /* le test est terminé, avant même de savoir s'il y a un verrou */
   /* Le brouillon n'est effacé qu'une fois les résultats réellement ouverts. Effacé
      ici, il laissait celui qui part payer — donc qui change d'onglet — sans rien à
      retrouver au retour : seize situations à refaire après avoir payé. */
@@ -3531,8 +3558,18 @@ $("#btnJournalVider").addEventListener("click", () => {
   sauverJournal({ entrees: [] });
   renderJournalBlocs();
 });
-$("#btnStart").addEventListener("click", () => showView("v-emotions"));
-$("#btnStart2").addEventListener("click", () => showView("v-emotions"));
+$("#btnStart").addEventListener("click", () => { mesurer("test-debut"); showView("v-emotions"); });
+$("#btnStart2").addEventListener("click", () => { mesurer("test-debut"); showView("v-emotions"); });
+
+/* Départ vers le paiement. Écouté sur le document plutôt que sur chaque bouton :
+   il y a deux chemins vers Stripe — la pop-up de fin et le bouton « dossier
+   complet » de la page de résultats — et leurs href sont posés à plusieurs
+   endroits. Un seul point d'écoute les couvre tous, aujourd'hui et demain.
+   sendBeacon survit au départ de la page, la mesure n'est pas perdue. */
+document.addEventListener("click", e => {
+  const a = e.target.closest && e.target.closest('a[href*="buy.stripe.com"]');
+  if(a) mesurer("stripe");
+}, true);
 $("#btnToTest").addEventListener("click", () => { renderPerso(); showView("v-perso"); });
 $("#btnRien").addEventListener("click", toutAZero);
 $("#btnMomentAjout").addEventListener("click", ajouterMoment);
@@ -3671,6 +3708,7 @@ window.addEventListener("storage", e => {
 renderEmotionCards();
 majBandeauReprise();
 runSelfTests();
+mesurer("accueil");
 
 /* Mise en cache pour un usage hors connexion (ignoré en local et dans l'artifact) */
 if("serviceWorker" in navigator && location.protocol === "https:"){

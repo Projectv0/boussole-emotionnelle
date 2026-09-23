@@ -107,5 +107,24 @@
   <p>Contenu informatif de développement personnel. Il ne remplace ni un diagnostic ni l’avis d’un professionnel de santé.</p>
 </footer>
 
+<!-- mesure d'audience -->
+<script>
+/* Un seul repère : quelqu'un a ouvert cette page. Pas de cookie, pas
+   d'identifiant, pas de suivi d'une page à l'autre — on ne peut pas savoir que
+   deux lectures viennent de la même personne, et c'est voulu. Le chemin est
+   écrit en dur plutôt que lu dans l'adresse : ni la barre de recherche, ni un
+   paramètre de campagne, ni un fragment ne peuvent s'y glisser.
+   MESURE vide = rien n'est envoyé. Le réglage suit celui de la page d'accueil. */
+(function(){
+  var MESURE = "";
+  if(!MESURE) return;
+  try{
+    var c = JSON.stringify({ e: "article", p: "/guide/repousser-un-geste-de-tendresse.html" });
+    var b = new Blob([c], { type: "text/plain" });
+    if(navigator.sendBeacon && navigator.sendBeacon(MESURE, b)) return;
+    fetch(MESURE, { method: "POST", body: c, keepalive: true, mode: "cors" });
+  }catch(_){}
+})();
+</script>
 </body>
 </html>
