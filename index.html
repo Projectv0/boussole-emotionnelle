@@ -382,6 +382,14 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 }
 .q-ask::after{ content:""; flex:1; height:1px; background:var(--hairline); }
 .eval-legende{ font-size:.8rem; color:var(--muted); margin:-.4rem 0 1rem; }
+.low-chip.absente{ opacity:.55; border-style:dashed; }
+.bar-row.absente, .bal-row.absente{ opacity:.5; }
+.bar-row.absente .bar-track{ background-image:repeating-linear-gradient(90deg, var(--hairline) 0 6px, transparent 6px 12px); }
+.eval-chips{
+  display:flex; flex-wrap:wrap; gap:.45rem; justify-content:center;
+  margin:.2rem 0 1.1rem;
+}
+.eval-chips .j-chip img{ width:1.35rem; height:1.35rem; border-radius:999px; }
 .eval-rows{ display:flex; flex-direction:column; gap:.55rem; }
 .eval-row{
   display:flex; align-items:center; gap:.8rem; flex-wrap:wrap;
@@ -1002,11 +1010,10 @@ footer p + p{ margin-top:.3rem; }
         <div class="shell"><div class="core">
           <p class="q-situation" id="qText"></p>
           <div class="q-ask">Qu’est-ce que ça éveillerait en toi&nbsp;?</div>
-          <p class="eval-legende">Pour chaque émotion, indique à quel point tu la ressentirais dans cette situation.</p>
+          <p class="eval-legende">Choisis toutes les émotions que cette situation ferait monter en toi — <strong>trois au minimum</strong>. Celles que tu ne choisis pas ne sont pas comptées.</p>
+          <div class="eval-chips" id="evalChips"></div>
+          <p class="eval-legende" id="evalIntro" hidden>Et maintenant, avec quelle force&nbsp;?</p>
           <div class="eval-rows" id="evalRows"></div>
-          <div style="text-align:center">
-            <button class="btn-rien" id="btnRien">Cette situation ne m’évoquerait pas grand-chose → tout à « pas du tout »</button>
-          </div>
         </div></div>
 
         <div class="test-nav">
@@ -1755,18 +1762,31 @@ function renderQuestion(){
   document.querySelector(".track").setAttribute("aria-valuenow", i+1);
   $("#qText").textContent = s.txt;
 
-  $("#evalRows").innerHTML = s.emos.map(id => {
-    const e = EMOTIONS.find(x => x.id === id);
-    return `<div class="eval-row${a[id] != null ? " ok" : ""}" data-emo="${id}">
-      <span class="eval-id"><img src="${ILLUS[id]}" alt=""><span class="nm">${e.court}</span></span>
-      <span class="eval-scale" role="radiogroup" aria-label="${e.court} : de 0 à 4">
-        ${[0,1,2,3,4].map(v => `<button class="seg${a[id] === v ? " sel" : ""}" data-v="${v}" role="radio" aria-checked="${a[id] === v}" aria-label="${e.court} : ${INTENSITES[v][1]}">${INTENSITES[v][1]}</button>`).join("")}
+  /* Les quatorze émotions sont proposées à chaque situation, et c'est la personne
+     qui désigne celles qu'elle ressentirait. Auparavant la situation en imposait
+     quatre à six : on demandait « à quel point », jamais « laquelle ». */
+  $("#evalChips").innerHTML = EMOTIONS.map(e => `
+    <button class="j-chip${a[e.id] != null ? " sel" : ""}" aria-pressed="${a[e.id] != null}" data-emo="${e.id}">
+      <img src="${ILLUS[e.id]}" alt=""><span>${e.court}</span>
+    </button>`).join("");
+  $("#evalChips").querySelectorAll(".j-chip").forEach(b =>
+    b.addEventListener("click", () => basculer(b.dataset.emo)));
+
+  /* Une émotion qu'on vient de désigner est forcément ressentie : l'échelle part
+     donc à 1, et non à 0. Mettre « pas du tout » à une émotion qu'on a choisie
+     n'aurait aucun sens — c'est la déselectionner qui le dit. */
+  const choisies = EMOTIONS.filter(e => a[e.id] != null);
+  $("#evalRows").innerHTML = choisies.map(e => `
+    <div class="eval-row ok" data-emo="${e.id}">
+      <span class="eval-id"><img src="${ILLUS[e.id]}" alt=""><span class="nm">${e.court}</span></span>
+      <span class="eval-scale" role="radiogroup" aria-label="${e.court} : intensité">
+        ${[1,2,3,4].map(v => `<button class="seg${a[e.id] === v ? " sel" : ""}" data-v="${v}" role="radio" aria-checked="${a[e.id] === v}" aria-label="${e.court} : ${INTENSITES[v][1]}">${INTENSITES[v][1]}</button>`).join("")}
       </span>
-    </div>`;
-  }).join("");
+    </div>`).join("");
   $("#evalRows").querySelectorAll(".eval-row").forEach(row =>
     row.querySelectorAll(".seg").forEach(b =>
       b.addEventListener("click", () => noter(row.dataset.emo, +b.dataset.v))));
+  $("#evalIntro").hidden = !choisies.length;
 
   $("#btnPrev").innerHTML = i === 0
     ? '<span class="ico" style="order:-1" aria-hidden="true">←</span> Mon journal'
@@ -1777,12 +1797,26 @@ function renderQuestion(){
   updateNav();
 }
 
+/* Nombre d'émotions à désigner au minimum par situation. Trois, parce qu'une
+   situation n'éveille presque jamais une seule chose, et que se limiter à une
+   seule est le réflexe qui empêche justement de voir ce qui se joue. */
+const MIN_EMOS = 3;
+
+function basculer(id){
+  const idx = state.selection[state.i];
+  const a = state.answers[idx] || (state.answers[idx] = {});
+  /* Choisir une émotion lui donne d'emblée « moyennement » : on ajuste ensuite.
+     Demander de désigner PUIS de noter séparément doublerait les gestes. */
+  if(a[id] != null) delete a[id]; else a[id] = 2;
+  renderQuestion();
+  sauverBrouillon();
+}
 function noter(id, v){
   const idx = state.selection[state.i];
   const a = state.answers[idx] || (state.answers[idx] = {});
+  if(a[id] == null) return;          /* on ne note que ce qui a été désigné */
   a[id] = v;
   const row = $("#evalRows").querySelector(`.eval-row[data-emo="${id}"]`);
-  row.classList.add("ok");
   row.querySelectorAll(".seg").forEach(b => {
     const sel = +b.dataset.v === v;
     b.classList.toggle("sel", sel);
@@ -1791,20 +1825,15 @@ function noter(id, v){
   updateNav();
   sauverBrouillon();
 }
-function toutAZero(){
-  const idx = state.selection[state.i], s = SITUATIONS[idx];
-  const a = state.answers[idx] || (state.answers[idx] = {});
-  s.emos.forEach(id => { a[id] = 0; });
-  renderQuestion();
-  sauverBrouillon();
-}
 function updateNav(){
   const idx = state.selection[state.i];
-  const s = SITUATIONS[idx], a = state.answers[idx] || {};
-  const fait = s.emos.filter(id => a[id] != null).length;
-  const ok = fait === s.emos.length;
+  const a = state.answers[idx] || {};
+  const n = Object.keys(a).length;
+  const ok = n >= MIN_EMOS;
   $("#btnNext").disabled = !ok;
-  $("#nextHint").textContent = ok ? "" : `Note chaque émotion pour continuer (${fait}/${s.emos.length}).`;
+  $("#nextHint").textContent = ok ? ""
+    : n === 0 ? `Choisis au moins ${MIN_EMOS} émotions pour continuer.`
+    : `Encore ${MIN_EMOS - n} émotion${MIN_EMOS - n > 1 ? "s" : ""} à choisir (${n}/${MIN_EMOS}).`;
 }
 function gotoQuestion(idx){
   sauverBrouillon();
@@ -1921,13 +1950,20 @@ function ajouterMoment(){
 function computeScores(answers, reelles, selection){
   const totaux = {}, maxima = {};
   EMOTIONS.forEach(e => { totaux[e.id] = 0; maxima[e.id] = 0; });
+  /* Seules les émotions réellement désignées entrent dans le calcul. Ne pas
+     choisir la colère sur une situation ne veut pas dire « colère à zéro » : ça
+     veut dire qu'on n'en sait rien, et une absence de donnée ne se moyenne pas.
+     La note est donc une INTENSITÉ MOYENNE quand l'émotion est là — pas une
+     fréquence. Deux personnes peuvent avoir la même note de colère en l'ayant
+     ressentie une fois ou douze. */
   const idxs = (selection && selection.length) ? selection : TOUTES;
   idxs.forEach(k => {
-    const s = SITUATIONS[k], a = answers[k] || {};
-    s.emos.forEach(id => {
+    const a = answers[k] || {};
+    for(const id in a){
+      if(maxima[id] === undefined) continue;
       maxima[id] += 4;
-      totaux[id] += a[id] || 0;
-    });
+      totaux[id] += a[id];
+    }
   });
   /* Un moment réel ne parle que des émotions que la personne y a nommées :
      lui seul compte pour celles-ci, exactement comme une situation ne compte
@@ -1948,9 +1984,32 @@ function computeScores(answers, reelles, selection){
   return notes;
 }
 
+/* Combien de fois chaque émotion a été désignée. Indispensable depuis que la
+   personne choisit elle-même : une émotion jamais retenue n'a pas une note de
+   zéro, elle n'a pas de note du tout, et l'afficher à 0/10 reviendrait à dire
+   « tu ne ressens jamais ça » à partir d'aucune donnée. */
+function compterMesures(answers, reelles, selection){
+  const n = {};
+  EMOTIONS.forEach(e => { n[e.id] = 0; });
+  const idxs = (selection && selection.length) ? selection : TOUTES;
+  idxs.forEach(k => {
+    for(const id in (answers[k] || {})) if(n[id] !== undefined) n[id]++;
+  });
+  (reelles || []).forEach(r => {
+    for(const id in (r.emos || {})) if(n[id] !== undefined) n[id]++;
+  });
+  return n;
+}
+
 /* ————— Résultats ————— */
 function moyenne(ids, notes){
-  return Math.round(ids.reduce((t, id) => t + notes[id], 0) / ids.length * 10) / 10;
+  /* Seules les émotions réellement mesurées entrent dans la moyenne. Compter une
+     émotion jamais désignée comme un zéro ferait dire au site « les émotions
+     agréables pèsent peu chez toi » à quelqu'un qui ne les a simplement pas
+     rencontrées dans les seize situations tirées. */
+  const vus = ids.filter(id => !lastMesures || lastMesures[id] > 0);
+  if(!vus.length) return 0;
+  return Math.round(vus.reduce((t, id) => t + notes[id], 0) / vus.length * 10) / 10;
 }
 
 function renderResults(notes){
@@ -1967,27 +2026,50 @@ function renderResults(notes){
       <span class="podium-score" style="color:${e.color}">${fmt(notes[e.id])}</span>
     </div>`).join("");
 
-  /* Peu ressenties (≤ 2) */
-  const basses = tri.filter(e => notes[e.id] <= 2);
-  $("#resLow").innerHTML = basses.length
-    ? basses.map(e => `<span class="low-chip"><img src="${ILLUS[e.id]}" alt=""> ${e.nom} · ${fmt(notes[e.id])}</span>`).join("")
-    : `<span class="low-chip">✨ Aucune note ≤ 2</span>`;
-  $("#resLowNote").textContent = basses.length
-    ? "Une note basse n’est pas un manque : ces émotions sont simplement peu sollicitées dans ta vie en ce moment."
-    : "Toutes tes émotions trouvent une place dans ta vie — aucune ne semble éteinte.";
+  /* Peu ressenties, et — c'est nouveau — celles qu'on n'a jamais retenues.
+     Les deux ne veulent pas du tout dire la même chose : une note basse est une
+     mesure, une absence de mesure n'en est pas une. Les confondre reviendrait à
+     affirmer « tu ne ressens pas de fierté » à quelqu'un qui n'a simplement
+     jamais coché la fierté. */
+  const mesuree = id => !lastMesures || lastMesures[id] > 0;
+  const nonMesurees = tri.filter(e => !mesuree(e.id));
+  const basses = tri.filter(e => mesuree(e.id) && notes[e.id] <= 2);
+  $("#resLow").innerHTML = (basses.length
+      ? basses.map(e => `<span class="low-chip"><img src="${ILLUS[e.id]}" alt=""> ${e.nom} · ${fmt(notes[e.id])}</span>`).join("")
+      : `<span class="low-chip">✨ Aucune note ≤ 2 parmi celles que tu as retenues</span>`)
+    + nonMesurees.map(e => `<span class="low-chip absente"><img src="${ILLUS[e.id]}" alt=""> ${e.nom} · non retenue</span>`).join("");
+  $("#resLowNote").textContent = (basses.length
+      ? "Une note basse n’est pas un manque : ces émotions sont simplement peu sollicitées dans ta vie en ce moment. "
+      : "Parmi les émotions que tu as retenues, aucune n’est en retrait. ")
+    + (nonMesurees.length
+      ? `Les ${nonMesurees.length} dernières, tu ne les as retenues sur aucune situation : le test n’a donc rien à en dire — ce n’est pas une note de zéro, c’est une absence de mesure.`
+      : "");
 
-  /* Équilibre agréables / désagréables */
+  /* Équilibre agréables / désagréables.
+     Une comparaison n'a de sens que si les deux côtés ont été mesurés. Quelqu'un
+     qui n'a retenu aucune émotion agréable sur les seize situations verrait
+     sinon « agréables 0/10 · désagréables 5/10 » et lirait que sa vie penche du
+     mauvais côté — une affirmation tirée d'aucune donnée, sur la page qui touche
+     le plus. */
+  const nbMes = ids => ids.filter(id => mesuree(id)).length;
+  const nAgr = nbMes(AGREABLES), nDes = nbMes(DESAGREABLES);
   const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
-  $("#resBalance").innerHTML = `
-    <div class="bal-row"><div class="bal-head"><span>😊 Émotions agréables</span><span class="v">${fmt(mAgr)} / 10</span></div>
-      <div class="bal-track"><div class="bal-fill" data-w="${mAgr*10}" style="background:linear-gradient(90deg,#57A05B,#63AFA4)"></div></div></div>
-    <div class="bal-row"><div class="bal-head"><span>🌧️ Émotions désagréables</span><span class="v">${fmt(mDes)} / 10</span></div>
-      <div class="bal-track"><div class="bal-fill" data-w="${mDes*10}" style="background:linear-gradient(90deg,#C4763B,#CF5C41)"></div></div></div>`;
+  const ligne = (emo, lbl, n, m, deg) => `
+    <div class="bal-row${n ? "" : " absente"}"><div class="bal-head"><span>${emo} ${lbl}</span><span class="v">${n ? fmt(m) + " / 10" : "non mesuré"}</span></div>
+      <div class="bal-track">${n ? `<div class="bal-fill" data-w="${m*10}" style="background:linear-gradient(90deg,${deg})"></div>` : ""}</div></div>`;
+  $("#resBalance").innerHTML =
+      ligne("😊", "Émotions agréables", nAgr, mAgr, "#57A05B,#63AFA4")
+    + ligne("🌧️", "Émotions désagréables", nDes, mDes, "#C4763B,#CF5C41");
+
   const diff = mAgr - mDes;
+  const fin = " (La surprise, neutre, n’entre pas dans ce calcul.)";
   $("#resBalanceNote").textContent =
-    diff >= 1.5 ? "Les émotions agréables dominent nettement : ton quotidien semble te nourrir plus qu’il ne te coûte. (La surprise, neutre, n’entre pas dans ce calcul.)" :
-    diff <= -1.5 ? "Les émotions désagréables pèsent plus lourd en ce moment : ton système émotionnel travaille beaucoup, et cela mérite douceur et récupération. (La surprise, neutre, n’entre pas dans ce calcul.)" :
-    "Agréables et désagréables s’équilibrent presque : une vie intérieure contrastée, où les deux registres cohabitent. (La surprise, neutre, n’entre pas dans ce calcul.)";
+    !nAgr && !nDes ? "Trop peu d’émotions retenues pour dire quoi que ce soit de ton équilibre." :
+    !nAgr ? "Tu n’as retenu aucune émotion agréable sur les situations tirées : il n’y a donc rien à comparer ici. Cela ne veut pas dire qu’elles sont absentes de ta vie — simplement que ces seize scènes ne les ont pas appelées." :
+    !nDes ? "Tu n’as retenu aucune émotion désagréable sur les situations tirées : il n’y a donc rien à comparer ici. Ces seize scènes ne les ont pas appelées, c’est tout ce qu’on peut en dire." :
+    diff >= 1.5 ? "Les émotions agréables dominent nettement : ton quotidien semble te nourrir plus qu’il ne te coûte." + fin :
+    diff <= -1.5 ? "Les émotions désagréables pèsent plus lourd en ce moment : ton système émotionnel travaille beaucoup, et cela mérite douceur et récupération." + fin :
+    "Agréables et désagréables s’équilibrent presque : une vie intérieure contrastée, où les deux registres cohabitent." + fin;
 
   /* Radar */
   $("#radarWrap").innerHTML = buildRadar(notes);
@@ -1995,11 +2077,12 @@ function renderResults(notes){
   /* Barres */
   $("#barsWrap").innerHTML = tri.map(e => {
     const b = BANDES[bandeDe(notes[e.id])];
-    return `<div class="bar-row">
+    const nm = mesuree(e.id);
+    return `<div class="bar-row${nm ? "" : " absente"}">
       <div class="bar-id"><span class="g"><img src="${ILLUS[e.id]}" alt=""></span>
-        <span><span class="nm">${e.nom}</span><span class="band" style="color:${b.c}">${b.lbl}</span></span></div>
-      <div class="bar-track"><div class="bar-fill" data-w="${notes[e.id]*10}" style="background:linear-gradient(90deg, ${rgba(e.color,.65)}, ${e.color})"></div></div>
-      <div class="bar-score" style="color:${e.color}">${fmt(notes[e.id])}</div>
+        <span><span class="nm">${e.nom}</span><span class="band" style="color:${nm ? b.c : "var(--muted)"}">${nm ? b.lbl : "non retenue"}</span></span></div>
+      <div class="bar-track">${nm ? `<div class="bar-fill" data-w="${notes[e.id]*10}" style="background:linear-gradient(90deg, ${rgba(e.color,.65)}, ${e.color})"></div>` : ""}</div>
+      <div class="bar-score" style="color:${nm ? e.color : "var(--muted)"}">${nm ? fmt(notes[e.id]) : "—"}</div>
     </div>`;
   }).join("");
 
@@ -2114,12 +2197,20 @@ function buildSynthese(notes, tri, mAgr, mDes, basses){
   const [t1, t2, t3] = tri;
   ph.push(`Aujourd’hui, ton paysage intérieur est surtout coloré par ${nm(t1)} (${fmt(notes[t1.id])}/10), ${nm(t2)} (${fmt(notes[t2.id])}/10) et ${nm(t3)} (${fmt(notes[t3.id])}/10).`);
 
+  /* Même précaution que sur la page de résultats : on ne compare que ce qui a
+     été mesuré des deux côtés. */
+  const mesureeL = id => !lastMesures || lastMesures[id] > 0;
+  const nAgrL = AGREABLES.filter(mesureeL).length, nDesL = DESAGREABLES.filter(mesureeL).length;
   const diff = mAgr - mDes;
-  ph.push(diff >= 1.5
-    ? `Côté équilibre, les émotions agréables (${fmt(mAgr)}/10 en moyenne) prennent nettement le dessus sur les désagréables (${fmt(mDes)}/10) — ton quotidien semble te nourrir plus qu’il ne te coûte.`
-    : diff <= -1.5
-    ? `Côté équilibre, les émotions désagréables (${fmt(mDes)}/10 en moyenne) pèsent en ce moment plus lourd que les agréables (${fmt(mAgr)}/10) — non pas que tout aille mal, mais ton système émotionnel travaille beaucoup, et cela mérite de la douceur envers toi-même.`
-    : `Côté équilibre, émotions agréables (${fmt(mAgr)}/10) et désagréables (${fmt(mDes)}/10) se répondent presque à parts égales : une vie intérieure contrastée, où les deux registres cohabitent.`);
+  if(nAgrL && nDesL){
+    ph.push(diff >= 1.5
+      ? `Côté équilibre, les émotions agréables (${fmt(mAgr)}/10 en moyenne) prennent nettement le dessus sur les désagréables (${fmt(mDes)}/10) — ton quotidien semble te nourrir plus qu’il ne te coûte.`
+      : diff <= -1.5
+      ? `Côté équilibre, les émotions désagréables (${fmt(mDes)}/10 en moyenne) pèsent en ce moment plus lourd que les agréables (${fmt(mAgr)}/10) — non pas que tout aille mal, mais ton système émotionnel travaille beaucoup, et cela mérite de la douceur envers toi-même.`
+      : `Côté équilibre, émotions agréables (${fmt(mAgr)}/10) et désagréables (${fmt(mDes)}/10) se répondent presque à parts égales : une vie intérieure contrastée, où les deux registres cohabitent.`);
+  } else if(nAgrL || nDesL){
+    ph.push(`Côté équilibre, il n’y a rien à comparer : sur les situations tirées, tu n’as retenu que des émotions ${nAgrL ? "agréables" : "désagréables"}. Ce n’est pas un déséquilibre de ta vie, c’est ce que ces seize scènes ont appelé chez toi.`);
+  }
 
   const combos = listeCombos(notes).slice(0, 3);
   if(combos.length === 0){
@@ -2144,14 +2235,21 @@ function buildSynthese(notes, tri, mAgr, mDes, basses){
 function buildCopyText(notes){
   const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
   const date = new Date().toLocaleDateString("fr-FR");
-  const lignes = tri.map((e, k) => `${String(k+1).padStart(2, " ")}. ${e.nom} — ${fmt(notes[e.id])}/10 (${BANDES[bandeDe(notes[e.id])].lbl.toLowerCase()})`);
+  /* Une émotion jamais retenue ne se recopie pas en « 0/10 » : ce texte est
+     destiné à être partagé, et il dirait de quelqu'un qu'il ne ressent pas de
+     gratitude alors que le test ne le lui a jamais demandé. */
+  const mesuree = id => !lastMesures || lastMesures[id] > 0;
+  const gardees = tri.filter(e => mesuree(e.id));
+  const absentes = tri.filter(e => !mesuree(e.id));
+  const lignes = gardees.map((e, k) => `${String(k+1).padStart(2, " ")}. ${e.nom} — ${fmt(notes[e.id])}/10 (${BANDES[bandeDe(notes[e.id])].lbl.toLowerCase()})`);
+  if(absentes.length) lignes.push("", `Non retenues sur les situations tirées : ${absentes.map(e => e.nom).join(", ")}.`);
   const mAgr = moyenne(AGREABLES, notes), mDes = moyenne(DESAGREABLES, notes);
   return [
     `🧭 Boussole émotionnelle — mes résultats (${date})`,
     "",
     ...lignes,
     "",
-    `Émotions dominantes : ${tri.slice(0, 3).map(e => e.nom).join(", ")}.`,
+    `Émotions dominantes : ${gardees.slice(0, 3).map(e => e.nom).join(", ")}.`,
     `Équilibre : agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.`,
     "",
     "Test indicatif par mises en situation, réalisé 100 % dans mon navigateur : mes réponses n'en sont jamais sorties.",
@@ -2983,9 +3081,11 @@ function lienAvecSuivi(url){
 
 /* ————— Journal des émotions (stocké uniquement sur l'appareil, jamais envoyé) ————— */
 /* ————— Brouillon du test en cours (reprise après fermeture de l'onglet) ————— */
-const BROUILLON_KEY = "boussole.brouillon.v2";
-const BROUILLON_VERSION = 2;   /* à incrémenter dès que SITUATIONS ou ROTATIONS bouge :
-   la sélection est faite d'indices bruts, un ancien brouillon pointerait ailleurs. */
+const BROUILLON_KEY = "boussole.brouillon.v3";
+const BROUILLON_VERSION = 3;   /* à incrémenter dès que SITUATIONS ou ROTATIONS bouge :
+   la sélection est faite d'indices bruts, un ancien brouillon pointerait ailleurs.
+   Passé à 3 le 23/09/2026 : les réponses ne veulent plus dire la même chose —
+   avant, une émotique absente valait zéro ; maintenant elle n'a pas été mesurée. */
 function sauverBrouillon(){
   try{
     localStorage.setItem(BROUILLON_KEY, JSON.stringify({
@@ -3008,7 +3108,7 @@ function chargerBrouillon(){
     if(Date.now() - new Date(b.d).getTime() > 7 * 864e5) return null;
     const faites = b.selection.filter(k => {
       const a = b.answers[k];
-      return a && SITUATIONS[k].emos.every(id => a[id] != null);
+      return a && Object.keys(a).length >= MIN_EMOS;
     }).length;
     if(faites === 0) return null;
     /* un brouillon terminé est conservé, pas jeté : c'est celui de la personne qui a
@@ -3298,7 +3398,10 @@ function importerJournal(fichier){
 }
 
 /* ————— Pont test ↔ journal (résultats gardés sur l'appareil, opt-in) ————— */
-const TESTS_KEY = "boussole.tests.v1";
+/* v2 : depuis le 23/09/2026 la note est une intensité moyenne, plus une
+   fréquence. Comparer un passage d'avant à un passage d'après ferait lire
+   un changement de barème comme une évolution personnelle. */
+const TESTS_KEY = "boussole.tests.v2";
 /* Version du barème. Les situations ont été rééquilibrées : comparer une note
    d'avant à une note d'après revient à comparer deux échelles différentes et à
    présenter comme une évolution ce qui n'est qu'un changement de règle du jeu.
@@ -3504,48 +3607,72 @@ async function creerRappel(){
 
 /* ————— Auto-vérification (console) ————— */
 function runSelfTests(){
-  const zeros = computeScores(SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, 0]))), [], null);
-  const zeroOK = EMOTIONS.every(e => zeros[e.id] === 0);
-  const maxKO = [];
-  EMOTIONS.forEach(e => {
-    const rep = SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, id === e.id ? 4 : 0])));
-    if(computeScores(rep, [], null)[e.id] !== 10) maxKO.push(e.id);
-  });
-  const couverture = {};
-  EMOTIONS.forEach(e => {
-    couverture[e.id] = SITUATIONS.filter(s => s.emos.includes(e.id)).length;
-  });
-  const covOK = Object.values(couverture).every(c => c >= 5);
-  /* le même invariant, mais dans la configuration réellement utilisée :
-     test raccourci par des moments réels (c'est ce cas qui manquait) */
-  const selCourte = ROTATIONS[0].slice(0, 8);
-  const reellesMax = Array.from({length:5}, () => Object.fromEntries(EMOTIONS.map(e => [e.id, 4])));
-  const repCourte = SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, 4])));
-  const notesMax = computeScores(repCourte, reellesMax, selCourte);
-  const mixteOK = EMOTIONS.every(e => notesMax[e.id] === 10);
-  const reellesZero = Array.from({length:5}, () => Object.fromEntries(EMOTIONS.map(e => [e.id, 0])));
-  const repZero = SITUATIONS.map(s => Object.fromEntries(s.emos.map(id => [id, 0])));
-  const mixteZeroOK = EMOTIONS.every(e => computeScores(repZero, reellesZero, selCourte)[e.id] === 0);
+  /* Les invariants ont changé avec le questionnaire. Avant, chaque situation
+     imposait ses émotions et le dénominateur était connu d'avance : on vérifiait
+     une couverture. Maintenant c'est la personne qui désigne, et ce qu'il faut
+     vérifier est différent — d'où la réécriture plutôt que l'ajustement. */
+  const toutes = id => SITUATIONS.map(() => ({ [id]: 4 }));
 
-  /* couverture de chaque jeu de la rotation */
-  let cov16OK = true, minCouv = 99;
-  ROTATIONS.forEach(roue => EMOTIONS.forEach(e => {
-    const c = roue.filter(k => SITUATIONS[k].emos.includes(e.id)).length;
-    minCouv = Math.min(minCouv, c);
-    if(c < 5) cov16OK = false;
-  }));
-  console.info(`[Boussole émotionnelle] Auto-vérification — tout à 0 → 0/10 partout : ${zeroOK ? "✓" : "✗"} · ` +
-    `tout à 4 → 10/10 : ${maxKO.length === 0 ? "✓" : "✗ " + maxKO.join(",")} · ` +
-    `avec 5 moments réels + test court → 0 partout : ${mixteZeroOK ? "✓" : "✗"} et 10 partout : ${mixteOK ? "✓" : "✗"} · ` +
-    `couverture ≥ 5 (banque de 24) : ${covOK ? "✓" : "✗"} · ` +
-    `couverture ≥ 5 sur les 3 rotations du test de ${TAILLE_TEST} : ${cov16OK ? "✓ (min " + minCouv + ")" : "✗ (min " + minCouv + ")"}`, couverture);
-  return { zeroOK, maxOK: maxKO.length === 0, mixteOK, mixteZeroOK, covOK, cov16OK, couverture };
+  /* 1. Une émotion désignée partout au maximum vaut 10/10. */
+  const maxKO = EMOTIONS.filter(e => computeScores(toutes(e.id), [], null)[e.id] !== 10).map(e => e.id);
+
+  /* 2. Désignée partout au minimum, elle vaut 2,5/10 — et jamais 0 : l'échelle
+        part à 1, puisque désigner une émotion c'est déjà dire qu'elle est là. */
+  const minKO = EMOTIONS.filter(e =>
+    computeScores(SITUATIONS.map(() => ({ [e.id]: 1 })), [], null)[e.id] !== 2.5).map(e => e.id);
+
+  /* 3. Jamais désignée = aucune mesure. C'est le point le plus important du
+        nouveau calcul : ce n'est pas un zéro, c'est une absence, et les
+        résultats doivent le dire autrement qu'en affichant 0/10. */
+  const rep = SITUATIONS.map(() => ({ joie: 3, peur: 2, colere: 4 }));
+  const mesures = compterMesures(rep, [], null);
+  const absenceOK = mesures.tristesse === 0 && mesures.joie === SITUATIONS.length;
+  const noteAbsente = computeScores(rep, [], null).tristesse === 0;
+
+  /* 4. La propriété assumée du barème : une seule mesure à 4 donne 10/10, parce
+        que la note mesure une intensité, pas une fréquence. Ce test existe pour
+        que personne ne la « corrige » par erreur en la prenant pour un défaut. */
+  const uneSeule = SITUATIONS.map((_, k) => k === 0 ? { degout: 4 } : { joie: 2, peur: 2, colere: 2 });
+  const intensiteOK = computeScores(uneSeule, [], null).degout === 10
+                   && compterMesures(uneSeule, [], null).degout === 1;
+
+  /* 5. Les moments réels du journal comptent exactement comme une situation.
+        Attention au format : un moment réel est { emos: {…} }, pas un objet
+        d'émotions nu. L'ancien autotest passait la mauvaise forme, que
+        computeScores lisait comme vide — il ne vérifiait donc rien du tout. */
+  const selCourte = ROTATIONS[0].slice(0, 8);
+  const reelles = Array.from({length:5}, () => ({ emos: Object.fromEntries(EMOTIONS.map(e => [e.id, 4])) }));
+  const notesMax = computeScores(SITUATIONS.map(() => Object.fromEntries(EMOTIONS.map(e => [e.id, 4]))), reelles, selCourte);
+  const mixteOK = EMOTIONS.every(e => notesMax[e.id] === 10);
+  const mixteMesures = compterMesures(SITUATIONS.map(() => ({ joie: 4 })), reelles, selCourte);
+  const mixteCompteOK = mixteMesures.joie === selCourte.length + 5 && mixteMesures.peur === 5;
+
+  /* 6. Le seuil de validation d'une situation. */
+  const seuilOK = MIN_EMOS >= 2 && MIN_EMOS <= EMOTIONS.length;
+
+  const ok = maxKO.length === 0 && minKO.length === 0 && absenceOK && noteAbsente
+          && intensiteOK && mixteOK && mixteCompteOK && seuilOK;
+  console.info("[Boussole émotionnelle] Auto-vérification — "
+    + `tout à 4 → 10/10 : ${maxKO.length === 0 ? "✓" : "✗ " + maxKO.join(",")} · `
+    + `tout à 1 → 2,5/10 : ${minKO.length === 0 ? "✓" : "✗ " + minKO.join(",")} · `
+    + `jamais désignée → 0 mesure : ${absenceOK && noteAbsente ? "✓" : "✗"} · `
+    + `une seule mesure à 4 → 10/10 (voulu) : ${intensiteOK ? "✓" : "✗"} · `
+    + `journal + test court : ${mixteOK && mixteCompteOK ? "✓" : "✗"} · `
+    + `minimum ${MIN_EMOS} émotions par situation : ${seuilOK ? "✓" : "✗"}`);
+  return { ok, maxOK: maxKO.length === 0, minOK: minKO.length === 0,
+           absenceOK: absenceOK && noteAbsente, intensiteOK, mixteOK, mixteCompteOK, seuilOK };
 }
+
 
 /* ————— Câblage ————— */
 let lastNotes = null;
+/* Combien de fois chaque émotion a été désignée pendant ce passage. Sans ce
+   compte, une émotion jamais retenue s'afficherait à 0/10 — soit « tu ne
+   ressens jamais ça », affirmé à partir d'aucune donnée. */
+let lastMesures = null;
 function finish(){
   lastNotes = computeScores(state.answers, state.reelles, state.selection);
+  lastMesures = compterMesures(state.answers, state.reelles, state.selection);
   resultatsGardesCe = false;
   mesurer("test-fin");   /* le test est terminé, avant même de savoir s'il y a un verrou */
   /* Le brouillon n'est effacé qu'une fois les résultats réellement ouverts. Effacé
@@ -3581,7 +3708,6 @@ document.addEventListener("click", e => {
   if(a) mesurer("stripe");
 }, true);
 $("#btnToTest").addEventListener("click", () => { renderPerso(); showView("v-perso"); });
-$("#btnRien").addEventListener("click", toutAZero);
 $("#btnMomentAjout").addEventListener("click", ajouterMoment);
 $("#btnPersoRetour").addEventListener("click", () => showView("v-emotions"));
 $("#btnPersoContinuer").addEventListener("click", () => {
@@ -3656,6 +3782,7 @@ $("#btnRestart").addEventListener("click", () => {
   saisie = saisieVierge();
   $("#jNote").value = "";
   lastNotes = null;
+  lastMesures = null;
   $("#copyFeedback").textContent = "";
   showView("v-accueil");
 });
