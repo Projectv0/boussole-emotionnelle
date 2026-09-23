@@ -1,0 +1,33 @@
+{
+  // Configuration du Worker, pour pouvoir le déployer en ligne de commande plutôt
+  // qu'en collant le code dans l'éditeur du tableau de bord. L'intérêt n'est pas
+  // le confort : un déploiement scripté est reproductible et vérifiable, là où un
+  // copier-coller dans un navigateur ne laisse aucune trace de ce qui a été collé.
+  //
+  //   wrangler d1 create boussole        crée la base, renvoie son identifiant
+  //   wrangler d1 execute boussole --remote --file=schema.sql
+  //   wrangler deploy                    met le Worker en ligne
+  //   wrangler secret put MESURE_CLE     à lancer par Martial : la valeur se tape
+  //                                      dans son terminal et n'est vue de personne
+  //
+  // Voir MESURE.md pour le détail, et A-FAIRE.md pour ce qui reste à faire.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "boussole",
+  "main": "verification.js",
+  "compatibility_date": "2026-09-01",
+
+  // L'identifiant est écrit par « wrangler d1 create boussole ».
+  // La base ne contient que des compteurs anonymes : un jour, un nom d'événement,
+  // un nombre. Rien qui désigne quiconque.
+  "d1_databases": [
+    {
+      "binding": "MESURE",
+      "database_name": "boussole",
+      "database_id": "à-remplir-par-wrangler-d1-create"
+    }
+  ],
+
+  // Les deux secrets ne sont JAMAIS écrits ici — ce fichier est versionné.
+  // STRIPE_CLE et MESURE_CLE se posent avec « wrangler secret put ».
+  "observability": { "enabled": true }
+}
