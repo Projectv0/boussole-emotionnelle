@@ -15,6 +15,14 @@ Trois blocs indépendants, dans l'ordre de ce qui rapporte le plus vite :
 Le site ne vend rien aujourd'hui (`modeTest: true`, liens Stripe de test) : rien n'est en
 train de mal tourner. Le bloc B est à faire **avant** de basculer, pas en urgence.
 
+**Ce qui est gratuit, exactement.** À dire juste partout, y compris dans les bios et les
+dépôts d'annuaire : **le guide de 57 articles est en accès libre**, et le test se répond
+librement — mais **aucun résultat ne s'affiche sans payer**, pas même les trois émotions
+dominantes, à partir de 1,99 €. Écrire « test gratuit » quelque part serait faux, et c'est
+précisément le schéma qui produit le plus de réclamations : quelqu'un passe dix à quinze
+minutes sur seize situations, puis découvre le prix. *(L'audit de mise en marché demande
+d'ailleurs d'annoncer le prix avant le test — point 2.4, encore à faire.)*
+
 **Le Kbis ne bloque que la vente, jamais l'audience.** C'est la distinction qui décide du
 calendrier : tout le bloc A — publier, mesurer, se rendre visible — se fait sans lui. Et
 comme une audience met des semaines à se construire, ce sont précisément les semaines
@@ -133,7 +141,7 @@ Dans l'application, *Modifier le profil* :
 |---|---|
 | **Nom d'utilisateur** | `boussole.emotionnelle` — vérifié libre sur TikTok, et identique à Instagram |
 | **Nom** | `Boussole Émotionnelle` |
-| **Bio** (80 car. max) | `Des scènes qu'on reconnaît. Le test, gratuit : boussole-emotionnelle.fr` — 71 caractères |
+| **Bio** (80 car. max) | `Des scènes qu'on reconnaît, et un guide libre : boussole-emotionnelle.fr` — 72 caractères |
 | **Photo** | `logo-instagram.png`, le même fichier que sur Instagram |
 
 **Bascule d'abord le compte en professionnel** (*Paramètres → Gérer le compte → Passer à un
