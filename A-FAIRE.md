@@ -111,10 +111,36 @@ modification des liens que dans son application : *Modifier le profil → Liens 
 `https://boussole-emotionnelle.fr`. Sans ça, la flèche de la bio ne désigne rien, et les 99
 publications n'ont aucun chemin vers le site.
 
-### TikTok
+### TikTok — à finir depuis le téléphone
 
-**Donne-moi l'adresse du profil** et je l'ajoute au `sameAs` et aux pieds de page, comme
-Instagram. Vérifie au passage que le pseudo n'est pas, lui aussi, généré automatiquement.
+Le compte existe, sous le pseudo généré `user4327198114255`. **Je n'ai pas pu le configurer
+depuis le navigateur** : après quelques tentatives, TikTok a cessé d'ouvrir sa fenêtre
+d'édition — une protection contre l'automatisation, vraisemblablement. Les réglages du
+compte, eux, répondaient normalement.
+
+De toute façon le téléphone est le bon endroit, pour une raison qui compte : **le formulaire
+web de TikTok n'a aucun champ de site web.** TikTok le réserve aux comptes professionnels.
+
+Dans l'application, *Modifier le profil* :
+
+| Champ | Valeur |
+|---|---|
+| **Nom d'utilisateur** | `boussole.emotionnelle` — vérifié libre sur TikTok, et identique à Instagram |
+| **Nom** | `Boussole Émotionnelle` |
+| **Bio** (80 car. max) | `Des scènes qu'on reconnaît. Le test, gratuit : boussole-emotionnelle.fr` — 71 caractères |
+| **Photo** | `logo-instagram.png`, le même fichier que sur Instagram |
+
+**Bascule d'abord le compte en professionnel** (*Paramètres → Gérer le compte → Passer à un
+compte professionnel*). C'est gratuit, ça prend trente secondes, et ça débloque le champ de
+site web — sans quoi aucun lien cliquable n'existe sur TikTok.
+
+> À savoir : les légendes des 99 publications disent « (lien en bio) ». Sur TikTok, cette
+> phrase est fausse tant que le compte n'est pas professionnel et le lien posé. C'est
+> pourquoi la bio ci-dessus écrit l'adresse en toutes lettres : elle reste vraie dans les
+> deux cas.
+
+**Ensuite, donne-moi l'adresse du profil** et je l'ajoute au `sameAs` et aux pieds de page,
+comme Instagram.
 
 **Et, dans Search Console**, tu peux maintenant rattacher Instagram et TikTok comme
 « comptes de plate-forme » : tu verras dans un même tableau ce qui vient du site et ce qui
