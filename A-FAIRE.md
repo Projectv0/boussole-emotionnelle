@@ -15,6 +15,12 @@ Trois blocs indépendants, dans l'ordre de ce qui rapporte le plus vite :
 Le site ne vend rien aujourd'hui (`modeTest: true`, liens Stripe de test) : rien n'est en
 train de mal tourner. Le bloc B est à faire **avant** de basculer, pas en urgence.
 
+**Le Kbis ne bloque que la vente, jamais l'audience.** C'est la distinction qui décide du
+calendrier : tout le bloc A — publier, mesurer, se rendre visible — se fait sans lui. Et
+comme une audience met des semaines à se construire, ce sont précisément les semaines
+d'attente du Kbis. Publier maintenant, c'est arriver au jour de la mise en vente avec des
+gens qui lisent déjà ; attendre, c'est ouvrir une boutique dans une rue vide.
+
 ---
 
 # A — Se rendre visible
@@ -131,8 +137,14 @@ Dans l'application, *Modifier le profil* :
 | **Photo** | `logo-instagram.png`, le même fichier que sur Instagram |
 
 **Bascule d'abord le compte en professionnel** (*Paramètres → Gérer le compte → Passer à un
-compte professionnel*). C'est gratuit, ça prend trente secondes, et ça débloque le champ de
-site web — sans quoi aucun lien cliquable n'existe sur TikTok.
+compte professionnel*). C'est gratuit et ça débloque le champ de site web — sans quoi aucun
+lien cliquable n'existe sur TikTok.
+
+> **À ne pas confondre avec « Vérification de l'entreprise »**, qui figure juste à côté dans
+> les réglages TikTok. Celle-là demande des pièces justificatives et attend donc ton Kbis.
+> Le passage en compte professionnel, lui, est un simple basculement : ni document, ni SIREN,
+> ni vérification. Si l'application te réclame malgré tout une pièce, dis-le-moi — ça voudra
+> dire que TikTok a changé son parcours, et on s'adaptera.
 
 > À savoir : les légendes des 99 publications disent « (lien en bio) ». Sur TikTok, cette
 > phrase est fausse tant que le compte n'est pas professionnel et le lien posé. C'est
