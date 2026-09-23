@@ -170,33 +170,68 @@ le bon chemin de page. Un événement inventé et une requête venue d'une autre
 n'écrivent rien. La lecture sans clé renvoie 403. Le compteur a ensuite été remis à zéro —
 il ne contient aucune de mes visites d'essai.
 
-### Ce qui te reste : la clé de lecture
+### Lire les chiffres
 
-```bash
-wrangler secret put MESURE_CLE
-```
-
-À lancer **dans ton terminal**, depuis `worker/`. La commande demande la valeur au clavier :
-choisis un mot de passe long, je ne le vois pas, il n'apparaît dans aucun fichier.
-
-Ensuite, pour lire les chiffres :
+`MESURE_CLE` est posée. Ouvre :
 
 ```
 https://boussole.projectv0-0.workers.dev/mesure?cle=TON_MOT_DE_PASSE&jours=30
 ```
 
-Enregistre la réponse dans un fichier et lance `python3 mesure.py chiffres.json` — tu
-obtiens l'entonnoir, les pages les plus lues et les quatorze derniers jours.
-
-> Tant que `MESURE_CLE` n'est pas posée, l'écriture fonctionne (les chiffres s'accumulent)
-> mais la lecture est refusée. Rien n'est perdu : pose la clé quand tu veux, l'historique
-> sera là.
+Enregistre la réponse dans un fichier, puis `python3 mesure.py chiffres.json` — tu obtiens
+l'entonnoir, les pages les plus lues et les quatorze derniers jours. Le compteur tourne
+depuis le 23 septembre : laisse-lui une semaine avant d'y chercher du sens.
 
 ### À faire aussi, quand tu passeras sur Cloudflare
 
 Une **règle de limitation de débit** sur la route du Worker — 10 requêtes par minute et par
 IP. Elle protège le compteur d'un gonflage à la main, et elle sera de toute façon nécessaire
 pour la vérification d'achat.
+
+---
+
+## A6 · Les liens entrants — **le seul vrai frein aujourd'hui**
+
+Constaté en cherchant, le 23 septembre : le site **est** indexé — premier sur son nom de
+domaine exact, sixième sur « boussole emotionnelle test emotions ». Mais il n'apparaît pas
+sur « boussole émotionnelle » seul, et **5 pages sur 59** sont indexées.
+
+Deux causes, une seule sur laquelle on peut agir.
+
+**Le nom du projet est une expression courante, pas une marque.** « Boussole émotionnelle »
+est déjà employée par pauldevaux.fr, emotioncompass.org, ecolepositive.fr, macoherence.com —
+des sites installés depuis des années. Personne ne se dispute « Decathlon » ; tout le monde
+se dispute celle-ci. C'est une contrainte permanente, pas un retard de démarrage.
+
+**Le site n'a aucun lien entrant.** Zéro. C'est ce qui décide du classement sur une requête
+disputée, et c'est la seule chose qui manque vraiment — le contenu, lui, est là.
+
+### Ce qu'on peut faire, et qui fait quoi
+
+**Moi** : repérer les endroits où déposer le site, écrire les textes de présentation aux
+bons formats, préparer les fiches.
+
+**Toi** : créer les comptes et valider les dépôts. Je ne crée pas de compte et je ne soumets
+pas de formulaire à ta place.
+
+Les pistes qui valent la peine, par ordre d'effet :
+
+- **les annuaires français de bien-être et d'outils gratuits** — lents, mais durables ;
+- **les forums et communautés** où le test répond à une question réellement posée (jamais en
+  autopromotion : une réponse utile qui cite le test) ;
+- **les plateformes d'outils gratuits** (type « ressources psycho », listes d'outils en accès
+  libre) ;
+- **les profils sociaux**, déjà en place pour Instagram : ils remontent souvent eux-mêmes sur
+  le nom.
+
+**Dis-moi quand tu veux t'y mettre** et je prépare le premier lot : la liste des cibles, ce
+qu'elles demandent, et les textes prêts à coller.
+
+### En attendant, une consigne pratique
+
+**Donne l'adresse, pas le nom.** `boussole-emotionnelle.fr` sort premier immédiatement ;
+« boussole émotionnelle » ne sortira pas avant des mois. C'est ce qu'il faut dire aux gens à
+qui tu en parles — ton associé compris.
 
 ---
 
@@ -302,25 +337,31 @@ Sans le paramètre `formule`, la page de remerciement ne sait pas quoi débloque
 reconnaître le produit acheté au lieu de deviner d'après le montant — sans eux, un code promo
 de −20 % ferait passer un acheteur du dossier sous le seuil et il recevrait un produit amputé.
 
-## B6 · Déployer le Worker de vérification
+## B6 · La clé Stripe du Worker
 
-Le Worker Cloudflare existe mais contient encore le Hello World. Sans lui, deux des trois
-portes qui donnent le produit payant gratuitement restent ouvertes : on ne peut pas vérifier
-un paiement sans interroger Stripe côté serveur.
+**Le Worker est déjà déployé** — c'est celui de la mesure, `boussole.projectv0-0.workers.dev`.
+Le code de vérification d'achat y est, et il répond déjà correctement : référence mal formée
+rejetée, et 501 tant qu'il n'a pas sa clé. Il ne manque que la clé.
 
-1. Coller le contenu de **`worker/verification.js`** dans le Worker (je l'aurai mis à jour
-   avec tes identifiants de prix et le contrôle des remboursements).
-2. Créer dans Stripe une **clé restreinte**, en lecture seule, avec **deux** permissions :
+1. Créer dans Stripe une **clé restreinte**, en lecture seule, avec **deux** permissions :
    **Checkout Sessions (lecture)** et **PaymentIntents (lecture)**. La seconde est
-   indispensable : sans elle, une session remboursée resterait valide indéfiniment, sur autant
-   d'appareils que la personne veut — le remboursement coûterait le prix **et** le produit.
-3. Ajouter cette clé comme secret nommé **`STRIPE_CLE`**.
-4. Poser une **règle de limitation de débit** Cloudflare : 10 requêtes par minute et par IP
-   sur la route du Worker.
-5. **Me donner l'URL du Worker.**
+   indispensable : sans elle, une session remboursée resterait valable indéfiniment, sur
+   autant d'appareils que la personne veut — le remboursement coûterait le prix **et** le
+   produit.
+2. La poser depuis `worker/` :
 
-> Je n'ai jamais accès à cette clé et je ne la manipule pas : elle se colle dans l'interface
-> Cloudflare, par toi.
+   ```bash
+   wrangler secret put STRIPE_CLE
+   ```
+
+   La valeur se tape au clavier, comme pour `MESURE_CLE`. Je ne la vois jamais.
+
+3. Poser une **règle de limitation de débit** Cloudflare : 10 requêtes par minute et par IP
+   sur la route du Worker. Elle protège à la fois le compteur d'audience et la vérification
+   d'achat.
+
+Ensuite je renseigne `VENTE.verification` dans le site — une ligne — et la vérification
+devient active.
 
 ## B7 · Le test réel, avant d'annoncer quoi que ce soit
 
@@ -380,14 +421,16 @@ carrousels et le dossier `publication/` en une commande.
 
 | Tu me donnes | Je fais |
 |---|---|
-| ~~la balise `google-site-verification`~~ | ✅ en ligne, propriété validée, sitemap envoyé |
-| ton choix de mesure d'audience | j'installe et je pose les cinq repères |
+| ~~la balise Search Console~~ | ✅ propriété validée, sitemap envoyé, Bing aussi |
+| ~~ton choix de mesure d'audience~~ | ✅ compteur en service depuis le 23 septembre |
+| ~~les adresses de profil Instagram~~ | ✅ `sameAs` et pied de page sur les 59 pages |
+| l'adresse du profil TikTok | je l'ajoute au `sameAs` et aux pieds de page |
 | les 10 décisions | je complète statuts et pacte |
 | les 7 champs du Kbis + directeur de publication | je publie les trois pages légales SAS |
 | le médiateur (nom, adresse, URL) | je l'inscris dans les CGV et les mentions légales |
 | ta décision sur le prix barré | je l'applique aux 4 endroits + les CGV |
 | les 2 liens Stripe + les 2 `price_...` | je branche et je prépare la bascule |
-| l'URL du Worker | je branche la vérification, je passe `modeTest` à `false`, j'incrémente le cache |
+| `wrangler secret put STRIPE_CLE` | je renseigne `VENTE.verification` et je bascule |
 | les 9 images régénérées | je remonte les carrousels et `publication/` |
 
 **Rien de tout cela ne se fait à ta place.** Chacun de ces points demande un compte à ton nom,
