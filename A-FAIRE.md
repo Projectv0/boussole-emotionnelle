@@ -158,45 +158,45 @@ comme Instagram.
 « comptes de plate-forme » : tu verras dans un même tableau ce qui vient du site et ce qui
 vient des réseaux. Ça passe par une autorisation que tu accordes toi-même.
 
-## A5 · Mesure d'audience — **écrite, il ne manque que le branchement**
+## ~~A5 · Mesure d'audience~~ — ✅ en service depuis le 23 septembre 2026
 
-Tu as choisi le compteur maison sur ton Worker Cloudflare : gratuit, sans cookie, sans
-bannière de consentement, et rien qui parte chez un tiers. **Le code est écrit, testé et
-commité.** Il n'envoie rien tant que tu n'as pas fait les cinq gestes ci-dessous — aucun
-risque à laisser en l'état.
+Worker déployé sur `boussole.projectv0-0.workers.dev`, base D1 « boussole » créée en région
+**EEUR — donc dans l'Union européenne**, ce que la politique de confidentialité annonçait
+déjà. Les 59 pages envoient leurs repères : la mesure tourne.
 
-Six moments sont comptés : ouverture de l'accueil, ouverture d'une page du guide, début du
-test, fin du test, affichage du choix de formule, départ vers Stripe.
+Vérifié de bout en bout sur le site réel avant de te le dire : une visite d'article, une
+visite d'accueil et un clic sur « Commencer le test » sont bien arrivés dans la base, avec
+le bon chemin de page. Un événement inventé et une requête venue d'une autre origine
+n'écrivent rien. La lecture sans clé renvoie 403. Le compteur a ensuite été remis à zéro —
+il ne contient aucune de mes visites d'essai.
 
-**Ce qui est enregistré tient en deux informations : le jour et le nom du moment.** Pas
-d'adresse IP, pas de cookie, pas d'identifiant de visite. La contrepartie, à accepter :
-on compte des événements, pas des visiteurs — tu sauras « 300 ouvertures, 12 tests finis,
-2 départs vers Stripe », jamais combien de personnes distinctes.
+### Ce qui te reste : la clé de lecture
 
-La politique de confidentialité a été corrigée dans le même commit : elle promettait
-« aucun pixel de mesure d'audience ». Elle décrit maintenant ce comptage, mot pour mot.
+```bash
+wrangler secret put MESURE_CLE
+```
 
-### Les cinq gestes, quinze minutes
+À lancer **dans ton terminal**, depuis `worker/`. La commande demande la valeur au clavier :
+choisis un mot de passe long, je ne le vois pas, il n'apparaît dans aucun fichier.
 
-1. **Créer une base D1** nommée `boussole` (Cloudflare → Storage & Databases → D1) et y
-   exécuter le `CREATE TABLE` de `worker/MESURE.md`.
-2. **Lier la base au Worker** sous le nom de variable exact **`MESURE`**.
-3. **Ajouter un secret `MESURE_CLE`** — un mot de passe de ton choix, qui protège la
-   lecture des chiffres.
-4. **Coller `worker/verification.js`** dans le Worker et déployer.
-5. **Me donner l'adresse du Worker.** Je la renseigne dans l'accueil et les 58 pages du
-   guide, et la mesure démarre.
+Ensuite, pour lire les chiffres :
 
-Le pas à pas complet, avec le SQL, est dans **`worker/MESURE.md`**.
+```
+https://boussole.projectv0-0.workers.dev/mesure?cle=TON_MOT_DE_PASSE&jours=30
+```
 
-> C'est le même Worker que celui de la vente (point B6). Si tu fais les deux en même
-> temps, la mesure démarre tout de suite et la vérification d'achat attendra sa clé Stripe.
+Enregistre la réponse dans un fichier et lance `python3 mesure.py chiffres.json` — tu
+obtiens l'entonnoir, les pages les plus lues et les quatorze derniers jours.
 
-### Lire les chiffres
+> Tant que `MESURE_CLE` n'est pas posée, l'écriture fonctionne (les chiffres s'accumulent)
+> mais la lecture est refusée. Rien n'est perdu : pose la clé quand tu veux, l'historique
+> sera là.
 
-`python3 mesure.py chiffres.json` — l'entonnoir, les pages du guide les plus ouvertes, et
-les quatorze derniers jours. Il désigne l'étape où la chute est la plus brutale, qui est
-celle à reprendre.
+### À faire aussi, quand tu passeras sur Cloudflare
+
+Une **règle de limitation de débit** sur la route du Worker — 10 requêtes par minute et par
+IP. Elle protège le compteur d'un gonflage à la main, et elle sera de toute façon nécessaire
+pour la vérification d'achat.
 
 ---
 
