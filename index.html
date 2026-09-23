@@ -2015,6 +2015,13 @@ function compterMesures(answers, reelles, selection){
 }
 
 /* ————— Résultats ————— */
+/* Sur quoi classe-t-on les émotions ? Sur leur PLACE, jamais sur leur seule
+   intensité. « De la plus forte à la plus discrète », le podium, les trois de la
+   carte partagée : tous désignent ce qui occupe le plus de terrain. Classer par
+   intensité mettait en tête une émotion retenue une seule fois mais avec force,
+   devant une émotion présente sur les seize scènes. */
+function rang(id){ return (lastPlaces || lastNotes || {})[id] || 0; }
+
 function moyenne(ids, notes){
   /* Seules les émotions réellement mesurées entrent dans la moyenne. Compter une
      émotion jamais désignée comme un zéro ferait dire au site « les émotions
@@ -2026,7 +2033,7 @@ function moyenne(ids, notes){
 }
 
 function renderResults(notes){
-  const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
+  const tri = [...EMOTIONS].sort((a, b) => rang(b.id) - rang(a.id));
   const date = new Date().toLocaleDateString("fr-FR", { weekday:"long", day:"numeric", month:"long", year:"numeric" });
   $("#resDate").textContent = `Test réalisé le ${date}. Tes réponses n’ont pas quitté ton navigateur.`;
 
@@ -2269,7 +2276,7 @@ function buildSynthese(notes, tri, mAgr, mDes, basses){
 
 /* ————— Copier les résultats ————— */
 function buildCopyText(notes){
-  const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
+  const tri = [...EMOTIONS].sort((a, b) => rang(b.id) - rang(a.id));
   const date = new Date().toLocaleDateString("fr-FR");
   /* Une émotion jamais retenue ne se recopie pas en « 0/10 » : ce texte est
      destiné à être partagé, et il dirait de quelqu'un qu'il ne ressent pas de
@@ -2277,16 +2284,27 @@ function buildCopyText(notes){
   const mesuree = id => !lastMesures || lastMesures[id] > 0;
   const gardees = tri.filter(e => mesuree(e.id));
   const absentes = tri.filter(e => !mesuree(e.id));
-  const lignes = gardees.map((e, k) => `${String(k+1).padStart(2, " ")}. ${e.nom} — ${fmt(notes[e.id])}/10 (${BANDES[bandeDe((lastPlaces || notes)[e.id])].lbl.toLowerCase()})`);
+  /* Le nombre de mesures accompagne la note : sans lui, « Honte 10/10 » partagé
+     tel quel laisse croire à une omniprésence qui peut venir d'une seule scène. */
+  const scenes = (state.selection ? state.selection.length : TAILLE_TEST) + (state.reelles ? state.reelles.length : 0);
+  const lignes = gardees.map((e, k) => `${String(k+1).padStart(2, " ")}. ${e.nom} — ${fmt(notes[e.id])}/10 · retenue ${lastMesures ? lastMesures[e.id] : "?"} fois sur ${scenes} (${BANDES[bandeDe((lastPlaces || notes)[e.id])].lbl.toLowerCase()})`);
   if(absentes.length) lignes.push("", `Non retenues sur les situations tirées : ${absentes.map(e => e.nom).join(", ")}.`);
   const mAgr = moyenne(AGREABLES, lastPlaces || notes), mDes = moyenne(DESAGREABLES, lastPlaces || notes);
+  /* Un côté sans aucune mesure ne se chiffre pas : « agréables 0,0/10 » dans un
+     texte destiné à être partagé affirmerait une absence de joie qu'on n'a
+     jamais mesurée. */
+  const vuA = AGREABLES.some(id => !lastMesures || lastMesures[id] > 0);
+  const vuD = DESAGREABLES.some(id => !lastMesures || lastMesures[id] > 0);
+  const equilibre = (vuA && vuD)
+    ? `Équilibre : agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.`
+    : `Équilibre : rien à comparer — je n'ai retenu que des émotions ${vuA ? "agréables" : "désagréables"} sur les scènes tirées.`;
   return [
     `🧭 Boussole émotionnelle — mes résultats (${date})`,
     "",
     ...lignes,
     "",
     `Émotions dominantes : ${gardees.slice(0, 3).map(e => e.nom).join(", ")}.`,
-    `Équilibre : agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.`,
+    equilibre,
     "",
     "Test indicatif par mises en situation, réalisé 100 % dans mon navigateur : mes réponses n'en sont jamais sorties.",
     "Ce n’est pas un diagnostic médical ou psychologique."
@@ -2417,7 +2435,7 @@ async function genererCartePost(notes){
   radarCanvas(ctx, W / 2, 610, 240, notes, SANS);
 
   /* Top 3 */
-  const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]).slice(0, 3);
+  const tri = [...EMOTIONS].sort((a, b) => rang(b.id) - rang(a.id)).slice(0, 3);
   const y0 = 916, rh = 88;
   for(let k = 0; k < 3; k++){
     const e = tri[k], y = y0 + k * (rh + 14);
@@ -2475,7 +2493,7 @@ async function genererCarteStory(notes){
   ctx.fillStyle = "rgba(255,253,248,.8)"; ctx.fill();
   ctx.strokeStyle = "rgba(45,40,51,.08)"; ctx.lineWidth = 2; ctx.stroke();
 
-  const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
+  const tri = [...EMOTIONS].sort((a, b) => rang(b.id) - rang(a.id));
   const dom = tri[0];
 
   /* En-tête */
@@ -2746,7 +2764,7 @@ function leviers(notes, tri){
 }
 
 function renderRapport(notes){
-  const tri = [...EMOTIONS].sort((a, b) => notes[b.id] - notes[a.id]);
+  const tri = [...EMOTIONS].sort((a, b) => rang(b.id) - rang(a.id));
   const date = new Date().toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
   const mAgr = moyenne(AGREABLES, lastPlaces || notes), mDes = moyenne(DESAGREABLES, lastPlaces || notes);
   const combos = listeCombos(notes);
@@ -2965,7 +2983,7 @@ normaliserRadios(document.body);
 /* ————— Pop-up de fin de questionnaire (le verrou) ————— */
 function ouvrirPaywall(){
   mesurer("paywall");
-  const tri = [...EMOTIONS].sort((a, b) => lastNotes[b.id] - lastNotes[a.id]).slice(0, 3);
+  const tri = [...EMOTIONS].sort((a, b) => rang(b.id) - rang(a.id)).slice(0, 3);
   $("#paywallGlyphs").innerHTML = tri.map(e => `<img src="${ILLUS[e.id]}" alt="">`).join("");
   const aR = $("#btnPayerResultats"), aD = $("#btnPayerDossier");
   $("#pwPrixResultats").textContent = VENTE.prixResultats;
