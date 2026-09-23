@@ -384,6 +384,9 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .eval-legende{ font-size:.8rem; color:var(--muted); margin:-.4rem 0 1rem; }
 .low-chip.absente{ opacity:.55; border-style:dashed; }
 .bar-row.absente, .bal-row.absente, .rap-absente{ opacity:.5; }
+.j-attente > .j-ctx{ opacity:.35; pointer-events:none; }
+.j-attente-note{ font-size:.82rem; color:var(--muted); margin:.2rem 0 .5rem; }
+.podium-sous{ display:block; font-size:.72rem; font-weight:500; color:var(--muted); margin-top:.1rem; }
 .ana.absente > summary{ opacity:.6; }
 .bar-row.absente .bar-track{ background-image:repeating-linear-gradient(90deg, var(--hairline) 0 6px, transparent 6px 12px); }
 .eval-chips{
@@ -962,8 +965,9 @@ footer p + p{ margin-top:.3rem; }
         <div class="j-emos" id="jEmos"></div>
         <div id="jIntensites"></div>
 
-        <div id="jConfBloc" hidden>
+        <div id="jConfBloc" class="j-attente">
           <p class="j-label">5 · À quel point es-tu sûr·e de ces mots&nbsp;?</p>
+          <p class="j-attente-note" id="jConfAttente">Choisis d’abord un mot à la question 4.</p>
           <div class="j-ctx" id="jConf"></div>
         </div>
 
@@ -1021,7 +1025,7 @@ footer p + p{ margin-top:.3rem; }
         <div class="test-nav">
           <button class="btn btn-ghost" id="btnPrev"><span class="ico" style="order:-1" aria-hidden="true">←</span> Précédent</button>
           <button class="btn btn-primary" id="btnNext" disabled>Suivant <span class="ico" aria-hidden="true">→</span></button>
-          <div class="next-hint" id="nextHint"></div>
+          <div class="next-hint" id="nextHint" role="status" aria-live="polite"></div>
         </div>
       </div>
     </div>
@@ -1066,7 +1070,7 @@ footer p + p{ margin-top:.3rem; }
       </div></div></div>
 
       <div class="res-card res-span-4"><div class="shell"><div class="core">
-        <div class="res-kicker">Peu ou pas ressenties</div>
+        <div class="res-kicker">En retrait, ou jamais retenues</div>
         <div class="low-list" id="resLow"></div>
         <p class="res-note" id="resLowNote"></p>
       </div></div></div>
@@ -1815,11 +1819,21 @@ function noter(id, v){
   sauverBrouillon();
 }
 function updateNav(){
+  /* Un bouton qui passe à disabled perd le focus, qui retombe sur <body> : au
+     clavier, il faut alors retabuler depuis le haut à chaque changement de
+     scène. On déplace le focus sur la première puce, qui est de toute façon la
+     prochaine chose à faire. */
+  const btn = $("#btnNext");
+  const avaitFocus = document.activeElement === btn;
   const idx = state.selection[state.i];
   const a = state.answers[idx] || {};
   const n = Object.keys(a).length;
   const ok = n >= MIN_EMOS;
-  $("#btnNext").disabled = !ok;
+  btn.disabled = !ok;
+  if(!ok && avaitFocus){
+    const premiere = $("#evalChips .j-chip");
+    if(premiere) premiere.focus();
+  }
   $("#nextHint").textContent = ok ? ""
     : n === 0 ? `Choisis au moins ${MIN_EMOS} émotions pour continuer.`
     : `Encore ${MIN_EMOS - n} émotion${MIN_EMOS - n > 1 ? "s" : ""} à choisir (${n}/${MIN_EMOS}).`;
@@ -1884,7 +1898,8 @@ function renderPerso(){
       saisie.emos[row.dataset.emo] = +b.dataset.v;
       renderPerso();
     })));
-  $("#jConfBloc").hidden = nb === 0;
+  $("#jConfBloc").classList.toggle("j-attente", nb === 0);
+  $("#jConfAttente").hidden = nb > 0;
   $("#btnMomentAjout").disabled = nb === 0 || state.reelles.length >= 5;
 
   const dispo = chargerJournal() !== null;
@@ -2039,6 +2054,16 @@ function moyenne(ids, notes){
 }
 
 function renderResults(notes){
+  /* Déclarés en tête : le podium, tout en haut, s'en sert déjà. Les avoir plus
+     bas faisait planter tout le rendu des résultats — une const utilisée avant
+     sa déclaration lève une ReferenceError, et la page restait vide. */
+  const mesuree = id => !lastMesures || lastMesures[id] > 0;
+  /* Le score dit la force, ce compte dit la présence. Les deux ensemble font
+     « la place » qu'une émotion occupe. */
+  const totalScenes = (state.selection ? state.selection.length : TAILLE_TEST)
+                    + (state.reelles ? state.reelles.length : 0);
+  /* La bande vient de la PLACE, pas de l'intensité — voir computePlaces. */
+  const bandePour = id => bandeDe(lastPlaces ? lastPlaces[id] : notes[id]);
   const tri = [...EMOTIONS].sort((a, b) => rang(b.id) - rang(a.id));
   const date = new Date().toLocaleDateString("fr-FR", { weekday:"long", day:"numeric", month:"long", year:"numeric" });
   $("#resDate").textContent = `Test réalisé le ${date}. Tes réponses n’ont pas quitté ton navigateur.`;
@@ -2048,7 +2073,7 @@ function renderResults(notes){
     <div class="podium-row">
       <span class="podium-rank">${k+1}</span>
       <span class="emo-glyph" style="border-color:${rgba(e.color,.3)}"><img src="${ILLUS[e.id]}" alt=""></span>
-      <span class="podium-name">${e.nom}</span>
+      <span class="podium-name">${e.nom}<span class="podium-sous">retenue ${lastMesures ? lastMesures[e.id] : "?"} fois sur ${totalScenes}</span></span>
       <span class="podium-score" style="color:${e.color}">${fmt(notes[e.id])}</span>
     </div>`).join("");
 
@@ -2057,26 +2082,26 @@ function renderResults(notes){
      mesure, une absence de mesure n'en est pas une. Les confondre reviendrait à
      affirmer « tu ne ressens pas de fierté » à quelqu'un qui n'a simplement
      jamais coché la fierté. */
-  const mesuree = id => !lastMesures || lastMesures[id] > 0;
-  /* Le score dit la force, ce compte dit la présence. Les deux ensemble font
-     « la place » qu'une émotion occupe — le score seul ne la dit pas, puisqu'une
-     émotion retenue une seule fois avec force obtient la même note qu'une
-     émotion retenue partout avec la même force. */
-  const totalScenes = (state.selection ? state.selection.length : TAILLE_TEST)
-                    + (state.reelles ? state.reelles.length : 0);
-  /* La bande vient de la PLACE, pas de l'intensité — voir computePlaces. */
-  const bandePour = id => bandeDe(lastPlaces ? lastPlaces[id] : notes[id]);
   const nonMesurees = tri.filter(e => !mesuree(e.id));
-  const basses = tri.filter(e => mesuree(e.id) && notes[e.id] <= 2);
+  /* Seuil sur la PLACE, pas sur l'intensité. Depuis que l'échelle part à 1, la
+     note minimale possible est 2,5 : tester « note <= 2 » ne pouvait plus jamais
+     être vrai, et ce bloc affichait donc toujours son texte de repli. */
+  const basses = tri.filter(e => mesuree(e.id) && (lastPlaces || notes)[e.id] <= 2);
   $("#resLow").innerHTML = (basses.length
-      ? basses.map(e => `<span class="low-chip"><img src="${ILLUS[e.id]}" alt=""> ${e.nom} · ${fmt(notes[e.id])}</span>`).join("")
+      /* Ces pastilles sont choisies sur la PLACE : y afficher l'intensité donnait
+         « Joie · 10,0 » dans une carte intitulée « En retrait ». On montre le
+         nombre de fois où l'émotion a été retenue, qui est ce dont il est
+         question ici. */
+      ? basses.map(e => `<span class="low-chip"><img src="${ILLUS[e.id]}" alt=""> ${e.nom} · ${lastMesures ? lastMesures[e.id] : "?"}&nbsp;fois</span>`).join("")
       : `<span class="low-chip">✨ Aucune note ≤ 2 parmi celles que tu as retenues</span>`)
     + nonMesurees.map(e => `<span class="low-chip absente"><img src="${ILLUS[e.id]}" alt=""> ${e.nom} · non retenue</span>`).join("");
   $("#resLowNote").textContent = (basses.length
-      ? "Une note basse n’est pas un manque : ces émotions sont simplement peu sollicitées dans ta vie en ce moment. "
+      ? "Ces émotions-là tiennent peu de place dans ce que tu as parcouru — retenues rarement, ou faiblement. Ce n’est pas un manque : elles sont simplement peu sollicitées en ce moment. "
       : "Parmi les émotions que tu as retenues, aucune n’est en retrait. ")
     + (nonMesurees.length
-      ? `Les ${nonMesurees.length} dernières, tu ne les as retenues sur aucune situation : le test n’a donc rien à en dire — ce n’est pas une note de zéro, c’est une absence de mesure.`
+      ? (nonMesurees.length === 1
+          ? `La dernière, tu ne l’as retenue sur aucune situation : le test n’a donc rien à en dire — ce n’est pas une note de zéro, c’est une absence de mesure.`
+          : `Les ${nonMesurees.length} dernières, tu ne les as retenues sur aucune situation : le test n’a donc rien à en dire — ce n’est pas une note de zéro, c’est une absence de mesure.`)
       : "");
 
   /* Équilibre agréables / désagréables.
@@ -2104,7 +2129,7 @@ function renderResults(notes){
   $("#resBalanceNote").textContent =
     !nAgr && !nDes ? "Trop peu d’émotions retenues pour dire quoi que ce soit de ton équilibre." :
     !nAgr ? "Tu n’as retenu aucune émotion agréable sur les situations tirées : il n’y a donc rien à comparer ici. Cela ne veut pas dire qu’elles sont absentes de ta vie — simplement que ces seize scènes ne les ont pas appelées." :
-    !nDes ? "Tu n’as retenu aucune émotion désagréable sur les situations tirées : il n’y a donc rien à comparer ici. Ces seize scènes ne les ont pas appelées, c’est tout ce qu’on peut en dire." :
+    !nDes ? `Tu n’as retenu aucune émotion désagréable sur les situations tirées : il n’y a donc rien à comparer ici. Ces ${totalScenes} scènes ne les ont pas appelées, c’est tout ce qu’on peut en dire.` :
     diff >= 1.5 ? "Les émotions agréables dominent nettement : ton quotidien semble te nourrir plus qu’il ne te coûte." + fin :
     diff <= -1.5 ? "Les émotions désagréables pèsent plus lourd en ce moment : ton système émotionnel travaille beaucoup, et cela mérite douceur et récupération." + fin :
     "Agréables et désagréables s’équilibrent presque : une vie intérieure contrastée, où les deux registres cohabitent." + fin;
@@ -2180,12 +2205,18 @@ function buildRadar(notes){
     const dy = s > .55 ? 10 : s < -.55 ? -2 : 4;
     return `<text x="${x.toFixed(1)}" y="${(y + dy).toFixed(1)}" text-anchor="${anchor}" font-size="12.5" font-weight="600" fill="#6E6779" font-family="inherit">${e.court}</text>`;
   }).join("");
+  const vuR = id => !lastMesures || lastMesures[id] > 0;
   const poly = EMOTIONS.map((e, k) => pt(k, R * notes[e.id] / 10).slice(0, 2).map(n => n.toFixed(1)).join(",")).join(" ");
+  /* Une émotion non retenue est tracée au centre — c'est inévitable pour ne pas
+     déformer le polygone — mais son point n'est pas plein et coloré comme les
+     autres : rien ne doit se lire comme une mesure à zéro. */
   const dots = EMOTIONS.map((e, k) => {
     const [x, y] = pt(k, R * notes[e.id] / 10);
-    return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4" fill="${e.color}" stroke="#FFFDF8" stroke-width="1.5"/>`;
+    return vuR(e.id)
+      ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4" fill="${e.color}" stroke="#FFFDF8" stroke-width="1.5"/>`
+      : `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="none" stroke="#B8B2C2" stroke-width="1.4" stroke-dasharray="2 2"/>`;
   }).join("");
-  return `<svg viewBox="0 0 560 584" role="img" aria-label="Radar de tes 14 notes émotionnelles">
+  return `<svg viewBox="0 0 560 584" role="img" aria-label="Radar de tes émotions ; celles que tu n’as retenues sur aucune scène sont marquées d’un point creux au centre">
     ${[2.5, 5, 7.5, 10].map(v => `<polygon points="${ring(v)}" fill="none" stroke="rgba(45,40,51,${v === 10 ? ".14" : ".07"})" stroke-width="1"/>`).join("")}
     ${axes}
     <polygon points="${poly}" fill="rgba(63,130,113,.16)" stroke="#3F8271" stroke-width="2" stroke-linejoin="round"/>
@@ -2196,7 +2227,12 @@ function buildRadar(notes){
 /* ————— Croisements entre émotions (partagés par la synthèse et le dossier) ————— */
 function listeCombos(notes){
   const HI = 5.5, LO = 2;
-  const n = id => notes[id];
+  /* « Montent souvent ensemble », « en veilleuse » : ces croisements décrivent
+     ce qui occupe le terrain, donc la place. Les lire sur l'intensité rendait
+     les seuils bas inatteignables (minimum 2,5) et les seuils hauts trop
+     faciles — deux émotions retenues une seule fois chacune, à fond, suffisaient
+     à déclencher un croisement. */
+  const n = id => (lastPlaces || notes)[id];
   /* Une combinaison qui se déclenche sur une note BASSE doit exiger que
      l'émotion ait été mesurée. Sans ça, « ta joie et ta sérénité sont au plus
      bas » s'afficherait chez quelqu'un qui ne les a simplement jamais retenues —
@@ -2239,7 +2275,8 @@ function listeCombos(notes){
 
 /* ————— Synthèse finale (5 à 8 phrases, générée à partir des notes) ————— */
 function buildSynthese(notes, tri, mAgr, mDes, basses){
-  const HI = 5.5, LO = 2;
+  /* HI et LO étaient déclarées ici sans y servir : retirées plutôt
+     qu'entretenues. Les seuils qui comptent sont dans listeCombos. */
   const nm = e => nomEmo(e.id);
   const ph = [];
 
@@ -2649,20 +2686,21 @@ function planTrenteJours(notes){
   /* Même précaution que dans leviers : une semaine entière du plan pouvait
      porter sur une émotion jamais retenue, annoncée « (0,0/10) ». */
   const vu = e => !lastMesures || lastMesures[e.id] > 0;
-  const desTri = DESAGREABLES.map(id => EMOTIONS.find(e => e.id === id)).filter(vu).sort((a, b) => notes[b.id] - notes[a.id]);
-  const agrTri = AGREABLES.map(id => EMOTIONS.find(e => e.id === id)).filter(vu).sort((a, b) => notes[a.id] - notes[b.id]);
-  const cible = (desTri.length && notes[desTri[0].id] > 2) ? desTri[0] : null;
+  const pl = id => (lastPlaces || notes)[id];
+  const desTri = DESAGREABLES.map(id => EMOTIONS.find(e => e.id === id)).filter(vu).sort((a, b) => pl(b.id) - pl(a.id));
+  const agrTri = AGREABLES.map(id => EMOTIONS.find(e => e.id === id)).filter(vu).sort((a, b) => pl(a.id) - pl(b.id));
+  const cible = (desTri.length && pl(desTri[0].id) > 2) ? desTri[0] : null;
   const ressource = agrTri[0] || null;
   const exoCible = cible ? DOSSIER[cible.id].exo : null;
   const exoRes = ressource ? DOSSIER[ressource.id].exo : null;
   return `
     <div class="rap-semaine"><b>Semaine 1 — Observer et nommer.</b>
       <p>Chaque jour, une minute de « météo intérieure » : quelle émotion domine, où je la sens dans le corps, quel besoin elle pointe. Note trois lignes le soir — sans juger, juste observer. C’est la fondation de tout le reste.</p></div>
-    ${cible ? `<div class="rap-semaine"><b>Semaine 2 — Apprivoiser ${cible.art}${cible.nom.toLowerCase()} (${fmt(notes[cible.id])}/10).</b>
+    ${cible ? `<div class="rap-semaine"><b>Semaine 2 — Apprivoiser ${cible.art}${cible.nom.toLowerCase()}${lastMesures ? ` (retenue ${lastMesures[cible.id]} fois)` : ""}.</b>
       <p>C’est ton émotion désagréable la plus présente. Trois fois cette semaine : « ${exoCible[0]} » Et si l’occasion se présente : « ${exoCible[1]} »</p></div>`
     : `<div class="rap-semaine"><b>Semaine 2 — Entretenir ton calme.</b>
       <p>Aucune émotion désagréable ne domine ton profil : profites-en pour renforcer les fondations. Chaque jour, trois minutes de respiration lente (inspire 4 s, expire 6 s), même — surtout — les jours où tout va bien.</p></div>`}
-    ${ressource ? `<div class="rap-semaine"><b>Semaine 3 — Cultiver ${ressource.art}${ressource.nom.toLowerCase()} (${fmt(notes[ressource.id])}/10).</b>
+    ${ressource ? `<div class="rap-semaine"><b>Semaine 3 — Cultiver ${ressource.art}${ressource.nom.toLowerCase()}${lastMesures ? ` (retenue ${lastMesures[ressource.id]} fois)` : ""}.</b>
       <p>C’est ton émotion agréable la plus discrète : elle a de la place pour grandir. Cette semaine : « ${exoRes[0]} » Puis, si le cœur t’en dit : « ${exoRes[1]} »</p></div>`
     : `<div class="rap-semaine"><b>Semaine 3 — Aller chercher ce qui n’est pas venu.</b>
       <p>Tu n’as retenu aucune émotion agréable sur les scènes que tu as parcourues. Ce n’est pas un verdict : ce sont ces scènes-là qui ne les ont pas appelées. Cette semaine, note chaque soir un moment — même minuscule — où quelque chose a été doux, drôle ou simplement tranquille. Trois lignes suffisent. C’est la matière qui manquait.</p></div>`}
@@ -2763,17 +2801,24 @@ function leviers(notes, tri){
      émotion agréable la plus discrète (0,0/10) : c'est là qu'il y a le plus à
      gagner ». Un levier entier bâti sur aucune donnée, dans le document vendu. */
   const vu = e => !lastMesures || lastMesures[e.id] > 0;
-  const desTri = DESAGREABLES.map(id => EMOTIONS.find(e => e.id === id)).filter(vu).sort((a, b) => notes[b.id] - notes[a.id]);
-  const agrTri = AGREABLES.map(id => EMOTIONS.find(e => e.id === id)).filter(vu).sort((a, b) => notes[a.id] - notes[b.id]);
+  /* « La plus présente », « la plus discrète » : ce sont des places, pas des
+     intensités. Trier sur la note donnait « ton émotion agréable la plus
+     discrète (10,0/10) » — une phrase qui se contredit toute seule. */
+  const pl = id => (lastPlaces || notes)[id];
+  const cb = e => lastMesures ? lastMesures[e.id] : null;
+  const desTri = DESAGREABLES.map(id => EMOTIONS.find(e => e.id === id)).filter(vu).sort((a, b) => pl(b.id) - pl(a.id));
+  const agrTri = AGREABLES.map(id => EMOTIONS.find(e => e.id === id)).filter(vu).sort((a, b) => pl(a.id) - pl(b.id));
 
-  if(desTri.length && notes[desTri[0].id] > 2){
-    out.push({ quand:"Cette semaine", pourquoi:`${maj(nomEmo(desTri[0].id))} est l’émotion inconfortable la plus présente chez toi (${fmt(notes[desTri[0].id])}/10).`,
-               quoi: DOSSIER[desTri[0].id].exo[0], emo: desTri[0] });
+  if(desTri.length && pl(desTri[0].id) > 2){
+    const e0 = desTri[0];
+    out.push({ quand:"Cette semaine", pourquoi:`${maj(nomEmo(e0.id))} est l’émotion inconfortable qui occupe le plus de place chez toi${cb(e0) != null ? ` — retenue ${cb(e0)} fois` : ""}.`,
+               quoi: DOSSIER[e0.id].exo[0], emo: e0 });
   }
   if(agrTri.length){
+    const a0 = agrTri[0];
     out.push({ quand: out.length ? "La semaine suivante" : "Cette semaine",
-               pourquoi:`${maj(nomEmo(agrTri[0].id))} est ton émotion agréable la plus discrète (${fmt(notes[agrTri[0].id])}/10) : c’est là qu’il y a le plus à gagner.`,
-               quoi: DOSSIER[agrTri[0].id].exo[0], emo: agrTri[0] });
+               pourquoi:`${maj(nomEmo(a0.id))} est ton émotion agréable la plus discrète${cb(a0) != null ? ` — retenue ${cb(a0)} fois seulement` : ""} : c’est là qu’il y a le plus à gagner.`,
+               quoi: DOSSIER[a0.id].exo[0], emo: a0 });
   }
   const dom = tri.find(vu);
   const troisieme = (dom && notes[dom.id] >= 5) ? dom : desTri[1];
@@ -3239,6 +3284,10 @@ function majBandeauReprise(){
     $("#btnReprendre").onclick = () => { reprendreBrouillon(b); finish(); };
   }else{
     $("#repriseTexte").innerHTML = `<strong>Tu avais commencé un test.</strong> ${b.faites} situation${b.faites > 1 ? "s" : ""} sur ${b.selection.length} déjà remplie${b.faites > 1 ? "s" : ""} — tu peux reprendre là où tu t’étais arrêté·e.`;
+    /* Le libellé doit être remis : la branche « complet » l'avait passé à « Voir
+       mes résultats », et il y restait ensuite alors que le bouton rouvre le
+       questionnaire. */
+    $("#btnReprendre").textContent = "Reprendre mon test";
     $("#btnReprendre").onclick = () => reprendreBrouillon(b);
   }
   $("#btnAbandonner").onclick = () => { effacerBrouillon(); majBandeauReprise(); };
@@ -3556,7 +3605,13 @@ function majGardeBox(){
 function garderResultats(){
   const t = chargerTests();
   if(!t || !lastNotes) return;
-  t.passages.push({ d: new Date().toISOString(), bareme: BAREME, notes: { ...lastNotes } });
+  /* On garde aussi le nombre de mesures : sans lui, une émotion jamais retenue
+     est relue plus tard comme un vrai zéro, et le croisement test ↔ journal
+     conclut « tu la ressens dans ta vie alors que le test la trouvait basse ».
+     Les passages d'avant le 23/09/2026 n'ont pas ce champ — d'où le test sur
+     son existence partout où il est lu. */
+  t.passages.push({ d: new Date().toISOString(), bareme: BAREME,
+                    notes: { ...lastNotes }, mesures: lastMesures ? { ...lastMesures } : null });
   if(sauverTests(t)){ resultatsGardesCe = true; majGardeBox(); }
 }
 /* Croisement test ↔ vécu, affiché dans les motifs du journal */
@@ -3579,7 +3634,8 @@ function motifsTestJournal(entrees){
     }
   }
   const topJ = Object.keys(freq).sort((a, b) => freq[b] - freq[a])[0];
-  if(topJ && part(topJ) >= .5 && dernier.notes[topJ] != null && dernier.notes[topJ] <= 2.5){
+  if(topJ && part(topJ) >= .5 && dernier.notes[topJ] != null && dernier.notes[topJ] <= 2.5
+     && (!dernier.mesures || dernier.mesures[topJ] > 0)){
     ph.push(`Écart intéressant : ${nomEmo(topJ)} était basse dans ton test (${fmt(dernier.notes[topJ])}/10), mais revient dans ${Math.round(part(topJ) * 100)} % de ton vécu — ton image de toi la sous-estime peut-être.`);
   }
   for(const e of hautes){
