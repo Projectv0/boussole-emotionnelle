@@ -8,7 +8,8 @@ une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste qu
 
 Trois blocs indépendants, dans l'ordre de ce qui rapporte le plus vite :
 
-- **A. Se rendre visible** — faisable aujourd'hui, ne dépend de rien. ~2 h.
+- **A. Se rendre visible** — faisable aujourd'hui, ne dépend de rien. L'essentiel est fait ;
+  il reste à configurer TikTok et à publier.
 - **B. Pouvoir vendre** — bloqué par la société. Plusieurs semaines.
 - **C. Finir les images** — bloqué par les crédits. ~10 €.
 
@@ -198,42 +199,78 @@ pour la vérification d'achat.
 
 ---
 
-## A6 · Les liens entrants — **le seul vrai frein aujourd'hui**
+## A6 · Être trouvé — ce qui marche vraiment, et dans quel ordre
 
-Constaté en cherchant, le 23 septembre : le site **est** indexé — premier sur son nom de
-domaine exact, sixième sur « boussole emotionnelle test emotions ». Mais il n'apparaît pas
-sur « boussole émotionnelle » seul, et **5 pages sur 59** sont indexées.
+**Corrigé le 24 septembre.** Ce point s'appelait « Les liens entrants — le seul vrai frein
+aujourd'hui », et il te proposait de démarcher annuaires et forums pour obtenir des liens.
+C'était une mauvaise recommandation, et je la retire.
 
-Deux causes, une seule sur laquelle on peut agir.
+Écrire à des inconnus pour demander un lien, à ton stade, ne donne rien — non parce que ton
+site est mauvais, mais parce que **personne ne met un lien vers un test payant d'un inconnu**.
+Un psychologue ne renvoie pas ses patients vers un outil qu'il n'a pas éprouvé et qui fait
+payer. Un média ne parle pas d'un site de trois semaines. Les forums modèrent l'autopromotion,
+et leurs liens ne comptent souvent pas. Restent les annuaires — qui acceptent tout le monde,
+et c'est exactement pourquoi ils ne valent presque rien.
 
-**Le nom du projet est une expression courante, pas une marque.** « Boussole émotionnelle »
-est déjà employée par pauldevaux.fr, emotioncompass.org, ecolepositive.fr, macoherence.com —
-des sites installés depuis des années. Personne ne se dispute « Decathlon » ; tout le monde
-se dispute celle-ci. C'est une contrainte permanente, pas un retard de démarrage.
+### Ce qui est vrai et qui ne changera pas
 
-**Le site n'a aucun lien entrant.** Zéro. C'est ce qui décide du classement sur une requête
-disputée, et c'est la seule chose qui manque vraiment — le contenu, lui, est là.
+**Le nom du projet est une expression courante, pas une marque.** « Boussole émotionnelle » est
+déjà employée par pauldevaux.fr, emotioncompass.org, ecolepositive.fr, macoherence.com — des
+sites installés depuis des années. Personne ne se dispute « Decathlon » ; tout le monde se
+dispute celle-ci. C'est une contrainte permanente, pas un retard de démarrage.
 
-### Ce qu'on peut faire, et qui fait quoi
+Le site **est** indexé : premier sur son nom de domaine exact, sixième sur « boussole
+emotionnelle test emotions ». Le 23 septembre, 5 pages sur 59 étaient indexées — ce n'est pas
+un manque de liens, c'est un site jeune que Google découvre lentement. **À revérifier dans
+Search Console en novembre** : si le compte n'a pas bougé, on regardera pourquoi. Il aura
+bougé.
 
-**Moi** : repérer les endroits où déposer le site, écrire les textes de présentation aux
-bons formats, préparer les fiches.
+### Ton moteur réel, dans l'ordre
 
-**Toi** : créer les comptes et valider les dépôts. Je ne crée pas de compte et je ne soumets
-pas de formulaire à ta place.
+**1. Publier.** Les 99 publications sont prêtes. Instagram et TikTok ne transmettent aucune
+autorité à Google, mais ils produisent les deux choses qui comptent le plus : des gens qui
+tapent « boussole émotionnelle » dans la barre de recherche, et des visites directes. C'est
+ça, ton canal. Il n'attend que la configuration de TikTok (voir A4).
 
-Les pistes qui valent la peine, par ordre d'effet :
+**2. Le guide, en longue traîne.** Les 57 articles ne visent pas « boussole émotionnelle »,
+disputée par quatre sites installés, mais « pourquoi je suis toujours fatigué malgré le
+sommeil », « la jalousie dans le couple ». Sur ces phrases-là, un bon article peut sortir
+**sans aucun lien entrant**. C'est lent, c'est déjà lancé, et ça ne demande rien à personne.
 
-- **les annuaires français de bien-être et d'outils gratuits** — lents, mais durables ;
-- **les forums et communautés** où le test répond à une question réellement posée (jamais en
-  autopromotion : une réponse utile qui cite le test) ;
-- **les plateformes d'outils gratuits** (type « ressources psycho », listes d'outils en accès
-  libre) ;
-- **les profils sociaux**, déjà en place pour Instagram : ils remontent souvent eux-mêmes sur
-  le nom.
+**3. La carte à partager et les codes de comparaison.** Chaque image emporte l'adresse du site,
+et comparer son profil suppose d'envoyer son code à quelqu'un. Le bouche-à-oreille est dans le
+produit — c'est d'ailleurs une raison de plus de soigner la carte.
 
-**Dis-moi quand tu veux t'y mettre** et je prépare le premier lot : la liste des cibles, ce
-qu'elles demandent, et les textes prêts à coller.
+Ces trois-là ne demandent l'accord de personne. C'est ce qui les rend fiables.
+
+### Les deux seules demandes qui peuvent aboutir
+
+Et elles ne portent **pas sur le test** — elles portent sur **le guide gratuit**. C'est lui,
+l'argument : 57 articles en accès libre, sans compte et sans collecte de données. Ça, quelqu'un
+peut le recommander sans se compromettre. Un test payant, non.
+
+- **Les associations et les listes de ressources** — santé mentale, aidants, parentalité,
+  écoles. Référencer des ressources gratuites est littéralement leur fonction.
+- **La presse locale**, une fois la société créée. Un entrepreneur du coin qui lance un outil
+  de bien-être est un sujet qu'un journal local prend volontiers. Et c'est un vrai lien.
+
+Quand tu voudras t'y mettre, je prépare les textes — mais après la publication, pas avant :
+un journal demandera « combien de gens l'utilisent ? », et il vaut mieux avoir une réponse.
+
+### La seule voie où « qui va accepter ? » a une réponse
+
+**Quelqu'un qui te connaît.** Toi ou Jimmy connaissez peut-être un psy, un coach, un
+enseignant, quelqu'un dans une association. Un lien de cette personne-là vaut cinquante
+démarches à froid, et c'est la seule piste où la question ne se pose pas.
+
+**Dis-moi si tu as un nom** et je prépare ce qu'il faut lui envoyer.
+
+### Ce qu'il ne faut pas faire
+
+- **Acheter des liens.** Google les repère, et la sanction porte sur le site, pas sur le vendeur.
+- **Les annuaires génériques à la chaîne.** Sans effet, et certains font activement du mal.
+- **Poster le lien dans des forums.** C'est de l'autopromotion, ça se fait supprimer, et ça
+  abîme le nom du projet — le seul actif que tu aies pour l'instant.
 
 ### En attendant, une consigne pratique
 
@@ -521,7 +558,7 @@ carrousels et le dossier `publication/` en une commande.
 | les 7 champs du Kbis + directeur de publication | je publie les trois pages légales SAS |
 | le médiateur (nom, adresse, URL) | je l'inscris dans les CGV et les mentions légales |
 | ta décision sur le prix barré | je l'applique aux 4 endroits + les CGV |
-| les 2 liens Stripe + les 2 `price_...` | je branche et je prépare la bascule |
+| les 3 liens Stripe (résultats, dossier, complément) | je branche et je prépare la bascule |
 | `wrangler secret put STRIPE_CLE` | je renseigne `VENTE.verification` et je bascule |
 | les 9 images régénérées | je remonte les carrousels et `publication/` |
 
