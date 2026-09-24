@@ -248,12 +248,21 @@ def luminance(fichier):
         _lum[fichier] = sum(im.getdata()) / (64 * 36)
     return _lum[fichier]
 
+# Les références n'utilisent que des scènes à personnages : foules, cours, batailles.
+# Une nature morte ou un tigre, même assombris, cassent l'illusion. On écarte sur le
+# titre — c'est grossier, mais c'est ce que le manifeste sait dire.
+HORS_STYLE = re.compile(r"still life|nature morte|flowers?|fruit|apples?|roses?|chrysanth|vase|"
+                        r"tiger|lion|horse[s]? (in|at)|cattle|sheep|dog|cat\b|bird|"
+                        r"landscape|cliff|coast|seascape|haystack|water lil|garden|"
+                        r"self-portrait|portrait of|study|sketch", re.I)
+
 def tableaux_pour(ident, n):
     """n tableaux distincts, tirés au sort de façon reproductible pour cette vidéo.
     Les toiles déjà très sombres sont écartées : assombries encore, elles ne
-    donnaient plus qu'une bouillie brune."""
+    donnaient plus qu'une bouillie brune. Les sujets hors style aussi."""
     alea = random.Random(ident)
-    pool = [t for t in MANIFESTE if luminance(t["fichier"]) >= 62]
+    pool = [t for t in MANIFESTE
+            if luminance(t["fichier"]) >= 62 and not HORS_STYLE.search(t.get("titre") or "")]
     alea.shuffle(pool)
     if len(pool) < n: pool = pool * (n // max(len(pool), 1) + 1)
     return [t["fichier"] for t in pool[:n]]
