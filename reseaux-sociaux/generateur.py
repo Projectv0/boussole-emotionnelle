@@ -239,8 +239,8 @@ def diapos_du(post):
         ("espace", dict(h=44)),
         ("sans", dict(txt=post["question"], taille=50, idx=DEMI, col=ENCRE, maxw=800, il=1.32)),
         ("espace", dict(h=52)),
-        ("sans", dict(txt="Le test de la Boussole émotionnelle : 14 émotions passées en revue, "
-                          "une note sur 10 pour chacune, une analyse personnalisée.",
+        ("sans", dict(txt="Le test de la Boussole émotionnelle : 16 situations du quotidien, "
+                          "14 émotions, et la place qu’elles occupent chez toi.",
                       taille=43, idx=REG, col=MUTED, maxw=810, il=1.42)),
         ("espace", dict(h=88)),
         ("pill", dict(txt="boussole-emotionnelle.fr")),
@@ -248,7 +248,7 @@ def diapos_du(post):
     return out
 
 LEGENDE_PIED = ("\n\nLe test complet est sur boussole-emotionnelle.fr (lien en bio) : "
-                "14 émotions, une note sur 10 pour chacune.")
+                "16 situations du quotidien, 14 émotions, et la place qu’elles occupent chez toi.")
 
 def ecrire_legende(post, dossier):
     s = SERIES[post["serie"]]

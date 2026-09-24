@@ -571,8 +571,8 @@ def slide_appel(post):
     d.text(((W - larg("Et toi ?", f)) / 2, y), "Et toi ?", font=f, fill=ENCRE)
     y += int(150 * ECH)
     y = ecrire(d, post["question"], W / 2, y, F(SANS, 46, DEMI), ENCRE, W - 2 * MARGE - 40, 1.32)
-    y = ecrire(d, "Le test de la Boussole émotionnelle : 14 émotions, une note sur 10 pour chacune, "
-                  "et une analyse personnalisée à la fin.",
+    y = ecrire(d, "Le test de la Boussole émotionnelle : 16 situations du quotidien, 14 émotions, "
+                  "et la place qu’elles occupent chez toi.",
                W / 2, y + 34, F(SANS, 33, REG), GRIS, W - 2 * MARGE - 60, 1.42)
     t = "boussole-emotionnelle.fr"
     f = F(SANS, 44, DEMI)
@@ -606,8 +606,8 @@ def diapositives(post):
 
 def legende(post, n):
     txt = (f"=== LÉGENDE (TikTok et Instagram) ===\n{post['legende']}\n\n"
-           f"Le test complet est sur boussole-emotionnelle.fr (lien en bio) : 14 émotions, "
-           f"une note sur 10 pour chacune.\n\n"
+           f"Le test complet est sur boussole-emotionnelle.fr (lien en bio) : 16 situations "
+           f"du quotidien, 14 émotions, et la place qu’elles occupent chez toi.\n\n"
            f"=== HASHTAGS ===\n{post['hashtags']}\n\n"
            f"=== CÔTÉ TIKTOK ===\nPublier en mode Photo (les {n} images du dossier tiktok/ dans "
            f"l'ordre), et choisir un son doux dans les tendances (lo-fi, piano).\n\n"
