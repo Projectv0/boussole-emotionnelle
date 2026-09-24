@@ -30,7 +30,7 @@ CTA = [
 
 SCRIPTS = [
   {
-    "id": "01-ca-va", "images": ['fake smile', 'person looking away', 'hiding sadness', 'face close up serious', 'coffee alone window', 'tired eyes'], "article": "repondre-que-ca-va", "penseur": "Darwin",
+    "id": "01-ca-va", "images": ['forced smile', 'pretending to be fine', 'woman smiling sad eyes', 'man looking away window', 'coffee alone morning', 'serious face close up'], "article": "repondre-que-ca-va", "penseur": "Darwin",
     "musique": "Dark-Times.mp3", "noir": 3,
     "groupes": [
       "Tu réponds *ça va* / dix fois par jour.",
@@ -301,7 +301,7 @@ SCRIPTS = [
     "legende": "« Ils vont voir. » Épictète répondait déjà : sépare ce qui dépend de toi de ce qui n'en dépend pas.",
   },
   {
-    "id": "12-dire-non", "images": ['saying no hand', 'overloaded desk', 'tired worker', 'calendar full', 'boundary line', 'person overwhelmed papers'], "article": "culpabilite-de-dire-non", "penseur": "Aristote",
+    "id": "12-dire-non", "images": ['stop hand gesture', 'overworked desk papers', 'tired employee office', 'calendar full schedule', 'closed door', 'person overwhelmed laptop'], "article": "culpabilite-de-dire-non", "penseur": "Aristote",
     "musique": "Lost-Frontier.mp3", "noir": 3,
     "groupes": [
       "Tu as dit / *oui*.",
@@ -398,7 +398,7 @@ SCRIPTS = [
     "legende": "Tu as tenu le projet, un autre a eu le merci. Épicure séparait les désirs naturels de ceux qu'aucune quantité ne remplit.",
   },
   {
-    "id": "16-fatigue", "images": ['tired morning bed', 'yawning', 'endless scrolling phone', 'busy street rush', 'empty room chair', 'eyes closed exhausted'], "article": "toujours-fatigue-malgre-le-sommeil", "penseur": "Pascal",
+    "id": "16-fatigue", "images": ['tired woman morning bed', 'exhausted man desk', 'rubbing eyes tired', 'endless scrolling phone bed', 'crowded street rush hour', 'person alone quiet room'], "article": "toujours-fatigue-malgre-le-sommeil", "penseur": "Pascal",
     "musique": "Ossuary-5---Rest.mp3", "noir": 3,
     "groupes": [
       "Huit heures / de sommeil.",

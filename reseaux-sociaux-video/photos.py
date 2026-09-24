@@ -35,6 +35,8 @@ def ici(*p): return os.path.join(ICI, *p)
 PAR_VIDEO = 30
 CLE_PEXELS = os.path.expanduser("~/.config/boussole/pexels.cle")
 UA = "boussole-emotionnelle.fr (atelier video, contact@boussole-emotionnelle.fr)"
+import re
+ANIMAUX = re.compile(r"\b(cat|kitten|dog|puppy|bird|horse|cow|sheep|lion|tiger|monkey|animal)s?\b", re.I)
 
 def cle_pexels():
     c = os.environ.get("PEXELS_API_KEY", "")
@@ -80,7 +82,8 @@ def pexels(mots, besoin):
         for p in d.get("photos", []):
             if p["id"] in vus: continue
             vus.add(p["id"])
-            out.append({"id": f"pexels-{p['id']}", "url": p["src"]["large2x"], "source": p["url"],
+            if ANIMAUX.search(p.get("alt") or ""): continue     # un chat qui bâille n'illustre pas la fatigue
+            out.append({"id": f"pexels-{p['id']}", "url": p["src"]["large2x"], "source": p["url"], "alt": p.get("alt", ""),
                         "auteur": p.get("photographer", ""), "licence": "Pexels (usage libre, sans attribution)",
                         "credit": "", "mot": mot})
         time.sleep(0.3)
