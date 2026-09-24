@@ -185,9 +185,10 @@ def couvrir(im, l, h):
 
 _fonds = {}
 def fond_tableau(fichier):
-    """Le tableau assombri et vignetté, comme dans les références. Mis en cache."""
+    """Le fond assombri et vignetté, comme dans les références. Mis en cache.
+    « fichier » est un chemin relatif à l'atelier : tableaux/… ou photos/<id>/…"""
     if fichier in _fonds: return _fonds[fichier]
-    im = couvrir(Image.open(ici("tableaux", fichier)).convert("RGB"), L, H)
+    im = couvrir(Image.open(ici(fichier)).convert("RGB"), L, H)
     # assombrissement uniforme, puis un vignettage doux
     im = Image.blend(im, Image.new("RGB", (L, H), NOIR), 0.42)
     masque = Image.new("L", (L, H), 0)
@@ -222,7 +223,7 @@ def ecrire_ligne(d, x, y, mots, f, espace):
 
 # Les emplacements du texte, loin du médaillon (centre bas). On les enchaîne dans
 # un ordre fixe : les références bougent le texte d'un groupe à l'autre.
-ANCRES = [("droite", 70), ("gauche", 190), ("droite", 200), ("gauche", 70), ("droite", 120), ("gauche", 240)]
+ANCRES = [("droite", 70), ("gauche", 300), ("droite", 220), ("gauche", 70), ("droite", 340), ("gauche", 180)]
 
 def replier(mots, f, espace, largeur_max):
     """Coupe une ligne de mots en plusieurs si elle dépasse la largeur permise."""
@@ -296,7 +297,7 @@ _lum = {}
 def luminance(fichier):
     """La clarté moyenne d'un tableau (0–255), calculée une fois sur une vignette."""
     if fichier not in _lum:
-        im = Image.open(ici("tableaux", fichier)).convert("L").resize((64, 36))
+        im = Image.open(ici(fichier)).convert("L").resize((64, 36))
         _lum[fichier] = sum(im.getdata()) / (64 * 36)
     return _lum[fichier]
 
@@ -308,16 +309,37 @@ HORS_STYLE = re.compile(r"still life|nature morte|flowers?|fruit|apples?|roses?|
                         r"landscape|cliff|coast|seascape|haystack|water lil|garden|"
                         r"self-portrait|portrait of|study|sketch", re.I)
 
+def photos_du_theme(ident):
+    """Les photos collectées pour cette vidéo (photos.py), avec leurs crédits."""
+    manif = ici("photos", f"{ident}.json")
+    if not os.path.exists(manif): return []
+    return [f for f in json.load(open(manif, encoding="utf-8"))
+            if os.path.exists(ici("photos", ident, f["fichier"]))]
+
 def tableaux_pour(ident, n):
-    """n tableaux distincts, tirés au sort de façon reproductible pour cette vidéo.
-    Les toiles déjà très sombres sont écartées : assombries encore, elles ne
-    donnaient plus qu'une bouillie brune. Les sujets hors style aussi."""
+    """n fonds distincts pour cette vidéo, tirés au sort de façon reproductible.
+
+    D'abord les photos du thème — c'est ce qu'on veut : des images qui parlent de
+    la colère dans la vidéo sur la colère. À défaut, les tableaux, en écartant les
+    toiles trop sombres (assombries encore, elles ne donnaient qu'une bouillie
+    brune) et les sujets hors style. Rend des chemins relatifs à l'atelier."""
     alea = random.Random(ident)
-    pool = [t for t in MANIFESTE
-            if luminance(t["fichier"]) >= 62 and not HORS_STYLE.search(t.get("titre") or "")]
+    photos = photos_du_theme(ident)
+    if len(photos) >= 12:
+        pool = [os.path.join("photos", ident, f["fichier"]) for f in photos
+                if luminance(os.path.join("photos", ident, f["fichier"])) >= 40]
+    else:
+        pool = [os.path.join("tableaux", t["fichier"]) for t in MANIFESTE
+                if luminance(os.path.join("tableaux", t["fichier"])) >= 62 and not HORS_STYLE.search(t.get("titre") or "")]
     alea.shuffle(pool)
     if len(pool) < n: pool = pool * (n // max(len(pool), 1) + 1)
-    return [t["fichier"] for t in pool[:n]]
+    return pool[:n]
+
+def credits_photos(ident, fichiers):
+    """Les crédits obligatoires (CC BY) des photos utilisées ; vide pour Pexels et le CC0."""
+    par_fichier = {os.path.join("photos", ident, f["fichier"]): f for f in photos_du_theme(ident)}
+    lignes = sorted({par_fichier[f]["credit"] for f in fichiers if f in par_fichier and par_fichier[f].get("credit")})
+    return lignes
 
 def construire(script, apercu=False):
     ident = script["id"]
@@ -366,7 +388,6 @@ def construire(script, apercu=False):
                 if produit:
                     im = cadre_produit(im)
                 else:
-                    im = poser_medaillon(im)
                     im = ecrire_groupe(im, groupes[g], g)
             chemin = os.path.join(dossier, f"{len(cache):03d}.png")
             im.save(chemin, "PNG", compress_level=3)
@@ -409,8 +430,12 @@ def construire(script, apercu=False):
                f"Le test : {SITE} (lien en bio)\n\n"
                f"#émotions #psychologie #{script['penseur'].lower().replace(' ', '').replace('é', 'e')} "
                f"#développementpersonnel #boussoleémotionnelle\n\n"
-               f"Musique : « {titre_musique} » — Kevin MacLeod (incompetech.com), licence CC BY 4.0\n"
-               f"Tableaux : domaine public — The Metropolitan Museum of Art et The Art Institute of Chicago (CC0)\n")
+               f"Musique : « {titre_musique} » — Kevin MacLeod (incompetech.com), licence CC BY 4.0\n")
+    creds = credits_photos(ident, fichiers_tableaux)
+    if fichiers_tableaux and fichiers_tableaux[0].startswith("photos/"):
+        legende += ("Photos : " + " · ".join(creds) + "\n") if creds else "Photos : Pexels et domaine public\n"
+    else:
+        legende += "Tableaux : domaine public — Met, Art Institute of Chicago, Cleveland Museum of Art (CC0)\n"
     open(ici("sortie", f"{ident}.legende.txt"), "w", encoding="utf-8").write(legende)
     taille = os.path.getsize(sortie) / 1e6
     print(f"  {ident} : {duree:.1f} s · {len(cache)} images-clés · {taille:.1f} Mo")
