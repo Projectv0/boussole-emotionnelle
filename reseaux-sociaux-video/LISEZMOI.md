@@ -1,16 +1,34 @@
 # Atelier vidéo — vingt vidéos dans le style des références
 
 Vingt vidéos d'une minute, paysage 16:9, dans le style des trois vidéos de
-référence du dossier `Video tiktok/` : une accroche sur fond noir, des tableaux
-de maître assombris qui changent toutes les deux secondes, le médaillon de la
-Boussole en personnage fixe, les mots qui apparaissent quand la voix les dit,
-et un badge rouge « LIEN EN BIO » à la fin.
+référence du dossier `Video tiktok/` : une accroche sur fond noir, des photos
+assombries qui changent toutes les deux secondes — chacune sur le thème de la
+vidéo —, les mots qui apparaissent quand la voix les dit, et un badge rouge
+« LIEN EN BIO » à la fin.
 
 ## Refaire les vidéos
 
-    python3 tableaux.py        # une fois : va chercher ~200 tableaux du domaine public
+    python3 photos.py          # une fois : ~30 photos par vidéo, sur le thème de chacune
     python3 generateur.py      # les vingt vidéos, dans sortie/
     python3 generateur.py 07   # une seule
+
+Il faut deux clés, gratuites ou presque, rangées hors du dépôt dans `~/.config/boussole/` :
+
+| Clé | Pour | Comment l'obtenir | Où la ranger |
+|---|---|---|---|
+| **Pexels** | les photos de chaque thème | compte gratuit sur pexels.com → *Image & Video API* → la clé s'affiche | `~/.config/boussole/pexels.cle` |
+| **ElevenLabs** | la voix off | compte sur elevenlabs.io, abonnement *Starter* (5 $/mois, le premier avec usage commercial) → *API keys* | `~/.config/boussole/elevenlabs.cle` |
+
+Pour ranger une clé, dans le Terminal (une seule ligne, en remplaçant la clé et le nom) :
+
+    mkdir -p ~/.config/boussole && printf '%s' 'LA_CLÉ' > ~/.config/boussole/pexels.cle && chmod 600 ~/.config/boussole/pexels.cle
+
+Les scripts lisent ces fichiers ; ils ne les affichent jamais et ne les copient nulle part.
+Sans clé Pexels, les fonds retombent sur les tableaux (`python3 tableaux.py`) ; sans clé
+ElevenLabs, sur la voix de macOS — les deux sont nettement moins bien.
+
+Choisir la voix : `python3 voix_eleven.py --voix` liste les voix du compte avec un extrait
+à écouter ; l'identifiant retenu va dans `VOIX_ELEVEN`, en tête de `generateur.py`.
 
 Chaque vidéo sort avec sa légende, `sortie/<id>.legende.txt`, prête à coller.
 Changer un texte dans `scripts.py` puis relancer suffit : la voix ne se
@@ -22,10 +40,10 @@ Il faut `ffmpeg` (`brew install ffmpeg`) et la voix française **Jacques** de ma
 
 | Quoi | D'où | Licence | À faire |
 |---|---|---|---|
-| Les tableaux | The Met, Art Institute of Chicago, Cleveland Museum of Art (Open Access) | CC0 | rien — mais `tableaux.json` garde la trace de chaque toile |
+| Les photos | Pexels | licence Pexels : usage commercial libre, sans attribution | rien — `photos/<id>.json` garde la trace de chacune |
+| Les tableaux (repli) | The Met, Art Institute of Chicago, Cleveland Museum of Art | CC0 | rien — `tableaux.json` garde la trace |
 | Les musiques | Kevin MacLeod, incompetech.com | CC BY 4.0 | **créditer** : la ligne est déjà dans chaque légende, il suffit de la laisser |
-| La voix | Jacques, synthèse vocale de macOS | usage libre | rien |
-| Le médaillon | le logo du site | à nous | rien |
+| La voix | ElevenLabs (abonnement Starter ou plus) | usage commercial inclus dans l'abonnement | rien |
 | Les textes | les articles du guide, et un penseur par vidéo | à nous | rien |
 
 Le crédit musique n'est pas une politesse : c'est la condition de la licence.
