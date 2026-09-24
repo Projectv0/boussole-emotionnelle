@@ -30,7 +30,7 @@ CTA = [
 
 SCRIPTS = [
   {
-    "id": "01-ca-va", "images": ['forced smile', 'pretending to be fine', 'woman smiling sad eyes', 'man looking away window', 'coffee alone morning', 'serious face close up'], "article": "repondre-que-ca-va", "penseur": "Darwin",
+    "id": "01-ca-va", "images": ['adult woman forced smile office', 'man hiding sadness behind smile', 'person alone window rain thinking', 'coffee cup morning alone table', 'tired adult face close up', 'everything is fine note'], "article": "repondre-que-ca-va", "penseur": "Darwin",
     "musique": "Dark-Times.mp3", "noir": 3,
     "groupes": [
       "Tu réponds *ça va* / dix fois par jour.",
