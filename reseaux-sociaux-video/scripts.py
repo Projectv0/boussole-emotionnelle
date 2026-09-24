@@ -160,7 +160,7 @@ SCRIPTS = [
   {
     "id": "07-parler-en-reunion", "titre": "Parler en réunion", "article": "peur-de-parler-en-reunion", "penseur": "Montaigne",
     "musique": "Shadowlands-1---Horizon.mp3", "noir": 3, "fantastique": False,
-    "images": ["cliff edge over sea", "diving board empty pool sky", "open sky wide field wind", "mountain summit clouds", "bridge into fog", "first light over valley"],
+    "images": ['cliff edge over sea fog', 'open sky wide field wind', 'mountain summit above clouds', 'bridge into fog', 'first light over valley', 'pier into mist lake'],
     "groupes": [
       "Tu avais / la bonne idée.",
       "Tu l'as gardée / pour toi.",
@@ -365,7 +365,7 @@ SCRIPTS = [
   {
     "id": "17-telephone", "titre": "Le téléphone en boucle", "article": "verifier-son-telephone-en-boucle", "penseur": "Simone Weil",
     "musique": "Dark-Times.mp3", "noir": 3, "fantastique": False,
-    "images": ["moth flying to light night", "neon glow dark alley", "blue light screen dark room no people", "city lights blur night", "lighthouse beam fog", "glowing window in dark house"],
+    "images": ['moth on lamp at night', 'neon glow dark alley', 'city lights blur night', 'lighthouse beam fog', 'glowing window in dark house', 'street lamp light rain night'],
     "groupes": [
       "Tu l'as regardé / il y a une minute.",
       "Tu le regardes / !encore!.",
