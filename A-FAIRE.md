@@ -497,8 +497,10 @@ vont ouvrir : si ça casse, ça casse sur tous les clients à la fois.
 
 Vingt vidéos d'une minute, dans le style des trois références de `Video tiktok/`, sont dans
 **`Vidéos à publier/`**, à la racine, chacune avec sa légende à côté, prête à coller. Les images
-sont des photos Pexels sur le thème de chaque vidéo ; la voix est encore celle du Mac, en
-attendant ta clé ElevenLabs — seule la voix changera.
+sont des photos Pexels sur le thème de chaque vidéo — paysages, orages, lumière, jamais un
+humain ; cinq vidéos en images imaginaires. Pas de voix pour l'instant : le texte se lit à
+l'écran sur la musique. Une voix ElevenLabs pourra s'ajouter plus tard, sans rien changer
+d'autre.
 
 **Une seule règle à respecter en publiant : garder la ligne de crédit musique** qui est dans
 chaque légende (« Musique : … — Kevin MacLeod (incompetech.com), licence CC BY 4.0 »). Ce n'est

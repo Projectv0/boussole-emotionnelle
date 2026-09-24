@@ -2,9 +2,14 @@
 
 Vingt vidéos d'une minute, paysage 16:9, dans le style des trois vidéos de
 référence du dossier `Video tiktok/` : une accroche sur fond noir, des photos
-assombries qui changent toutes les deux secondes — chacune sur le thème de la
-vidéo —, les mots qui apparaissent quand la voix les dit, et un badge rouge
-« LIEN EN BIO » à la fin.
+assombries qui changent toutes les deux secondes — paysages, orages, lumière,
+matière, jamais un humain, et toujours sur le thème de la vidéo (cinq en images
+imaginaires) —, des phrases entières qui se lisent à l'écran sur la musique, et
+un badge rouge « LIEN EN BIO » à la fin.
+
+**Sans voix pour l'instant** (`SANS_VOIX = True` en tête de `generateur.py`) : le temps
+de lecture fait le rythme. Passer `SANS_VOIX` à `False` rebranche une voix — ElevenLabs
+si la clé est là, sinon celle de macOS — et les mots s'affichent alors quand elle les dit.
 
 ## Refaire les vidéos
 
@@ -34,7 +39,7 @@ Chaque vidéo sort avec sa légende à côté d'elle, prête à coller.
 Changer un texte dans `scripts.py` puis relancer suffit : la voix ne se
 resynthétise que si le texte a changé.
 
-Il faut `ffmpeg` (`brew install ffmpeg`) et la voix française **Jacques** de macOS.
+Il faut `ffmpeg` (`brew install ffmpeg`).
 
 ## Ce qu'il y a dedans, et d'où ça vient
 
