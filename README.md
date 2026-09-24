@@ -1,6 +1,6 @@
 # 🧭 Boussole émotionnelle
 
-**Un test bienveillant pour comprendre la place de tes émotions** — tes moments vécus et 16 situations de la vie quotidienne, 14 émotions notées de 0 à 10, une analyse personnalisée et une carte de résultats à partager.
+**Un test bienveillant pour comprendre la place de tes émotions** — tes moments vécus et 16 situations de la vie quotidienne, 14 émotions notées de 0 à 10 et une analyse personnalisée.
 
 **👉 Faire le test : https://boussole-emotionnelle.fr/**
 
@@ -9,11 +9,12 @@
 - Le journal des émotions ouvre le parcours : jusqu'à 5 moments réels exprimés, qui comptent dans les résultats et raccourcissent le test.
 - 16 mises en situation concrètes (travail, famille, amitié, argent, imprévus…) : pour chacune, tu indiques — de « pas du tout » à « énormément » — ce qu'elle éveillerait en toi, émotion par émotion.
 - 14 émotions mesurées : joie, tristesse, colère, peur, surprise, dégoût, amour/tendresse, anxiété, honte, culpabilité, jalousie/envie, fierté, gratitude, sérénité.
-- Résultats : radar, classement, analyse par émotion selon ta note, synthèse croisée — et une carte à partager (format post ou story).
+- Formule « Tes résultats » : radar, classement, analyse par émotion selon ta note, synthèse croisée.
+- Formule « Résultats + Dossier complet » : tout ce qui précède, le dossier d'analyse — et la carte de résultats à partager (format post ou story).
 
 ## Confidentialité
 
-Tout se passe **dans le navigateur** : aucune donnée n'est enregistrée, envoyée ni partagée. Le site tient dans un seul fichier HTML autonome, sans backend.
+Tout se passe **dans le navigateur** : aucune donnée n'est enregistrée, envoyée ni partagée. Le site tient dans un seul fichier HTML autonome. Deux services minuscules vivent à côté, sur Cloudflare : un compteur de fréquentation anonyme et la vérification des achats. Aucune réponse au test ne leur est jamais envoyée.
 
 ## Avertissement
 

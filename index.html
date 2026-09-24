@@ -571,6 +571,18 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 }
 .cle-input:focus{ outline:2px solid var(--sage); outline-offset:2px; }
 
+/* ————— La carte à partager, pour qui ne l'a pas encore —————
+   Elle prend la place laissée vide par le bouton masqué : sans elle, la rangée
+   d'actions de fin de parcours perdait son seul bouton d'accent et la personne
+   ne saurait même pas que cette image existe. */
+.carte-promo{
+  max-width:34rem; margin:1.4rem auto 0; padding:1.5rem 1.6rem; text-align:center;
+  background:rgba(255,255,255,.55); border:1px solid var(--hairline); border-radius:1.6rem;
+}
+.carte-promo-titre{ font-family:var(--serif); font-weight:620; font-size:1.25rem; color:var(--sage-deep); margin-bottom:.6rem; }
+.carte-promo p{ font-size:.92rem; color:#4A4453; }
+.carte-promo-note{ font-size:.84rem !important; color:var(--muted) !important; margin:.7rem 0 1.1rem; }
+
 /* ————— Le code à offrir ————— */
 .cadeau-code{
   font-family:var(--serif); font-weight:620; letter-spacing:.14em;
@@ -1064,6 +1076,7 @@ footer p + p{ margin-top:.3rem; }
       <p>Lis-le tranquillement ici — et télécharge-le en PDF : c’est ta copie, à garder et à relire.</p>
       <div style="display:flex; gap:.9rem; flex-wrap:wrap; margin-top:1.4rem">
         <button class="btn btn-primary" id="btnRapportPdf">Télécharger en PDF <span class="ico" aria-hidden="true">⬇</span></button>
+        <button class="btn btn-ghost" id="btnRapportCarte">Ma carte à partager <span class="ico" aria-hidden="true">🖼️</span></button>
         <button class="btn btn-ghost" id="btnRapportRetour"><span class="ico" style="order:-1" aria-hidden="true">←</span> Retour aux résultats</button>
       </div>
       <p style="font-size:.78rem; color:var(--faint); margin-top:.8rem">Dans la fenêtre d’impression qui s’ouvre, choisis « Enregistrer au format PDF ».</p>
@@ -1155,6 +1168,7 @@ footer p + p{ margin-top:.3rem; }
               <li>🌱 <b>42 pratiques concrètes</b> — trois exercices gradués par émotion, pour réguler les envahissantes et cultiver les ressources</li>
               <li>🔀 <b>Tes croisements décodés</b> — ce que racontent tes émotions quand on les lit ensemble</li>
               <li>🗓️ <b>Ton plan de 30 jours</b> — quatre semaines personnalisées selon ton profil, pas à pas</li>
+              <li>🖼️ <b>Ta carte à partager</b> — ton profil en image&nbsp;: le radar et ton top 3 au format post, ton émotion dominante au format story</li>
             </ul>
             <p class="vente-note">Comme le test, le dossier est généré <b>dans ton navigateur</b> : tes réponses ne sont jamais envoyées. Après le paiement, cet onglet se débloque tout seul — <b>garde-le ouvert</b>, c’est lui qui contient tes réponses.</p>
           </div>
@@ -1222,7 +1236,6 @@ footer p + p{ margin-top:.3rem; }
               <li>Radar et classement des 14 émotions</li>
               <li>Analyse personnalisée par émotion</li>
               <li>Synthèse croisée de ton profil</li>
-              <li>Carte de résultats à partager</li>
             </ul>
             <a class="btn btn-ghost" id="btnPayerResultats" target="_blank" rel="noopener">Voir mes résultats <span class="ico" aria-hidden="true">→</span></a>
           </div>
@@ -1237,6 +1250,7 @@ footer p + p{ margin-top:.3rem; }
               <li>Tes croisements décodés</li>
               <li>Plan personnalisé de 30 jours</li>
               <li>Export PDF, ta copie à garder</li>
+              <li>Ta carte à partager · post et story</li>
             </ul>
             <a class="btn btn-primary" id="btnPayerDossier" target="_blank" rel="noopener">Tout débloquer <span class="ico" aria-hidden="true">→</span></a>
           </div>
@@ -1262,11 +1276,19 @@ footer p + p{ margin-top:.3rem; }
     </div>
 
     <div class="res-actions">
-      <button class="btn btn-primary" id="btnCarte">Créer ma carte à partager <span class="ico" aria-hidden="true">✦</span></button>
+      <button class="btn btn-primary" id="btnCarte" hidden>Créer ma carte à partager <span class="ico" aria-hidden="true">✦</span></button>
       <button class="btn btn-ghost" id="btnCopy">Copier mes résultats <span class="ico" aria-hidden="true">⧉</span></button>
       <button class="btn btn-ghost" id="btnRestart">Refaire le test <span class="ico" aria-hidden="true">↺</span></button>
     </div>
     <div class="copy-feedback" id="copyFeedback" role="status"></div>
+
+    <div class="carte-promo no-print" id="cartePromo" hidden>
+      <h3 class="carte-promo-titre">🖼️ Ta boussole, en image</h3>
+      <p>Tes résultats peuvent devenir une image, fabriquée ici même, dans ton navigateur. Au format post&nbsp;: le radar de tes 14 émotions, ton top 3 avec tes notes et la date du jour&nbsp;; au format story&nbsp;: ton émotion dominante en grand. À garder, à relire dans six mois, ou à envoyer à quelqu’un.</p>
+      <p class="carte-promo-note">Elle fait partie du dossier complet.</p>
+      <button class="btn btn-primary" id="btnCartePromo">Découvrir le dossier complet <span class="ico" aria-hidden="true">→</span></button>
+    </div>
+
     <div class="soutien">
       <p>Tes émotions bougent chaque jour — ton journal les suit, moment après moment.</p>
       <div style="display:flex; gap:.7rem; justify-content:center; flex-wrap:wrap">
@@ -1277,7 +1299,7 @@ footer p + p{ margin-top:.3rem; }
       <p style="font-size:.76rem; color:var(--faint); margin-top:.7rem" id="rappelNote"></p>
     </div>
 
-    <div class="carte-overlay" id="carteOverlay" hidden>
+    <div class="carte-overlay" id="carteOverlay" hidden role="dialog" aria-modal="true" aria-label="Ta carte de résultats">
       <div class="carte-box">
         <div class="carte-formats" role="radiogroup" aria-label="Format de la carte">
           <button class="fmt sel" data-fmt="post" role="radio" aria-checked="true">Post · 4:5</button>
@@ -2748,6 +2770,10 @@ async function fabriquerCarte(dureeRoulette){
   const attente = lancerRoulette(dureeRoulette);
   try{
     const cv = await genererCarte(lastNotes);
+    /* Le droit peut tomber pendant la fabrication — un code cadeau saisi dans un
+       autre onglet. On le revérifie après l'attente, sinon l'image naîtrait juste
+       après que fermerCarte l'a effacée. */
+    if(!carteAutorisee()) return;
     $("#carteImg").src = cv.toDataURL("image/png");
     $("#carteImg").dataset.fmt = carteFormat;
     carteBlob = await new Promise(res => cv.toBlob(res, "image/png"));
@@ -2764,9 +2790,17 @@ async function fabriquerCarte(dureeRoulette){
 }
 async function ouvrirCarte(){
   if(!lastNotes) return;
+  /* La même garde que pour le dossier, et pas seulement un bouton masqué : une
+     page restée ouverte depuis longtemps peut avoir perdu le droit entre-temps,
+     et le bouton n'y est réévalué qu'au rendu des résultats. */
+  if(!carteAutorisee()) return;
   const btn = $("#btnCarte");
   btn.disabled = true;
   $("#carteOverlay").hidden = false;
+  /* Le focus entre dans la fenêtre, comme pour les deux autres modales du site :
+     sans ça, désactiver le bouton qu'on vient d'actionner rend le focus au corps
+     du document, et la tabulation repart derrière la fenêtre. */
+  $("#btnCarteFermer").focus();
   try{ await fabriquerCarte(1400); }
   finally{ btn.disabled = false; }
 }
@@ -3026,6 +3060,7 @@ function renderRapport(notes){
         <li><b>Ton plan de trente jours</b> — quatre semaines, une intention chacune.</li>
         <li><b>Ta page de suivi</b> — à remplir dans un mois.</li>
       </ol>
+      <p style="margin-top:1rem">Ton dossier comprend aussi <b>ta carte à partager</b> — ton profil en image, au format post ou story. Elle se fabrique sur la page de résultats, bouton «&nbsp;Créer ma carte à partager&nbsp;».</p>
       <p style="margin-top:1rem">Prends ce dossier comme une promenade, pas comme un bulletin de notes. Chaque fiche décrit une émotion telle qu’elle vit chez toi <i>en ce moment</i> — tes notes bougeront avec les saisons de ta vie. Un mot sur les manifestations décrites : le corps est polyvalent, et un même signal (joues qui chauffent, ventre noué) peut servir plusieurs émotions — c’est le contexte qui les distingue. Enfin, ce dossier éclaire, il ne diagnostique pas.</p>
     </div>
 
@@ -3216,13 +3251,55 @@ function appliquerAcces(niveau){
   effacerBrouillon();   /* les résultats s'ouvrent : le brouillon a fait son office */
   $("#paywallOverlay").hidden = true;
   $("#rapportOverlay").hidden = true;
+  /* L'accès peut aussi redescendre — un code cadeau saisi dans un autre onglet
+     écrit « resultats » par-dessus un « dossier ». Appelé ici et pas seulement
+     au rendu : sans résultats affichés, appliquerAcces ressort avant lui. */
+  majCarteBox();
   if(!lastNotes) return;
   renderResults(lastNotes);
   showView("v-resultats");
 }
+/* La carte à partager fait partie du dossier, et d'aucune autre formule.
+   Écrit sous la même forme que ouvrirRapport, et pour la même raison : le jour
+   où la vente s'arrête, « niveauAcces === "dossier" » seul ferait disparaître la
+   carte pour tout le monde, sans aucun moyen de la débloquer. */
+/* La règle sortie de son contexte, pour qu'un autotest puisse l'interroger sans
+   toucher à la configuration de vente. */
+const carteOuverte = (sousPaywall, niveau) => !sousPaywall || niveau === "dossier";
+const carteAutorisee = () => carteOuverte(paywallActif(), niveauAcces);
+
+/* Recalculé à chaque rendu plutôt que posé une fois : l'accès peut monter — un
+   paiement dans un autre onglet — mais aussi redescendre, quand un code cadeau
+   saisi ailleurs écrase l'accès dossier dans la même clé de stockage. */
+function majCarteBox(){
+  const btn = $("#btnCarte"), promo = $("#cartePromo");
+  const ouverte = carteAutorisee();
+  if(btn) btn.hidden = !ouverte;
+  /* La promotion ne s'affiche que s'il y a quelque chose à acheter : jamais
+     quand la vente est arrêtée, où la carte est ouverte à tous. */
+  if(promo) promo.hidden = ouverte || !paywallActif();
+  if(!ouverte) fermerCarte();
+}
+
+/* Referme la carte et oublie son image. Une image laissée en mémoire resterait
+   téléchargeable après la perte du droit — un code cadeau saisi dans un autre
+   onglet fait retomber l'accès — comme après un nouveau test, où elle ne
+   correspondrait plus à rien. */
+function fermerCarte(){
+  const etaitOuverte = !$("#carteOverlay").hidden;
+  $("#carteOverlay").hidden = true;
+  carteBlob = null;
+  $("#carteImg").removeAttribute("src");
+  /* Le focus revient d'où il venait, et seulement si le bouton est encore là :
+     on ferme aussi quand le droit vient d'être perdu, et il est alors masqué. */
+  const btn = $("#btnCarte");
+  if(etaitOuverte && btn && !btn.hidden) btn.focus();
+}
+
 /* Vitrine du dossier sur la page de résultats, selon l'accès en cours */
 function majVenteBox(){
   majCadeauBox();
+  majCarteBox();
   const box = $("#venteBox"), a = $("#btnAcheter");
   $("#ventePrix").innerHTML = `${VENTE.prixDossier} <s>${VENTE.prixDossierRef}</s>`;
   if(VENTE.remiseDossier && $("#venteBadge")) $("#venteBadge").textContent = `Offre de lancement · ${VENTE.remiseDossier}`;
@@ -3489,6 +3566,14 @@ function majCadeauBox(){
 }
 
 async function validerCadeau(code, st){
+  /* Avant d'interroger le serveur, jamais après : le code se consomme à la
+     première présentation réussie. Sans cette garde ici, l'acheteur du dossier
+     qui colle un code reçu d'un ami le brûlait pour rien — et repartait avec un
+     accès « resultats » écrit par-dessus le sien, donc sans sa carte à partager. */
+  if(niveauAcces === "dossier" || lireAcces() === "dossier"){
+    st.textContent = "Tu as déjà le dossier complet sur cet appareil, et il comprend tout ce que ce code ouvre. Garde-le pour quelqu’un d’autre — il n’a pas été utilisé.";
+    return;
+  }
   st.textContent = "Vérification…";
   let d;
   try{
@@ -4183,9 +4268,21 @@ function runSelfTests(){
                          "BE1-5A3B7C9D2E4F6G", "BE2-5-A-3-B-7-C-9-", "BE-IOIO-0101"]
     .every(s => normaliserCadeau(s) === "");
 
+  /* 8. La carte à partager appartient au dossier, et à lui seul — mais elle doit
+        rester ouverte à tous le jour où la vente s'arrête, sans quoi elle
+        disparaîtrait pour tout le monde sans moyen de la débloquer. */
+  const carteKO = [
+    [true,  "aucun",     false],
+    [true,  "resultats", false],   // formule à 1,99 €, et bénéficiaire d'un code cadeau
+    [true,  "dossier",   true ],
+    [false, "aucun",     true ],   // vente arrêtée : la carte est à tout le monde
+    [false, "resultats", true ],
+    [false, "dossier",   true ],
+  ].filter(([p, n, attendu]) => carteOuverte(p, n) !== attendu);
+
   const ok = maxKO.length === 0 && minKO.length === 0 && absenceOK && noteAbsente
           && intensiteOK && plafondOK && partOK && mixteOK && mixteCompteOK && seuilOK
-          && cadeauOK && cadeauRefusOK;
+          && cadeauOK && cadeauRefusOK && carteKO.length === 0;
   console.info("[Boussole émotionnelle] Auto-vérification — "
     + `tout à 4 → 10/10 : ${maxKO.length === 0 ? "✓" : "✗ " + maxKO.join(",")} · `
     + `tout à 1 → 2,5/10 : ${minKO.length === 0 ? "✓" : "✗ " + minKO.join(",")} · `
@@ -4195,10 +4292,12 @@ function runSelfTests(){
     + `répartition en % cohérente : ${partOK ? "✓" : "✗"} · `
     + `journal + test court : ${mixteOK && mixteCompteOK ? "✓" : "✗"} · `
     + `minimum ${MIN_EMOS} émotions par situation : ${seuilOK ? "✓" : "✗"} · `
-    + `code cadeau lu et refusé comme il faut : ${cadeauOK && cadeauRefusOK ? "✓" : "✗"}`);
+    + `code cadeau lu et refusé comme il faut : ${cadeauOK && cadeauRefusOK ? "✓" : "✗"} · `
+    + `carte à partager réservée au dossier : ${carteKO.length === 0 ? "✓" : "✗ " + JSON.stringify(carteKO)}`);
   return { ok, maxOK: maxKO.length === 0, minOK: minKO.length === 0,
            absenceOK: absenceOK && noteAbsente, intensiteOK, plafondOK, partOK,
-           mixteOK, mixteCompteOK, seuilOK, cadeauOK: cadeauOK && cadeauRefusOK };
+           mixteOK, mixteCompteOK, seuilOK, cadeauOK: cadeauOK && cadeauRefusOK,
+           carteOK: carteKO.length === 0 };
 }
 
 
@@ -4271,6 +4370,17 @@ $("#btnCopy").addEventListener("click", copierResultats);
 document.body.appendChild($("#carteOverlay")); /* sort les modales du contexte d'empilement de <main> */
 document.body.appendChild($("#rapportOverlay"));
 $("#btnCarte").addEventListener("click", ouvrirCarte);
+/* Un seul endroit porte le prix et le bouton d'achat : la vitrine. La promotion
+   y conduit plutôt que d'ouvrir une deuxième porte vers le même paiement. */
+$("#btnCartePromo").addEventListener("click", () => {
+  const box = $("#venteBox");
+  if(!box || box.hidden) return;
+  /* Sans ce repère, on ne saurait jamais si réserver la carte au dossier fait
+     vendre davantage — c'est-à-dire si la décision était la bonne. */
+  mesurer("promo-carte");
+  box.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block:"center" });
+  $("#btnAcheter").focus({ preventScroll:true });
+});
 
 /* Verrou de fin de test + offre du dossier */
 document.body.appendChild($("#paywallOverlay"));
@@ -4314,9 +4424,12 @@ $("#btnFermerCle").addEventListener("click", fermerModaleCle);
 $("#rapportOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) fermerModaleCle(); });
 $("#btnRapportPdf").addEventListener("click", () => window.print());
 $("#btnRapportRetour").addEventListener("click", () => showView("v-resultats"));
+/* Depuis le dossier, la carte s'ouvre sans repasser par la page de résultats —
+   c'est là qu'on la cherche, et le sommaire vient de promettre qu'elle existe. */
+$("#btnRapportCarte").addEventListener("click", () => { showView("v-resultats"); ouvrirCarte(); });
 $("#btnCarteDl").addEventListener("click", telechargerCarte);
 $("#btnCartePartage").addEventListener("click", partagerCarte);
-$("#btnCarteFermer").addEventListener("click", () => { $("#carteOverlay").hidden = true; });
+$("#btnCarteFermer").addEventListener("click", fermerCarte);
 document.querySelectorAll(".carte-formats .fmt").forEach(b => b.addEventListener("click", async () => {
   if(b.dataset.fmt === carteFormat) return;
   carteFormat = b.dataset.fmt;
@@ -4327,7 +4440,7 @@ document.querySelectorAll(".carte-formats .fmt").forEach(b => b.addEventListener
   });
   await fabriquerCarte(500);
 }));
-$("#carteOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) e.currentTarget.hidden = true; });
+$("#carteOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) fermerCarte(); });
 $("#btnRestart").addEventListener("click", () => {
   effacerBrouillon();
   state.i = 0;
@@ -4340,6 +4453,7 @@ $("#btnRestart").addEventListener("click", () => {
   lastMesures = null;
   lastPlaces = null;
   lastPart = null;
+  fermerCarte();   /* l'image du passage précédent ne vaut plus rien */
   $("#copyFeedback").textContent = "";
   showView("v-accueil");
 });
@@ -4362,7 +4476,7 @@ document.addEventListener("keydown", e => {
 /* Échap ferme la fenêtre ouverte (sauf le verrou de paiement, qu'on ne contourne pas) */
 document.addEventListener("keydown", e => {
   if(e.key !== "Escape") return;
-  if(!$("#carteOverlay").hidden){ $("#carteOverlay").hidden = true; e.preventDefault(); return; }
+  if(!$("#carteOverlay").hidden){ fermerCarte(); e.preventDefault(); return; }
   if(!$("#rapportOverlay").hidden){ fermerModaleCle(); e.preventDefault(); }
 });
 $("#btnVersMethode").addEventListener("click", () => showView("v-methode"));

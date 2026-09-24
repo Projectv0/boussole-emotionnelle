@@ -28,6 +28,11 @@ ETAPES = [("accueil",    "Ouverture de l'accueil"),
           ("paywall",    "Choix de formule affiché"),
           ("stripe",     "Départ vers le paiement")]
 
+# Hors entonnoir : ce repère ne se place pas entre deux étapes, il compte les
+# clics sur l'encart qui propose la carte à partager aux acheteurs de la formule
+# simple. C'est le seul moyen de savoir si la réserver au dossier a servi.
+A_COTE = [("promo-carte", "Clic sur « Ta boussole, en image »")]
+
 
 def charger(source):
     if source is None:
@@ -89,6 +94,10 @@ def principal(source):
         for a in articles[:15]:
             nom = a["page"].replace("/guide/", "").replace(".html", "")
             print(f"  {nom:<46} {a['n']:>6}")
+
+    for cle, nom in A_COTE:
+        if totaux.get(cle):
+            print(f"\nÀ CÔTÉ DE L'ENTONNOIR\n  {nom:<46} {totaux[cle]:>6}")
 
     parJour = d.get("parJour") or []
     if parJour:

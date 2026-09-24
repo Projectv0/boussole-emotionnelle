@@ -403,15 +403,34 @@ Une fois que j'ai basculé le site, à faire **dans l'ordre**, en production :
 3. `?apercu=1` ne montre plus rien de spécial.
 4. `merci.html?formule=dossier` sans `session_id` ne débloque rien.
 5. Une référence inventée dans « J'ai déjà payé » est refusée.
-6. **Un vrai achat à 1,99 € donne les résultats et *pas* le dossier.**
-7. Le montant débité correspond au prix affiché.
-8. Le client reçoit sa référence d'achat et peut l'imprimer.
-9. **Le code à offrir** : l'achat du dossier fait apparaître la carte « Offrir le test à
-   quelqu'un » ; le code créé ouvre les résultats sur un *autre* appareil, et refuse de
-   servir une deuxième fois. Un achat à 1,99 €, lui, ne montre aucune carte.
+6. **Un vrai achat à 1,99 € donne les résultats et *pas* le dossier** — et le bouton
+   « Créer ma carte à partager » n'apparaît pas ; à sa place, l'encart « Ta boussole, en image »
+   mène à la vitrine du dossier.
+7. **Un vrai achat du dossier fait apparaître le bouton de la carte**, et l'image se fabrique
+   aux deux formats (post et story).
+8. Le montant débité correspond au prix affiché.
+9. Le client reçoit sa référence d'achat et peut l'imprimer.
+10. **Le code à offrir** : l'achat du dossier fait apparaître l'encadré « Offrir le test à
+    quelqu'un » ; le code créé ouvre les résultats sur un *autre* appareil, et refuse de
+    servir une deuxième fois. Un achat à 1,99 €, lui, ne montre pas cet encadré.
 
-**Le point 6 demande une vraie carte, sur un vrai paiement de 1,99 € que tu te rembourseras
-ensuite. Je ne peux pas le faire : je n'entre jamais de numéro de carte, même de test.**
+**Le point 6 demande une vraie carte bancaire, sur un vrai paiement de 1,99 € que tu te
+rembourseras ensuite. Je ne peux pas le faire : je n'entre jamais de numéro de carte, même de test.**
+
+## B7 bis · Deux choses à savoir avant d'ouvrir la vente
+
+**Le passage de 1,99 € à 5,99 € refait payer le plein tarif.** Quelqu'un qui a pris la formule
+simple puis clique « Passer au dossier complet » paie 5,99 € en plus de ses 1,99 € — donc
+7,98 € pour un produit affiché à 5,99 €. C'était déjà le cas avant aujourd'hui, mais la
+carte réservée au dossier va pousser bien plus de monde vers ce bouton. Deux sorties possibles :
+créer dans Stripe un **lien de complément à 4 €** et le brancher sur ce bouton-là, ou l'assumer
+et l'écrire noir sur blanc à côté du prix. Dis-moi laquelle et je la pose. Ne laisse pas la
+troisième, qui est de ne rien faire.
+
+**La carte n'a jamais été vendue à personne.** Si tu t'étais demandé si quelqu'un ayant acheté
+à 1,99 € avant ce changement se retrouvait lésé : non. Le mode test est encore actif, aucun
+paiement réel n'a eu lieu, et les CGV disent aujourd'hui qu'aucune formule payante n'est
+proposée. La question ne se posera plus jamais si la vente ouvre après ce changement.
 
 ## B8 · Le test depuis Instagram et TikTok, sur un vrai téléphone
 

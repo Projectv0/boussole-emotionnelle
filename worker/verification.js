@@ -36,7 +36,7 @@ const ORIGINES = [
 const SEUIL_DOSSIER = 400;
 const DEVISE = "eur";
 
-/* Les six seuls événements acceptés. Une liste fermée plutôt qu'un champ libre :
+/* Les sept seuls événements acceptés. Une liste fermée plutôt qu'un champ libre :
    sans elle, n'importe qui pourrait remplir la base de lignes inventées, et le
    tableau deviendrait illisible sans qu'aucune alerte ne se déclenche. */
 const EVENEMENTS = new Set([
@@ -46,6 +46,7 @@ const EVENEMENTS = new Set([
   "test-fin",     // seize situations répondues
   "paywall",      // la fenêtre de choix de formule s'ouvre
   "stripe",       // départ vers le paiement
+  "promo-carte",  // clic sur « Découvrir le dossier complet » depuis l'encart de la carte
 ]);
 
 export default {
