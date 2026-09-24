@@ -386,6 +386,12 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .bar-row.absente, .bal-row.absente, .rap-absente{ opacity:.5; }
 .j-attente > .j-ctx{ opacity:.35; pointer-events:none; }
 .j-attente-note{ font-size:.82rem; color:var(--muted); margin:.2rem 0 .5rem; }
+.bal-part{ margin:.2rem 0 .2rem; }
+.bal-jauge{ display:flex; height:1.15rem; border-radius:999px; overflow:hidden; background:var(--hairline); }
+.bal-agr{ background:linear-gradient(90deg,#57A05B,#63AFA4); }
+.bal-des{ background:linear-gradient(90deg,#C4763B,#CF5C41); }
+.bal-legende{ display:flex; justify-content:space-between; margin-top:.5rem; font-size:.86rem; color:var(--muted); }
+.bal-legende b{ color:var(--ink); }
 .podium-sous{ display:block; font-size:.72rem; font-weight:500; color:var(--muted); margin-top:.1rem; }
 .ana.absente > summary{ opacity:.6; }
 .bar-row.absente .bar-track{ background-image:repeating-linear-gradient(90deg, var(--hairline) 0 6px, transparent 6px 12px); }
@@ -820,7 +826,7 @@ footer p + p{ margin-top:.3rem; }
           <div class="core">
             <div class="res-kicker">L’esprit du test</div>
             <p>Pas de questions abstraites ici : tu te projettes dans <b>des situations concrètes</b> — une réunion, un appel, un imprévu, un dimanche matin — et tu choisis toi-même, parmi les 14, les émotions que chacune ferait monter en toi, puis avec quelle force.</p>
-            <p style="margin-top:.9rem">À la fin, chaque émotion que tu as retenue reçoit une note de <b>0 à 10</b> — son intensité moyenne quand elle est là —, accompagnée du nombre de scènes où tu l’as retenue. Celles que tu ne retiens jamais restent sans note, et le disent. Avec un résumé et une analyse personnalisée.</p>
+            <p style="margin-top:.9rem">À la fin, chaque émotion que tu as retenue reçoit une note de <b>0 à 10</b>, qui tient compte de sa force <i>et</i> du nombre de fois où elle est revenue — accompagnée de ce nombre, pour que tu voies sur quoi la note repose. Celles que tu ne retiens jamais restent sans note, et le disent. Avec un résumé et une analyse personnalisée.</p>
           </div>
         </div>
       </div>
@@ -911,7 +917,7 @@ footer p + p{ margin-top:.3rem; }
         <p style="margin-top:.6rem"><b>1. Les 14 émotions.</b> Le parcours s’ouvre sur une présentation de chaque émotion : à quoi elle sert, comment elle se manifeste. Cinq minutes qui rendent tout le reste plus clair.</p>
         <p style="margin-top:.6rem"><b>2. Tes moments réels.</b> Juste avant le test, ton journal te propose d’exprimer jusqu’à 5 moments vécus. Ils comptent dans le calcul exactement comme les situations imaginées — la matière la plus fiable, c’est ce que tu as réellement vécu.</p>
         <p style="margin-top:.6rem"><b>3. Les mises en situation.</b> 16 scènes du quotidien (moins si tu as exprimé des moments), variées : travail, famille, couple, argent, imprévus, réseaux, réussites, moments calmes. Pour chacune, <b>tu choisis toi-même</b>, parmi les 14, les émotions que la scène ferait monter en toi — trois au minimum — puis tu dis avec quelle force, de « un peu » à « énormément ». Les émotions que tu ne retiens pas ne sont pas comptées comme des zéros : elles ne sont simplement pas mesurées sur cette scène-là.</p>
-        <p style="margin-top:.6rem"><b>4. Le calcul.</b> Chaque cran vaut de 1 à 4. Tu obtiens pour chaque émotion <b>deux informations, et il faut les lire ensemble</b> : une <b>note sur 10</b>, qui est son intensité moyenne <i>quand tu l’as retenue</i> ; et le <b>nombre de scènes</b> où tu l’as retenue, sur le total parcouru. Une émotion retenue une seule fois avec force obtient donc 10 — mais tu liras « retenue 1 fois sur 16 » à côté, et c’est cette seconde information qui dit sa vraie place. L’étiquette (« peu présente », « modérée », « très présente ») est calculée sur la place, pas sur l’intensité. Tes moments réels comptent exactement comme une scène. Ces règles sont vérifiées automatiquement à chaque chargement du site.</p>
+        <p style="margin-top:.6rem"><b>4. Le calcul.</b> Chaque cran vaut de 1 à 4. La note d’une émotion part de son <b>intensité moyenne</b> quand tu l’as retenue, puis elle est <b>tempérée par le nombre de fois</b> où tu l’as retenue&nbsp;: une émotion vue une seule fois, même à fond, ne peut pas coiffer une émotion présente sur toutes les scènes. Une émotion retenue partout, elle, garde exactement son intensité — le 10 sur 10 reste atteignable, mais il se mérite sur la durée. Le nombre de scènes est affiché à côté de chaque note, et l’étiquette («&nbsp;peu présente&nbsp;», «&nbsp;modérée&nbsp;», «&nbsp;très forte&nbsp;») décrit la place occupée, pas la force ressentie. L’équilibre entre registres agréable et désagréable est donné en <b>pourcentage de ce que tu as ressenti</b>, et non en note&nbsp;: c’est un rapport, pas un bulletin. Tes moments réels comptent exactement comme une scène. Ces règles sont vérifiées automatiquement à chaque chargement du site.</p>
 
         <h3 style="margin-top:1.6rem">Pourquoi 14 émotions</h3>
         <p style="margin-top:.6rem">Six émotions <b>de base</b>, reconnues dans toutes les cultures (joie, tristesse, colère, peur, surprise, dégoût) ; six émotions <b>sociales</b>, qui n’existent que dans le lien aux autres (amour, honte, culpabilité, jalousie, fierté, gratitude) ; et deux <b>états intérieurs</b> qui colorent le fond des journées (anxiété, sérénité). Les 14 te sont proposées à chaque scène, et c’est toi qui désignes celles qui te parlent.</p>
@@ -1981,9 +1987,27 @@ function computeScores(answers, reelles, selection){
       totaux[id] += em[id];
     }
   });
+  /* L'intensité moyenne seule donnait des notes absurdes : une émotion retenue
+     une seule fois, à fond, obtenait 10/10 et coiffait une émotion présente sur
+     les seize scènes. On la tempère donc par le nombre de mesures sur laquelle
+     elle repose — peu de mesures, peu de confiance, note tirée vers le bas.
+
+     Le facteur vaut 1 pour une émotion retenue sur toutes les scènes : celle-là
+     garde exactement son intensité, et 10/10 reste atteignable. Il tombe à 0,59
+     pour trois mesures sur seize, à 0,30 pour une seule.
+
+     K règle la sévérité : plus il est grand, plus il faut de mesures pour être
+     cru. À 3, il faut environ un quart des scènes pour valoir 80 % de sa note. */
+  const K = 3;
+  const scenes = idxs.length + ((reelles || []).length);
+  const plafond = scenes ? scenes / (scenes + K) : 1;
   const notes = {};
   EMOTIONS.forEach(e => {
-    notes[e.id] = maxima[e.id] ? Math.round((totaux[e.id] / maxima[e.id]) * 100) / 10 : 0;
+    if(!maxima[e.id]){ notes[e.id] = 0; return; }
+    const mesures = maxima[e.id] / 4;
+    const intensite = totaux[e.id] / maxima[e.id] * 10;
+    const confiance = Math.min(1, (mesures / (mesures + K)) / plafond);
+    notes[e.id] = Math.round(intensite * confiance * 10) / 10;
   });
   return notes;
 }
@@ -2018,6 +2042,31 @@ function computePlaces(answers, reelles, selection){
   return places;
 }
 
+/* LA RÉPARTITION entre registres agréable et désagréable, en pourcentage.
+   Deux notes sur 10 ne convenaient pas : avec trois émotions choisies sur
+   quatorze, aucune moyenne ne peut monter haut, et « 1,1 / 10 » face à
+   « 3,8 / 10 » se lit comme deux mauvaises notes alors qu'il s'agit d'un
+   rapport entre deux registres. Une part, elle, utilise toute l'échelle et
+   ne peut pas se lire comme un bulletin. */
+function repartition(answers, reelles, selection){
+  const somme = {};
+  EMOTIONS.forEach(e => { somme[e.id] = 0; });
+  const idxs = (selection && selection.length) ? selection : TOUTES;
+  idxs.forEach(k => {
+    const a = answers[k] || {};
+    for(const id in a) if(somme[id] !== undefined) somme[id] += a[id];
+  });
+  (reelles || []).forEach(r => {
+    const em = r.emos || {};
+    for(const id in em) if(somme[id] !== undefined) somme[id] += em[id];
+  });
+  const tot = EMOTIONS.reduce((s, e) => s + somme[e.id], 0);
+  const part = ids => tot ? Math.round(ids.reduce((s, id) => s + somme[id], 0) / tot * 100) : 0;
+  /* La surprise est neutre : elle n'appartient à aucun des deux registres et
+     n'entre donc pas dans la comparaison, mais elle pèse dans le total. */
+  return { agreables: part(AGREABLES), desagreables: part(DESAGREABLES), total: tot };
+}
+
 /* Combien de fois chaque émotion a été désignée. Indispensable depuis que la
    personne choisit elle-même : une émotion jamais retenue n'a pas une note de
    zéro, elle n'a pas de note du tout, et l'afficher à 0/10 reviendrait à dire
@@ -2041,7 +2090,17 @@ function compterMesures(answers, reelles, selection){
    carte partagée : tous désignent ce qui occupe le plus de terrain. Classer par
    intensité mettait en tête une émotion retenue une seule fois mais avec force,
    devant une émotion présente sur les seize scènes. */
-function rang(id){ return (lastPlaces || lastNotes || {})[id] || 0; }
+function rang(id){
+  /* On classe sur la NOTE depuis le 24/09/2026. Tant qu'elle n'était qu'une
+     intensité, classer dessus mettait en tête une émotion retenue une seule
+     fois ; il fallait donc classer sur la place, et les chiffres affichés
+     sortaient dans le désordre — ce qui se lit comme un défaut.
+     La note tenant désormais compte du nombre de mesures, les deux ordres se
+     rejoignent, et la colonne des notes redevient décroissante.
+     La bande d'interprétation, elle, reste calée sur la place : « peu présente »
+     décrit une fréquence, pas une force. */
+  return (lastNotes || {})[id] || 0;
+}
 
 function moyenne(ids, notes){
   /* Seules les émotions réellement mesurées entrent dans la moyenne. Compter une
@@ -2104,35 +2163,33 @@ function renderResults(notes){
           : `Les ${nonMesurees.length} dernières, tu ne les as retenues sur aucune situation : le test n’a donc rien à en dire — ce n’est pas une note de zéro, c’est une absence de mesure.`)
       : "");
 
-  /* Équilibre agréables / désagréables.
-     Une comparaison n'a de sens que si les deux côtés ont été mesurés. Quelqu'un
-     qui n'a retenu aucune émotion agréable sur les seize situations verrait
-     sinon « agréables 0/10 · désagréables 5/10 » et lirait que sa vie penche du
-     mauvais côté — une affirmation tirée d'aucune donnée, sur la page qui touche
-     le plus. */
+  /* Équilibre agréables / désagréables — en part de ce qui a été ressenti, pas
+     en notes. Deux notes sur 10 se lisaient comme un bulletin scolaire alors
+     qu'il s'agit d'un rapport entre deux registres. */
   const nbMes = ids => ids.filter(id => mesuree(id)).length;
   const nAgr = nbMes(AGREABLES), nDes = nbMes(DESAGREABLES);
-  /* Comme la couleur du moment, cet équilibre parle d'une période : il se lit
-     donc sur la place, pas sur l'intensité. Comparer des intensités faisait dire
-     « les émotions agréables dominent nettement » à quelqu'un dont la joie avait
-     été retenue une seule fois, mais fort. */
-  const mAgr = moyenne(AGREABLES, lastPlaces || notes), mDes = moyenne(DESAGREABLES, lastPlaces || notes);
-  const ligne = (emo, lbl, n, m, deg) => `
-    <div class="bal-row${n ? "" : " absente"}"><div class="bal-head"><span>${emo} ${lbl}</span><span class="v">${n ? fmt(m) + " / 10" : "non mesuré"}</span></div>
-      <div class="bal-track">${n ? `<div class="bal-fill" data-w="${m*10}" style="background:linear-gradient(90deg,${deg})"></div>` : ""}</div></div>`;
-  $("#resBalance").innerHTML =
-      ligne("😊", "Émotions agréables", nAgr, mAgr, "#57A05B,#63AFA4")
-    + ligne("🌧️", "Émotions désagréables", nDes, mDes, "#C4763B,#CF5C41");
+  const pAgr = lastPart ? lastPart.agreables : 0, pDes = lastPart ? lastPart.desagreables : 0;
+  $("#resBalance").innerHTML = `
+    <div class="bal-part">
+      <div class="bal-jauge">
+        <span class="bal-agr" style="width:${pAgr}%"></span>
+        <span class="bal-des" style="width:${pDes}%"></span>
+      </div>
+      <div class="bal-legende">
+        <span><b>${pAgr}&nbsp;%</b> 😊 agréables</span>
+        <span><b>${pDes}&nbsp;%</b> 🌧️ désagréables</span>
+      </div>
+    </div>`;
 
-  const diff = mAgr - mDes;
-  const fin = " (La surprise, neutre, n’entre pas dans ce calcul.)";
+  const ecart = pAgr - pDes;
+  const fin = " La surprise, neutre, n’entre dans aucun des deux camps.";
   $("#resBalanceNote").textContent =
     !nAgr && !nDes ? "Trop peu d’émotions retenues pour dire quoi que ce soit de ton équilibre." :
-    !nAgr ? "Tu n’as retenu aucune émotion agréable sur les situations tirées : il n’y a donc rien à comparer ici. Cela ne veut pas dire qu’elles sont absentes de ta vie — simplement que ces seize scènes ne les ont pas appelées." :
-    !nDes ? `Tu n’as retenu aucune émotion désagréable sur les situations tirées : il n’y a donc rien à comparer ici. Ces ${totalScenes} scènes ne les ont pas appelées, c’est tout ce qu’on peut en dire.` :
-    diff >= 1.5 ? "Les émotions agréables dominent nettement : ton quotidien semble te nourrir plus qu’il ne te coûte." + fin :
-    diff <= -1.5 ? "Les émotions désagréables pèsent plus lourd en ce moment : ton système émotionnel travaille beaucoup, et cela mérite douceur et récupération." + fin :
-    "Agréables et désagréables s’équilibrent presque : une vie intérieure contrastée, où les deux registres cohabitent." + fin;
+    !nAgr ? "Sur les scènes tirées, tu n’as retenu que des émotions désagréables. Cela ne veut pas dire que les autres sont absentes de ta vie — ces seize scènes ne les ont pas appelées, c’est tout." :
+    !nDes ? "Sur les scènes tirées, tu n’as retenu que des émotions agréables. Ces seize scènes n’ont pas appelé les autres, c’est tout ce qu’on peut en dire." :
+    ecart >= 25 ? "L’agréable occupe la plus grande part de ce que tu as ressenti : ton quotidien semble te nourrir plus qu’il ne te coûte." + fin :
+    ecart <= -25 ? "L’inconfortable occupe la plus grande part de ce que tu as ressenti en ce moment. Ce n’est pas un verdict sur ta vie : c’est une période, et elle demande de la douceur envers toi-même." + fin :
+    "Les deux registres se partagent presque à parts égales ce que tu as ressenti : une vie intérieure contrastée, où l’un et l’autre cohabitent." + fin;
 
   /* Radar */
   $("#radarWrap").innerHTML = buildRadar(notes);
@@ -2170,7 +2227,7 @@ function renderResults(notes){
   }).join("");
 
   /* Synthèse croisée */
-  $("#syntheseWrap").innerHTML = buildSynthese(notes, tri, mAgr, mDes, basses);
+  $("#syntheseWrap").innerHTML = buildSynthese(notes, tri, basses);
 
   /* la comparaison d'un passage précédent n'a plus lieu d'être */
   $("#compResultat").hidden = true;
@@ -2274,26 +2331,29 @@ function listeCombos(notes){
 }
 
 /* ————— Synthèse finale (5 à 8 phrases, générée à partir des notes) ————— */
-function buildSynthese(notes, tri, mAgr, mDes, basses){
+function buildSynthese(notes, tri, basses){
   /* HI et LO étaient déclarées ici sans y servir : retirées plutôt
      qu'entretenues. Les seuils qui comptent sont dans listeCombos. */
   const nm = e => nomEmo(e.id);
   const ph = [];
 
   const [t1, t2, t3] = tri;
-  ph.push(`Aujourd’hui, ton paysage intérieur est surtout coloré par ${nm(t1)} (${fmt(notes[t1.id])}/10), ${nm(t2)} (${fmt(notes[t2.id])}/10) et ${nm(t3)} (${fmt(notes[t3.id])}/10).`);
+  ph.push(`Aujourd’hui, ton paysage intérieur est surtout coloré par ${nm(t1)}, ${nm(t2)} et ${nm(t3)}.`);
 
   /* Même précaution que sur la page de résultats : on ne compare que ce qui a
      été mesuré des deux côtés. */
   const mesureeL = id => !lastMesures || lastMesures[id] > 0;
   const nAgrL = AGREABLES.filter(mesureeL).length, nDesL = DESAGREABLES.filter(mesureeL).length;
-  const diff = mAgr - mDes;
+  /* En part de ce qui a été ressenti, et sans chiffre entre parenthèses : la
+     lecture d'une lettre ne se fluidifie pas à coups de notes rappelées. */
+  const pA = lastPart ? lastPart.agreables : 0, pD = lastPart ? lastPart.desagreables : 0;
+  const diff = pA - pD;
   if(nAgrL && nDesL){
-    ph.push(diff >= 1.5
-      ? `Côté équilibre, les émotions agréables (${fmt(mAgr)}/10 en moyenne) prennent nettement le dessus sur les désagréables (${fmt(mDes)}/10) — ton quotidien semble te nourrir plus qu’il ne te coûte.`
-      : diff <= -1.5
-      ? `Côté équilibre, les émotions désagréables (${fmt(mDes)}/10 en moyenne) pèsent en ce moment plus lourd que les agréables (${fmt(mAgr)}/10) — non pas que tout aille mal, mais ton système émotionnel travaille beaucoup, et cela mérite de la douceur envers toi-même.`
-      : `Côté équilibre, émotions agréables (${fmt(mAgr)}/10) et désagréables (${fmt(mDes)}/10) se répondent presque à parts égales : une vie intérieure contrastée, où les deux registres cohabitent.`);
+    ph.push(diff >= 25
+      ? `Côté équilibre, l’agréable occupe la plus grande part de ce que tu as ressenti — ton quotidien semble te nourrir plus qu’il ne te coûte.`
+      : diff <= -25
+      ? `Côté équilibre, c’est l’inconfortable qui occupe la plus grande part de ce que tu as ressenti. Non pas que tout aille mal, mais ton système émotionnel travaille beaucoup en ce moment, et cela mérite de la douceur envers toi-même.`
+      : `Côté équilibre, les deux registres se partagent presque à parts égales ce que tu as ressenti : une vie intérieure contrastée, où l’un et l’autre cohabitent.`);
   } else if(nAgrL || nDesL){
     ph.push(`Côté équilibre, il n’y a rien à comparer : sur les situations tirées, tu n’as retenu que des émotions ${nAgrL ? "agréables" : "désagréables"}. Ce n’est pas un déséquilibre de ta vie, c’est ce que ces seize scènes ont appelé chez toi.`);
   }
@@ -2332,14 +2392,14 @@ function buildCopyText(notes){
   const scenes = (state.selection ? state.selection.length : TAILLE_TEST) + (state.reelles ? state.reelles.length : 0);
   const lignes = gardees.map((e, k) => `${String(k+1).padStart(2, " ")}. ${e.nom} — ${fmt(notes[e.id])}/10 · retenue ${lastMesures ? lastMesures[e.id] : "?"} fois sur ${scenes} (${BANDES[bandeDe((lastPlaces || notes)[e.id])].lbl.toLowerCase()})`);
   if(absentes.length) lignes.push("", `Non retenues sur les situations tirées : ${absentes.map(e => e.nom).join(", ")}.`);
-  const mAgr = moyenne(AGREABLES, lastPlaces || notes), mDes = moyenne(DESAGREABLES, lastPlaces || notes);
+  const pA = lastPart ? lastPart.agreables : 0, pD = lastPart ? lastPart.desagreables : 0;
   /* Un côté sans aucune mesure ne se chiffre pas : « agréables 0,0/10 » dans un
      texte destiné à être partagé affirmerait une absence de joie qu'on n'a
      jamais mesurée. */
   const vuA = AGREABLES.some(id => !lastMesures || lastMesures[id] > 0);
   const vuD = DESAGREABLES.some(id => !lastMesures || lastMesures[id] > 0);
   const equilibre = (vuA && vuD)
-    ? `Équilibre : agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.`
+    ? `Répartition de ce que j'ai ressenti : ${pA} % d'émotions agréables, ${pD} % de désagréables.`
     : `Équilibre : rien à comparer — je n'ai retenu que des émotions ${vuA ? "agréables" : "désagréables"} sur les scènes tirées.`;
   return [
     `🧭 Boussole émotionnelle — mes résultats (${date})`,
@@ -2773,17 +2833,19 @@ function archetype(notes, tri){
 
   /* Même précaution que sur la page de résultats : on ne compare que si les deux
      registres ont été mesurés, et sur la place plutôt que sur l'intensité. */
-  const socle = lastPlaces || notes;
   const vu = id => !lastMesures || lastMesures[id] > 0;
-  const moy = ids => { const v = ids.filter(vu); return v.length ? v.reduce((s,id)=>s+socle[id],0)/v.length : null; };
-  const mAgr = moy(AGREABLES), mDes = moy(DESAGREABLES);
+  /* Sur la part de ce qui a été ressenti, comme partout ailleurs depuis le
+     24/09 : une moyenne de notes ne disait pas un équilibre, elle donnait
+     l'impression d'un bulletin. */
+  const mAgr = AGREABLES.some(vu) ? (lastPart ? lastPart.agreables : null) : null;
+  const mDes = DESAGREABLES.some(vu) ? (lastPart ? lastPart.desagreables : null) : null;
   if(mAgr === null || mDes === null) return {
     titre:"Le portrait partiel",
     phrase:"Sur les scènes que tu as parcourues, tu n’as retenu qu’un seul registre d’émotions — agréables ou désagréables. Il n’y a donc pas de quoi dessiner une couleur d’ensemble : ce portrait dit ce que ces scènes ont appelé chez toi, pas l’équilibre de ta vie." };
-  if(mDes - mAgr >= 1.5) return {
+  if(mDes - mAgr >= 25) return {
     titre:"La traversée",
     phrase:"Ton profil raconte une période exigeante : les émotions inconfortables occupent plus de place que les autres. Ce n’est pas un état permanent — c’est une saison, et elle demande surtout de la douceur envers toi-même." };
-  if(mAgr - mDes >= 1.5) return {
+  if(mAgr - mDes >= 25) return {
     titre:"La belle saison",
     phrase:"Les émotions agréables dominent nettement : ton quotidien semble te nourrir plus qu’il ne te coûte. Profite de cette période — c’est aussi le meilleur moment pour installer des habitudes qui tiendront quand le vent tournera." };
   return {
@@ -2839,7 +2901,7 @@ function renderRapport(notes){
   const totalScenes = (state.selection ? state.selection.length : TAILLE_TEST)
                     + (state.reelles ? state.reelles.length : 0);
   const date = new Date().toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
-  const mAgr = moyenne(AGREABLES, lastPlaces || notes), mDes = moyenne(DESAGREABLES, lastPlaces || notes);
+  const pAgr = lastPart ? lastPart.agreables : 0, pDes = lastPart ? lastPart.desagreables : 0;
   const combos = listeCombos(notes);
   const arch = archetype(notes, tri);
   const lev = leviers(notes, tri);
@@ -2905,7 +2967,7 @@ function renderRapport(notes){
       ${EMOTIONS.some(e => !mesuree(e.id)) ? `<p style="max-width:30rem; margin:.7rem auto 0; font-size:.82rem; color:var(--muted)">Les émotions que tu n’as retenues sur aucune scène apparaissent au centre du graphique&nbsp;: c’est une absence de mesure, pas une note de zéro.</p>` : ""}
       <p style="max-width:30rem; margin:1.2rem auto 0; font-size:.92rem">Tes émotions dominantes : <b>${tri.filter(e => mesuree(e.id)).slice(0, 3).map(e => esc(e.nom)).join(", ")}</b>.
       ${(AGREABLES.some(mesuree) && DESAGREABLES.some(mesuree))
-        ? `Équilibre du moment : agréables ${fmt(mAgr)}/10 · désagréables ${fmt(mDes)}/10.`
+        ? `Répartition de ce que tu as ressenti : ${pAgr}&nbsp;% d’agréable, ${pDes}&nbsp;% de désagréable.`
         : `Équilibre du moment : rien à comparer — tu n’as retenu que des émotions ${AGREABLES.some(mesuree) ? "agréables" : "désagréables"} sur les scènes tirées.`}</p>
     </div>
 
@@ -2927,8 +2989,8 @@ function renderRapport(notes){
       <h3>Ton profil en un coup d’œil</h3>
       <div class="rap-recap">${recap}</div>
       <div class="rap-equilibre">
-        <div class="${AGREABLES.some(mesuree) ? "" : "rap-absente"}"><b>${AGREABLES.some(mesuree) ? fmt(mAgr) + "/10" : "—"}</b><span>émotions agréables</span></div>
-        <div class="${DESAGREABLES.some(mesuree) ? "" : "rap-absente"}"><b>${DESAGREABLES.some(mesuree) ? fmt(mDes) + "/10" : "—"}</b><span>émotions désagréables</span></div>
+        <div class="${AGREABLES.some(mesuree) ? "" : "rap-absente"}"><b>${AGREABLES.some(mesuree) ? pAgr + "&nbsp;%" : "—"}</b><span>émotions agréables</span></div>
+        <div class="${DESAGREABLES.some(mesuree) ? "" : "rap-absente"}"><b>${DESAGREABLES.some(mesuree) ? pDes + "&nbsp;%" : "—"}</b><span>émotions désagréables</span></div>
       </div>
     </div>
 
@@ -3817,12 +3879,25 @@ function runSelfTests(){
   const absenceOK = mesures.tristesse === 0 && mesures.joie === SITUATIONS.length;
   const noteAbsente = computeScores(rep, [], null).tristesse === 0;
 
-  /* 4. La propriété assumée du barème : une seule mesure à 4 donne 10/10, parce
-        que la note mesure une intensité, pas une fréquence. Ce test existe pour
-        que personne ne la « corrige » par erreur en la prenant pour un défaut. */
+  /* 4. Une seule mesure ne peut PLUS valoir 10/10. C'était le cas jusqu'au
+        24/09/2026, et à l'usage c'était absurde : une émotion retenue une fois,
+        à fond, coiffait une émotion présente sur les seize scènes. La note est
+        désormais tempérée par le nombre de mesures. Ce test garde la trace de
+        la décision — et vérifie que la note reste franchement plus basse. */
   const uneSeule = SITUATIONS.map((_, k) => k === 0 ? { degout: 4 } : { joie: 2, peur: 2, colere: 2 });
-  const intensiteOK = computeScores(uneSeule, [], null).degout === 10
-                   && compterMesures(uneSeule, [], null).degout === 1;
+  const nDeg = computeScores(uneSeule, [], null).degout;
+  const intensiteOK = nDeg > 0 && nDeg <= 4 && compterMesures(uneSeule, [], null).degout === 1;
+
+  /* 4 bis. À l'inverse, une émotion retenue sur TOUTES les scènes garde exactement
+        son intensité : 10/10 doit rester atteignable, sinon la note ne sert plus. */
+  const partoutMax = SITUATIONS.map(() => ({ fierte: 4 }));
+  const plafondOK = computeScores(partoutMax, [], null).fierte === 10;
+
+  /* 4 ter. La répartition agréable / désagréable est un pourcentage, et les deux
+        parts ne peuvent pas dépasser cent à elles deux. */
+  const mixte = SITUATIONS.map(() => ({ joie: 3, peur: 3, surprise: 2 }));
+  const r = repartition(mixte, [], null);
+  const partOK = r.agreables + r.desagreables <= 100 && r.agreables > 0 && r.desagreables > 0;
 
   /* 5. Les moments réels du journal comptent exactement comme une situation.
         Attention au format : un moment réel est { emos: {…} }, pas un objet
@@ -3839,16 +3914,19 @@ function runSelfTests(){
   const seuilOK = MIN_EMOS >= 2 && MIN_EMOS <= EMOTIONS.length;
 
   const ok = maxKO.length === 0 && minKO.length === 0 && absenceOK && noteAbsente
-          && intensiteOK && mixteOK && mixteCompteOK && seuilOK;
+          && intensiteOK && plafondOK && partOK && mixteOK && mixteCompteOK && seuilOK;
   console.info("[Boussole émotionnelle] Auto-vérification — "
     + `tout à 4 → 10/10 : ${maxKO.length === 0 ? "✓" : "✗ " + maxKO.join(",")} · `
     + `tout à 1 → 2,5/10 : ${minKO.length === 0 ? "✓" : "✗ " + minKO.join(",")} · `
     + `jamais désignée → 0 mesure : ${absenceOK && noteAbsente ? "✓" : "✗"} · `
-    + `une seule mesure à 4 → 10/10 (voulu) : ${intensiteOK ? "✓" : "✗"} · `
+    + `une seule mesure ne vaut plus 10/10 : ${intensiteOK ? "✓" : "✗"} · `
+    + `retenue partout → intensité intacte : ${plafondOK ? "✓" : "✗"} · `
+    + `répartition en % cohérente : ${partOK ? "✓" : "✗"} · `
     + `journal + test court : ${mixteOK && mixteCompteOK ? "✓" : "✗"} · `
     + `minimum ${MIN_EMOS} émotions par situation : ${seuilOK ? "✓" : "✗"}`);
   return { ok, maxOK: maxKO.length === 0, minOK: minKO.length === 0,
-           absenceOK: absenceOK && noteAbsente, intensiteOK, mixteOK, mixteCompteOK, seuilOK };
+           absenceOK: absenceOK && noteAbsente, intensiteOK, plafondOK, partOK,
+           mixteOK, mixteCompteOK, seuilOK };
 }
 
 
@@ -3859,10 +3937,12 @@ let lastNotes = null;
    ressens jamais ça », affirmé à partir d'aucune donnée. */
 let lastMesures = null;
 let lastPlaces = null;   /* voir computePlaces : choisit les textes d'interprétation */
+let lastPart = null;     /* la répartition agréables / désagréables, en pourcentage */
 function finish(){
   lastNotes = computeScores(state.answers, state.reelles, state.selection);
   lastMesures = compterMesures(state.answers, state.reelles, state.selection);
   lastPlaces  = computePlaces(state.answers, state.reelles, state.selection);
+  lastPart    = repartition(state.answers, state.reelles, state.selection);
   resultatsGardesCe = false;
   mesurer("test-fin");   /* le test est terminé, avant même de savoir s'il y a un verrou */
   /* Le brouillon n'est effacé qu'une fois les résultats réellement ouverts. Effacé
@@ -3974,6 +4054,7 @@ $("#btnRestart").addEventListener("click", () => {
   lastNotes = null;
   lastMesures = null;
   lastPlaces = null;
+  lastPart = null;
   $("#copyFeedback").textContent = "";
   showView("v-accueil");
 });
