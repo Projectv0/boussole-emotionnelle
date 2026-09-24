@@ -11,6 +11,7 @@ Trois blocs indépendants, dans l'ordre de ce qui rapporte le plus vite :
 - **A. Se rendre visible** — clos, sauf une chose : configurer TikTok, puis publier.
 - **B. Pouvoir vendre** — bloqué par la société. Plusieurs semaines.
 - **C. Finir les images** — bloqué par les crédits. ~10 €.
+- **D. Les vingt vidéos** — prêtes à publier.
 
 Le site ne vend rien aujourd'hui (`modeTest: true`, liens Stripe de test) : rien n'est en
 train de mal tourner. Le bloc B est à faire **avant** de basculer, pas en urgence.
@@ -487,6 +488,27 @@ son test toujours verrouillé de l'autre.
 Fais un achat de bout en bout depuis chacune des deux applications, sur ton téléphone, et
 regarde si l'onglet du test se débloque. C'est précisément le canal que les 99 publications
 vont ouvrir : si ça casse, ça casse sur tous les clients à la fois.
+
+---
+
+# D — Les vingt vidéos
+
+## D1 · Publier les vingt vidéos — tout est prêt
+
+Vingt vidéos d'une minute, dans le style des trois références de `Video tiktok/`, sont dans
+`reseaux-sociaux-video/sortie/`, chacune avec sa légende (`<id>.legende.txt`) prête à coller.
+
+**Une seule règle à respecter en publiant : garder la ligne de crédit musique** qui est dans
+chaque légende (« Musique : … — Kevin MacLeod (incompetech.com), licence CC BY 4.0 »). Ce n'est
+pas une politesse, c'est la condition de la licence. Les tableaux, eux, sont en CC0 : rien à
+créditer, mais `tableaux.json` garde la trace de chaque toile si on te le demande un jour.
+
+Les vidéos sont en **paysage**, comme les références. Si à l'usage tu préfères du 9:16, c'est
+deux lignes dans `generateur.py` — dis-le-moi.
+
+**Le dossier `Video tiktok/` est resté sur ton disque mais a été retiré du dépôt public** le
+24 septembre : il y était depuis le 23, servi par GitHub Pages — ce sont les vidéos d'un autre
+créateur, elles n'avaient rien à y faire.
 
 ---
 

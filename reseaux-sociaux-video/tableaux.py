@@ -57,6 +57,12 @@ def garder(image_bytes, chemin):
     im.convert("RGB").save(chemin, "JPEG", quality=88)
     return (w, h)
 
+def ecrire_manifeste():
+    """À côté puis remplacé d'un coup : personne ne lit jamais un fichier à moitié écrit."""
+    tmp = MANIFESTE + ".tmp"
+    json.dump(manifeste, open(tmp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    os.replace(tmp, MANIFESTE)
+
 manifeste = json.load(open(MANIFESTE, encoding="utf-8")) if os.path.exists(MANIFESTE) else []
 deja = {m["id"] for m in manifeste}
 n = len(manifeste)
@@ -103,7 +109,7 @@ def met():
                               "source": o.get("objectURL"), "taille": taille})
             deja.add(cle); n += 1; pris += 1
         print(f"  met/{terme}: +{pris} (total {n})")
-        json.dump(manifeste, open(MANIFESTE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        ecrire_manifeste()
 
 # ————— Art Institute of Chicago —————
 def aic():
@@ -149,7 +155,7 @@ def aic():
                               "source": f"https://www.artic.edu/artworks/{a['id']}", "taille": taille})
             deja.add(cle); n += 1; pris += 1
         print(f"  aic/{terme}: +{pris} (total {n})")
-        json.dump(manifeste, open(MANIFESTE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        ecrire_manifeste()
 
 # ————— Cleveland Museum of Art —————
 def cleveland():
@@ -185,11 +191,11 @@ def cleveland():
                               "licence": "CC0 (Open Access)", "source": a.get("url"), "taille": taille})
             deja.add(cle); n += 1; pris += 1
         print(f"  cleveland/{saut}: +{pris} (total {n})")
-        json.dump(manifeste, open(MANIFESTE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        ecrire_manifeste()
         saut += 100
 
 met()
 aic()
 cleveland()
-json.dump(manifeste, open(MANIFESTE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+ecrire_manifeste()
 print(f"\n{n} tableaux dans {DOSSIER}")
