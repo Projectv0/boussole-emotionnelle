@@ -2501,9 +2501,10 @@ async function genererCartePost(notes){
   /* Pied de carte */
   ctx.textAlign = "center";
   ctx.fillStyle = "#33685B"; ctx.font = `700 28px ${SANS}`;
-  ctx.fillText(`Fais le test → ${URL_SITE}`, W / 2, H - 100);
-  ctx.fillStyle = "#9A93A6"; ctx.font = `600 21px ${SANS}`;
-  ctx.fillText("Test indicatif de découverte de soi — pas un diagnostic. 100 % privé.", W / 2, H - 62);
+  /* La mention « test indicatif — pas un diagnostic » a été retirée des cartes à
+     partager le 24/09/2026, à la demande de Martial. Elle reste sur le site, dans
+     le texte copiable des résultats et dans le dossier. */
+  ctx.fillText(`Fais le test → ${URL_SITE}`, W / 2, H - 78);
   return cv;
 }
 /* ————— Format Story 9:16 : l'émotion dominante en grand, façon « filtre » ————— */
@@ -2598,8 +2599,6 @@ async function genererCarteStory(notes){
   ctx.fillStyle = "#33685B"; ctx.font = `700 30px ${SANS}`;
   ctx.fillText(URL_SITE, W / 2, 1638);
 
-  ctx.fillStyle = "#9A93A6"; ctx.font = `600 22px ${SANS}`;
-  ctx.fillText("Test indicatif de découverte de soi — pas un diagnostic. 100 % privé.", W / 2, H - 200);
   return cv;
 }
 let carteFormat = "post";
