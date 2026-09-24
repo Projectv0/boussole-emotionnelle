@@ -9,20 +9,19 @@
 Le style, tel qu'il a été lu dans les trois vidéos de référence :
   · paysage 16:9, une minute environ, 30 images par seconde ;
   · une accroche sur fond noir, les mots posés un par un, un mot en couleur ;
-  · puis un tableau de maître assombri, qui change toutes les deux secondes,
-    un personnage fixe devant (ici le médaillon de la Boussole), et les mots
-    qui apparaissent quand la voix les dit ;
+  · puis des photos assombries, sur le thème de la vidéo, qui changent toutes
+    les deux secondes, et les mots qui apparaissent quand la voix les dit ;
   · à la fin, le produit et un badge rouge « LIEN EN BIO ».
 
 Ce qu'on assemble :
   scripts.py       les vingt textes, groupe de mots par groupe de mots
-  voix.swift       la voix de macOS, qui date chaque mot
-  tableaux/        des peintures du domaine public (voir tableaux.py)
+  photos/          les photos de chaque thème (voir photos.py)
   musiques/        Kevin MacLeod, CC BY — le crédit part dans la légende
-  medaillon.png    le personnage fixe
+  voix_eleven.py   la voix ElevenLabs (voix.swift, celle de macOS, en dernier recours)
   ../og.jpg        l'image du site, montrée à la fin comme « le produit »
 
-Sortie : sortie/<id>.mp4 et sortie/<id>.legende.txt.
+Sortie : « ../Vidéos à publier/NN - Titre.mp4 », avec sa légende à côté.
+Les fichiers de travail (voix, images-clés) vont dans .cache/, qu'on peut effacer.
 """
 import hashlib, json, math, os, random, re, subprocess, sys
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -30,7 +29,9 @@ from scripts import SCRIPTS
 
 ICI = os.path.dirname(os.path.abspath(__file__))
 def ici(*p): return os.path.join(ICI, *p)
-for d in ("voix", "sortie", "images"): os.makedirs(ici(d), exist_ok=True)
+SORTIE = ici("..", "Vidéos à publier")
+CACHE = ici(".cache")
+for d in (SORTIE, os.path.join(CACHE, "voix"), os.path.join(CACHE, "images")): os.makedirs(d, exist_ok=True)
 
 L, H, FPS = 1024, 576, 30
 VOIX = "Jacques"                 # la voix macOS, en dernier recours
@@ -44,8 +45,6 @@ BLANC, NOIR = (255, 255, 255), (0, 0, 0)
 COULEURS = {"*": (245, 208, 0), "!": (224, 48, 48), "+": (46, 204, 113)}   # jaune, rouge, vert
 ROUGE_BADGE = (196, 22, 22)
 
-MANIFESTE = json.load(open(ici("tableaux.json"), encoding="utf-8"))
-MEDAILLON = Image.open(ici("medaillon.png")).convert("RGBA")
 PRODUIT = Image.open(ici("..", "og.jpg")).convert("RGB")
 
 # ————————————————————————— le texte —————————————————————————
@@ -78,40 +77,11 @@ def lignes_affichees(groupe):
 
 # ————————————————————————— la voix —————————————————————————
 
-def enregistrement_humain(ident):
-    """Le fichier déposé dans enregistrement/ pour cette vidéo, s'il existe."""
-    for ext in ("m4a", "wav", "mp3", "aiff", "aif", "caf", "flac", "ogg"):
-        p = ici("enregistrement", f"{ident}.{ext}")
-        if os.path.exists(p): return p
-    return None
-
-def voix_humaine(ident, texte, source):
-    """Une vraie voix : convertie en wav, puis calée mot à mot sur le texte par aligner.py."""
-    st = os.stat(source)
-    empreinte = hashlib.sha1(f"humaine|{texte}|{st.st_size}|{int(st.st_mtime)}".encode("utf-8")).hexdigest()[:10]
-    wav, js, txt = ici("voix", f"{ident}.wav"), ici("voix", f"{ident}.json"), ici("voix", f"{ident}.txt")
-    if os.path.exists(js):
-        d = json.load(open(js, encoding="utf-8"))
-        if d.get("empreinte") == empreinte and os.path.exists(wav):
-            return wav, d
-    open(txt, "w", encoding="utf-8").write(texte)
-    # mono, 44,1 kHz, coupe-bas contre le souffle et le grondement, niveau normalisé
-    r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", source, "-ac", "1", "-ar", "44100",
-                        "-af", "highpass=f=80,loudnorm=I=-16:TP=-1.5:LRA=11", wav], capture_output=True, text=True)
-    if r.returncode != 0: raise SystemExit(f"conversion de {source} : {r.stderr[-500:]}")
-    r = subprocess.run([sys.executable, ici("aligner.py"), wav, txt, js], capture_output=True, text=True)
-    if r.returncode != 0 or not os.path.exists(js):
-        raise SystemExit(f"aligner.py a échoué pour {ident} :\n{r.stdout[-400:]}\n{r.stderr[-800:]}")
-    d = json.load(open(js, encoding="utf-8")); d["empreinte"] = empreinte
-    json.dump(d, open(js, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print(f"    voix humaine : {r.stdout.strip()}")
-    return wav, d
-
 def voix_eleven(ident, texte):
     """ElevenLabs : la voix des vidéos de référence, avec l'instant de chaque mot."""
     import voix_eleven as ve
     empreinte = hashlib.sha1(f"eleven|{VOIX_ELEVEN}|{ve.MODELE}|{texte}".encode("utf-8")).hexdigest()[:10]
-    mp3, js = ici("voix", f"{ident}.mp3"), ici("voix", f"{ident}.json")
+    mp3, js = os.path.join(CACHE, "voix", f"{ident}.mp3"), os.path.join(CACHE, "voix", f"{ident}.json")
     if os.path.exists(js):
         d = json.load(open(js, encoding="utf-8"))
         if d.get("empreinte") == empreinte and os.path.exists(mp3):
@@ -123,16 +93,14 @@ def voix_eleven(ident, texte):
     return mp3, d
 
 def synthetiser(ident, texte):
-    """Rend (chemin audio, données JSON) : l'enregistrement humain s'il est là, sinon
-    ElevenLabs si une voix est choisie et la clé posée, sinon la synthèse macOS."""
-    source = enregistrement_humain(ident)
-    if source: return voix_humaine(ident, texte, source)
+    """Rend (chemin audio, données JSON) : ElevenLabs si une voix est choisie et la
+    clé posée, sinon la synthèse macOS."""
     if VOIX_ELEVEN:
         import voix_eleven as ve
         if ve.cle(): return voix_eleven(ident, texte)
         print("    (voix ElevenLabs choisie mais pas de clé : voix macOS à la place)")
     empreinte = hashlib.sha1((VOIX + texte + open(ici("voix.swift"), encoding="utf-8").read()).encode("utf-8")).hexdigest()[:10]
-    caf, js, txt = ici("voix", f"{ident}.caf"), ici("voix", f"{ident}.json"), ici("voix", f"{ident}.txt")
+    caf, js, txt = os.path.join(CACHE, "voix", f"{ident}.caf"), os.path.join(CACHE, "voix", f"{ident}.json"), os.path.join(CACHE, "voix", f"{ident}.txt")
     if os.path.exists(js):
         d = json.load(open(js, encoding="utf-8"))
         if d.get("empreinte") == empreinte and os.path.exists(caf):
@@ -198,13 +166,6 @@ def fond_tableau(fichier):
     im = Image.composite(im, Image.new("RGB", (L, H), NOIR), masque)
     _fonds[fichier] = im
     return im
-
-MED_H = 300
-_med = MEDAILLON.resize((round(MEDAILLON.width * MED_H / MEDAILLON.height), MED_H), Image.LANCZOS)
-def poser_medaillon(im):
-    im = im.convert("RGBA")
-    im.alpha_composite(_med, ((L - _med.width) // 2, H - _med.height + 36))
-    return im.convert("RGB")
 
 _polices = {}
 def police(taille):
@@ -301,14 +262,6 @@ def luminance(fichier):
         _lum[fichier] = sum(im.getdata()) / (64 * 36)
     return _lum[fichier]
 
-# Les références n'utilisent que des scènes à personnages : foules, cours, batailles.
-# Une nature morte ou un tigre, même assombris, cassent l'illusion. On écarte sur le
-# titre — c'est grossier, mais c'est ce que le manifeste sait dire.
-HORS_STYLE = re.compile(r"still life|nature morte|flowers?|fruit|apples?|roses?|chrysanth|vase|"
-                        r"tiger|lion|horse[s]? (in|at)|cattle|sheep|dog|cat\b|bird|"
-                        r"landscape|cliff|coast|seascape|haystack|water lil|garden|"
-                        r"self-portrait|portrait of|study|sketch", re.I)
-
 def photos_du_theme(ident):
     """Les photos collectées pour cette vidéo (photos.py), avec leurs crédits."""
     manif = ici("photos", f"{ident}.json")
@@ -317,20 +270,14 @@ def photos_du_theme(ident):
             if os.path.exists(ici("photos", ident, f["fichier"]))]
 
 def tableaux_pour(ident, n):
-    """n fonds distincts pour cette vidéo, tirés au sort de façon reproductible.
-
-    D'abord les photos du thème — c'est ce qu'on veut : des images qui parlent de
-    la colère dans la vidéo sur la colère. À défaut, les tableaux, en écartant les
-    toiles trop sombres (assombries encore, elles ne donnaient qu'une bouillie
-    brune) et les sujets hors style. Rend des chemins relatifs à l'atelier."""
-    alea = random.Random(ident)
+    """n fonds distincts pour cette vidéo, tirés au sort de façon reproductible parmi
+    les photos de son thème. Rend des chemins relatifs à l'atelier."""
     photos = photos_du_theme(ident)
-    if len(photos) >= 12:
-        pool = [os.path.join("photos", ident, f["fichier"]) for f in photos
-                if luminance(os.path.join("photos", ident, f["fichier"])) >= 40]
-    else:
-        pool = [os.path.join("tableaux", t["fichier"]) for t in MANIFESTE
-                if luminance(os.path.join("tableaux", t["fichier"])) >= 62 and not HORS_STYLE.search(t.get("titre") or "")]
+    if len(photos) < 12:
+        raise SystemExit(f"{ident} : pas assez de photos — lance d'abord  python3 photos.py {ident[:2]}")
+    alea = random.Random(ident)
+    pool = [os.path.join("photos", ident, f["fichier"]) for f in photos
+            if luminance(os.path.join("photos", ident, f["fichier"])) >= 40]
     alea.shuffle(pool)
     if len(pool) < n: pool = pool * (n // max(len(pool), 1) + 1)
     return pool[:n]
@@ -367,7 +314,7 @@ def construire(script, apercu=False):
     coupes = propres
 
     fichiers_tableaux = tableaux_pour(ident, len(cuts_tableaux) + 1)
-    dossier = ici("images", ident); os.makedirs(dossier, exist_ok=True)
+    dossier = os.path.join(CACHE, "images", ident); os.makedirs(dossier, exist_ok=True)
     liste, cache = [], {}
 
     for k in range(len(coupes) - 1):
@@ -406,7 +353,8 @@ def construire(script, apercu=False):
         f.write(f"file '{liste[-1][0]}'\n")
 
     musique = ici("musiques", script["musique"])
-    sortie = ici("sortie", f"{ident}.mp4")
+    nom = f"{ident[:2]} - {script['titre']}"
+    sortie = os.path.join(SORTIE, f"{nom}.mp4")
     fondu = max(duree - 3.0, 0)
     # La voix sort du synthétiseur à basse cadence ; sans rééchantillonnage, amix
     # alignait la musique dessus et l'abîmait. Tout passe à 44,1 kHz d'abord.
@@ -432,18 +380,15 @@ def construire(script, apercu=False):
                f"#développementpersonnel #boussoleémotionnelle\n\n"
                f"Musique : « {titre_musique} » — Kevin MacLeod (incompetech.com), licence CC BY 4.0\n")
     creds = credits_photos(ident, fichiers_tableaux)
-    if fichiers_tableaux and fichiers_tableaux[0].startswith("photos/"):
-        legende += ("Photos : " + " · ".join(creds) + "\n") if creds else "Photos : Pexels et domaine public\n"
-    else:
-        legende += "Tableaux : domaine public — Met, Art Institute of Chicago, Cleveland Museum of Art (CC0)\n"
-    open(ici("sortie", f"{ident}.legende.txt"), "w", encoding="utf-8").write(legende)
+    legende += ("Photos : " + " · ".join(creds) + "\n") if creds else "Photos : Pexels\n"
+    open(os.path.join(SORTIE, f"{nom} (légende).txt"), "w", encoding="utf-8").write(legende)
     taille = os.path.getsize(sortie) / 1e6
-    print(f"  {ident} : {duree:.1f} s · {len(cache)} images-clés · {taille:.1f} Mo")
+    print(f"  {nom} : {duree:.1f} s · {taille:.1f} Mo")
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     apercu = "--apercu" in sys.argv
     choisis = [s for s in SCRIPTS if not args or any(s["id"].startswith(a) for a in args)]
-    print(f"{len(choisis)} vidéo(s) · {len(MANIFESTE)} tableaux disponibles")
+    print(f"{len(choisis)} vidéo(s) → {SORTIE}")
     for s in choisis:
         construire(s, apercu=apercu)

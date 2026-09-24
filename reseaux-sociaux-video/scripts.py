@@ -30,7 +30,7 @@ CTA = [
 
 SCRIPTS = [
   {
-    "id": "01-ca-va", "images": ['adult woman forced smile office', 'man hiding sadness behind smile', 'person alone window rain thinking', 'coffee cup morning alone table', 'tired adult face close up', 'everything is fine note'], "article": "repondre-que-ca-va", "penseur": "Darwin",
+    "id": "01-ca-va", "titre": 'Répondre que ça va', "images": ['adult woman forced smile office', 'man hiding sadness behind smile', 'person alone window rain thinking', 'coffee cup morning alone table', 'tired adult face close up', 'everything is fine note'], "article": "repondre-que-ca-va", "penseur": "Darwin",
     "musique": "Dark-Times.mp3", "noir": 3,
     "groupes": [
       "Tu réponds *ça va* / dix fois par jour.",
@@ -55,7 +55,7 @@ SCRIPTS = [
     "legende": "Tu dis « ça va » et ton visage dit autre chose. Darwin l'avait vu avant tout le monde.",
   },
   {
-    "id": "02-colere", "images": ['angry man', 'clenched fist', 'slammed door', 'shouting argument', 'storm clouds dark', 'broken glass'], "article": "colere", "penseur": "Sénèque",
+    "id": "02-colere", "titre": 'La colère', "images": ['angry man', 'clenched fist', 'slammed door', 'shouting argument', 'storm clouds dark', 'broken glass'], "article": "colere", "penseur": "Sénèque",
     "musique": "Anguish.mp3", "noir": 3,
     "groupes": [
       "Tu as claqué / une porte.",
@@ -80,7 +80,7 @@ SCRIPTS = [
     "legende": "La colère est une courte folie, disaient les anciens. Elle a un signal, et il arrive avant la porte qui claque.",
   },
   {
-    "id": "03-ruminer", "images": ['office meeting stress', 'man thinking window night', 'overthinking', 'lying awake ceiling', 'notebook writing pen', 'empty conference room'], "article": "ruminer-une-critique-au-travail", "penseur": "Marc Aurèle",
+    "id": "03-ruminer", "titre": 'Ruminer une critique', "images": ['office meeting stress', 'man thinking window night', 'overthinking', 'lying awake ceiling', 'notebook writing pen', 'empty conference room'], "article": "ruminer-une-critique-au-travail", "penseur": "Marc Aurèle",
     "musique": "Long-Note-Two.mp3", "noir": 3,
     "groupes": [
       "Une phrase / en réunion.",
@@ -104,7 +104,7 @@ SCRIPTS = [
     "legende": "Cinq secondes pour la dire, trois jours pour la ruminer. Marc Aurèle avait un mot pour ça.",
   },
   {
-    "id": "04-dimanche-soir", "images": ['sunday evening sofa', 'dusk apartment window', 'alarm clock bedroom', 'rain window evening', 'laptop dark room', 'empty street evening'], "article": "angoisse-dimanche-soir", "penseur": "Alain",
+    "id": "04-dimanche-soir", "titre": 'Le dimanche soir', "images": ['sunday evening sofa', 'dusk apartment window', 'alarm clock bedroom', 'rain window evening', 'laptop dark room', 'empty street evening'], "article": "angoisse-dimanche-soir", "penseur": "Alain",
     "musique": "Colorless-Aura.mp3", "noir": 3,
     "groupes": [
       "Dimanche, / dix-huit heures.",
@@ -129,7 +129,7 @@ SCRIPTS = [
     "legende": "Dimanche, 18 h, et quelque chose descend. Ce n'est jamais toute la semaine — c'est une chose, pas encore nommée.",
   },
   {
-    "id": "05-jalousie-couple", "images": ['couple distance', 'checking phone secretly', 'woman looking at phone jealous', 'couple back to back', 'unanswered phone', 'shadow two people'], "article": "jalousie-dans-le-couple", "penseur": "La Rochefoucauld",
+    "id": "05-jalousie-couple", "titre": 'La jalousie dans le couple', "images": ['couple distance', 'checking phone secretly', 'woman looking at phone jealous', 'couple back to back', 'unanswered phone', 'shadow two people'], "article": "jalousie-dans-le-couple", "penseur": "La Rochefoucauld",
     "musique": "Cold-Sober.mp3", "noir": 3,
     "groupes": [
       "Un prénom / dans une conversation.",
@@ -154,7 +154,7 @@ SCRIPTS = [
     "legende": "La jalousie se nourrit dans les doutes, écrivait La Rochefoucauld. La question n'est pas « qui ». C'est « de quoi ».",
   },
   {
-    "id": "06-message-vu", "images": ['phone screen waiting', 'typing message', 'person waiting phone', 'notification smartphone', 'empty chat', 'night phone light face'], "article": "message-vu-sans-reponse", "penseur": "Sénèque",
+    "id": "06-message-vu", "titre": 'Message vu, sans réponse', "images": ['phone screen waiting', 'typing message', 'person waiting phone', 'notification smartphone', 'empty chat', 'night phone light face'], "article": "message-vu-sans-reponse", "penseur": "Sénèque",
     "musique": "Heart-of-Nowhere.mp3", "noir": 3,
     "groupes": [
       "*Vu*. / Il y a deux heures.",
@@ -178,7 +178,7 @@ SCRIPTS = [
     "legende": "« Vu », il y a deux heures. Sénèque l'écrivait déjà : on souffre plus souvent en imagination qu'en réalité.",
   },
   {
-    "id": "07-parler-en-reunion", "images": ['meeting room raising hand', 'nervous presentation', 'conference table people', 'public speaking anxiety', 'microphone empty room', 'hands sweating'], "article": "peur-de-parler-en-reunion", "penseur": "Montaigne",
+    "id": "07-parler-en-reunion", "titre": 'Parler en réunion', "images": ['meeting room raising hand', 'nervous presentation', 'conference table people', 'public speaking anxiety', 'microphone empty room', 'hands sweating'], "article": "peur-de-parler-en-reunion", "penseur": "Montaigne",
     "musique": "Shadowlands-1---Horizon.mp3", "noir": 3,
     "groupes": [
       "Tu avais / la bonne idée.",
@@ -203,7 +203,7 @@ SCRIPTS = [
     "legende": "Ce dont j'ai le plus peur, c'est la peur, écrivait Montaigne. En réunion, elle arrive avant la phrase.",
   },
   {
-    "id": "08-surprise", "images": ['surprised face', 'unexpected gift', 'opened door light', 'wide eyes', 'sudden rain umbrella', 'jack in the box'], "article": "surprise", "penseur": "Descartes",
+    "id": "08-surprise", "titre": 'La surprise', "images": ['surprised face', 'unexpected gift', 'opened door light', 'wide eyes', 'sudden rain umbrella', 'jack in the box'], "article": "surprise", "penseur": "Descartes",
     "musique": "Dreams-Become-Real.mp3", "noir": 3,
     "groupes": [
       "Une seconde. / Pas plus.",
@@ -227,7 +227,7 @@ SCRIPTS = [
     "legende": "Descartes plaçait la surprise avant toutes les autres passions. C'est la porte — regarde ce qui entre après.",
   },
   {
-    "id": "09-pleurer", "images": ['tears face', 'crying woman window', 'tissue box', 'rain on glass', 'hand wiping tears', 'emotional listening music headphones'], "article": "pleurer-pour-un-rien", "penseur": "William James",
+    "id": "09-pleurer", "titre": 'Pleurer pour un rien', "images": ['tears face', 'crying woman window', 'tissue box', 'rain on glass', 'hand wiping tears', 'emotional listening music headphones'], "article": "pleurer-pour-un-rien", "penseur": "William James",
     "musique": "Ossuary-5---Rest.mp3", "noir": 3,
     "groupes": [
       "Une pub. / Une chanson. / Un mot gentil.",
@@ -251,7 +251,7 @@ SCRIPTS = [
     "legende": "On ne pleure pas parce qu'on est triste — on est triste parce qu'on pleure, disait William James. Le corps d'abord.",
   },
   {
-    "id": "10-trois-heures", "images": ['insomnia', 'bedroom night dark', 'alarm clock 3am', 'ceiling lying awake', 'moonlight bedroom', 'sleepless night'], "article": "se-reveiller-a-3h-du-matin", "penseur": "Kierkegaard",
+    "id": "10-trois-heures", "titre": 'Trois heures du matin', "images": ['insomnia', 'bedroom night dark', 'alarm clock 3am', 'ceiling lying awake', 'moonlight bedroom', 'sleepless night'], "article": "se-reveiller-a-3h-du-matin", "penseur": "Kierkegaard",
     "musique": "Long-Note-One.mp3", "noir": 3,
     "groupes": [
       "Trois heures / du matin.",
@@ -276,7 +276,7 @@ SCRIPTS = [
     "legende": "Trois heures du matin, et la même pensée. Kierkegaard appelait ça le vertige de la liberté.",
   },
   {
-    "id": "11-imposteur", "images": ['applause office', 'self doubt mirror', 'award ceremony', 'nervous at desk', 'imposter mask', 'person hiding behind laptop'], "article": "syndrome-imposteur", "penseur": "Épictète",
+    "id": "11-imposteur", "titre": "Le syndrome de l'imposteur", "images": ['applause office', 'self doubt mirror', 'award ceremony', 'nervous at desk', 'imposter mask', 'person hiding behind laptop'], "article": "syndrome-imposteur", "penseur": "Épictète",
     "musique": "Echoes-of-Time-v2.mp3", "noir": 3,
     "groupes": [
       "On te félicite.",
@@ -301,7 +301,7 @@ SCRIPTS = [
     "legende": "« Ils vont voir. » Épictète répondait déjà : sépare ce qui dépend de toi de ce qui n'en dépend pas.",
   },
   {
-    "id": "12-dire-non", "images": ['stop hand gesture', 'overworked desk papers', 'tired employee office', 'calendar full schedule', 'closed door', 'person overwhelmed laptop'], "article": "culpabilite-de-dire-non", "penseur": "Aristote",
+    "id": "12-dire-non", "titre": 'Dire non', "images": ['stop hand gesture', 'overworked desk papers', 'tired employee office', 'calendar full schedule', 'closed door', 'person overwhelmed laptop'], "article": "culpabilite-de-dire-non", "penseur": "Aristote",
     "musique": "Lost-Frontier.mp3", "noir": 3,
     "groupes": [
       "Tu as dit / *oui*.",
@@ -324,7 +324,7 @@ SCRIPTS = [
     "legende": "Tu as dit oui, tu voulais dire non. Aristote : une émotion est juste quand elle vise la bonne personne, au bon moment.",
   },
   {
-    "id": "13-amitie", "images": ['two friends laughing old photo', 'empty chairs cafe', 'walking away friends', 'phone contacts scrolling', 'distance road', 'friends silhouette sunset'], "article": "amitie-qui-seloigne", "penseur": "Aristote",
+    "id": "13-amitie", "titre": "L'amitié qui s'éloigne", "images": ['two friends laughing old photo', 'empty chairs cafe', 'walking away friends', 'phone contacts scrolling', 'distance road', 'friends silhouette sunset'], "article": "amitie-qui-seloigne", "penseur": "Aristote",
     "musique": "Colorless-Aura.mp3", "noir": 3,
     "groupes": [
       "Vous étiez / inséparables.",
@@ -348,7 +348,7 @@ SCRIPTS = [
     "legende": "Inséparables, puis un message tous les trois mois. Aristote distinguait trois amitiés — et une seule survit au changement.",
   },
   {
-    "id": "14-rupture", "images": ['breakup alone', 'empty side of bed', 'photo torn', 'rain window sad', 'crystal salt', 'person walking alone city'], "article": "apres-la-rupture", "penseur": "Stendhal",
+    "id": "14-rupture", "titre": 'Après la rupture', "images": ['breakup alone', 'empty side of bed', 'photo torn', 'rain window sad', 'crystal salt', 'person walking alone city'], "article": "apres-la-rupture", "penseur": "Stendhal",
     "musique": "Anguish.mp3", "noir": 3,
     "groupes": [
       "C'est fini / depuis deux mois.",
@@ -373,7 +373,7 @@ SCRIPTS = [
     "legende": "Deux mois après, cette personne te semble parfaite. Stendhal avait un mot pour ça : la cristallisation.",
   },
   {
-    "id": "15-reconnaissance", "images": ['office late night working', 'applause colleagues', 'unnoticed worker', 'empty office desk', 'handshake boss', 'coffee cup desk night'], "article": "manque-de-reconnaissance-travail", "penseur": "Épicure",
+    "id": "15-reconnaissance", "titre": 'Le manque de reconnaissance', "images": ['office late night working', 'applause colleagues', 'unnoticed worker', 'empty office desk', 'handshake boss', 'coffee cup desk night'], "article": "manque-de-reconnaissance-travail", "penseur": "Épicure",
     "musique": "Cold-Sober.mp3", "noir": 3,
     "groupes": [
       "Tu as tenu / le projet.",
@@ -398,7 +398,7 @@ SCRIPTS = [
     "legende": "Tu as tenu le projet, un autre a eu le merci. Épicure séparait les désirs naturels de ceux qu'aucune quantité ne remplit.",
   },
   {
-    "id": "16-fatigue", "images": ['tired woman morning bed', 'exhausted man desk', 'rubbing eyes tired', 'endless scrolling phone bed', 'crowded street rush hour', 'person alone quiet room'], "article": "toujours-fatigue-malgre-le-sommeil", "penseur": "Pascal",
+    "id": "16-fatigue", "titre": 'Toujours fatigué', "images": ['tired woman morning bed', 'exhausted man desk', 'rubbing eyes tired', 'endless scrolling phone bed', 'crowded street rush hour', 'person alone quiet room'], "article": "toujours-fatigue-malgre-le-sommeil", "penseur": "Pascal",
     "musique": "Ossuary-5---Rest.mp3", "noir": 3,
     "groupes": [
       "Huit heures / de sommeil.",
@@ -423,7 +423,7 @@ SCRIPTS = [
     "legende": "Huit heures de sommeil, et fatigué. Pascal : tout le malheur vient de ne pas savoir rester en repos dans une chambre.",
   },
   {
-    "id": "17-telephone", "images": ['scrolling phone bed', 'phone in hand close up', 'notification screen', 'people phones street', 'phone face down table', 'hand reaching phone'], "article": "verifier-son-telephone-en-boucle", "penseur": "Simone Weil",
+    "id": "17-telephone", "titre": 'Le téléphone en boucle', "images": ['scrolling phone bed', 'phone in hand close up', 'notification screen', 'people phones street', 'phone face down table', 'hand reaching phone'], "article": "verifier-son-telephone-en-boucle", "penseur": "Simone Weil",
     "musique": "Dark-Times.mp3", "noir": 3,
     "groupes": [
       "Tu l'as regardé / il y a une minute.",
@@ -448,7 +448,7 @@ SCRIPTS = [
     "legende": "Tu l'as regardé il y a une minute. Simone Weil : l'attention est la forme la plus rare de la générosité — et tu la donnes à un écran.",
   },
   {
-    "id": "18-parents", "images": ['elderly hands', 'old parents walking', 'aging mother daughter', 'wrinkled hands holding', 'family dinner table', 'old photo album'], "article": "voir-ses-parents-vieillir", "penseur": "Montaigne",
+    "id": "18-parents", "titre": 'Voir ses parents vieillir', "images": ['elderly hands', 'old parents walking', 'aging mother daughter', 'wrinkled hands holding', 'family dinner table', 'old photo album'], "article": "voir-ses-parents-vieillir", "penseur": "Montaigne",
     "musique": "Long-Note-One.mp3", "noir": 3,
     "groupes": [
       "Un geste / plus lent.",
@@ -474,7 +474,7 @@ SCRIPTS = [
     "legende": "Un geste plus lent, une phrase répétée. Ce qui se serre n'est pas de la pitié — c'est de l'amour qui découvre qu'il a une durée.",
   },
   {
-    "id": "19-gratitude", "images": ['thank you note', 'helping hand', 'friends hugging', 'coffee offered', 'written letter', 'sunrise gratitude'], "article": "gratitude", "penseur": "Cicéron",
+    "id": "19-gratitude", "titre": 'La gratitude', "images": ['thank you note', 'helping hand', 'friends hugging', 'coffee offered', 'written letter', 'sunrise gratitude'], "article": "gratitude", "penseur": "Cicéron",
     "musique": "Dreams-Become-Real.mp3", "noir": 3,
     "groupes": [
       "Quelqu'un t'a aidé / cette semaine.",
@@ -500,7 +500,7 @@ SCRIPTS = [
     "legende": "Tu as dit merci et tu es passé à autre chose. Cicéron appelait la gratitude la mère de toutes les vertus.",
   },
   {
-    "id": "20-ne-plus-rien-ressentir", "images": ['blank stare', 'grey empty room', 'foggy morning', 'person still window', 'muted colors landscape', 'numb'], "article": "ne-plus-rien-ressentir", "penseur": "Spinoza",
+    "id": "20-ne-plus-rien-ressentir", "titre": 'Ne plus rien ressentir', "images": ['blank stare', 'grey empty room', 'foggy morning', 'person still window', 'muted colors landscape', 'numb'], "article": "ne-plus-rien-ressentir", "penseur": "Spinoza",
     "musique": "Shadowlands-1---Horizon.mp3", "noir": 3,
     "groupes": [
       "Rien ne te touche / vraiment.",

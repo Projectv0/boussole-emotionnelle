@@ -9,7 +9,7 @@ vidéo —, les mots qui apparaissent quand la voix les dit, et un badge rouge
 ## Refaire les vidéos
 
     python3 photos.py          # une fois : ~30 photos par vidéo, sur le thème de chacune
-    python3 generateur.py      # les vingt vidéos, dans sortie/
+    python3 generateur.py      # les vingt vidéos, dans « Vidéos à publier/ » à la racine
     python3 generateur.py 07   # une seule
 
 Il faut deux clés, gratuites ou presque, rangées hors du dépôt dans `~/.config/boussole/` :
@@ -24,13 +24,13 @@ Pour ranger une clé, dans le Terminal (une seule ligne, en remplaçant la clé 
     mkdir -p ~/.config/boussole && printf '%s' 'LA_CLÉ' > ~/.config/boussole/pexels.cle && chmod 600 ~/.config/boussole/pexels.cle
 
 Les scripts lisent ces fichiers ; ils ne les affichent jamais et ne les copient nulle part.
-Sans clé Pexels, les fonds retombent sur les tableaux (`python3 tableaux.py`) ; sans clé
-ElevenLabs, sur la voix de macOS — les deux sont nettement moins bien.
+Sans clé Pexels, pas de fonds : le générateur s'arrête et le dit. Sans clé ElevenLabs, la
+voix de macOS prend le relais — nettement moins bien.
 
 Choisir la voix : `python3 voix_eleven.py --voix` liste les voix du compte avec un extrait
 à écouter ; l'identifiant retenu va dans `VOIX_ELEVEN`, en tête de `generateur.py`.
 
-Chaque vidéo sort avec sa légende, `sortie/<id>.legende.txt`, prête à coller.
+Chaque vidéo sort avec sa légende à côté d'elle, prête à coller.
 Changer un texte dans `scripts.py` puis relancer suffit : la voix ne se
 resynthétise que si le texte a changé.
 
@@ -41,7 +41,6 @@ Il faut `ffmpeg` (`brew install ffmpeg`) et la voix française **Jacques** de ma
 | Quoi | D'où | Licence | À faire |
 |---|---|---|---|
 | Les photos | Pexels | licence Pexels : usage commercial libre, sans attribution | rien — `photos/<id>.json` garde la trace de chacune |
-| Les tableaux (repli) | The Met, Art Institute of Chicago, Cleveland Museum of Art | CC0 | rien — `tableaux.json` garde la trace |
 | Les musiques | Kevin MacLeod, incompetech.com | CC BY 4.0 | **créditer** : la ligne est déjà dans chaque légende, il suffit de la laisser |
 | La voix | ElevenLabs (abonnement Starter ou plus) | usage commercial inclus dans l'abonnement | rien |
 | Les textes | les articles du guide, et un penseur par vidéo | à nous | rien |

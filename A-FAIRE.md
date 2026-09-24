@@ -496,7 +496,9 @@ vont ouvrir : si ça casse, ça casse sur tous les clients à la fois.
 ## D1 · Publier les vingt vidéos — tout est prêt
 
 Vingt vidéos d'une minute, dans le style des trois références de `Video tiktok/`, sont dans
-`reseaux-sociaux-video/sortie/`, chacune avec sa légende (`<id>.legende.txt`) prête à coller.
+**`Vidéos à publier/`**, à la racine, chacune avec sa légende à côté, prête à coller. Les images
+sont des photos Pexels sur le thème de chaque vidéo ; la voix est encore celle du Mac, en
+attendant ta clé ElevenLabs — seule la voix changera.
 
 **Une seule règle à respecter en publiant : garder la ligne de crédit musique** qui est dans
 chaque légende (« Musique : … — Kevin MacLeod (incompetech.com), licence CC BY 4.0 »). Ce n'est

@@ -14,10 +14,9 @@ reseaux-sociaux-bd/controle/
 
 # Vidéos de référence d'un autre créateur : jamais dans le dépôt public
 Video tiktok/
-# Atelier vidéo : les tableaux, musiques et sorties sont lourds et téléchargés
-reseaux-sociaux-video/tableaux/
+# Atelier vidéo : ce qui est téléchargé ou produit reste hors dépôt
 reseaux-sociaux-video/musiques/
-reseaux-sociaux-video/voix/
-reseaux-sociaux-video/sortie/
-reseaux-sociaux-video/images/
+reseaux-sociaux-video/photos/
+reseaux-sociaux-video/.cache/
+Vidéos à publier/
 reseaux-sociaux-video/photos/
