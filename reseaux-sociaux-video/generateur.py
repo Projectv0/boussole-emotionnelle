@@ -77,8 +77,39 @@ def lignes_affichees(groupe):
 
 # ————————————————————————— la voix —————————————————————————
 
+def enregistrement_humain(ident):
+    """Le fichier déposé dans enregistrement/ pour cette vidéo, s'il existe."""
+    for ext in ("m4a", "wav", "mp3", "aiff", "aif", "caf", "flac", "ogg"):
+        p = ici("enregistrement", f"{ident}.{ext}")
+        if os.path.exists(p): return p
+    return None
+
+def voix_humaine(ident, texte, source):
+    """Une vraie voix : convertie en wav, puis calée mot à mot sur le texte par aligner.py."""
+    st = os.stat(source)
+    empreinte = hashlib.sha1(f"humaine|{texte}|{st.st_size}|{int(st.st_mtime)}".encode("utf-8")).hexdigest()[:10]
+    wav, js, txt = ici("voix", f"{ident}.wav"), ici("voix", f"{ident}.json"), ici("voix", f"{ident}.txt")
+    if os.path.exists(js):
+        d = json.load(open(js, encoding="utf-8"))
+        if d.get("empreinte") == empreinte and os.path.exists(wav):
+            return wav, d
+    open(txt, "w", encoding="utf-8").write(texte)
+    # mono, 44,1 kHz, coupe-bas contre le souffle et le grondement, niveau normalisé
+    r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", source, "-ac", "1", "-ar", "44100",
+                        "-af", "highpass=f=80,loudnorm=I=-16:TP=-1.5:LRA=11", wav], capture_output=True, text=True)
+    if r.returncode != 0: raise SystemExit(f"conversion de {source} : {r.stderr[-500:]}")
+    r = subprocess.run([sys.executable, ici("aligner.py"), wav, txt, js], capture_output=True, text=True)
+    if r.returncode != 0 or not os.path.exists(js):
+        raise SystemExit(f"aligner.py a échoué pour {ident} :\n{r.stdout[-400:]}\n{r.stderr[-800:]}")
+    d = json.load(open(js, encoding="utf-8")); d["empreinte"] = empreinte
+    json.dump(d, open(js, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(f"    voix humaine : {r.stdout.strip()}")
+    return wav, d
+
 def synthetiser(ident, texte):
-    """Rend (chemin .caf, données JSON) ; ne resynthétise pas un texte inchangé."""
+    """Rend (chemin audio, données JSON) : la voix humaine si elle est là, sinon la synthèse."""
+    source = enregistrement_humain(ident)
+    if source: return voix_humaine(ident, texte, source)
     empreinte = hashlib.sha1((VOIX + texte + open(ici("voix.swift"), encoding="utf-8").read()).encode("utf-8")).hexdigest()[:10]
     caf, js, txt = ici("voix", f"{ident}.caf"), ici("voix", f"{ident}.json"), ici("voix", f"{ident}.txt")
     if os.path.exists(js):
@@ -273,7 +304,7 @@ def construire(script, apercu=False):
     texte = narration(groupes)
     caf, voix = synthetiser(ident, texte)
     instants = dater_groupes(groupes, texte, voix["mots"])
-    fin_voix = voix["duree"]
+    fin_voix = min(voix["duree"], voix.get("fin", voix["duree"]))
     duree = fin_voix + SORTIE_FINALE
     noir = script["noir"]
     t_tableaux = instants[noir]                         # le premier tableau arrive avec ce groupe
@@ -339,7 +370,7 @@ def construire(script, apercu=False):
     # alignait la musique dessus et l'abîmait. Tout passe à 44,1 kHz d'abord.
     filtre = (f"[2:a]aresample=44100,atrim=0:{duree:.3f},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=1.2,"
               f"afade=t=out:st={fondu:.3f}:d=3,volume=0.16[m];"
-              f"[1:a]aresample=44100,apad=whole_dur={duree:.3f}[v];"
+              f"[1:a]aresample=44100,atrim=0:{duree:.3f},apad=whole_dur={duree:.3f}[v];"
               f"[v][m]amix=inputs=2:duration=first:normalize=0[a]")
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst,
            "-i", caf, "-i", musique, "-filter_complex", filtre,
