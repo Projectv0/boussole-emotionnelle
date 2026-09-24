@@ -21,3 +21,25 @@ CREATE TABLE IF NOT EXISTS compteur (
 
 -- Les lectures se font toujours sur une plage de dates, jamais sur la table entière.
 CREATE INDEX IF NOT EXISTS compteur_jour ON compteur (jour);
+
+-- Les codes cadeaux. Un acheteur du dossier peut en engendrer UN, qu'il offre à
+-- quelqu'un : celui-ci obtient les résultats détaillés, jamais le dossier.
+--
+-- Trois garde-fous, et ils tiennent tous dans cette table :
+--   · un seul code par achat        → la contrainte UNIQUE sur session
+--   · un seul usage                 → utilise_le, écrit au moment où il sert
+--   · vingt-quatre heures           → expire_le, posé à la création
+--
+-- Un code périmé sans avoir servi peut être remplacé par un neuf, sur la même
+-- ligne : il n'a rien donné à personne, et le cadeau promis n'est pas perdu pour
+-- un envoi oublié. Un code déjà utilisé, lui, ne se rejoue jamais — c'est
+-- « utilise_le IS NULL » dans le UPDATE qui tient cette promesse.
+--
+-- Rien ici ne désigne personne : une référence d'achat Stripe, deux dates.
+CREATE TABLE IF NOT EXISTS cadeau (
+  code       TEXT PRIMARY KEY,
+  session    TEXT NOT NULL UNIQUE,   -- l'achat qui l'a engendré
+  cree_le    TEXT NOT NULL,
+  expire_le  TEXT NOT NULL,
+  utilise_le TEXT                    -- NULL tant qu'il n'a pas servi
+);

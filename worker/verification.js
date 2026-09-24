@@ -9,6 +9,10 @@
       POST /mesure             →  204, enregistre un événement anonyme
       GET  /mesure?cle=…       →  le tableau, réservé à l'éditeur
 
+   3. CODE CADEAU
+      POST /cadeau             →  { code, expire_le } pour un acheteur du dossier
+      POST /cadeau/utiliser    →  { valide, niveau } pour celui qui le reçoit
+
    Secrets à configurer dans Cloudflare (Settings → Variables → Secret) :
      STRIPE_CLE  clé restreinte Stripe, lecture seule sur les sessions Checkout
                  ET sur les PaymentIntents — sans la seconde, une session
@@ -61,6 +65,8 @@ export default {
         ? ecrireMesure(req, env, origine, cors)
         : lireMesure(url, env, cors);
     }
+    if (url.pathname === "/cadeau")          return creerCadeau(req, env, origine, cors);
+    if (url.pathname === "/cadeau/utiliser") return utiliserCadeau(req, env, origine, cors);
     return verifierAchat(url, env, cors);
   },
 };
@@ -149,13 +155,23 @@ function egal(a, b) {
 }
 
 /* ————————————————————————— vérification d'achat ————————————————————————— */
+const REF_ACHAT = /^cs_(live|test)_[A-Za-z0-9]{10,}$/;
+
 async function verifierAchat(url, env, cors) {
   const id = url.searchParams.get("session_id") || "";
-  if (!/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(id))
+  if (!REF_ACHAT.test(id))
     return json({ valide: false, erreur: "référence invalide" }, 400, cors);
 
-  if (!env.STRIPE_CLE)
-    return json({ valide: false, erreur: "clé non configurée" }, 501, cors);
+  const a = await lireAchat(id, env);
+  if (a.erreur) return json({ valide: false, erreur: a.erreur }, a.status, cors);
+  return json({ valide: a.valide, niveau: a.niveau }, 200, cors);
+}
+
+/* La question posée à Stripe, séparée de la réponse faite au navigateur : le
+   code cadeau a besoin de la même vérification, et deux copies du même contrôle
+   d'argent finissent toujours par diverger. */
+async function lireAchat(id, env) {
+  if (!env.STRIPE_CLE) return { erreur: "clé non configurée", status: 501 };
 
   let s;
   try {
@@ -166,10 +182,10 @@ async function verifierAchat(url, env, cors) {
         + "?expand[]=payment_intent.latest_charge",
       { headers: { Authorization: `Bearer ${env.STRIPE_CLE}` } }
     );
-    if (!r.ok) return json({ valide: false }, 200, cors);
+    if (!r.ok) return { valide: false, niveau: null };
     s = await r.json();
   } catch (_) {
-    return json({ valide: false, erreur: "stripe injoignable" }, 502, cors);
+    return { erreur: "stripe injoignable", status: 502 };
   }
 
   const charge = s.payment_intent && s.payment_intent.latest_charge;
@@ -180,7 +196,143 @@ async function verifierAchat(url, env, cors) {
 
   /* Le palier suit le montant réellement encaissé, dans la devise attendue. */
   const niveau = (s.amount_total | 0) >= SEUIL_DOSSIER ? "dossier" : "resultats";
-  return json({ valide: paye, niveau: paye ? niveau : null }, 200, cors);
+  return { valide: paye, niveau: paye ? niveau : null };
+}
+
+/* ————————————————————————————— code cadeau —————————————————————————————
+   Acheter le dossier ouvre le droit d'offrir le test à quelqu'un. Un code, un
+   seul, valable vingt-quatre heures — comptées depuis le moment où on l'engendre,
+   pas depuis l'achat : on offre quand on a la personne en tête, pas dans la
+   minute qui suit le paiement.
+
+   Ce que le code ouvre : les résultats. Jamais le dossier — celui-là reste
+   attaché à l'achat qui l'a payé.
+
+   Alphabet sans O ni 0, sans I ni 1 : un code se lit à voix haute et se recopie
+   d'un téléphone à l'autre, et personne ne devrait avoir à deviner lequel des
+   deux caractères c'était. Trente-deux lettres sur huit positions font mille
+   milliards de combinaisons : on ne tombe pas dessus par hasard. Une règle de
+   limitation de débit côté Cloudflare reste à poser malgré tout (voir A-FAIRE),
+   pour qu'on ne puisse pas non plus essayer en masse. */
+const ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const DUREE_CADEAU = 24 * 3600 * 1000;
+
+function engendrerCode() {
+  const tirage = new Uint8Array(8);
+  crypto.getRandomValues(tirage);
+  let s = "";
+  /* 256 est un multiple exact de 32 : le reste de la division ne favorise
+     aucune lettre. Avec un alphabet d'une autre taille il faudrait retirer. */
+  for (let i = 0; i < 8; i++) s += ALPHABET[tirage[i] % 32];
+  return `BE-${s.slice(0, 4)}-${s.slice(4)}`;
+}
+
+/* On accepte le code tel qu'il aura voyagé : en minuscules, sans les tirets,
+   avec des espaces, avec ou sans le BE du début. Ce qui en ressort est la forme
+   unique écrite dans la base, ou une chaîne vide si ça n'y ressemble pas. */
+function normaliserCode(brut) {
+  const brutMaj = String(brut || "").trim().toUpperCase();
+  /* Le site a un autre code, celui de la comparaison entre proches : « BE2- »
+     suivi de quatorze caractères dont un tiret pour les émotions non retenues.
+     Ces tirets s'effacent au nettoyage, et un code comptant sept absences
+     prendrait exactement la forme d'un code cadeau. Le navigateur écarte déjà
+     ce cas ; le serveur ne s'en remet pas à lui pour autant. */
+  if (/^BE[12]-/.test(brutMaj)) return "";
+  const s = brutMaj.replace(/[^A-Z0-9]/g, "");
+  const c = s.startsWith("BE") ? s.slice(2) : s;
+  if (!new RegExp(`^[${ALPHABET}]{8}$`).test(c)) return "";
+  return `BE-${c.slice(0, 4)}-${c.slice(4)}`;
+}
+
+async function creerCadeau(req, env, origine, cors) {
+  if (req.method !== "POST") return json({ erreur: "méthode" }, 405, cors);
+  if (!ORIGINES.includes(origine)) return json({ erreur: "origine" }, 403, cors);
+  if (!env.MESURE) return json({ erreur: "base non liée" }, 501, cors);
+
+  let corps;
+  try { corps = JSON.parse(await req.text()); } catch (_) { corps = null; }
+  const id = String(corps && corps.session_id || "");
+  if (!REF_ACHAT.test(id)) return json({ erreur: "référence invalide" }, 400, cors);
+
+  /* Le droit d'offrir se vérifie auprès de Stripe, pas auprès du navigateur :
+     autrement n'importe qui réclamerait des codes à la chaîne. */
+  const a = await lireAchat(id, env);
+  if (a.erreur) return json({ erreur: a.erreur }, a.status, cors);
+  if (!a.valide || a.niveau !== "dossier")
+    return json({ erreur: "réservé au dossier complet" }, 403, cors);
+
+  const maintenant = new Date().toISOString();
+  const expire = new Date(Date.parse(maintenant) + DUREE_CADEAU).toISOString();
+
+  try {
+    /* Insérer d'abord, relire ensuite. Lire puis écrire laisserait deux clics
+       simultanés engendrer deux codes ; ici la contrainte UNIQUE sur session
+       tranche, et la relecture dit simplement lequel a gagné. */
+    await env.MESURE.prepare(
+      "INSERT INTO cadeau (code, session, cree_le, expire_le) VALUES (?, ?, ?, ?) " +
+      "ON CONFLICT(session) DO NOTHING"
+    ).bind(engendrerCode(), id, maintenant, expire).run();
+
+    /* Un code périmé sans avoir servi n'a rien donné à personne : le remplacer
+       ne crée pas un second cadeau, il rend celui qui était promis. Sans cela,
+       oublier d'envoyer son code pendant une journée le perdrait pour toujours.
+       La condition « utilise_le IS NULL » est ce qui garde la promesse : un code
+       déjà offert, lui, ne se rejoue jamais. Ne s'applique qu'à une ligne déjà
+       périmée, donc jamais à celle que l'INSERT vient d'écrire. */
+    await env.MESURE.prepare(
+      "UPDATE cadeau SET code = ?, cree_le = ?, expire_le = ? " +
+      "WHERE session = ? AND utilise_le IS NULL AND expire_le <= ?"
+    ).bind(engendrerCode(), maintenant, expire, id, maintenant).run();
+
+    const l = await env.MESURE.prepare(
+      "SELECT code, expire_le, utilise_le FROM cadeau WHERE session = ?"
+    ).bind(id).first();
+    if (!l) return json({ erreur: "code indisponible" }, 500, cors);
+
+    return json({
+      code: l.code,
+      expire_le: l.expire_le,
+      utilise: !!l.utilise_le,
+      expire: l.expire_le <= maintenant,
+    }, 200, cors);
+  } catch (e) {
+    return json({ erreur: String(e && e.message || e) }, 500, cors);
+  }
+}
+
+async function utiliserCadeau(req, env, origine, cors) {
+  if (req.method !== "POST") return json({ valide: false, erreur: "méthode" }, 405, cors);
+  if (!ORIGINES.includes(origine)) return json({ valide: false, erreur: "origine" }, 403, cors);
+  if (!env.MESURE) return json({ valide: false, erreur: "base non liée" }, 501, cors);
+
+  let corps;
+  try { corps = JSON.parse(await req.text()); } catch (_) { corps = null; }
+  const code = normaliserCode(corps && corps.code);
+  if (!code) return json({ valide: false, raison: "format" }, 400, cors);
+
+  const maintenant = new Date().toISOString();
+  try {
+    /* Une seule écriture, et c'est elle qui décide : les trois conditions sont
+       dans le WHERE. Deux navigateurs qui présentent le même code à la même
+       seconde ne peuvent donc pas l'utiliser tous les deux — la base n'applique
+       la mise à jour qu'une fois. Vérifier d'abord puis écrire laisserait au
+       contraire une porte ouverte entre les deux instants. */
+    const r = await env.MESURE.prepare(
+      "UPDATE cadeau SET utilise_le = ? WHERE code = ? AND utilise_le IS NULL AND expire_le > ?"
+    ).bind(maintenant, code, maintenant).run();
+
+    if (r && r.meta && r.meta.changes === 1)
+      return json({ valide: true, niveau: "resultats" }, 200, cors);
+
+    /* Rien n'a changé : reste à dire pourquoi, sans rien inventer. */
+    const l = await env.MESURE.prepare(
+      "SELECT expire_le, utilise_le FROM cadeau WHERE code = ?"
+    ).bind(code).first();
+    const raison = !l ? "inconnu" : l.utilise_le ? "utilise" : "expire";
+    return json({ valide: false, raison }, 200, cors);
+  } catch (e) {
+    return json({ valide: false, erreur: String(e && e.message || e) }, 500, cors);
+  }
 }
 
 function vide(cors) {

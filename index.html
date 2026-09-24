@@ -571,6 +571,18 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 }
 .cle-input:focus{ outline:2px solid var(--sage); outline-offset:2px; }
 
+/* ————— Le code à offrir ————— */
+.cadeau-code{
+  font-family:var(--serif); font-weight:620; letter-spacing:.14em;
+  /* Un code se lit d'un bloc : il ne doit jamais passer à la ligne au milieu,
+     même sur le plus étroit des téléphones. La taille suit donc la largeur. */
+  font-size:clamp(1.15rem, 5.8vw, 1.9rem); white-space:nowrap; overflow-x:auto;
+  color:var(--sage-deep); text-align:center; padding:1rem .6rem; margin:1rem 0 .3rem;
+  background:rgba(255,255,255,.7); border:1.5px dashed var(--hairline-strong); border-radius:1.2rem;
+  user-select:all;
+}
+.cadeau-delai{ text-align:center; font-size:.84rem; font-weight:600; color:var(--muted); }
+
 /* ————— Comparaison entre deux profils ————— */
 .comp-actions{ display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin-top:1.2rem; }
 .comp-input{ flex:1; min-width:14rem; margin:0; text-align:left; letter-spacing:.02em; }
@@ -645,6 +657,13 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 .skip-zone p{ font-size:.74rem; color:var(--faint); margin-top:.6rem; }
 .paywall-foot{ margin-top:1.1rem; font-size:.84rem; color:var(--faint); display:flex; gap:.6rem; justify-content:center; align-items:center; flex-wrap:wrap; }
 .linklike{ font-size:.84rem; font-weight:600; color:var(--sage-deep); text-decoration:underline; text-underline-offset:3px; }
+/* Sur un téléphone les trois liens passent à la ligne, et la puce de séparation
+   se retrouvait seule en fin de ligne. On la retire à cette largeur : l'écart
+   suffit à les distinguer. */
+@media (max-width:430px){
+  .paywall-foot{ gap:.35rem 1.1rem; }
+  .paywall-foot > span[aria-hidden]{ display:none; }
+}
 .linklike:hover{ color:var(--ink); }
 
 /* ————— Vue dossier ————— */
@@ -1148,13 +1167,30 @@ footer p + p{ margin-top:.3rem; }
           </div>
         </div>
       </div></div></div>
+
+      <div class="res-card res-span-12" id="cadeauBox" hidden><div class="shell"><div class="core">
+        <div class="res-kicker">Offrir le test à quelqu’un</div>
+        <p style="font-size:.94rem; color:#4A4453">Ton dossier te permet d’offrir le test à quelqu’un&nbsp;: un code unique, à envoyer à la personne de ton choix. Elle fait le test de son côté, et ses résultats s’affichent sans qu’elle ait rien à payer. Ce sont bien <b>ses résultats</b> qu’elle découvre — le dossier complet, lui, reste le tien.</p>
+        <p style="font-size:.9rem; color:var(--muted); margin-top:.7rem">Le code sert <b>une seule fois</b> et reste valable <b>vingt-quatre heures</b>, comptées à partir du moment où tu le crées&nbsp;: rien ne presse, choisis ton moment. Et s’il s’éteint sans avoir servi, tu pourras en créer un nouveau — un envoi oublié ne te coûte pas le geste.</p>
+        <div class="comp-actions">
+          <button class="btn btn-primary" id="btnCreerCadeau">Créer mon code <span class="ico" aria-hidden="true">🎁</span></button>
+        </div>
+        <div id="cadeauResultat" hidden>
+          <div class="cadeau-code" id="cadeauCode"></div>
+          <p class="cadeau-delai" id="cadeauDelai"></p>
+          <div class="comp-actions">
+            <button class="btn btn-primary" id="btnCopierCadeau">Copier le message <span class="ico" aria-hidden="true">⧉</span></button>
+          </div>
+        </div>
+        <p class="copy-feedback" id="cadeauInfo" role="status"></p>
+      </div></div></div>
     </div>
 
     <div class="carte-overlay" id="rapportOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="rapportTitre">
       <div class="carte-box">
         <h3 id="rapportTitre" style="font-size:1.3rem; margin:.4rem 0 .6rem">Débloquer mon accès</h3>
-        <p class="carte-hint" style="margin-top:0">Colle ici la référence d’achat affichée après ton paiement (elle commence par «&nbsp;cs_&nbsp;»). Normalement, l’onglet se débloque tout seul — ceci ne sert qu’en dépannage.</p>
-        <input class="cle-input" id="cleLicence" aria-label="Référence d’achat" placeholder="cs_live_…" autocomplete="off" spellcheck="false">
+        <p class="carte-hint" style="margin-top:0" id="cleHint">Colle ici la référence d’achat affichée après ton paiement (elle commence par «&nbsp;cs_&nbsp;»). Normalement, l’onglet se débloque tout seul — ceci ne sert qu’en dépannage.</p>
+        <input class="cle-input" id="cleLicence" aria-label="Référence d’achat ou code cadeau" placeholder="cs_live_…" autocomplete="off" spellcheck="false">
         <div class="carte-actions">
           <button class="btn btn-primary" id="btnValiderCle">Débloquer <span class="ico" aria-hidden="true">🔓</span></button>
           <button class="btn btn-ghost" id="btnFermerCle">Fermer <span class="ico" aria-hidden="true">✕</span></button>
@@ -1211,6 +1247,8 @@ footer p + p{ margin-top:.3rem; }
         </div>
         <div class="paywall-foot">
           <button class="linklike" id="btnPaywallCle">J’ai déjà payé</button>
+          <span aria-hidden="true" id="pwCadeauSep" hidden>·</span>
+          <button class="linklike" id="btnPaywallCadeau" hidden>On m’a offert un code</button>
           <span aria-hidden="true">·</span>
           <button class="linklike" id="btnPaywallRetour">Revenir au questionnaire</button>
         </div>
@@ -1627,8 +1665,14 @@ const VENTE = {
   produitDossier: "",
   /* Adresse d'une éventuelle fonction de vérification côté serveur.
      Laissée vide : le déblocage se fait alors sur la seule référence Stripe. */
-  verification: ""
+  verification: "",
+  /* Codes cadeaux. Le Worker ne peut engendrer un code qu'après avoir demandé à
+     Stripe si le dossier a bien été payé : tant que « verification » est vide,
+     c'est que la clé Stripe n'est pas posée, et cette fonction reste en sommeil.
+     Les deux s'allument donc ensemble, le jour de la mise en vente. */
+  cadeau: "https://boussole.projectv0-0.workers.dev/cadeau"
 };
+const cadeauActif = () => !!VENTE.cadeau && !!VENTE.verification;
 /* ?apercu=1 sert à regarder la pop-up sans faire le test. C'était une seconde porte,
    indépendante de modeTest : passer modeTest à false ne la fermait pas, et le bouton
    « Passer le paiement » restait accessible à qui connaissait l'adresse. Elle est
@@ -3157,6 +3201,10 @@ function ouvrirPaywall(){
     aD.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); };
   }
   $("#skipZone").hidden = !VENTE.modeTest;
+  /* Le lien « on m'a offert un code » ne s'affiche que si des codes peuvent
+     exister : proposer d'en saisir un quand aucun ne peut avoir été créé, ce
+     serait montrer une porte sans serrure. */
+  $("#btnPaywallCadeau").hidden = $("#pwCadeauSep").hidden = !cadeauActif();
   $("#paywallOverlay").hidden = false;
   /* le focus entre dans la fenêtre : sans ça, la tabulation continue de parcourir
      la page qui est derrière, devenue inatteignable à la souris */
@@ -3174,6 +3222,7 @@ function appliquerAcces(niveau){
 }
 /* Vitrine du dossier sur la page de résultats, selon l'accès en cours */
 function majVenteBox(){
+  majCadeauBox();
   const box = $("#venteBox"), a = $("#btnAcheter");
   $("#ventePrix").innerHTML = `${VENTE.prixDossier} <s>${VENTE.prixDossierRef}</s>`;
   if(VENTE.remiseDossier && $("#venteBadge")) $("#venteBadge").textContent = `Offre de lancement · ${VENTE.remiseDossier}`;
@@ -3193,13 +3242,30 @@ function majVenteBox(){
   }
 }
 async function validerCle(){
-  const ref = $("#cleLicence").value.trim();
+  const saisi = $("#cleLicence").value.trim();
   const st = $("#cleStatut");
-  if(!ref){ st.textContent = "Colle d’abord ta référence d’achat."; return; }
+  if(!saisi){ st.textContent = "Colle d’abord ta référence d’achat, ou le code qu’on t’a offert."; return; }
 
-  /* Référence Stripe : identifiant de session de paiement (cs_live_… / cs_test_…) */
+  /* Deux choses peuvent arriver ici, et elles ne se ressemblent pas : une
+     référence Stripe (cs_live_… / cs_test_…) ou un code cadeau (BE-XXXX-XXXX).
+     Aucune des deux ne peut passer pour l'autre — l'une fait plus de trente
+     caractères, l'autre exactement huit —, alors on laisse la personne coller
+     ce qu'elle a sous la main plutôt que de lui demander de choisir un champ. */
+  const ref = saisi;
+  /* Il existe un troisième code sur ce site, celui de la comparaison entre
+     proches. Le reconnaître ici évite d'envoyer quelqu'un au mauvais guichet
+     avec un message qui ne lui dirait rien. */
+  if(decoderNotes(saisi)){
+    st.textContent = "Ce code-là sert à comparer ton profil avec celui d’un proche : il s’utilise plus bas, dans « Comparer avec un proche ».";
+    return;
+  }
+  const codeCadeau = normaliserCadeau(saisi);
+  if(codeCadeau) return validerCadeau(codeCadeau, st);
+
   if(!/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(ref)){
-    st.textContent = "Cette référence n’est pas reconnue. Elle commence par « cs_ » et figure sur la page affichée après ton paiement.";
+    st.textContent = cadeauActif()
+      ? "Ni une référence d’achat, ni un code cadeau. La référence commence par « cs_ » et figure sur la page affichée après ton paiement ; un code cadeau ressemble à BE-XXXX-XXXX."
+      : "Cette référence n’est pas reconnue. Elle commence par « cs_ » et figure sur la page affichée après ton paiement.";
     return;
   }
   st.textContent = "Vérification…";
@@ -3249,14 +3315,183 @@ async function verifierAchat(ref){
 
 /* Accès enregistré sur l'appareil, pour survivre à la fermeture de l'onglet */
 const ACCES_KEY = "boussole.acces.v1";
-function enregistrerAcces(niveau, session){
-  try{ localStorage.setItem(ACCES_KEY, JSON.stringify({ niveau, session, d: new Date().toISOString() })); }catch(_){}
+function enregistrerAcces(niveau, session, cadeau){
+  try{ localStorage.setItem(ACCES_KEY, JSON.stringify({ niveau, session, cadeau: cadeau || "", d: new Date().toISOString() })); }catch(_){}
 }
-function lireAcces(){
+function lireAccesComplet(){
   try{
     const a = JSON.parse(localStorage.getItem(ACCES_KEY) || "null");
-    return a && (a.niveau === "dossier" || a.niveau === "resultats") ? a.niveau : null;
+    return a && (a.niveau === "dossier" || a.niveau === "resultats") ? a : null;
   }catch(_){ return null; }
+}
+function lireAcces(){
+  const a = lireAccesComplet();
+  return a ? a.niveau : null;
+}
+/* La référence de l'achat, telle que merci.html ou la fenêtre de déblocage l'ont
+   écrite. C'est elle qui prouve au serveur le droit d'offrir : sans elle, le
+   bouton reste muet plutôt que d'échouer une fois cliqué. */
+function sessionAchat(){
+  const a = lireAccesComplet();
+  return a && a.niveau === "dossier" && /^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(a.session || "")
+    ? a.session : "";
+}
+
+/* ————— Le code à offrir —————
+   Acheter le dossier ouvre un geste : un code unique, valable vingt-quatre heures
+   à partir du moment où on le crée, qui donne à une autre personne ses propres
+   résultats détaillés. Pas le dossier — celui-là reste à qui l'a payé.
+
+   Tout se décide sur le serveur : c'est lui qui demande à Stripe si le dossier a
+   bien été payé, lui qui garantit un seul code par achat, et lui qui n'accepte
+   qu'un seul usage. Ce qui suit n'est qu'une fenêtre sur cette décision — rien
+   ici ne débloque quoi que ce soit tout seul. */
+const CADEAU_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";   /* ni O ni 0, ni I ni 1 */
+
+/* Rend la forme canonique d'un code, ou une chaîne vide si ça n'y ressemble pas.
+   On accepte le code tel qu'il aura voyagé : minuscules, espaces, tirets perdus,
+   avec ou sans le « BE » du début — personne ne recopie un code au caractère près. */
+function normaliserCadeau(brut){
+  const brutMaj = String(brut || "").trim().toUpperCase();
+  /* Le code de comparaison entre proches commence lui aussi par BE, et son tiret
+     « émotion non retenue » s'efface au nettoyage : sans cette garde, un BE2-
+     comptant sept émotions absentes prendrait exactement la forme d'un code
+     cadeau. Deux codes différents sur le même site, autant qu'ils ne se
+     confondent jamais. */
+  if(/^BE[12]-/.test(brutMaj)) return "";
+  const s = brutMaj.replace(/[^A-Z0-9]/g, "");
+  const c = s.startsWith("BE") ? s.slice(2) : s;
+  if(!new RegExp(`^[${CADEAU_ALPHABET}]{8}$`).test(c)) return "";
+  return `BE-${c.slice(0,4)}-${c.slice(4)}`;
+}
+
+/* « Valable encore 23 h — jusqu'à vendredi 13 h 30 », plutôt qu'une date ISO que
+   personne ne lit. On arrondit les minutes d'un seul coup : arrondir le reste
+   après avoir pris les heures donnait « 23 h 60 min ». */
+function echeanceCadeau(iso){
+  const t = Date.parse(iso);
+  if(!isFinite(t)) return "";
+  const minutes = Math.round((t - Date.now()) / 60000);
+  if(minutes <= 0) return "Ce code a passé ses vingt-quatre heures.";
+  const h = Math.floor(minutes / 60), m = minutes % 60;
+  const reste = h >= 1 ? `${h} h` + (m ? ` ${m} min` : "") : `${m} min`;
+  const d = new Date(t);
+  const jour = new Intl.DateTimeFormat("fr-FR", { weekday:"long" }).format(d);
+  const heure = d.getMinutes()
+    ? `${d.getHours()} h ${String(d.getMinutes()).padStart(2, "0")}`
+    : `${d.getHours()} h`;
+  return `Valable encore ${reste} — jusqu’à ${jour} ${heure}.`;
+}
+
+async function demanderCadeau(){
+  const info = $("#cadeauInfo"), bouton = $("#btnCreerCadeau");
+  const session = sessionAchat();
+  if(!session){
+    info.textContent = "Ta référence d’achat n’est pas retrouvée sur cet appareil. Écris-nous à contact@boussole-emotionnelle.fr avec ta référence et on crée le code à la main.";
+    return;
+  }
+  bouton.disabled = true;
+  info.textContent = "Création…";
+  let d;
+  try{
+    /* text/plain à dessein : un content-type JSON déclencherait une requête
+       préalable, et celle-ci n'apporterait rien de plus ici. */
+    const r = await fetch(VENTE.cadeau, { method:"POST", body: JSON.stringify({ session_id: session }) });
+    d = await r.json();
+  }catch(_){
+    bouton.disabled = false;
+    info.textContent = "La création est momentanément indisponible — réessaie dans un moment.";
+    return;
+  }
+  bouton.disabled = false;
+  if(!d || !d.code){
+    info.textContent = d && d.erreur === "réservé au dossier complet"
+      ? "Ce geste est réservé au dossier complet."
+      : "La création est momentanément indisponible — réessaie dans un moment, ou écris-nous à contact@boussole-emotionnelle.fr.";
+    return;
+  }
+  afficherCadeau(d);
+}
+
+function afficherCadeau(d){
+  $("#cadeauCode").textContent = d.code;
+  $("#cadeauResultat").hidden = false;
+  $("#btnCreerCadeau").hidden = true;
+  if(d.utilise){
+    $("#cadeauDelai").textContent = "Ce code a servi — quelqu’un a découvert ses résultats grâce à toi 💛";
+    $("#btnCopierCadeau").hidden = true;
+    $("#cadeauInfo").textContent = "";
+    return;
+  }
+  if(d.expire){
+    /* Périmé sans avoir servi : le cadeau n'a été offert à personne. Le bouton
+       revient, et le serveur remplacera le code plutôt que d'en refuser un
+       second — un envoi oublié ne doit pas coûter le geste. */
+    $("#cadeauDelai").textContent = "Ce code a passé ses vingt-quatre heures sans servir.";
+    $("#btnCopierCadeau").hidden = true;
+    $("#btnCreerCadeau").hidden = false;
+    $("#btnCreerCadeau").innerHTML = 'Créer un nouveau code <span class="ico" aria-hidden="true">🎁</span>';
+    $("#cadeauInfo").textContent = "";
+    return;
+  }
+  $("#cadeauDelai").textContent = echeanceCadeau(d.expire_le);
+  $("#btnCopierCadeau").hidden = false;
+  $("#cadeauInfo").textContent = "";
+  $("#btnCopierCadeau").onclick = async () => {
+    const message = `Je t’offre la Boussole émotionnelle : seize situations du quotidien, et ce qu’elles disent de toi.\n\n`
+                  + `Ton code : ${d.code}\n\n`
+                  + `Le test est ici : https://boussole-emotionnelle.fr\n`
+                  + `À la fin, clique sur « On m’a offert un code » et colle celui-ci : tes résultats s’ouvriront.\n`
+                  + `Il sert une fois, et il est valable vingt-quatre heures.`;
+    try{
+      await navigator.clipboard.writeText(message);
+      $("#cadeauInfo").textContent = "Message copié — il n’y a plus qu’à l’envoyer 💛";
+    }catch(_){
+      /* presse-papiers refusé : on sélectionne le code, la personne le copie elle-même */
+      const r = document.createRange();
+      r.selectNodeContents($("#cadeauCode"));
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      $("#cadeauInfo").textContent = "Le code est sélectionné — copie-le.";
+    }
+  };
+}
+
+/* La carte n'apparaît que pour qui a payé le dossier, et seulement quand le
+   serveur est en mesure de répondre. Dans tous les autres cas elle n'existe pas :
+   mieux vaut rien qu'un bouton qui échoue. */
+function majCadeauBox(){
+  const box = $("#cadeauBox");
+  if(!box) return;
+  box.hidden = !(cadeauActif() && niveauAcces === "dossier" && sessionAchat());
+}
+
+async function validerCadeau(code, st){
+  st.textContent = "Vérification…";
+  let d;
+  try{
+    const r = await fetch(VENTE.cadeau + "/utiliser", { method:"POST", body: JSON.stringify({ code }) });
+    d = await r.json();
+  }catch(_){
+    st.textContent = "La vérification est momentanément indisponible — ton code n’est pas en cause. Réessaie dans un moment.";
+    return;
+  }
+  if(!d || !d.valide){
+    const raison = d && d.raison;
+    st.textContent =
+      raison === "utilise" ? "Ce code a déjà servi : il ne s’ouvre qu’une fois. Demande-en un nouveau à la personne qui te l’a offert."
+    : raison === "expire"  ? "Ce code a passé ses vingt-quatre heures. Demande-en un nouveau à la personne qui te l’a offert."
+    : raison === "inconnu" ? "Ce code n’est pas reconnu. Vérifie que tu l’as recopié en entier — il ressemble à BE-XXXX-XXXX."
+    : "La vérification est momentanément indisponible — réessaie dans un moment, ou écris-nous à contact@boussole-emotionnelle.fr.";
+    return;
+  }
+  enregistrerAcces("resultats", "", code);
+  if(!lastNotes){
+    niveauAcces = "resultats";
+    st.textContent = "Code accepté ! Tes réponses ne sont plus là (le site n’enregistre rien) : fais le test — tes résultats s’ouvriront directement à la fin.";
+    return;
+  }
+  st.textContent = "";
+  appliquerAcces("resultats");
 }
 
 /* ————— « Préviens-moi quand l'appli sort » —————
@@ -3913,8 +4148,21 @@ function runSelfTests(){
   /* 6. Le seuil de validation d'une situation. */
   const seuilOK = MIN_EMOS >= 2 && MIN_EMOS <= EMOTIONS.length;
 
+  /* 7. Le code cadeau, tel qu'il arrive vraiment : recopié à la main, sans les
+        tirets, en minuscules, parfois sans le « BE ». Tout doit ramener à la
+        même forme. Et rien ne doit passer pour un code cadeau qui n'en est pas —
+        surtout pas une référence Stripe ni le code de comparaison (BE1-…), sous
+        peine d'envoyer la personne vers le mauvais guichet. */
+  const attendu = "BE-K4T9-M2PX";
+  const cadeauOK = ["BE-K4T9-M2PX", "be-k4t9-m2px", "BEK4T9M2PX", "k4t9 m2px", " BE K4T9-M2PX "]
+    .every(s => normaliserCadeau(s) === attendu);
+  const cadeauRefusOK = ["", "BE-K4T9-M2P", "cs_test_9B68wI5BQ11M8Mg00oc7u00",
+                         "BE1-5A3B7C9D2E4F6G", "BE2-5-A-3-B-7-C-9-", "BE-IOIO-0101"]
+    .every(s => normaliserCadeau(s) === "");
+
   const ok = maxKO.length === 0 && minKO.length === 0 && absenceOK && noteAbsente
-          && intensiteOK && plafondOK && partOK && mixteOK && mixteCompteOK && seuilOK;
+          && intensiteOK && plafondOK && partOK && mixteOK && mixteCompteOK && seuilOK
+          && cadeauOK && cadeauRefusOK;
   console.info("[Boussole émotionnelle] Auto-vérification — "
     + `tout à 4 → 10/10 : ${maxKO.length === 0 ? "✓" : "✗ " + maxKO.join(",")} · `
     + `tout à 1 → 2,5/10 : ${minKO.length === 0 ? "✓" : "✗ " + minKO.join(",")} · `
@@ -3923,10 +4171,11 @@ function runSelfTests(){
     + `retenue partout → intensité intacte : ${plafondOK ? "✓" : "✗"} · `
     + `répartition en % cohérente : ${partOK ? "✓" : "✗"} · `
     + `journal + test court : ${mixteOK && mixteCompteOK ? "✓" : "✗"} · `
-    + `minimum ${MIN_EMOS} émotions par situation : ${seuilOK ? "✓" : "✗"}`);
+    + `minimum ${MIN_EMOS} émotions par situation : ${seuilOK ? "✓" : "✗"} · `
+    + `code cadeau lu et refusé comme il faut : ${cadeauOK && cadeauRefusOK ? "✓" : "✗"}`);
   return { ok, maxOK: maxKO.length === 0, minOK: minKO.length === 0,
            absenceOK: absenceOK && noteAbsente, intensiteOK, plafondOK, partOK,
-           mixteOK, mixteCompteOK, seuilOK };
+           mixteOK, mixteCompteOK, seuilOK, cadeauOK: cadeauOK && cadeauRefusOK };
 }
 
 
@@ -4003,8 +4252,19 @@ $("#btnCarte").addEventListener("click", ouvrirCarte);
 /* Verrou de fin de test + offre du dossier */
 document.body.appendChild($("#paywallOverlay"));
 let paywallEnAttente = false;
-const ouvrirModaleCle = () => {
+/* La même fenêtre pour deux situations très différentes : celui qui a payé et
+   dont l'onglet n'a pas suivi, et celui à qui on vient d'offrir le test. Le champ
+   accepte les deux, seule la manière de le dire change. */
+const ouvrirModaleCle = (mode) => {
+  const cadeau = mode === "cadeau";
   $("#cleStatut").textContent = "";
+  $("#rapportTitre").textContent = cadeau ? "Utiliser mon code cadeau" : "Débloquer mon accès";
+  $("#cleHint").innerHTML = cadeau
+    ? "Colle ici le code qu’on t’a envoyé — il ressemble à «&nbsp;BE-XXXX-XXXX&nbsp;». Il ouvre tes résultats, une fois, et il est valable vingt-quatre heures."
+    : "Colle ici la référence d’achat affichée après ton paiement (elle commence par «&nbsp;cs_&nbsp;»). Normalement, l’onglet se débloque tout seul — ceci ne sert qu’en dépannage."
+      + (cadeauActif() ? " Si on t’a offert un code cadeau, il a sa place ici aussi." : "");
+  $("#cleLicence").placeholder = cadeau ? "BE-XXXX-XXXX"
+    : (cadeauActif() ? "cs_live_… ou BE-XXXX-XXXX" : "cs_live_…");
   /* la fenêtre de clé doit passer devant : on met le verrou en attente */
   paywallEnAttente = !$("#paywallOverlay").hidden;
   $("#paywallOverlay").hidden = true;
@@ -4019,7 +4279,9 @@ $("#btnDejaCle").addEventListener("click", () => {
   if(niveauAcces === "dossier"){ ouvrirRapport(); return; }
   ouvrirModaleCle();
 });
-$("#btnPaywallCle").addEventListener("click", ouvrirModaleCle);
+$("#btnPaywallCle").addEventListener("click", () => ouvrirModaleCle());
+$("#btnPaywallCadeau").addEventListener("click", () => ouvrirModaleCle("cadeau"));
+$("#btnCreerCadeau").addEventListener("click", demanderCadeau);
 $("#btnSkipPaiement").addEventListener("click", () => appliquerAcces("dossier"));
 $("#btnPaywallRetour").addEventListener("click", () => { $("#paywallOverlay").hidden = true; });
 $("#paywallOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) e.currentTarget.hidden = true; });

@@ -368,8 +368,30 @@ rejetée, et 501 tant qu'il n'a pas sa clé. Il ne manque que la clé.
    sur la route du Worker. Elle protège à la fois le compteur d'audience et la vérification
    d'achat.
 
-Ensuite je renseigne `VENTE.verification` dans le site — une ligne — et la vérification
-devient active.
+Ensuite je renseigne `VENTE.verification` dans le site — une ligne — et **deux choses
+s'allument d'un coup** : la vérification d'achat, et le code à offrir (B6 bis).
+
+## B6 bis · Le code à offrir — prêt, en sommeil
+
+Fait le 24 septembre 2026, et **déjà en ligne côté serveur**. Acheter le dossier ouvre le
+droit d'offrir le test à une personne : un code unique, valable vingt-quatre heures à partir
+du moment où l'acheteur le crée, utilisable une seule fois, qui donne **les résultats** —
+jamais le dossier.
+
+Le Worker vérifie auprès de Stripe que le dossier a bien été payé avant d'engendrer quoi que
+ce soit. Donc, très concrètement : **tant que `STRIPE_CLE` n'est pas posée, aucun code ne peut
+exister**, et le site n'en propose aucun — ni le bouton sur la page de résultats, ni le lien
+« On m'a offert un code » dans la fenêtre de paiement. Rien à faire de ton côté : la même
+ligne `VENTE.verification` allume les deux.
+
+Un point mérite ton avis, parce que c'est moi qui ai tranché : **si le code expire sans avoir
+servi, l'acheteur peut en créer un neuf.** Un code périmé n'a rien donné à personne, et
+oublier de l'envoyer pendant une journée aurait sinon coûté le cadeau pour toujours. La
+promesse « un seul cadeau par achat » tient quand même : un code *déjà utilisé*, lui, n'est
+jamais remplacé. Dis-moi si tu préfères la version stricte, c'est une condition à retirer.
+
+La règle de limitation de débit du point 3 ci-dessus devient plus importante avec cette
+fonction : elle est ce qui empêche d'essayer des codes en masse.
 
 ## B7 · Le test réel, avant d'annoncer quoi que ce soit
 
@@ -385,6 +407,9 @@ Une fois que j'ai basculé le site, à faire **dans l'ordre**, en production :
 6. **Un vrai achat à 1,99 € donne les résultats et *pas* le dossier.**
 7. Le montant débité correspond au prix affiché.
 8. Le client reçoit sa référence d'achat et peut l'imprimer.
+9. **Le code à offrir** : l'achat du dossier fait apparaître la carte « Offrir le test à
+   quelqu'un » ; le code créé ouvre les résultats sur un *autre* appareil, et refuse de
+   servir une deuxième fois. Un achat à 1,99 €, lui, ne montre aucune carte.
 
 **Le point 6 demande une vraie carte, sur un vrai paiement de 1,99 € que tu te rembourseras
 ensuite. Je ne peux pas le faire : je n'entre jamais de numéro de carte, même de test.**
