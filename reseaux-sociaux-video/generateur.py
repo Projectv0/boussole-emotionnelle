@@ -33,7 +33,8 @@ def ici(*p): return os.path.join(ICI, *p)
 for d in ("voix", "sortie", "images"): os.makedirs(ici(d), exist_ok=True)
 
 L, H, FPS = 1024, 576, 30
-VOIX = "Jacques"
+VOIX = "Jacques"                 # la voix macOS, en dernier recours
+VOIX_ELEVEN = ""                 # l'identifiant d'une voix ElevenLabs : voir voix_eleven.py --voix
 POLICE = "/System/Library/Fonts/Supplemental/Georgia Bold.ttf"
 CADENCE_TABLEAU = 2.3        # secondes entre deux tableaux
 SORTIE_FINALE = 4.0          # le produit reste à l'écran après le dernier mot
@@ -106,10 +107,30 @@ def voix_humaine(ident, texte, source):
     print(f"    voix humaine : {r.stdout.strip()}")
     return wav, d
 
+def voix_eleven(ident, texte):
+    """ElevenLabs : la voix des vidéos de référence, avec l'instant de chaque mot."""
+    import voix_eleven as ve
+    empreinte = hashlib.sha1(f"eleven|{VOIX_ELEVEN}|{ve.MODELE}|{texte}".encode("utf-8")).hexdigest()[:10]
+    mp3, js = ici("voix", f"{ident}.mp3"), ici("voix", f"{ident}.json")
+    if os.path.exists(js):
+        d = json.load(open(js, encoding="utf-8"))
+        if d.get("empreinte") == empreinte and os.path.exists(mp3):
+            return mp3, d
+    d = ve.synthetiser(texte, VOIX_ELEVEN, mp3, js)
+    d["empreinte"] = empreinte
+    json.dump(d, open(js, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(f"    ElevenLabs : {d['duree']:.1f} s · {len(texte)} caractères")
+    return mp3, d
+
 def synthetiser(ident, texte):
-    """Rend (chemin audio, données JSON) : la voix humaine si elle est là, sinon la synthèse."""
+    """Rend (chemin audio, données JSON) : l'enregistrement humain s'il est là, sinon
+    ElevenLabs si une voix est choisie et la clé posée, sinon la synthèse macOS."""
     source = enregistrement_humain(ident)
     if source: return voix_humaine(ident, texte, source)
+    if VOIX_ELEVEN:
+        import voix_eleven as ve
+        if ve.cle(): return voix_eleven(ident, texte)
+        print("    (voix ElevenLabs choisie mais pas de clé : voix macOS à la place)")
     empreinte = hashlib.sha1((VOIX + texte + open(ici("voix.swift"), encoding="utf-8").read()).encode("utf-8")).hexdigest()[:10]
     caf, js, txt = ici("voix", f"{ident}.caf"), ici("voix", f"{ident}.json"), ici("voix", f"{ident}.txt")
     if os.path.exists(js):
