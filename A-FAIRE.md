@@ -1,15 +1,14 @@
 # Ce que tu as à faire
 
-*État au 21 septembre 2026. Search Console et Bing sont faits ; le bloc A est à moitié
-clos, et tout ce qui reste ne dépend plus que de toi.*
+*État au 24 septembre 2026. Le bloc A est clos — il ne reste qu'à configurer TikTok et à
+publier. Tout le reste ne dépend plus que de toi.*
 
 Tout ce qui pouvait être fait dans le dépôt l'est. Ce qui reste demande un compte tiers,
 une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste que ça.
 
 Trois blocs indépendants, dans l'ordre de ce qui rapporte le plus vite :
 
-- **A. Se rendre visible** — faisable aujourd'hui, ne dépend de rien. L'essentiel est fait ;
-  il reste à configurer TikTok et à publier.
+- **A. Se rendre visible** — clos, sauf une chose : configurer TikTok, puis publier.
 - **B. Pouvoir vendre** — bloqué par la société. Plusieurs semaines.
 - **C. Finir les images** — bloqué par les crédits. ~10 €.
 
@@ -96,7 +95,7 @@ Deux corrections possibles, toutes deux dans ton espace IONOS — je ne m'y conn
    émotionnelle ». L'expéditeur reste `odem-app.com`, mais le nom et l'adresse de réponse
    cessent de contredire le site. À décider avec Jimmy : c'est sa boîte.
 
-## ~~A4 · Les deux comptes réseaux~~ — ✅ fait le 23 septembre 2026
+## A4 · Les deux comptes réseaux — Instagram ✅, **TikTok à finir**
 
 Instagram et TikTok existent. Les 99 publications de `publication/` sont prêtes : six par
 semaine, du lundi au samedi, sur 17 semaines, sans jamais deux fois le même genre deux
@@ -199,84 +198,52 @@ pour la vérification d'achat.
 
 ---
 
-## A6 · Être trouvé — ce qui marche vraiment, et dans quel ordre
+## ~~A6 · Les liens entrants~~ — ❌ abandonné le 24 septembre 2026
 
-**Corrigé le 24 septembre.** Ce point s'appelait « Les liens entrants — le seul vrai frein
-aujourd'hui », et il te proposait de démarcher annuaires et forums pour obtenir des liens.
-C'était une mauvaise recommandation, et je la retire.
+**Ta décision, et elle est la bonne : on ne démarche personne.** Tu n'as pas de réseau à
+mobiliser aujourd'hui, et sans réseau, demander un lien ne donne rien — personne ne renvoie
+vers un test payant d'un inconnu. Les seuls qui accepteraient sont les annuaires qui acceptent
+tout le monde, et c'est exactement pourquoi ils ne valent rien.
 
-Écrire à des inconnus pour demander un lien, à ton stade, ne donne rien — non parce que ton
-site est mauvais, mais parce que **personne ne met un lien vers un test payant d'un inconnu**.
-Un psychologue ne renvoie pas ses patients vers un outil qu'il n'a pas éprouvé et qui fait
-payer. Un média ne parle pas d'un site de trois semaines. Les forums modèrent l'autopromotion,
-et leurs liens ne comptent souvent pas. Restent les annuaires — qui acceptent tout le monde,
-et c'est exactement pourquoi ils ne valent presque rien.
+**Il n'y a donc rien à faire ici.** Ce n'est pas un abandon par négligence : ton site se fera
+trouver par trois chemins qui ne demandent l'accord de personne.
 
-### Ce qui est vrai et qui ne changera pas
+1. **Publier.** Les 99 publications produisent ce qui compte le plus — des gens qui tapent
+   « boussole émotionnelle » dans la barre de recherche, et des visites directes. C'est ton
+   canal. Il n'attend que TikTok (A4).
+2. **Le guide, en longue traîne.** Les 57 articles ne visent pas le nom du site, disputé par
+   quatre sites installés, mais « pourquoi je suis toujours fatigué malgré le sommeil »,
+   « la jalousie dans le couple ». Sur ces phrases-là, un bon article peut sortir **sans aucun
+   lien entrant**. C'est lent, c'est déjà lancé.
+3. **La carte à partager et les codes de comparaison.** Chaque image emporte l'adresse du site,
+   et comparer son profil suppose d'envoyer son code à quelqu'un. Le bouche-à-oreille est dans
+   le produit.
 
-**Le nom du projet est une expression courante, pas une marque.** « Boussole émotionnelle » est
-déjà employée par pauldevaux.fr, emotioncompass.org, ecolepositive.fr, macoherence.com — des
-sites installés depuis des années. Personne ne se dispute « Decathlon » ; tout le monde se
-dispute celle-ci. C'est une contrainte permanente, pas un retard de démarrage.
+### Une consigne pratique, elle, qui reste valable
 
-Le site **est** indexé : premier sur son nom de domaine exact, sixième sur « boussole
-emotionnelle test emotions ». Le 23 septembre, 5 pages sur 59 étaient indexées — ce n'est pas
-un manque de liens, c'est un site jeune que Google découvre lentement. **À revérifier dans
-Search Console en novembre** : si le compte n'a pas bougé, on regardera pourquoi. Il aura
-bougé.
+**Donne l'adresse, pas le nom.** `boussole-emotionnelle.fr` sort premier immédiatement ;
+« boussole émotionnelle » ne sortira pas avant des mois — l'expression est déjà employée par
+pauldevaux.fr, emotioncompass.org, ecolepositive.fr, macoherence.com, installés depuis des
+années. C'est une contrainte permanente, pas un retard de démarrage. Dis l'adresse aux gens à
+qui tu en parles, ton associé compris.
 
-### Ton moteur réel, dans l'ordre
+### Deux choses à ne pas oublier plus tard
 
-**1. Publier.** Les 99 publications sont prêtes. Instagram et TikTok ne transmettent aucune
-autorité à Google, mais ils produisent les deux choses qui comptent le plus : des gens qui
-tapent « boussole émotionnelle » dans la barre de recherche, et des visites directes. C'est
-ça, ton canal. Il n'attend que la configuration de TikTok (voir A4).
+**Revérifier l'indexation en novembre.** Le 23 septembre, 5 pages sur 59 étaient indexées.
+Ce n'est pas un manque de liens, c'est un site de trois semaines que Google découvre lentement.
+Si le compte n'a pas bougé d'ici novembre, on regardera pourquoi — mais il aura bougé.
 
-**2. Le guide, en longue traîne.** Les 57 articles ne visent pas « boussole émotionnelle »,
-disputée par quatre sites installés, mais « pourquoi je suis toujours fatigué malgré le
-sommeil », « la jalousie dans le couple ». Sur ces phrases-là, un bon article peut sortir
-**sans aucun lien entrant**. C'est lent, c'est déjà lancé, et ça ne demande rien à personne.
+**Si un jour la situation change** — tu rencontres un psy, un coach, quelqu'un dans une
+association, ou la presse locale s'intéresse à la société une fois créée — dis-le-moi : ce
+sont les deux seuls cas où une demande aurait du sens, et elle porterait sur **le guide
+gratuit**, jamais sur le test payant. Ce n'est pas une tâche, c'est une porte laissée ouverte.
 
-**3. La carte à partager et les codes de comparaison.** Chaque image emporte l'adresse du site,
-et comparer son profil suppose d'envoyer son code à quelqu'un. Le bouche-à-oreille est dans le
-produit — c'est d'ailleurs une raison de plus de soigner la carte.
-
-Ces trois-là ne demandent l'accord de personne. C'est ce qui les rend fiables.
-
-### Les deux seules demandes qui peuvent aboutir
-
-Et elles ne portent **pas sur le test** — elles portent sur **le guide gratuit**. C'est lui,
-l'argument : 57 articles en accès libre, sans compte et sans collecte de données. Ça, quelqu'un
-peut le recommander sans se compromettre. Un test payant, non.
-
-- **Les associations et les listes de ressources** — santé mentale, aidants, parentalité,
-  écoles. Référencer des ressources gratuites est littéralement leur fonction.
-- **La presse locale**, une fois la société créée. Un entrepreneur du coin qui lance un outil
-  de bien-être est un sujet qu'un journal local prend volontiers. Et c'est un vrai lien.
-
-Quand tu voudras t'y mettre, je prépare les textes — mais après la publication, pas avant :
-un journal demandera « combien de gens l'utilisent ? », et il vaut mieux avoir une réponse.
-
-### La seule voie où « qui va accepter ? » a une réponse
-
-**Quelqu'un qui te connaît.** Toi ou Jimmy connaissez peut-être un psy, un coach, un
-enseignant, quelqu'un dans une association. Un lien de cette personne-là vaut cinquante
-démarches à froid, et c'est la seule piste où la question ne se pose pas.
-
-**Dis-moi si tu as un nom** et je prépare ce qu'il faut lui envoyer.
-
-### Ce qu'il ne faut pas faire
+### Ce qu'il ne faut pas faire, si on t'en parle
 
 - **Acheter des liens.** Google les repère, et la sanction porte sur le site, pas sur le vendeur.
 - **Les annuaires génériques à la chaîne.** Sans effet, et certains font activement du mal.
 - **Poster le lien dans des forums.** C'est de l'autopromotion, ça se fait supprimer, et ça
   abîme le nom du projet — le seul actif que tu aies pour l'instant.
-
-### En attendant, une consigne pratique
-
-**Donne l'adresse, pas le nom.** `boussole-emotionnelle.fr` sort premier immédiatement ;
-« boussole émotionnelle » ne sortira pas avant des mois. C'est ce qu'il faut dire aux gens à
-qui tu en parles — ton associé compris.
 
 ---
 
