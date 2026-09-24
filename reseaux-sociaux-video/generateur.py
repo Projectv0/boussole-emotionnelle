@@ -384,7 +384,7 @@ def construire(script, apercu=False):
                 im = Image.new("RGB", (L, H), NOIR)
                 if g is not None: im = ecrire_groupe(im, groupes[g], g, noir=True)
             else:
-                im = fond_tableau(cle[0])
+                im = fond_tableau(cle[0]).copy()     # jamais écrire sur l'image en cache
                 if produit:
                     im = cadre_produit(im)
                 else:

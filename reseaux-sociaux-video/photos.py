@@ -57,6 +57,11 @@ def telecharger(url, chemin, entetes=None):
         return None
     w, h = im.size
     if w < 1000 or w <= h * 1.1: return None
+    if im.mode in ("RGBA", "LA", "P") and (im.mode == "P" and "transparency" in im.info or im.mode != "P"):
+        return None                                   # un détourage sur fond transparent, pas une photo
+    from PIL import ImageStat
+    if max(ImageStat.Stat(im.convert("RGB").resize((64, 36))).stddev) < 18:
+        return None                                   # presque unie : un aplat, un logo, une pancarte
     if w > 2000:
         im = im.resize((2000, round(h * 2000 / w)), Image.LANCZOS)
     im.convert("RGB").save(chemin, "JPEG", quality=88)
