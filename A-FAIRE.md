@@ -319,9 +319,10 @@ peut le contester.* Tant que tu n'as pas tranché, je ne touche pas à l'afficha
 
 Après l'ouverture du compte bancaire professionnel (il faut le Kbis et l'IBAN société).
 
-**Créer deux produits** aux prix réels : **1,99 €** (résultats) et **5,99 €** (dossier complet).
+**Créer trois produits** aux prix réels : **1,99 €** (résultats), **5,99 €** (dossier complet)
+et **4,00 €** (le complément, pour qui a déjà payé les 1,99 € — voir B7 bis).
 
-**Créer deux liens de paiement**, avec ces URL de redirection **exactement** :
+**Créer trois liens de paiement**, avec ces URL de redirection **exactement** :
 
 ```
 https://boussole-emotionnelle.fr/merci.html?formule=resultats&session_id={CHECKOUT_SESSION_ID}
@@ -330,10 +331,13 @@ https://boussole-emotionnelle.fr/merci.html?formule=resultats&session_id={CHECKO
 https://boussole-emotionnelle.fr/merci.html?formule=dossier&session_id={CHECKOUT_SESSION_ID}
 ```
 
+Le complément utilise **la même URL de retour que le dossier** — `formule=dossier` — puisque
+c'est bien le dossier qu'il ouvre.
+
 Sans le paramètre `formule`, la page de remerciement ne sait pas quoi débloquer. Sans
 `session_id`, rien ne peut être vérifié.
 
-**Deux réglages à activer sur les deux liens :**
+**Deux réglages à activer sur les trois liens :**
 
 - **« Exiger l'acceptation des conditions de vente »**, en y mettant l'URL des CGV. Stripe
   produit alors une preuve horodatée de l'acceptation — ce qu'aucun code côté navigateur ne
@@ -408,24 +412,61 @@ Une fois que j'ai basculé le site, à faire **dans l'ordre**, en production :
    mène à la vitrine du dossier.
 7. **Un vrai achat du dossier fait apparaître le bouton de la carte**, et l'image se fabrique
    aux deux formats (post et story).
-8. Le montant débité correspond au prix affiché.
-9. Le client reçoit sa référence d'achat et peut l'imprimer.
-10. **Le code à offrir** : l'achat du dossier fait apparaître l'encadré « Offrir le test à
+8. **Le complément** : avec un accès « resultats », la vitrine affiche 4 € et non
+   « 5,99 € ~~20 €~~ », le badge de lancement disparaît, et la ligne « Tes 1,99 € sont déjà
+   réglés » s'affiche. Le paiement de 4 € ouvre le dossier **et** la carte à partager.
+9. Le montant débité correspond au prix affiché.
+10. Le client reçoit sa référence d'achat et peut l'imprimer.
+11. **Le code à offrir** : l'achat du dossier fait apparaître l'encadré « Offrir le test à
     quelqu'un » ; le code créé ouvre les résultats sur un *autre* appareil, et refuse de
     servir une deuxième fois. Un achat à 1,99 €, lui, ne montre pas cet encadré.
 
 **Le point 6 demande une vraie carte bancaire, sur un vrai paiement de 1,99 € que tu te
 rembourseras ensuite. Je ne peux pas le faire : je n'entre jamais de numéro de carte, même de test.**
 
-## B7 bis · Deux choses à savoir avant d'ouvrir la vente
+## B7 bis · Le lien de complément — fait côté site, il manque le lien Stripe
 
-**Le passage de 1,99 € à 5,99 € refait payer le plein tarif.** Quelqu'un qui a pris la formule
-simple puis clique « Passer au dossier complet » paie 5,99 € en plus de ses 1,99 € — donc
-7,98 € pour un produit affiché à 5,99 €. C'était déjà le cas avant aujourd'hui, mais la
-carte réservée au dossier va pousser bien plus de monde vers ce bouton. Deux sorties possibles :
-créer dans Stripe un **lien de complément à 4 €** et le brancher sur ce bouton-là, ou l'assumer
-et l'écrire noir sur blanc à côté du prix. Dis-moi laquelle et je la pose. Ne laisse pas la
-troisième, qui est de ne rien faire.
+**Ta décision du 24 septembre : le complément.** Quelqu'un qui a pris la formule à 1,99 € et
+qui veut le dossier ne paie plus que la **différence, 4 €**, au lieu de 5,99 € par-dessus ses
+1,99 € (soit 7,98 € pour un produit affiché à 5,99 €).
+
+Tout est posé côté site : la vitrine bascule d'elle-même sur le complément dès qu'elle voit un
+accès « resultats », affiche 4 € au lieu de « 5,99 € ~~20 €~~ », retire le badge de lancement
+et ajoute la ligne « Tes 1,99 € sont déjà réglés : il ne reste que la différence ».
+**Il ne manque que le lien.** Tant qu'il est vide, le bouton reste celui du dossier entier au
+plein tarif — c'est-à-dire exactement le comportement d'avant.
+
+Dans Stripe, à créer **en même temps que les deux autres** (B5) :
+
+- un produit **« Complément — Dossier complet »**, prix unique **4,00 € TTC**
+- URL de retour, exactement comme les deux autres :
+
+  ```
+  https://boussole-emotionnelle.fr/merci.html?formule=dossier&session_id={CHECKOUT_SESSION_ID}
+  ```
+
+  `formule=dossier` et pas autre chose : ce qu'ouvre ce paiement, c'est le dossier.
+
+Donne-moi le lien et je le pose dans `VENTE.lienComplement` — une ligne.
+
+**Ce que le Worker en fait.** Il ne regarde pas quel lien a été cliqué, il regarde le montant
+encaissé : au-dessus de 2,50 €, c'est un dossier. Donc 4 € ouvre le dossier, 1,99 € non, et
+5,99 € non plus. J'ai descendu ce seuil de 4 € à 2,50 € aujourd'hui : à 4 € il tombait pile
+sur le montant du complément, et un centime de moins aurait livré la formule à 1,99 € à
+quelqu'un qui a payé le double, sans que rien ne le signale. **Ne crée aucun produit entre
+2,00 € et 2,50 €** sans me le dire.
+
+**Une limite, que j'assume et que tu dois connaître.** Rien n'empêche techniquement quelqu'un
+qui n'a jamais payé les 1,99 € d'utiliser le lien de complément et d'avoir le dossier pour 4 €
+au lieu de 5,99 €. Il faudrait pour cela qu'il trouve le lien — il ne s'affiche que pour un
+accès « resultats ». J'ai écarté le verrou qui l'aurait empêché : il aurait aussi puni les gens
+honnêtes dont le navigateur a perdu la référence, et qui auraient payé 4 € pour ne recevoir que
+les résultats. Un manque à gagner de 1,99 € vaut mieux qu'un client qui paie et ne reçoit pas.
+Pour que tu puisses le voir : chaque complément part chez Stripe avec la référence de l'achat
+qu'il complète (`de:cs_…` dans la colonne « client reference »). Une ligne sans référence, c'est
+un complément sans achat antérieur.
+
+## B7 ter · Ce qui reste vrai quoi qu'il arrive
 
 **La carte n'a jamais été vendue à personne.** Si tu t'étais demandé si quelqu'un ayant acheté
 à 1,99 € avant ce changement se retrouvait lésé : non. Le mode test est encore actif, aucun

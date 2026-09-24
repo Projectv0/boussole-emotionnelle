@@ -31,9 +31,20 @@ const ORIGINES = [
   "https://www.boussole-emotionnelle.fr",
 ];
 
-/* Seuil en centimes séparant la formule Résultats (199) du Dossier (599).
-   À revoir si les prix changent : c'est le montant payé qui décide du palier. */
-const SEUIL_DOSSIER = 400;
+/* Seuil en centimes séparant la formule Résultats du reste. Trois montants sont
+   vendus : 199 (Résultats), 400 (le complément, pour qui a déjà payé les 199) et
+   599 (Résultats + Dossier d'un coup). Les deux derniers ouvrent le dossier.
+
+   Le seuil est posé à 250 et non à 400 : à 400 il tombait pile sur le montant du
+   complément, et un centime de moins — un prix arrondi autrement, une devise,
+   une remise — aurait silencieusement livré la formule à 1,99 € à quelqu'un qui
+   a payé le double. On laisse donc de la marge sous le plus petit des deux
+   montants qui ouvrent le dossier.
+
+   À revoir si les prix changent : c'est le montant réellement encaissé qui décide
+   du palier, et rien d'autre. Tant qu'aucun produit n'est vendu entre 2,00 € et
+   2,50 €, cette règle est sans ambiguïté. */
+const SEUIL_DOSSIER = 250;
 const DEVISE = "eur";
 
 /* Les sept seuls événements acceptés. Une liste fermée plutôt qu'un champ libre :

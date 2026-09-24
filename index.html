@@ -564,6 +564,9 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 }
 .vente-prix{ font-family:var(--serif); font-weight:620; font-size:2.6rem; line-height:1; color:var(--sage-deep); }
 .vente-prix-note{ font-size:.72rem; font-weight:600; color:var(--faint); margin-bottom:.5rem; }
+/* Le prix affiché change selon ce qui a déjà été payé : cette ligne dit pourquoi,
+   sinon « 4 € » à côté d'un dossier annoncé à 5,99 € n'aurait aucun sens. */
+.vente-complement{ font-size:.82rem; color:var(--sage-deep); font-weight:600; margin-bottom:.6rem; }
 .cle-input{
   width:100%; padding:.85rem 1rem; border-radius:1rem; border:1.5px solid var(--hairline-strong);
   font-family:inherit; font-size:.95rem; text-align:center; letter-spacing:.06em;
@@ -1176,6 +1179,7 @@ footer p + p{ margin-top:.3rem; }
             <span class="offre-badge" id="venteBadge">Offre de lancement · −70 %</span>
             <div class="vente-prix" id="ventePrix">5,99 € <s>20 €</s></div>
             <div class="vente-prix-note">paiement unique · TVA incluse</div>
+            <p class="vente-complement" id="venteComplement" hidden>Tes 1,99 € sont déjà réglés&nbsp;: il ne reste que la différence.</p>
             <a class="btn btn-primary" id="btnAcheter" target="_blank" rel="noopener">Obtenir mon dossier <span class="ico" aria-hidden="true">→</span></a>
             <button class="btn btn-ghost" id="btnDejaCle">J’ai déjà payé <span class="ico" aria-hidden="true">🔑</span></button>
           </div>
@@ -1685,6 +1689,16 @@ const VENTE = {
   remiseDossier: "−70 %",
   lienDossier: "https://buy.stripe.com/test_4gM00cggueSC1jObJ6c7u01",
   produitDossier: "",
+
+  /* Le complément, pour qui a déjà payé les résultats : la différence entre les
+     deux formules, et rien de plus. Sans lui, passer de 1,99 € au dossier coûtait
+     5,99 € de plus — soit 7,98 € pour un produit affiché à 5,99 €.
+     Tant que le lien est vide, le bouton reste celui du dossier entier, au plein
+     tarif : c'est le comportement d'avant, et il n'a rien de faux, il est
+     seulement moins généreux. Le lien se crée dans Stripe (voir A-FAIRE, B5). */
+  prixComplement: "4 €",
+  lienComplement: "",
+  produitComplement: "",
   /* Adresse d'une éventuelle fonction de vérification côté serveur.
      Laissée vide : le déblocage se fait alors sur la seule référence Stripe. */
   verification: "",
@@ -3301,8 +3315,18 @@ function majVenteBox(){
   majCadeauBox();
   majCarteBox();
   const box = $("#venteBox"), a = $("#btnAcheter");
-  $("#ventePrix").innerHTML = `${VENTE.prixDossier} <s>${VENTE.prixDossierRef}</s>`;
-  if(VENTE.remiseDossier && $("#venteBadge")) $("#venteBadge").textContent = `Offre de lancement · ${VENTE.remiseDossier}`;
+  const badge = $("#venteBadge"), note = $("#venteComplement");
+  /* Qui a déjà payé les résultats ne doit pas les repayer : on lui montre le
+     complément, et le prix affiché est celui qu'il aura réellement à régler. */
+  const complement = niveauAcces === "resultats" && !!VENTE.lienComplement;
+  if(note) note.hidden = !complement;
+  if(badge) badge.hidden = complement;
+  if(complement){
+    $("#ventePrix").innerHTML = VENTE.prixComplement;
+  }else{
+    $("#ventePrix").innerHTML = `${VENTE.prixDossier} <s>${VENTE.prixDossierRef}</s>`;
+    if(VENTE.remiseDossier && badge) badge.textContent = `Offre de lancement · ${VENTE.remiseDossier}`;
+  }
   a.onclick = null;
   if(niveauAcces === "dossier"){
     box.hidden = false;
@@ -3311,8 +3335,11 @@ function majVenteBox(){
     a.onclick = e => { e.preventDefault(); ouvrirRapport(); };
   }else if(paywallActif()){
     box.hidden = false;
-    a.innerHTML = 'Passer au dossier complet <span class="ico" aria-hidden="true">→</span>';
-    if(VENTE.lienDossier){ enLien(a, lienAvecSuivi(VENTE.lienDossier)); }
+    a.innerHTML = complement
+      ? 'Compléter mon accès <span class="ico" aria-hidden="true">→</span>'
+      : 'Passer au dossier complet <span class="ico" aria-hidden="true">→</span>';
+    const lien = complement ? VENTE.lienComplement : VENTE.lienDossier;
+    if(lien){ enLien(a, lienAvecSuivi(lien, complement)); }
     else{ enBouton(a); a.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); }; }
   }else{
     box.hidden = true;
@@ -3617,14 +3644,26 @@ function veutAppli(){
 function noterAppli(oui){
   try{ oui ? localStorage.setItem(APPLI_KEY, "1") : localStorage.removeItem(APPLI_KEY); }catch(_){}
 }
-function lienAvecSuivi(url){
-  if(!url || !veutAppli()) return url;
+/* client_reference_id est le champ libre que Stripe rattache au paiement et
+   affiche dans le tableau de bord. Il porte deux choses, et jamais rien d'autre :
+   le souhait d'être prévenu de la sortie de l'appli, et — pour un complément — la
+   référence de l'achat qu'il complète, pour qu'on puisse voir d'où il vient.
+   Aucune des deux ne dit qui est la personne. */
+function lienAvecSuivi(url, complement){
+  const marques = [];
+  if(veutAppli()) marques.push(REF_APPLI);
+  if(complement){
+    const ref = (lireAccesComplet() || {}).session || "";
+    if(/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(ref)) marques.push("de:" + ref);
+  }
+  if(!url || !marques.length) return url;
+  const valeur = marques.join("+");
   try{
     const u = new URL(url);
-    u.searchParams.set("client_reference_id", REF_APPLI);
+    u.searchParams.set("client_reference_id", valeur);
     return u.toString();
   }catch(_){
-    return url + (url.includes("?") ? "&" : "?") + "client_reference_id=" + REF_APPLI;
+    return url + (url.includes("?") ? "&" : "?") + "client_reference_id=" + encodeURIComponent(valeur);
   }
 }
 
