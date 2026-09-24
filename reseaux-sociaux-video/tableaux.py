@@ -36,8 +36,11 @@ TERMES = ["crowd", "court", "banquet", "feast", "battle", "procession", "market"
 
 UA = {"User-Agent": "boussole-emotionnelle.fr (atelier vidéo, usage éditorial)"}
 
-def lire(url, binaire=False):
-    req = urllib.request.Request(url, headers=UA)
+NAVIGATEUR = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
+              "Referer": "https://www.artic.edu/"}
+
+def lire(url, binaire=False, entetes=None):
+    req = urllib.request.Request(url, headers=entetes or UA)
     with urllib.request.urlopen(req, timeout=40) as r:
         d = r.read()
     return d if binaire else json.loads(d.decode("utf-8"))
@@ -133,9 +136,9 @@ def aic():
             if a.get("department_title") not in ("Painting and Sculpture of Europe", "Arts of the Americas"): continue
             url = f"https://www.artic.edu/iiif/2/{a['image_id']}/full/1686,/0/default.jpg"
             try:
-                octets = lire(url, binaire=True)
+                octets = lire(url, binaire=True, entetes=NAVIGATEUR)
             except Exception:
-                try: octets = lire(url.replace("1686,", "843,"), binaire=True)
+                try: octets = lire(url.replace("1686,", "843,"), binaire=True, entetes=NAVIGATEUR)
                 except Exception: continue
             time.sleep(0.3)
             taille = garder(octets, os.path.join(DOSSIER, f"{cle}.jpg"))
@@ -148,7 +151,45 @@ def aic():
         print(f"  aic/{terme}: +{pris} (total {n})")
         json.dump(manifeste, open(MANIFESTE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
+# ————— Cleveland Museum of Art —————
+def cleveland():
+    global n
+    saut = 0
+    while n < CIBLE:
+        q = urllib.parse.urlencode({"type": "Painting", "has_image": 1, "cc0": 1, "limit": 100, "skip": saut,
+                                    "created_after": 1500, "created_before": 1890})
+        try:
+            data = lire(f"https://openaccess-api.clevelandart.org/api/artworks/?{q}").get("data") or []
+        except Exception as e:
+            print(f"  cleveland: {e}"); return
+        if not data: return
+        pris = 0
+        for a in data:
+            cle = f"cma-{a['id']}"
+            if cle in deja or n >= CIBLE: continue
+            dep = a.get("department") or ""
+            if not any(m in dep for m in ("European Painting", "American Painting")): continue
+            web = (a.get("images") or {}).get("web") or {}
+            url = web.get("url")
+            if not url: continue
+            try:
+                octets = lire(url, binaire=True)
+            except Exception:
+                continue
+            time.sleep(0.25)
+            taille = garder(octets, os.path.join(DOSSIER, f"{cle}.jpg"))
+            if not taille: continue
+            manifeste.append({"id": cle, "fichier": f"{cle}.jpg", "titre": a.get("title"),
+                              "auteur": ", ".join(c.get("description", "") for c in (a.get("creators") or []))[:80],
+                              "date": a.get("creation_date"), "musee": "The Cleveland Museum of Art",
+                              "licence": "CC0 (Open Access)", "source": a.get("url"), "taille": taille})
+            deja.add(cle); n += 1; pris += 1
+        print(f"  cleveland/{saut}: +{pris} (total {n})")
+        json.dump(manifeste, open(MANIFESTE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        saut += 100
+
 met()
 aic()
+cleveland()
 json.dump(manifeste, open(MANIFESTE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"\n{n} tableaux dans {DOSSIER}")
