@@ -34,7 +34,8 @@ CACHE = ici(".cache")
 for d in (SORTIE, os.path.join(CACHE, "voix"), os.path.join(CACHE, "images")): os.makedirs(d, exist_ok=True)
 
 L, H, FPS = 1024, 576, 30
-VOIX = "Jacques"                 # la voix macOS, en dernier recours
+SANS_VOIX = True                 # pour l'instant : texte et musique seulement, le temps de lecture fait le rythme
+VOIX = "Jacques"                 # la voix macOS, en dernier recours (quand SANS_VOIX passe à False)
 VOIX_ELEVEN = ""                 # l'identifiant d'une voix ElevenLabs : voir voix_eleven.py --voix
 POLICE = "/System/Library/Fonts/Supplemental/Georgia Bold.ttf"
 CADENCE_TABLEAU = 2.3        # secondes entre deux tableaux
@@ -68,7 +69,7 @@ def lignes_affichees(groupe):
         for m in re.finditer(r"([*!+])(.+?)\1|([^*!+]+)", ligne):
             couleur = COULEURS[m.group(1)] if m.group(1) else None
             for jeton in (m.group(2) or m.group(3) or "").split():
-                propre = re.sub(r"[.,:;!?«»\"()…]", "", jeton).strip()
+                propre = re.sub(r"[.,:;!?«»\"()…]", "", jeton).strip().replace("'", "’")
                 if propre:
                     mots.append((propre.upper(), couleur))
         if mots:
@@ -211,7 +212,7 @@ def ecrire_groupe(im, groupe, rang, noir=False):
     rendu = []
     for k, mots in enumerate(lignes):
         grande = (k == 0)
-        f = police(56 if grande else 32)
+        f = police(50 if grande else 30)
         espace = 14 if grande else 9
         for morceau in replier(mots, f, espace, L - 2 * marge - 40):
             rendu.append((grande, f, espace, morceau))
@@ -221,7 +222,7 @@ def ecrire_groupe(im, groupe, rang, noir=False):
         x = (marge + decal) if cote == "gauche" else (L - marge - w - decal)
         x = max(24, min(x, L - 24 - w))
         ecrire_ligne(d, x, y, mots, f, espace)
-        y += (64 if grande else 40)
+        y += (58 if grande else 38)
     return im
 
 def cadre_produit(fond):
@@ -288,13 +289,32 @@ def credits_photos(ident, fichiers):
     lignes = sorted({par_fichier[f]["credit"] for f in fichiers if f in par_fichier and par_fichier[f].get("credit")})
     return lignes
 
+def instants_lecture(groupes):
+    """Sans voix : chaque groupe reste le temps de se lire, posément.
+
+    Une base pour poser le regard, puis un temps par mot ; les phrases très
+    courtes ne clignotent pas, les longues ne s'éternisent pas. Les trois
+    groupes de l'accroche, sur fond noir, prennent un peu plus de temps."""
+    instants, t = [], 0.6
+    for k, g in enumerate(groupes):
+        mots = len(narration([g]).split())
+        d = 1.1 + 0.30 * mots
+        d = max(1.8, min(d, 4.6))
+        if k < 3: d += 0.4
+        instants.append(round(t, 3)); t += d
+    return instants, round(t, 3)
+
 def construire(script, apercu=False):
     ident = script["id"]
     groupes = script["groupes"]
     texte = narration(groupes)
-    caf, voix = synthetiser(ident, texte)
-    instants = dater_groupes(groupes, texte, voix["mots"])
-    fin_voix = min(voix["duree"], voix.get("fin", voix["duree"]))
+    if SANS_VOIX:
+        caf = None
+        instants, fin_voix = instants_lecture(groupes)
+    else:
+        caf, voix = synthetiser(ident, texte)
+        instants = dater_groupes(groupes, texte, voix["mots"])
+        fin_voix = min(voix["duree"], voix.get("fin", voix["duree"]))
     duree = fin_voix + SORTIE_FINALE
     noir = script["noir"]
     t_tableaux = instants[noir]                         # le premier tableau arrive avec ce groupe
@@ -356,14 +376,20 @@ def construire(script, apercu=False):
     nom = f"{ident[:2]} - {script['titre']}"
     sortie = os.path.join(SORTIE, f"{nom}.mp4")
     fondu = max(duree - 3.0, 0)
-    # La voix sort du synthétiseur à basse cadence ; sans rééchantillonnage, amix
-    # alignait la musique dessus et l'abîmait. Tout passe à 44,1 kHz d'abord.
-    filtre = (f"[2:a]aresample=44100,atrim=0:{duree:.3f},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=1.2,"
-              f"afade=t=out:st={fondu:.3f}:d=3,volume=0.16[m];"
-              f"[1:a]aresample=44100,atrim=0:{duree:.3f},apad=whole_dur={duree:.3f}[v];"
-              f"[v][m]amix=inputs=2:duration=first:normalize=0[a]")
+    if caf is None:
+        filtre = (f"[1:a]aresample=44100,atrim=0:{duree:.3f},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=1.5,"
+                  f"afade=t=out:st={fondu:.3f}:d=3,volume=0.55[a]")
+        entrees = ["-i", musique]
+    else:
+        # La voix sort du synthétiseur à basse cadence ; sans rééchantillonnage, amix
+        # alignait la musique dessus et l'abîmait. Tout passe à 44,1 kHz d'abord.
+        filtre = (f"[2:a]aresample=44100,atrim=0:{duree:.3f},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=1.2,"
+                  f"afade=t=out:st={fondu:.3f}:d=3,volume=0.16[m];"
+                  f"[1:a]aresample=44100,atrim=0:{duree:.3f},apad=whole_dur={duree:.3f}[v];"
+                  f"[v][m]amix=inputs=2:duration=first:normalize=0[a]")
+        entrees = ["-i", caf, "-i", musique]
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst,
-           "-i", caf, "-i", musique, "-filter_complex", filtre,
+           *entrees, "-filter_complex", filtre,
            "-map", "0:v", "-map", "[a]", "-r", str(FPS), "-c:v", "libx264", "-preset", "medium",
            "-crf", "19", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-ar", "44100",
            "-t", f"{duree:.3f}", "-movflags", "+faststart", sortie]
@@ -381,7 +407,7 @@ def construire(script, apercu=False):
                f"Musique : « {titre_musique} » — Kevin MacLeod (incompetech.com), licence CC BY 4.0\n")
     creds = credits_photos(ident, fichiers_tableaux)
     legende += ("Photos : " + " · ".join(creds) + "\n") if creds else "Photos : Pexels\n"
-    open(os.path.join(SORTIE, f"{nom} (légende).txt"), "w", encoding="utf-8").write(legende)
+    open(os.path.join(SORTIE, f"{nom} (légende).txt"), "w", encoding="utf-8").write(legende.replace("'", "’"))
     taille = os.path.getsize(sortie) / 1e6
     print(f"  {nom} : {duree:.1f} s · {taille:.1f} Mo")
 

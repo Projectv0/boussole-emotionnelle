@@ -36,7 +36,7 @@ PAR_VIDEO = 30
 CLE_PEXELS = os.path.expanduser("~/.config/boussole/pexels.cle")
 UA = "boussole-emotionnelle.fr (atelier video, contact@boussole-emotionnelle.fr)"
 import re
-ANIMAUX = re.compile(r"\b(cat|kitten|dog|puppy|bird|horse|cow|sheep|lion|tiger|monkey|animal|child|children|kid|boy|girl|baby|toddler|soldier|military|army|skeleton|skull)s?\b", re.I)
+ANIMAUX = re.compile(r"\b(cat|kitten|dog|puppy|bird|horse|cow|sheep|lion|tiger|monkey|animal|child|children|kid|boy|girl|baby|toddler|soldier|military|army|skeleton|skull|person|people|man|men|woman|women|human|face|portrait|couple|family|crowd|hand|hands|arm|finger|model|businessman|businesswoman|worker|team|smiling|standing|sitting|wearing|holding|walking|selfie|silhouette)s?\b", re.I)
 
 def cle_pexels():
     c = os.environ.get("PEXELS_API_KEY", "")
