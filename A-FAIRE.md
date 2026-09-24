@@ -384,11 +384,10 @@ exister**, et le site n'en propose aucun — ni le bouton sur la page de résult
 « On m'a offert un code » dans la fenêtre de paiement. Rien à faire de ton côté : la même
 ligne `VENTE.verification` allume les deux.
 
-Un point mérite ton avis, parce que c'est moi qui ai tranché : **si le code expire sans avoir
-servi, l'acheteur peut en créer un neuf.** Un code périmé n'a rien donné à personne, et
-oublier de l'envoyer pendant une journée aurait sinon coûté le cadeau pour toujours. La
-promesse « un seul cadeau par achat » tient quand même : un code *déjà utilisé*, lui, n'est
-jamais remplacé. Dis-moi si tu préfères la version stricte, c'est une condition à retirer.
+**Un code perdu est perdu** — ta décision du 24 septembre. Passé les vingt-quatre heures,
+qu'il ait servi ou non, l'achat n'en ouvre pas d'autre. Comme c'est irréversible, la carte le
+dit **avant** le clic, et le bouton demande une confirmation : le premier clic annonce ce qui
+va se passer, le second le fait.
 
 La règle de limitation de débit du point 3 ci-dessus devient plus importante avec cette
 fonction : elle est ce qui empêche d'essayer des codes en masse.

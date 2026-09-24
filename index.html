@@ -1171,7 +1171,7 @@ footer p + p{ margin-top:.3rem; }
       <div class="res-card res-span-12" id="cadeauBox" hidden><div class="shell"><div class="core">
         <div class="res-kicker">Offrir le test à quelqu’un</div>
         <p style="font-size:.94rem; color:#4A4453">Ton dossier te permet d’offrir le test à quelqu’un&nbsp;: un code unique, à envoyer à la personne de ton choix. Elle fait le test de son côté, et ses résultats s’affichent sans qu’elle ait rien à payer. Ce sont bien <b>ses résultats</b> qu’elle découvre — le dossier complet, lui, reste le tien.</p>
-        <p style="font-size:.9rem; color:var(--muted); margin-top:.7rem">Le code sert <b>une seule fois</b> et reste valable <b>vingt-quatre heures</b>, comptées à partir du moment où tu le crées&nbsp;: rien ne presse, choisis ton moment. Et s’il s’éteint sans avoir servi, tu pourras en créer un nouveau — un envoi oublié ne te coûte pas le geste.</p>
+        <p style="font-size:.9rem; color:var(--muted); margin-top:.7rem">Le code sert <b>une seule fois</b> et reste valable <b>vingt-quatre heures</b>, comptées à partir du moment où tu le crées. Passé ce délai il s’éteint, et <b>il n’y en aura pas d’autre</b>&nbsp;: rien ne presse, crée-le le jour où tu es prêt·e à l’envoyer.</p>
         <div class="comp-actions">
           <button class="btn btn-primary" id="btnCreerCadeau">Créer mon code <span class="ico" aria-hidden="true">🎁</span></button>
         </div>
@@ -3383,11 +3383,23 @@ function echeanceCadeau(iso){
   return `Valable encore ${reste} — jusqu’à ${jour} ${heure}.`;
 }
 
+/* Un achat n'ouvre qu'un code, et rien ne le réédite : le compte à rebours part
+   au clic, définitivement. Un geste irréversible demande deux gestes — le premier
+   clic dit ce qui va se passer, le second le fait. */
+let cadeauConfirme = false;
 async function demanderCadeau(){
   const info = $("#cadeauInfo"), bouton = $("#btnCreerCadeau");
   const session = sessionAchat();
   if(!session){
     info.textContent = "Ta référence d’achat n’est pas retrouvée sur cet appareil. Écris-nous à contact@boussole-emotionnelle.fr avec ta référence et on crée le code à la main.";
+    return;
+  }
+  if(!cadeauConfirme){
+    cadeauConfirme = true;
+    bouton.innerHTML = 'Oui, créer mon code <span class="ico" aria-hidden="true">🎁</span>';
+    /* Formulé de façon à rester vrai même pour qui revient sur un code déjà
+       créé : on ne promet pas que le compte à rebours part « maintenant ». */
+    info.textContent = "Un seul code par achat, et il n’est pas réédité : ses vingt-quatre heures partent à sa création.";
     return;
   }
   bouton.disabled = true;
@@ -3413,7 +3425,12 @@ async function demanderCadeau(){
   afficherCadeau(d);
 }
 
+/* On note sur l'appareil qu'un code existe, sans le code lui-même : au retour,
+   le bouton propose de le revoir au lieu de demander une confirmation pour une
+   création qui a déjà eu lieu. */
+const CADEAU_KEY = "boussole.cadeau.v1";
 function afficherCadeau(d){
+  try{ localStorage.setItem(CADEAU_KEY, "1"); }catch(_){}
   $("#cadeauCode").textContent = d.code;
   $("#cadeauResultat").hidden = false;
   $("#btnCreerCadeau").hidden = true;
@@ -3424,13 +3441,11 @@ function afficherCadeau(d){
     return;
   }
   if(d.expire){
-    /* Périmé sans avoir servi : le cadeau n'a été offert à personne. Le bouton
-       revient, et le serveur remplacera le code plutôt que d'en refuser un
-       second — un envoi oublié ne doit pas coûter le geste. */
+    /* Un achat n'ouvre qu'un code, et la péremption n'y change rien : le bouton
+       ne revient pas. C'est dur, et c'est pour cela que la carte le dit avant
+       qu'on appuie dessus plutôt qu'après. */
     $("#cadeauDelai").textContent = "Ce code a passé ses vingt-quatre heures sans servir.";
     $("#btnCopierCadeau").hidden = true;
-    $("#btnCreerCadeau").hidden = false;
-    $("#btnCreerCadeau").innerHTML = 'Créer un nouveau code <span class="ico" aria-hidden="true">🎁</span>';
     $("#cadeauInfo").textContent = "";
     return;
   }
@@ -3463,6 +3478,14 @@ function majCadeauBox(){
   const box = $("#cadeauBox");
   if(!box) return;
   box.hidden = !(cadeauActif() && niveauAcces === "dossier" && sessionAchat());
+  if(box.hidden) return;
+  let dejaCree = false;
+  try{ dejaCree = localStorage.getItem(CADEAU_KEY) === "1"; }catch(_){}
+  if(dejaCree && !cadeauConfirme){
+    /* Le code existe : rien à confirmer, il n'y a qu'à le retrouver. */
+    cadeauConfirme = true;
+    $("#btnCreerCadeau").innerHTML = 'Revoir mon code <span class="ico" aria-hidden="true">🎁</span>';
+  }
 }
 
 async function validerCadeau(code, st){

@@ -30,10 +30,8 @@ CREATE INDEX IF NOT EXISTS compteur_jour ON compteur (jour);
 --   · un seul usage                 → utilise_le, écrit au moment où il sert
 --   · vingt-quatre heures           → expire_le, posé à la création
 --
--- Un code périmé sans avoir servi peut être remplacé par un neuf, sur la même
--- ligne : il n'a rien donné à personne, et le cadeau promis n'est pas perdu pour
--- un envoi oublié. Un code déjà utilisé, lui, ne se rejoue jamais — c'est
--- « utilise_le IS NULL » dans le UPDATE qui tient cette promesse.
+-- Un achat, un code, une fois pour toutes : la contrainte UNIQUE sur session
+-- vaut aussi après la péremption. Un code oublié est perdu, sans réédition.
 --
 -- Rien ici ne désigne personne : une référence d'achat Stripe, deux dates.
 CREATE TABLE IF NOT EXISTS cadeau (

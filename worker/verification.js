@@ -208,6 +208,10 @@ async function lireAchat(id, env) {
    Ce que le code ouvre : les résultats. Jamais le dossier — celui-là reste
    attaché à l'achat qui l'a payé.
 
+   Un achat, un code, et c'est tout : la contrainte UNIQUE sur session vaut aussi
+   bien après la péremption. Un code oublié est perdu, sans réédition — c'est
+   voulu, et c'est pourquoi le site prévient avant qu'on appuie sur le bouton.
+
    Alphabet sans O ni 0, sans I ni 1 : un code se lit à voix haute et se recopie
    d'un téléphone à l'autre, et personne ne devrait avoir à deviner lequel des
    deux caractères c'était. Trente-deux lettres sur huit positions font mille
@@ -272,17 +276,6 @@ async function creerCadeau(req, env, origine, cors) {
       "INSERT INTO cadeau (code, session, cree_le, expire_le) VALUES (?, ?, ?, ?) " +
       "ON CONFLICT(session) DO NOTHING"
     ).bind(engendrerCode(), id, maintenant, expire).run();
-
-    /* Un code périmé sans avoir servi n'a rien donné à personne : le remplacer
-       ne crée pas un second cadeau, il rend celui qui était promis. Sans cela,
-       oublier d'envoyer son code pendant une journée le perdrait pour toujours.
-       La condition « utilise_le IS NULL » est ce qui garde la promesse : un code
-       déjà offert, lui, ne se rejoue jamais. Ne s'applique qu'à une ligne déjà
-       périmée, donc jamais à celle que l'INSERT vient d'écrire. */
-    await env.MESURE.prepare(
-      "UPDATE cadeau SET code = ?, cree_le = ?, expire_le = ? " +
-      "WHERE session = ? AND utilise_le IS NULL AND expire_le <= ?"
-    ).bind(engendrerCode(), maintenant, expire, id, maintenant).run();
 
     const l = await env.MESURE.prepare(
       "SELECT code, expire_le, utilise_le FROM cadeau WHERE session = ?"
