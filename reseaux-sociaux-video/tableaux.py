@@ -165,7 +165,8 @@ def cleveland():
         q = urllib.parse.urlencode({"type": "Painting", "has_image": 1, "cc0": 1, "limit": 100, "skip": saut,
                                     "created_after": 1500, "created_before": 1890})
         try:
-            data = lire(f"https://openaccess-api.clevelandart.org/api/artworks/?{q}").get("data") or []
+            data = lire(f"https://openaccess-api.clevelandart.org/api/artworks/?{q}",
+                        entetes={"User-Agent": NAVIGATEUR["User-Agent"]}).get("data") or []
         except Exception as e:
             print(f"  cleveland: {e}"); return
         if not data: return
@@ -179,7 +180,7 @@ def cleveland():
             url = web.get("url")
             if not url: continue
             try:
-                octets = lire(url, binaire=True)
+                octets = lire(url, binaire=True, entetes={"User-Agent": NAVIGATEUR["User-Agent"]})
             except Exception:
                 continue
             time.sleep(0.25)
