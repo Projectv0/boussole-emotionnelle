@@ -11,3 +11,11 @@ reseaux-sociaux-bd/illustrations/
 reseaux-sociaux-bd/sortie/
 reseaux-sociaux-bd/controle/
 .claude/
+
+# Vidéos de référence d'un autre créateur : jamais dans le dépôt public
+Video tiktok/
+# Atelier vidéo : les tableaux, musiques et sorties sont lourds et téléchargés
+reseaux-sociaux-video/tableaux/
+reseaux-sociaux-video/musiques/
+reseaux-sociaux-video/voix/
+reseaux-sociaux-video/sortie/
