@@ -9,8 +9,8 @@
 Le style, tel qu'il a été lu dans les trois vidéos de référence :
   · paysage 16:9, une minute environ, 30 images par seconde ;
   · une accroche sur fond noir, les mots posés un par un, un mot en couleur ;
-  · puis des photos assombries, sur le thème de la vidéo, qui changent toutes
-    les deux secondes, et les mots qui apparaissent quand la voix les dit ;
+  · puis des photos assombries, sur le thème de la vidéo — une photo par phrase,
+    la photo et le texte changent au même instant, jamais l'un sans l'autre ;
   · à la fin, le produit et un badge rouge « LIEN EN BIO ».
 
 Ce qu'on assemble :
@@ -38,7 +38,6 @@ SANS_VOIX = True                 # pour l'instant : texte et musique seulement, 
 VOIX = "Jacques"                 # la voix macOS, en dernier recours (quand SANS_VOIX passe à False)
 VOIX_ELEVEN = ""                 # l'identifiant d'une voix ElevenLabs : voir voix_eleven.py --voix
 POLICE = "/System/Library/Fonts/Supplemental/Georgia Bold.ttf"
-CADENCE_TABLEAU = 2.3        # secondes entre deux tableaux
 SORTIE_FINALE = 4.0          # le produit reste à l'écran après le dernier mot
 SITE = "boussole-emotionnelle.fr"
 
@@ -317,23 +316,19 @@ def construire(script, apercu=False):
         fin_voix = min(voix["duree"], voix.get("fin", voix["duree"]))
     duree = fin_voix + SORTIE_FINALE
     noir = script["noir"]
-    t_tableaux = instants[noir]                         # le premier tableau arrive avec ce groupe
-    t_produit = instants[len(groupes) - 1]              # le dernier groupe : « Fais le test… »
 
-    # Les instants où l'image change : chaque groupe, et un tableau toutes les 2,3 s.
-    coupes = sorted(set([0.0] + instants + [t_produit, duree]))
-    t = t_tableaux
-    cuts_tableaux = []
-    while t < t_produit:
-        cuts_tableaux.append(t); t += CADENCE_TABLEAU
-    coupes = sorted(set(coupes + cuts_tableaux))
+    # L'image ne change qu'avec le texte : une photo neuve à chaque phrase, posée à
+    # l'instant exact où la phrase apparaît. Le dernier groupe (« Fais le test… »)
+    # garde la photo de la phrase précédente sous le produit.
+    cuts_tableaux = instants[noir:len(groupes) - 1]
+    coupes = sorted(set([0.0] + instants + [duree]))
     # on écarte les coupes trop proches (moins d'une image) pour ne pas produire de durées nulles
     propres = [coupes[0]]
     for c in coupes[1:]:
         if c - propres[-1] >= 1 / FPS: propres.append(c)
     coupes = propres
 
-    fichiers_tableaux = tableaux_pour(ident, len(cuts_tableaux) + 1)
+    fichiers_tableaux = tableaux_pour(ident, len(cuts_tableaux))
     dossier = os.path.join(CACHE, "images", ident); os.makedirs(dossier, exist_ok=True)
     liste, cache = [], {}
 

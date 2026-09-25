@@ -1,11 +1,12 @@
 # Atelier vidéo — vingt vidéos dans le style des références
 
 Vingt vidéos d'une minute, paysage 16:9, dans le style des trois vidéos de
-référence du dossier `Video tiktok/` : une accroche sur fond noir, des photos
-assombries qui changent toutes les deux secondes — paysages, orages, lumière,
-matière, jamais un humain, et toujours sur le thème de la vidéo (cinq en images
-imaginaires) —, des phrases entières qui se lisent à l'écran sur la musique, et
-un badge rouge « LIEN EN BIO » à la fin.
+référence du dossier `Video tiktok/` : une accroche sur fond noir, puis des
+phrases entières qui se lisent à l'écran sur la musique, chacune sur sa propre
+photo assombrie — la photo et la phrase changent au même instant, jamais l'une
+sans l'autre. Paysages, orages, lumière, matière, jamais un humain, et toujours
+sur le thème de la vidéo (cinq en images imaginaires). Un badge rouge
+« LIEN EN BIO » à la fin.
 
 **Sans voix pour l'instant** (`SANS_VOIX = True` en tête de `generateur.py`) : le temps
 de lecture fait le rythme. Passer `SANS_VOIX` à `False` rebranche une voix — ElevenLabs
