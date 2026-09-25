@@ -11,7 +11,8 @@ Le style, tel qu'il a été lu dans les trois vidéos de référence :
   · une accroche sur fond noir, les mots posés un par un, un mot en couleur ;
   · puis des photos assombries, sur le thème de la vidéo — une photo par phrase,
     la photo et le texte changent au même instant, jamais l'un sans l'autre ;
-  · à la fin, le produit et un badge rouge « LIEN EN BIO ».
+  · à la fin, la photo reste entière : une question dans le style des phrases,
+    et un bandeau discret en bas — la boussole, le nom, l'adresse, « LIEN EN BIO ».
 
 Ce qu'on assemble :
   scripts.py       les vingt textes, groupe de mots par groupe de mots
@@ -37,13 +38,15 @@ L, H, FPS = 1024, 576, 30
 SANS_VOIX = True                 # pour l'instant : texte et musique seulement, le temps de lecture fait le rythme
 VOIX = "Jacques"                 # la voix macOS, en dernier recours (quand SANS_VOIX passe à False)
 VOIX_ELEVEN = ""                 # l'identifiant d'une voix ElevenLabs : voir voix_eleven.py --voix
-POLICE = "/System/Library/Fonts/Supplemental/Georgia Bold.ttf"
-SORTIE_FINALE = 4.0          # le produit reste à l'écran après le dernier mot
+POLICES = {"grasse": "/System/Library/Fonts/Supplemental/Georgia Bold.ttf",
+           "italique": "/System/Library/Fonts/Supplemental/Georgia Italic.ttf",
+           "normale": "/System/Library/Fonts/Supplemental/Georgia.ttf"}
+SORTIE_FINALE = 4.0          # la page de fin reste à l'écran après le dernier mot
 SITE = "boussole-emotionnelle.fr"
 
 BLANC, NOIR = (255, 255, 255), (0, 0, 0)
 COULEURS = {"*": (245, 208, 0), "!": (224, 48, 48), "+": (46, 204, 113)}   # jaune, rouge, vert
-ROUGE_BADGE = (196, 22, 22)
+CREME, ENCRE = (253, 248, 238), (38, 34, 30)                              # les tons du site
 
 PRODUIT = Image.open(ici("..", "og.jpg")).convert("RGB")
 
@@ -168,9 +171,10 @@ def fond_tableau(fichier):
     return im
 
 _polices = {}
-def police(taille):
-    if taille not in _polices: _polices[taille] = ImageFont.truetype(POLICE, taille)
-    return _polices[taille]
+def police(taille, style="grasse"):
+    cle = (style, taille)
+    if cle not in _polices: _polices[cle] = ImageFont.truetype(POLICES[style], taille)
+    return _polices[cle]
 
 def largeur_ligne(mots, f, espace):
     return sum(f.getlength(m) for m, _ in mots) + espace * (len(mots) - 1)
@@ -224,32 +228,42 @@ def ecrire_groupe(im, groupe, rang, noir=False):
         y += (58 if grande else 38)
     return im
 
+def medaillon(diam, bord=3):
+    """La boussole de og.jpg, découpée en rond sur son fond crème, avec un liseré."""
+    src = PRODUIT.crop((50, 30, 610, 590)).resize((diam, diam), Image.LANCZOS)
+    masque = Image.new("L", (diam, diam), 0)
+    ImageDraw.Draw(masque).ellipse((0, 0, diam - 1, diam - 1), fill=255)
+    rond = Image.new("RGBA", (diam, diam), (0, 0, 0, 0))
+    rond.paste(src, (0, 0), masque)
+    ImageDraw.Draw(rond).ellipse((0, 0, diam - 1, diam - 1), outline=CREME + (255,), width=bord)
+    return rond
+
 def cadre_produit(fond):
-    """La fin : le produit au centre, le nom du site, et le badge rouge."""
+    """La fin : la photo reste entière, une question dans le style des phrases de
+    la vidéo, et un bandeau discret en bas — la boussole en médaillon, le nom du
+    site en italique, l'adresse, et une étiquette jaune « LIEN EN BIO »."""
     im = fond.convert("RGBA")
     d = ImageDraw.Draw(im, "RGBA")
-    # le visuel du site, encadré et ombré
-    pl = 470; prod = PRODUIT.resize((pl, round(PRODUIT.height * pl / PRODUIT.width)), Image.LANCZOS)
-    px, py = 64, 92
-    ombre = Image.new("RGBA", (prod.width + 60, prod.height + 60), (0, 0, 0, 0))
-    ImageDraw.Draw(ombre).rectangle((30, 40, prod.width + 30, prod.height + 40), fill=(0, 0, 0, 180))
-    ombre = ombre.filter(ImageFilter.GaussianBlur(18))
-    im.alpha_composite(ombre, (px - 30, py - 30))
-    d.rectangle((px - 4, py - 4, px + prod.width + 4, py + prod.height + 4), fill=(248, 244, 236, 255))
-    im.paste(prod, (px, py))
-    # le texte, à droite
+    f = police(50)
+    ecrire_ligne(d, 96, 150, [("ET", None), ("TOI,", None)], f, 14)
+    ecrire_ligne(d, 130, 214, [("OÙ", None), ("EN", None), ("ES-TU", COULEURS["*"]), ("?", None)], f, 14)
+    # le bandeau
+    haut = H - 150
+    bande = Image.new("RGBA", (L, H), (0, 0, 0, 0))
+    ImageDraw.Draw(bande).rectangle((0, haut, L, H), fill=(12, 10, 10, 215))
+    im.alpha_composite(bande)
+    im.alpha_composite(medaillon(104), (60, haut + 23))
     d = ImageDraw.Draw(im, "RGBA")
-    f1, f2, f3 = police(52), police(30), police(22)
-    x = px + prod.width + 42
-    ecrire_ligne(d, x, 128, [("FAIS", None), ("LE", None), ("TEST", COULEURS["*"])], f1, 14)
-    ecrire_ligne(d, x, 200, [("SEIZE", None), ("SITUATIONS", None)], f2, 9)
-    ecrire_ligne(d, x, 240, [("QUATORZE", None), ("ÉMOTIONS", None)], f2, 9)
-    ecrire_ligne(d, x, 296, [(SITE.upper(), COULEURS["+"])], f3, 9)
-    # le badge rouge
-    fb = police(34); texte = "LIEN EN BIO"; tw = fb.getlength(texte)
-    bx, by = x, 360
-    d.rectangle((bx, by, bx + tw + 44, by + 62), fill=ROUGE_BADGE + (255,))
-    d.text((bx + 22, by + 11), texte, font=fb, fill=BLANC)
+    x = 196
+    d.text((x, H - 128), "Boussole émotionnelle", font=police(34, "italique"), fill=CREME)
+    d.text((x, H - 82), "Fais le test  ·  16 situations  ·  14 émotions", font=police(22, "normale"), fill=(215, 210, 200))
+    d.text((x, H - 50), SITE, font=police(24), fill=COULEURS["+"])
+    # l'étiquette jaune
+    fb = police(26); texte = "LIEN EN BIO"; tw, th = fb.getlength(texte), fb.size
+    cx, cy = L - 150, H - 75
+    x0, y0, x1, y1 = cx - tw / 2 - 28, cy - th / 2 - 12, cx + tw / 2 + 28, cy + th / 2 + 12
+    d.rounded_rectangle((x0, y0, x1, y1), radius=(y1 - y0) / 2, fill=COULEURS["*"] + (255,))
+    d.text((cx - tw / 2, y0 + 12 - th * 0.12), texte, font=fb, fill=ENCRE)
     return im.convert("RGB")
 
 # ————————————————————————— la ligne de temps —————————————————————————

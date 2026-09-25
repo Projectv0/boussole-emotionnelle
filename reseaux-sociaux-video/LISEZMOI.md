@@ -5,8 +5,9 @@ référence du dossier `Video tiktok/` : une accroche sur fond noir, puis des
 phrases entières qui se lisent à l'écran sur la musique, chacune sur sa propre
 photo assombrie — la photo et la phrase changent au même instant, jamais l'une
 sans l'autre. Paysages, orages, lumière, matière, jamais un humain, et toujours
-sur le thème de la vidéo (cinq en images imaginaires). Un badge rouge
-« LIEN EN BIO » à la fin.
+sur le thème de la vidéo (cinq en images imaginaires). À la fin, la photo reste
+entière : une question — « Et toi, où en es-tu ? » — et un bandeau discret en
+bas avec la boussole, le nom du site, l'adresse et l'étiquette « LIEN EN BIO ».
 
 **Sans voix pour l'instant** (`SANS_VOIX = True` en tête de `generateur.py`) : le temps
 de lecture fait le rythme. Passer `SANS_VOIX` à `False` rebranche une voix — ElevenLabs
