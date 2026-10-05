@@ -491,24 +491,26 @@ vont ouvrir : si ça casse, ça casse sur tous les clients à la fois.
 
 ---
 
-# D — Les vingt vidéos
+# D — Les vidéos
 
-## D1 · Publier les vingt vidéos — tout est prêt
+## D1 · Publier les vidéos — tout est prêt
 
-Vingt vidéos d'une minute, dans le style des trois références de `Video tiktok/`, sont dans
-**`Vidéos à publier/`**, à la racine, chacune avec sa légende à côté, prête à coller. Les images
-sont des photos Pexels sur le thème de chaque vidéo — paysages, orages, lumière, jamais un
-humain ; cinq vidéos en images imaginaires. Pas de voix pour l'instant : le texte se lit à
-l'écran sur la musique. Une voix ElevenLabs pourra s'ajouter plus tard, sans rien changer
-d'autre.
+Quarante vidéos d'une minute, en **4:3**, dans **`Vidéos à publier/`** à la racine, chacune
+avec sa légende à côté, prête à coller. Les mêmes vingt textes, en deux versions :
+
+- **`Photos/`** : des photos Pexels sur le thème de chaque vidéo — paysages, orages, lumière,
+  jamais un humain ; cinq vidéos en images imaginaires ;
+- **`Illustrations/`** : les illustrations nanobanana des carrousels, une scène par phrase.
+  Elles ont été générées par IA : en publiant, active l'étiquette prévue par la plateforme.
+
+Dans les deux, les mots apparaissent un à un au rythme d'une voix off, les images bougent
+lentement et changent avec chaque phrase, par une transition. Pas de voix pour l'instant ;
+une voix ElevenLabs pourra s'ajouter plus tard, sans rien changer d'autre.
 
 **Une seule règle à respecter en publiant : garder la ligne de crédit musique** qui est dans
 chaque légende (« Musique : … — Kevin MacLeod (incompetech.com), licence CC BY 4.0 »). Ce n'est
-pas une politesse, c'est la condition de la licence. Les tableaux, eux, sont en CC0 : rien à
-créditer, mais `tableaux.json` garde la trace de chaque toile si on te le demande un jour.
-
-Les vidéos sont en **paysage**, comme les références. Si à l'usage tu préfères du 9:16, c'est
-deux lignes dans `generateur.py` — dis-le-moi.
+pas une politesse, c'est la condition de la licence. Les photos Pexels et nos illustrations
+n'ont rien à créditer.
 
 **Le dossier `Video tiktok/` est resté sur ton disque mais a été retiré du dépôt public** le
 24 septembre : il y était depuis le 23, servi par GitHub Pages — ce sont les vidéos d'un autre

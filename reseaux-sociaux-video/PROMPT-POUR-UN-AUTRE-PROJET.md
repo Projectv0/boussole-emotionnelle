@@ -39,7 +39,8 @@ L'atelier d'origine est sur cette machine, dans
 `/Users/cavalier/Dev/Site Emotion/reseaux-sociaux-video/`. Copie-le dans le nouveau
 projet sous le nom `reseaux-sociaux-video/`, mais seulement ces fichiers :
 
-    generateur.py        la fabrique (PIL pour les images-clés, ffmpeg pour l'assemblage)
+    generateur.py        la fabrique : textes, fonds, page de fin, légendes
+    montage.py           le montage image par image : rythme des mots, mouvements, transitions
     photos.py            la récolte des photos par thème (API Pexels)
     scripts.py           les vingt textes — à réécrire entièrement, garde juste la structure
     voix_eleven.py       la voix ElevenLabs, prête mais inactive
@@ -69,13 +70,13 @@ Tout le reste du code reste tel quel. Dans `generateur.py` :
 - `PRODUIT` : l'image du projet (`../og.jpg` dans l'original). La fonction `medaillon()`
   découpe un rond dans cette image avec la boîte `(50, 30, 610, 590)` : adapte la boîte
   à la nouvelle image pour que le rond cadre bien le visuel.
-- `cadre_produit()` : la page de fin. La question en haut (« ET TOI, / OÙ EN ES-TU ? »),
-  le nom en italique (« Boussole émotionnelle »), la ligne de détail (« Fais le test ·
+- La page de fin : `QUESTION` (« ET TOI, / OÙ EN ES-TU ? ») et `couche_bandeau()` — le
+  nom en italique (« Boussole émotionnelle »), la ligne de détail (« Fais le test ·
   16 situations · 14 émotions ») et l'étiquette (« LIEN EN BIO ») : réécris-les pour le
   projet. Garde la mise en page : photo entière, question en escalier à gauche dans le
   style des phrases, bandeau sombre de 150 px en bas avec le médaillon (104 px),
   le nom, la ligne de détail, l'adresse en vert, l'étiquette jaune à droite.
-- La légende, en fin de `construire()` : le lien vers l'article (`{SITE}/guide/…` dans
+- La légende, dans `ecrire_legende()` : le lien vers l'article (`{SITE}/guide/…` dans
   l'original), la ligne « Le test : … (lien en bio) », les mots-dièse. Adapte au projet.
   **Garde absolument** la ligne de crédit musique et la ligne « Photos : Pexels ».
 
@@ -96,20 +97,24 @@ Dans `scripts.py` : tout est à réécrire (voir § 5).
 
 ## 4 · Le format, exactement
 
-- Paysage 16:9, **1024 × 576**, 30 images par seconde, H.264 (crf 19), AAC 160 kb/s à
-  44,1 kHz, `+faststart`. Entre **55 et 64 secondes** par vidéo.
+- Paysage 4:3, **1024 × 768**, 30 images par seconde, H.264 (crf 19), AAC 160 kb/s à
+  44,1 kHz, `+faststart`. Entre **55 et 67 secondes** par vidéo.
 - Une vidéo se déroule ainsi :
-  1. 0,6 s de noir ;
+  1. 0,5 s de noir ;
   2. **l'accroche** : trois groupes de mots sur fond noir, posés en escalier depuis un
      coin, un mot en couleur ;
   3. **le corps** : dix à treize phrases, chacune sur **sa propre photo**. La photo et la
      phrase changent au même instant, jamais l'une sans l'autre. C'est la règle la plus
      importante du style. Le texte se déplace d'une phrase à l'autre entre six
      emplacements fixes (`ANCRES`), à gauche ou à droite, jamais centré ;
-  4. **la page de fin** : 4 secondes, la dernière photo reste, la question et le bandeau.
-- Le temps d'affichage d'une phrase se calcule sur sa longueur : `1,1 s + 0,30 s par
-  mot`, borné entre 1,8 et 4,6 s ; les trois groupes de l'accroche gagnent 0,4 s.
-  C'est `instants_lecture()`, ne change pas ces valeurs.
+  4. **la page de fin** : 4,5 secondes, la dernière photo reste, le bandeau monte du bas
+     et la question se pose mot à mot.
+- **Ce n'est pas un diaporama** : c'est `montage.py`, ne change pas ses réglages sans
+  raison. Les mots apparaissent un à un au rythme d'une voix off posée (environ 150 mots
+  par minute, selon les syllabes, avec des pauses aux virgules et aux points), en fondu
+  et en remontant un peu ; chaque photo avance, recule ou glisse lentement pendant la
+  lecture ; chaque changement de phrase passe par une transition (fondu, poussée, zoom
+  ou flou, en alternance) qui commence à l'instant exact où la phrase commence.
 - Le texte : Georgia Bold, en capitales, 50 px pour la première ligne d'une phrase et
   30 px pour les suivantes, contour noir de 3 px et ombre portée, blanc par défaut.
   Trois couleurs d'accent : jaune `*mot*`, rouge `!mot!`, vert `+mot+`. La barre `/`

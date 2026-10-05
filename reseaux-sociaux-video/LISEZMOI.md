@@ -1,6 +1,6 @@
 # Atelier vidéo — vingt vidéos dans le style des références
 
-Vingt vidéos d'une minute, paysage 16:9, dans le style des trois vidéos de
+Vingt vidéos d’une minute, en 4:3 (1024 × 768), dans le style des trois vidéos de
 référence du dossier `Video tiktok/` : une accroche sur fond noir, puis des
 phrases entières qui se lisent à l'écran sur la musique, chacune sur sa propre
 photo assombrie — la photo et la phrase changent au même instant, jamais l'une
@@ -9,20 +9,43 @@ sur le thème de la vidéo (cinq en images imaginaires). À la fin, la photo res
 entière : une question — « Et toi, où en es-tu ? » — et un bandeau discret en
 bas avec la boussole, le nom du site, l'adresse et l'étiquette « LIEN EN BIO ».
 
-**Sans voix pour l'instant** (`SANS_VOIX = True` en tête de `generateur.py`) : le temps
-de lecture fait le rythme. Passer `SANS_VOIX` à `False` rebranche une voix — ElevenLabs
-si la clé est là, sinon celle de macOS — et les mots s'affichent alors quand elle les dit.
+**Sans voix pour l'instant** (`SANS_VOIX = True` en tête de `generateur.py`) : les mots
+apparaissent un à un, au rythme où une voix off posée les dirait. Passer `SANS_VOIX` à
+`False` rebranche une voix — ElevenLabs si la clé est là, sinon celle de macOS — et les
+mots s'affichent alors quand elle les dit.
+
+## Le montage (`montage.py`)
+
+Pour que ce ne soit pas un diaporama, chaque vidéo est rendue image par image, à
+30 images par seconde :
+
+- **le rythme des mots** : environ 150 mots par minute, un mot long prend plus de temps
+  qu'un mot court (on compte ses syllabes), une virgule fait respirer, un point marque un
+  vrai temps. Quand la phrase est dite en entier, elle reste le temps de finir de la lire
+  (`TENUE`), puis la suivante arrive ;
+- **les mots** arrivent en fondu en remontant un peu ; ceux en couleur arrivent plus gros
+  et se posent. La phrase d'avant s'efface quand la suivante commence ;
+- **les images** bougent lentement pendant la lecture : elles avancent, reculent ou
+  glissent d'un côté — vers les visages, sur les illustrations ;
+- **les transitions** : l'image change à l'instant exact où la phrase change, par un
+  fondu, une poussée latérale, un zoom ou un flou, en alternance ;
+- **la fin** : le bandeau monte du bas, la question « Et toi, où en es-tu ? » se pose
+  mot à mot.
+
+Tous les réglages sont en tête de `montage.py`. `--apercu` pose dans `.cache/` une image
+par phrase, au moment où elle est entière — de quoi faire des planches de contrôle sans
+rendre la vidéo.
 
 ## Refaire les vidéos
 
     python3 photos.py          # une fois : ~30 photos par vidéo, sur le thème de chacune
-    python3 generateur.py      # les vingt vidéos, dans « Vidéos à publier/ » à la racine
+    python3 generateur.py      # les vingt vidéos photos, dans « Vidéos à publier/Photos/ »
     python3 generateur.py 07   # une seule
     python3 generateur.py --legendes   # réécrire les légendes seules, sans refaire les vidéos
 
 ## La version illustrée
 
-    python3 generateur.py --illustrations        # les vingt, dans « Vidéos à publier (illustrations)/ »
+    python3 generateur.py --illustrations        # les vingt illustrées, dans « Vidéos à publier/Illustrations/ »
     python3 generateur.py --illustrations 07     # une seule
 
 Mêmes textes, même musique, même rythme ; les fonds sont les illustrations nanobanana des
@@ -108,6 +131,9 @@ tristesse comme passages (*Éthique*, III), Darwin sur l'expression involontaire
 
 ## Le format
 
-Les références sont en paysage, ce qui est inhabituel sur TikTok ; on a gardé le
-même format. Pour passer en 9:16, changer `L, H = 1024, 576` dans `generateur.py`
-et revoir les ancres du texte — tout le reste suit.
+**4:3, 1024 × 768** depuis le 5 octobre 2026 (les références étaient en 16:9). Le
+format tient dans une ligne, `L, H, FPS = 1024, 768, 30` en tête de `generateur.py` :
+les hauteurs du texte (`ANCRES`), les emplacements essayés pour éviter les visages, la
+question de fin et les cadrages suivent la hauteur d'eux-mêmes. Pour un format portrait
+(9:16), il faudrait en plus revoir la largeur des lignes, pensée pour un cadre plus
+large que haut.

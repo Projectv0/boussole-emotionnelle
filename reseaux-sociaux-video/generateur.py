@@ -9,10 +9,12 @@
     python3 generateur.py --illustrations 03     # (choix phrase par phrase : choix_illustrations.py)
 
 Le style, tel qu'il a été lu dans les trois vidéos de référence :
-  · paysage 16:9, une minute environ, 30 images par seconde ;
+  · paysage 4:3 (1024 × 768), une minute environ, 30 images par seconde ;
   · une accroche sur fond noir, les mots posés un par un, un mot en couleur ;
   · puis des photos assombries, sur le thème de la vidéo — une photo par phrase,
     la photo et le texte changent au même instant, jamais l'un sans l'autre ;
+  · les mots apparaissent au rythme d'une voix off, chaque image bouge lentement,
+    et chaque changement de phrase passe par une transition (voir montage.py) ;
   · à la fin, la photo reste entière : une question dans le style des phrases,
     et un bandeau discret en bas — la boussole, le nom, l'adresse, « LIEN EN BIO ».
 
@@ -23,8 +25,8 @@ Ce qu'on assemble :
   voix_eleven.py   la voix ElevenLabs (voix.swift, celle de macOS, en dernier recours)
   ../og.jpg        l'image du site, montrée à la fin comme « le produit »
 
-Sortie : « ../Vidéos à publier/NN - Titre.mp4 », avec sa légende à côté — et, avec
---illustrations, « ../Vidéos à publier (illustrations)/ ».
+Sortie : « ../Vidéos à publier/Photos/NN - Titre.mp4 », avec sa légende à côté — et, avec
+--illustrations, « ../Vidéos à publier/Illustrations/ ».
 Les fichiers de travail (voix, images-clés) vont dans .cache/, qu'on peut effacer.
 
 Les illustrations sont des scènes avec des personnages : le cadrage se centre sur
@@ -38,12 +40,13 @@ from scripts import SCRIPTS
 ICI = os.path.dirname(os.path.abspath(__file__))
 def ici(*p): return os.path.join(ICI, *p)
 ILLUSTRATIONS = "--illustrations" in sys.argv     # fonds : illustrations nanobanana au lieu des photos Pexels
-SORTIE = ici("..", "Vidéos à publier (illustrations)" if ILLUSTRATIONS else "Vidéos à publier")
+# un seul dossier, deux versions : « Vidéos à publier/Photos » et « Vidéos à publier/Illustrations »
+SORTIE = ici("..", "Vidéos à publier", "Illustrations" if ILLUSTRATIONS else "Photos")
 CACHE = ici(".cache")
 IMAGES_CLES = os.path.join(CACHE, "images-illustrations" if ILLUSTRATIONS else "images")
 for d in (SORTIE, os.path.join(CACHE, "voix"), IMAGES_CLES): os.makedirs(d, exist_ok=True)
 
-L, H, FPS = 1024, 576, 30
+L, H, FPS = 1024, 768, 30        # 4:3 ; tout le reste (texte, cadrages, fin) suit la hauteur
 SANS_VOIX = True                 # pour l'instant : texte et musique seulement, le temps de lecture fait le rythme
 VOIX = "Jacques"                 # la voix macOS, en dernier recours (quand SANS_VOIX passe à False)
 VOIX_ELEVEN = ""                 # l'identifiant d'une voix ElevenLabs : voir voix_eleven.py --voix
@@ -69,27 +72,33 @@ def narration(groupes):
         morceaux.append(re.sub(r"\s+", " ", s).strip())
     return " ".join(morceaux)
 
-def lignes_affichees(groupe):
+def lignes_affichees(groupe, avec_ponctuation=False):
     """Les lignes à l'écran : [[(mot, couleur|None), …], …], en capitales, sans ponctuation.
 
     Une marque peut couvrir plusieurs mots — « *ça va* » — : on découpe la ligne en
-    tronçons colorés ou non, puis chaque tronçon en mots."""
-    lignes = []
+    tronçons colorés ou non, puis chaque tronçon en mots.
+
+    Avec avec_ponctuation, rend aussi, ligne par ligne, la ponctuation qui suit chaque
+    mot (« , », « . », « ? »…) : c'est elle qui fait respirer le rythme de lecture."""
+    lignes, ponctuations = [], []
     for ligne in groupe.split("/"):
-        mots = []
+        mots, ponct = [], []
         for m in re.finditer(r"([*!+])(.+?)\1|([^*!+]+)", ligne):
             couleur = COULEURS[m.group(1)] if m.group(1) else None
             # « d'*humeur* » : l'élision reste collée au mot coloré, et prend sa couleur
             colle = bool(m.group(1)) and m.start() > 0 and ligne[m.start() - 1] in "'’" and bool(mots)
             for i, jeton in enumerate((m.group(2) or m.group(3) or "").split()):
                 propre = re.sub(r"[.,:;!?«»\"()…]", "", jeton).strip().replace("'", "’")
-                if not propre: continue
+                signes = "".join(c for c in jeton if c in ".,:;!?…")
+                if not propre:                      # « ? » isolé, « . » après un mot coloré
+                    if ponct: ponct[-1] += signes
+                    continue
                 if colle and i == 0:
-                    propre = mots.pop()[0] + propre.upper()
-                mots.append((propre.upper(), couleur))
+                    propre = mots.pop()[0] + propre.upper(); ponct.pop()
+                mots.append((propre.upper(), couleur)); ponct.append(signes)
         if mots:
-            lignes.append(mots)
-    return lignes
+            lignes.append(mots); ponctuations.append(ponct)
+    return (lignes, ponctuations) if avec_ponctuation else lignes
 
 # ————————————————————————— la voix —————————————————————————
 
@@ -336,7 +345,9 @@ def ecrire_ligne(d, x, y, mots, f, espace):
 
 # Les emplacements du texte, loin du médaillon (centre bas). On les enchaîne dans
 # un ordre fixe : les références bougent le texte d'un groupe à l'autre.
-ANCRES = [("droite", 70), ("gauche", 300), ("droite", 220), ("gauche", 70), ("droite", 340), ("gauche", 180)]
+# (hauteurs dessinées pour 576 px de haut, ramenées à la hauteur réelle)
+def _y(v): return round(v * H / 576)
+ANCRES = [("droite", _y(70)), ("gauche", _y(300)), ("droite", _y(220)), ("gauche", _y(70)), ("droite", _y(340)), ("gauche", _y(180))]
 
 def replier(mots, f, espace, largeur_max):
     """Coupe une ligne de mots en plusieurs si elle dépasse la largeur permise."""
@@ -414,7 +425,7 @@ def placer_hors_visages(lignes, rang, eviter):
     meilleur = None
     for largeur in (660, 520):                 # plus étroit si c'est le seul moyen d'éviter un visage
         for cote in ("gauche", "droite"):
-            for y in (40, 110, 180, 250, 320, 390):
+            for y in range(40, H - 150, 70):
                 places = disposer(lignes, cote, y, largeur, equilibre=True)
                 boite = emprise(places)
                 if boite[3] > H - 28: continue
@@ -423,25 +434,33 @@ def placer_hors_visages(lignes, rang, eviter):
                     meilleur = (score, places)
     return meilleur[1] if meilleur else disposer(lignes, cote0, y0, 660, equilibre=True)
 
-def ecrire_groupe(im, groupe, rang, noir=False, eviter=None):
-    """Écrit un groupe. « eviter » (les visages d'une illustration) déplace le texte
-    hors des visages et pose une ombre douce derrière lui, pour qu'il se lise sur
-    un fond clair."""
+def placer_groupe(groupe, rang, noir=False, eviter=None):
+    """Où vont les lignes d'un groupe. « eviter » (les visages d'une illustration)
+    déplace le texte hors des visages."""
     lignes = lignes_affichees(groupe)
-    if not lignes: return im
+    if not lignes: return []
     if eviter is not None:
-        places = placer_hors_visages(lignes, rang, eviter)
-        x0, y0, x1, y1 = emprise(places)
-        ombre = Image.new("L", (L, H), 0)
-        ImageDraw.Draw(ombre).rounded_rectangle((x0 - 26, y0 - 18, x1 + 26, y1 + 14), radius=30, fill=125)
-        ombre = ombre.filter(ImageFilter.GaussianBlur(26))
-        im = Image.composite(Image.new("RGB", (L, H), NOIR), im, ombre)
-    else:
-        cote, y = ANCRES[rang % len(ANCRES)]
-        if noir:
-            # sur fond noir, les mots se posent en escalier depuis le coin
-            cote, y = ("gauche", 150) if rang % 2 == 0 else ("droite", 120)
-        places = disposer(lignes, cote, y, L - 2 * 64 - 40)
+        return placer_hors_visages(lignes, rang, eviter)
+    cote, y = ANCRES[rang % len(ANCRES)]
+    if noir:
+        # sur fond noir, les mots se posent en escalier depuis le coin
+        cote, y = ("gauche", _y(150)) if rang % 2 == 0 else ("droite", _y(120))
+    return disposer(lignes, cote, y, L - 2 * 64 - 40)
+
+def ombre_douce(boite):
+    """Le voile sombre et flou posé derrière un texte sur fond clair : un masque L × H."""
+    x0, y0, x1, y1 = boite
+    ombre = Image.new("L", (L, H), 0)
+    ImageDraw.Draw(ombre).rounded_rectangle((x0 - 26, y0 - 18, x1 + 26, y1 + 14), radius=30, fill=125)
+    return ombre.filter(ImageFilter.GaussianBlur(26))
+
+def ecrire_groupe(im, groupe, rang, noir=False, eviter=None):
+    """Écrit un groupe d'un coup (images fixes). Sur une illustration, le texte
+    évite les visages et une ombre douce le rend lisible sur un fond clair."""
+    places = placer_groupe(groupe, rang, noir, eviter)
+    if not places: return im
+    if eviter is not None:
+        im = Image.composite(Image.new("RGB", (L, H), NOIR), im, ombre_douce(emprise(places)))
     d = ImageDraw.Draw(im, "RGBA")
     for x, y, w, grande, f, espace, mots in places:
         ecrire_ligne(d, x, y, mots, f, espace)
@@ -457,53 +476,59 @@ def medaillon(diam, bord=3):
     ImageDraw.Draw(rond).ellipse((0, 0, diam - 1, diam - 1), outline=CREME + (255,), width=bord)
     return rond
 
-def cadre_produit(fond, eviter=None):
-    """La fin : la photo reste entière, une question dans le style des phrases de
-    la vidéo, et un bandeau discret en bas — la boussole en médaillon, le nom du
-    site en italique, l'adresse, et une étiquette jaune « LIEN EN BIO ».
-    Sur une illustration, la question passe à droite si elle couvrirait un visage."""
+QUESTION = ([("ET", None), ("TOI,", None)],
+            [("OÙ", None), ("EN", None), ("ES-TU", COULEURS["*"]), ("?", None)])
+HAUT_BANDEAU = 150
+
+def placer_question(eviter=None):
+    """Les deux lignes de « ET TOI, / OÙ EN ES-TU ? » : [(x, y, mots), (x, y, mots)], et la
+    boîte qu'elles occupent. Sur une illustration, la place la plus libre au-dessus du
+    bandeau, à gauche ou à droite, plus ou moins haut."""
     f = police(50)
-    l1 = [("ET", None), ("TOI,", None)]
-    l2 = [("OÙ", None), ("EN", None), ("ES-TU", COULEURS["*"]), ("?", None)]
-    w2 = largeur_ligne(l2, f, 14)
-    (xa, ya), (xb, yb) = (96, 150), (130, 214)
+    w2 = largeur_ligne(QUESTION[1], f, 14)
+    xa, ya = 96, _y(150)
     if eviter:
-        # la place la plus libre, au-dessus du bandeau : à gauche ou à droite, plus ou moins haut
         meilleur = None
         for droite in (False, True):
-            for y in (40, 80, 120, 150, 190, 230, 270):
+            for y in range(40, H - HAUT_BANDEAU - 150, 40):
                 a = (L - 96 - w2 - 34) if droite else 96
                 boite = (a - 20, y - 10, a + 34 + w2 + 20, y + 64 + 70)
-                score = gene(boite, eviter) + abs(y - 150) * 3 + (600 if droite else 0)
+                score = gene(boite, eviter) + abs(y - _y(150)) * 3 + (600 if droite else 0)
                 if meilleur is None or score < meilleur[0]:
                     meilleur = (score, a, y)
         _, xa, ya = meilleur
-        xb, yb = xa + 34, ya + 64
-        boite = (xa - 26, ya - 18, xb + w2 + 26, yb + 70)
-        ombre = Image.new("L", (L, H), 0)
-        ImageDraw.Draw(ombre).rounded_rectangle(boite, radius=30, fill=125)
-        fond = Image.composite(Image.new("RGB", (L, H), NOIR), fond, ombre.filter(ImageFilter.GaussianBlur(26)))
-    im = fond.convert("RGBA")
+    xb, yb = xa + 34, ya + 64
+    return [(xa, ya, QUESTION[0]), (xb, yb, QUESTION[1])], (xa, ya, xb + w2, yb + 56)
+
+def couche_bandeau():
+    """Le bandeau du bas, seul, sur fond transparent : L × HAUT_BANDEAU, RGBA.
+    La boussole en médaillon, le nom du site en italique, l'adresse, et une
+    étiquette jaune « LIEN EN BIO »."""
+    im = Image.new("RGBA", (L, HAUT_BANDEAU), (12, 10, 10, 215))
+    im.alpha_composite(medaillon(104), (60, 23))
     d = ImageDraw.Draw(im, "RGBA")
-    ecrire_ligne(d, xa, ya, l1, f, 14)
-    ecrire_ligne(d, xb, yb, l2, f, 14)
-    # le bandeau
-    haut = H - 150
-    bande = Image.new("RGBA", (L, H), (0, 0, 0, 0))
-    ImageDraw.Draw(bande).rectangle((0, haut, L, H), fill=(12, 10, 10, 215))
-    im.alpha_composite(bande)
-    im.alpha_composite(medaillon(104), (60, haut + 23))
-    d = ImageDraw.Draw(im, "RGBA")
-    x = 196
-    d.text((x, H - 128), "Boussole émotionnelle", font=police(34, "italique"), fill=CREME)
-    d.text((x, H - 82), "Fais le test  ·  16 situations  ·  14 émotions", font=police(22, "normale"), fill=(215, 210, 200))
-    d.text((x, H - 50), SITE, font=police(24), fill=COULEURS["+"])
-    # l'étiquette jaune
+    x, haut = 196, H - HAUT_BANDEAU
+    d.text((x, H - 128 - haut), "Boussole émotionnelle", font=police(34, "italique"), fill=CREME)
+    d.text((x, H - 82 - haut), "Fais le test  ·  16 situations  ·  14 émotions", font=police(22, "normale"), fill=(215, 210, 200))
+    d.text((x, H - 50 - haut), SITE, font=police(24), fill=COULEURS["+"])
     fb = police(26); texte = "LIEN EN BIO"; tw, th = fb.getlength(texte), fb.size
-    cx, cy = L - 150, H - 75
+    cx, cy = L - 150, H - 75 - haut
     x0, y0, x1, y1 = cx - tw / 2 - 28, cy - th / 2 - 12, cx + tw / 2 + 28, cy + th / 2 + 12
     d.rounded_rectangle((x0, y0, x1, y1), radius=(y1 - y0) / 2, fill=COULEURS["*"] + (255,))
     d.text((cx - tw / 2, y0 + 12 - th * 0.12), texte, font=fb, fill=ENCRE)
+    return im
+
+def cadre_produit(fond, eviter=None):
+    """La fin, d'un coup (image fixe) : l'image reste entière, la question dans le
+    style des phrases, et le bandeau en bas."""
+    lignes, boite = placer_question(eviter)
+    if eviter:
+        fond = Image.composite(Image.new("RGB", (L, H), NOIR), fond, ombre_douce(boite))
+    im = fond.convert("RGBA")
+    d = ImageDraw.Draw(im, "RGBA")
+    for x, y, mots in lignes:
+        ecrire_ligne(d, x, y, mots, police(50), 14)
+    im.alpha_composite(couche_bandeau(), (0, H - HAUT_BANDEAU))
     return im.convert("RGB")
 
 # ————————————————————————— la ligne de temps —————————————————————————
@@ -542,128 +567,36 @@ def credits_photos(ident, fichiers):
     lignes = sorted({par_fichier[f]["credit"] for f in fichiers if f in par_fichier and par_fichier[f].get("credit")})
     return lignes
 
-def instants_lecture(groupes):
-    """Sans voix : chaque groupe reste le temps de se lire, posément.
-
-    Une base pour poser le regard, puis un temps par mot ; les phrases très
-    courtes ne clignotent pas, les longues ne s'éternisent pas. Les trois
-    groupes de l'accroche, sur fond noir, prennent un peu plus de temps."""
-    instants, t = [], 0.6
-    for k, g in enumerate(groupes):
-        mots = len(narration([g]).split())
-        d = 1.1 + 0.30 * mots
-        d = max(1.8, min(d, 4.6))
-        if k < 3: d += 0.4
-        instants.append(round(t, 3)); t += d
-    return instants, round(t, 3)
-
 def construire(script, apercu=False):
+    """Une vidéo : on choisit les fonds (une image par phrase posée sur image) et la
+    voix s'il y en a une ; montage.py fait le reste — le rythme des mots, le
+    mouvement des images, les transitions, la fin."""
+    import montage
     ident = script["id"]
     groupes = script["groupes"]
-    texte = narration(groupes)
-    if SANS_VOIX:
-        caf = None
-        instants, fin_voix = instants_lecture(groupes)
-    else:
-        caf, voix = synthetiser(ident, texte)
-        instants = dater_groupes(groupes, texte, voix["mots"])
-        fin_voix = min(voix["duree"], voix.get("fin", voix["duree"]))
-    duree = fin_voix + SORTIE_FINALE
-    noir = script["noir"]
-
-    # L'image ne change qu'avec le texte : une photo neuve à chaque phrase, posée à
-    # l'instant exact où la phrase apparaît. Le dernier groupe (« Fais le test… »)
-    # garde la photo de la phrase précédente sous le produit.
-    cuts_tableaux = instants[noir:len(groupes) - 1]
-    coupes = sorted(set([0.0] + instants + [duree]))
-    # on écarte les coupes trop proches (moins d'une image) pour ne pas produire de durées nulles
-    propres = [coupes[0]]
-    for c in coupes[1:]:
-        if c - propres[-1] >= 1 / FPS: propres.append(c)
-    coupes = propres
-
+    n = len(groupes) - script["noir"] - 1          # le dernier groupe garde l'image d'avant, sous la fin
     if ILLUSTRATIONS:
         from choix_illustrations import CHOIX
         fichiers_tableaux = CHOIX.get(ident, [])
-        if len(fichiers_tableaux) != len(cuts_tableaux):
+        if len(fichiers_tableaux) != n:
             raise SystemExit(f"{ident} : {len(fichiers_tableaux)} illustrations choisies pour "
-                             f"{len(cuts_tableaux)} phrases — voir choix_illustrations.py")
+                             f"{n} phrases — voir choix_illustrations.py")
+        fonds, visages_par_fond = zip(*(fond_illustration(c) for c in fichiers_tableaux))
     else:
-        fichiers_tableaux = tableaux_pour(ident, len(cuts_tableaux))
-    dossier = os.path.join(IMAGES_CLES, ident); os.makedirs(dossier, exist_ok=True)
-    for vieux in os.listdir(dossier):            # pas de vieilles images-clés d'un rendu précédent
-        if vieux.endswith(".png"): os.remove(os.path.join(dossier, vieux))
-    liste, cache = [], {}
-
-    for k in range(len(coupes) - 1):
-        t0, t1 = coupes[k], coupes[k + 1]
-        # quel groupe est affiché ? le dernier dont l'instant est ≤ t0
-        g = max((i for i, ti in enumerate(instants) if ti <= t0 + 1e-6), default=None)
-        # quel tableau ? le dernier cut ≤ t0
-        idx_tab = max((i for i, tc in enumerate(cuts_tableaux) if tc <= t0 + 1e-6), default=None)
-        sur_noir = g is None or g < noir
-        produit = g is not None and g >= len(groupes) - 1
-        cle = ("noir" if sur_noir else fichiers_tableaux[idx_tab if idx_tab is not None else 0], g, produit)
-        if cle not in cache:
-            if sur_noir:
-                im = Image.new("RGB", (L, H), NOIR)
-                if g is not None: im = ecrire_groupe(im, groupes[g], g, noir=True)
-            elif ILLUSTRATIONS:
-                fond, visages_ici = fond_illustration(cle[0])
-                im = fond.copy()                      # jamais écrire sur l'image en cache
-                if produit:
-                    im = cadre_produit(im, eviter=visages_ici)
-                else:
-                    im = ecrire_groupe(im, groupes[g], g, eviter=visages_ici)
-            else:
-                im = fond_tableau(cle[0]).copy()     # jamais écrire sur l'image en cache
-                if produit:
-                    im = cadre_produit(im)
-                else:
-                    im = ecrire_groupe(im, groupes[g], g)
-            chemin = os.path.join(dossier, f"{len(cache):03d}.png")
-            im.save(chemin, "PNG", compress_level=3)
-            cache[cle] = chemin
-        liste.append((cache[cle], t1 - t0))
-
-    if apercu:
-        print(f"  {ident} : {len(cache)} images-clés dans images/{ident}/ (durée {duree:.1f} s)")
-        return
-
-    # la liste pour ffmpeg (le dernier fichier est répété : c'est ce que le format exige)
-    lst = os.path.join(dossier, "liste.txt")
-    with open(lst, "w", encoding="utf-8") as f:
-        for chemin, d in liste:
-            f.write(f"file '{chemin}'\nduration {d:.4f}\n")
-        f.write(f"file '{liste[-1][0]}'\n")
-
-    musique = ici("musiques", script["musique"])
+        fichiers_tableaux = tableaux_pour(ident, n)
+        fonds, visages_par_fond = [fond_tableau(f) for f in fichiers_tableaux], [[] for _ in range(n)]
+    voix = None if SANS_VOIX else synthetiser(ident, narration(groupes))
     nom = f"{ident[:2]} - {script['titre']}"
     sortie = os.path.join(SORTIE, f"{nom}.mp4")
-    fondu = max(duree - 3.0, 0)
-    if caf is None:
-        filtre = (f"[1:a]aresample=44100,atrim=0:{duree:.3f},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=1.5,"
-                  f"afade=t=out:st={fondu:.3f}:d=3,volume=0.55[a]")
-        entrees = ["-i", musique]
-    else:
-        # La voix sort du synthétiseur à basse cadence ; sans rééchantillonnage, amix
-        # alignait la musique dessus et l'abîmait. Tout passe à 44,1 kHz d'abord.
-        filtre = (f"[2:a]aresample=44100,atrim=0:{duree:.3f},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=1.2,"
-                  f"afade=t=out:st={fondu:.3f}:d=3,volume=0.16[m];"
-                  f"[1:a]aresample=44100,atrim=0:{duree:.3f},apad=whole_dur={duree:.3f}[v];"
-                  f"[v][m]amix=inputs=2:duration=first:normalize=0[a]")
-        entrees = ["-i", caf, "-i", musique]
-    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst,
-           *entrees, "-filter_complex", filtre,
-           "-map", "0:v", "-map", "[a]", "-r", str(FPS), "-c:v", "libx264", "-preset", "medium",
-           "-crf", "19", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-ar", "44100",
-           "-t", f"{duree:.3f}", "-movflags", "+faststart", sortie]
-    r = subprocess.run(cmd, capture_output=True, text=True)
-    if r.returncode != 0:
-        raise SystemExit(f"ffmpeg a échoué pour {ident} :\n{r.stderr[-1500:]}")
+    duree, images = montage.monter(script, list(fonds), list(visages_par_fond), sortie,
+                                   ici("musiques", script["musique"]), voix=voix,
+                                   apercu=os.path.join(IMAGES_CLES, ident) if apercu else None)
+    if apercu:
+        print(f"  {ident} : {images} images de contrôle (durée {duree:.1f} s)")
+        return duree
     ecrire_legende(script, fichiers_tableaux)
-    taille = os.path.getsize(sortie) / 1e6
-    print(f"  {nom} : {duree:.1f} s · {taille:.1f} Mo")
+    print(f"  {nom} : {duree:.1f} s · {os.path.getsize(sortie) / 1e6:.1f} Mo", flush=True)
+    return duree
 
 def ecrire_legende(script, fichiers_tableaux=None):
     """La légende, avec le lien de l'article et le crédit musique (obligatoire, CC BY)."""
@@ -693,6 +626,12 @@ if __name__ == "__main__":
         for s in choisis: ecrire_legende(s)
         print(f"{len(choisis)} légende(s) réécrite(s) → {SORTIE}")
         raise SystemExit
-    print(f"{len(choisis)} vidéo(s) → {SORTIE}")
-    for s in choisis:
-        construire(s, apercu=apercu)
+    print(f"{len(choisis)} vidéo(s) → {SORTIE}", flush=True)
+    if apercu or len(choisis) == 1:
+        for s in choisis:
+            construire(s, apercu=apercu)
+    else:
+        # chaque vidéo se rend image par image : on en fait plusieurs à la fois
+        import multiprocessing as mp
+        with mp.get_context("fork").Pool(max(1, min(6, (os.cpu_count() or 2) - 2))) as pool:
+            pool.map(construire, choisis, chunksize=1)
