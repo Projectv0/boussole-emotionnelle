@@ -18,6 +18,36 @@ si la clé est là, sinon celle de macOS — et les mots s'affichent alors quand
     python3 photos.py          # une fois : ~30 photos par vidéo, sur le thème de chacune
     python3 generateur.py      # les vingt vidéos, dans « Vidéos à publier/ » à la racine
     python3 generateur.py 07   # une seule
+    python3 generateur.py --legendes   # réécrire les légendes seules, sans refaire les vidéos
+
+## La version illustrée
+
+    python3 generateur.py --illustrations        # les vingt, dans « Vidéos à publier (illustrations)/ »
+    python3 generateur.py --illustrations 07     # une seule
+
+Mêmes textes, même musique, même rythme ; les fonds sont les illustrations nanobanana des
+carrousels (`../reseaux-sociaux-illustre/illustrations/`, crayon et aquarelle, et
+`../reseaux-sociaux-bd/illustrations/`, bande dessinée). Le choix est fait à la main, phrase
+par phrase, dans **`choix_illustrations.py`** — une image par phrase, aucune image utilisée
+deux fois sur les vingt vidéos. `illustrations/catalogue.json` décrit les 437 images
+disponibles (d'après leurs prompts) pour en choisir d'autres.
+
+Ces illustrations montrent des personnages ; le générateur s'en arrange :
+
+- **le cadrage** se centre sur les visages. Ils sont repérés par
+  `../reseaux-sociaux-bd/detecter-visages.swift` (`illustrations/visages-illustre.json`
+  pour les illustrations ; celui des cases de BD existait déjà dans
+  `../reseaux-sociaux-bd/file/visages.json`). Les visages que le détecteur ratait sont dans
+  `illustrations/visages-complement.json` : retrouvés sur l'image agrandie, ou relevés à l'œil
+  puis vérifiés ;
+- **le texte** se pose là où il ne couvre aucun visage — couvrir des yeux coûte dix fois plus
+  que couvrir des cheveux —, avec une ombre douce derrière lui pour se lire sur un fond clair ;
+- **les cases de BD** gardent leur mur vide au-dessus des personnages (dessiné pour les
+  bulles, c'est la place du texte), mais perdent leur marge, leur filet de cadre et le
+  bandeau crème que certaines avaient en haut.
+
+Les illustrations ont été générées par IA : à la publication, activer l'étiquette prévue
+par la plateforme. Rien à créditer dans la légende.
 
 Il faut deux clés, gratuites ou presque, rangées hors du dépôt dans `~/.config/boussole/` :
 
