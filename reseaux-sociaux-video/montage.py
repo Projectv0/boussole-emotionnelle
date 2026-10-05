@@ -5,11 +5,12 @@
 Le générateur décide quoi montrer (les phrases, les images, la fin) ; ce module décide
 quand et comment, image par image, à 30 images par seconde :
 
-  · LE RYTHME. Sans voix, chaque mot apparaît à l'instant où une voix off posée le
-    dirait : environ 150 mots par minute, un mot long prend plus de temps qu'un mot
-    court, une virgule fait respirer, un point marque un vrai temps. Quand une phrase
-    est dite en entier, elle reste le temps de finir de la lire, puis la suivante
-    arrive. Avec une voix (SANS_VOIX = False), ce sont les instants de la voix.
+  · LE RYTHME. Sans voix, chaque mot apparaît à l'instant où une voix off le dirait :
+    un mot long prend plus de temps qu'un mot court, une virgule fait respirer, un
+    point marque un vrai temps. Quand une phrase est dite en entier, elle reste le
+    temps de finir de la lire, puis la suivante arrive. Le tout est accéléré pour que
+    chaque vidéo dure 50 s (DUREE_VISEE) : environ 160 mots par minute, le débit d'une
+    voix off. Avec une voix (SANS_VOIX = False), ce sont les instants de la voix.
   · LES MOTS. Chacun arrive en fondu, en remontant de quelques pixels ; les mots en
     couleur arrivent un peu plus gros et se posent. La phrase d'avant s'efface quand
     la suivante commence.
@@ -29,6 +30,8 @@ L, H, FPS = G.L, G.H, G.FPS
 NOIR, BLANC = G.NOIR, G.BLANC
 
 # — le rythme d'une voix off posée —
+DUREE_VISEE = 50.0          # chaque vidéo dure 50 s : le rythme ci-dessous est accéléré d'autant
+                            # (de ~130 à ~160 mots par minute, le débit d'une voix off)
 DEBUT = 0.5                 # le noir avant le premier mot
 TENUE = 0.75                # une phrase dite en entier reste ce temps-là avant la suivante
 TENUE_ACCROCHE = 1.15       # un peu plus pour les trois phrases de l'accroche, sur fond noir
@@ -78,14 +81,24 @@ def dire(groupe, debut):
     fin_parole = dernier[0] + duree_mot(dernier[1]) if dernier else debut
     return instants, fin_parole
 
-def chronologie(groupes):
-    """[{debut, mots: [instants]}] pour chaque groupe, et la durée totale."""
+def chronologie(groupes, visee=None):
+    """[{debut, mots: [instants]}] pour chaque groupe, et la durée totale.
+
+    Avec « visee », tout le texte est accéléré dans la même proportion — les mots, les
+    pauses, les tenues — pour que la vidéo dure ce temps-là ; jamais ralenti."""
+    visee = DUREE_VISEE if visee is None else visee
     out, t = [], DEBUT
     for k, g in enumerate(groupes):
         instants, fin = dire(g, t)
         out.append({"debut": t, "mots": instants})
         t = fin + (TENUE_ACCROCHE if k < 3 else TENUE)
-    return out, out[-1]["debut"] + FIN
+    duree = out[-1]["debut"] + FIN
+    if visee and duree > visee:
+        f = (visee - FIN - DEBUT) / (duree - FIN - DEBUT)
+        acc = lambda x: DEBUT + (x - DEBUT) * f
+        out = [{"debut": acc(g["debut"]), "mots": [acc(m) for m in g["mots"]]} for g in out]
+        duree = out[-1]["debut"] + FIN
+    return out, duree
 
 def chronologie_voix(groupes, voix):
     """Avec une voix : chaque mot affiché prend l'instant où la voix le dit. Les mots

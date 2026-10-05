@@ -5,7 +5,7 @@ du nouveau projet. Remplis d'abord la fiche du § 1 ; tout le reste est prêt.
 
 ---
 
-Je veux vingt vidéos d'une minute pour les réseaux sociaux, dans un style précis que
+Je veux vingt vidéos de 50 secondes pour les réseaux sociaux, dans un style précis que
 j'ai déjà mis au point sur un autre projet et que tu vas reproduire à l'identique :
 des phrases entières qui se lisent à l'écran, en grandes capitales, sur des photos
 assombries qui changent à chaque phrase, avec une musique libre de droits, sans voix
@@ -98,7 +98,7 @@ Dans `scripts.py` : tout est à réécrire (voir § 5).
 ## 4 · Le format, exactement
 
 - Paysage 4:3, **1024 × 768**, 30 images par seconde, H.264 (crf 19), AAC 160 kb/s à
-  44,1 kHz, `+faststart`. Entre **55 et 67 secondes** par vidéo.
+  44,1 kHz, `+faststart`. **50 secondes** par vidéo, pas plus.
 - Une vidéo se déroule ainsi :
   1. 0,5 s de noir ;
   2. **l'accroche** : trois groupes de mots sur fond noir, posés en escalier depuis un
@@ -110,7 +110,7 @@ Dans `scripts.py` : tout est à réécrire (voir § 5).
   4. **la page de fin** : 4,5 secondes, la dernière photo reste, le bandeau monte du bas
      et la question se pose mot à mot.
 - **Ce n'est pas un diaporama** : c'est `montage.py`, ne change pas ses réglages sans
-  raison. Les mots apparaissent un à un au rythme d'une voix off posée (environ 150 mots
+  raison. Les mots apparaissent un à un au rythme d'une voix off (environ 160 mots
   par minute, selon les syllabes, avec des pauses aux virgules et aux points), en fondu
   et en remontant un peu ; chaque photo avance, recule ou glisse lentement pendant la
   lecture ; chaque changement de phrase passe par une transition (fondu, poussée, zoom

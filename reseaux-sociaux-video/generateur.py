@@ -9,7 +9,7 @@
     python3 generateur.py --illustrations 03     # (choix phrase par phrase : choix_illustrations.py)
 
 Le style, tel qu'il a été lu dans les trois vidéos de référence :
-  · paysage 4:3 (1024 × 768), une minute environ, 30 images par seconde ;
+  · paysage 4:3 (1024 × 768), 50 secondes, 30 images par seconde ;
   · une accroche sur fond noir, les mots posés un par un, un mot en couleur ;
   · puis des photos assombries, sur le thème de la vidéo — une photo par phrase,
     la photo et le texte changent au même instant, jamais l'un sans l'autre ;

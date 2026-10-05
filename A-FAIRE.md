@@ -495,7 +495,7 @@ vont ouvrir : si ça casse, ça casse sur tous les clients à la fois.
 
 ## D1 · Publier les vidéos — tout est prêt
 
-Quarante vidéos d'une minute, en **4:3**, dans **`Vidéos à publier/`** à la racine, chacune
+Quarante vidéos de **50 secondes**, en **4:3**, dans **`Vidéos à publier/`** à la racine, chacune
 avec sa légende à côté, prête à coller. Les mêmes vingt textes, en deux versions :
 
 - **`Photos/`** : des photos Pexels sur le thème de chaque vidéo — paysages, orages, lumière,

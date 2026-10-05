@@ -1,6 +1,6 @@
 # Atelier vidéo — vingt vidéos dans le style des références
 
-Vingt vidéos d’une minute, en 4:3 (1024 × 768), dans le style des trois vidéos de
+Vingt vidéos de 50 secondes, en 4:3 (1024 × 768), dans le style des trois vidéos de
 référence du dossier `Video tiktok/` : une accroche sur fond noir, puis des
 phrases entières qui se lisent à l'écran sur la musique, chacune sur sa propre
 photo assombrie — la photo et la phrase changent au même instant, jamais l'une
@@ -19,7 +19,8 @@ mots s'affichent alors quand elle les dit.
 Pour que ce ne soit pas un diaporama, chaque vidéo est rendue image par image, à
 30 images par seconde :
 
-- **le rythme des mots** : environ 150 mots par minute, un mot long prend plus de temps
+- **le rythme des mots** : environ 160 mots par minute — chaque vidéo dure 50 s
+  (`DUREE_VISEE`), le rythme s'accélère d'autant —, un mot long prend plus de temps
   qu'un mot court (on compte ses syllabes), une virgule fait respirer, un point marque un
   vrai temps. Quand la phrase est dite en entier, elle reste le temps de finir de la lire
   (`TENUE`), puis la suivante arrive ;
