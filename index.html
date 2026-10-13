@@ -668,6 +668,18 @@ main{ position:relative; z-index:1; max-width:60rem; margin:0 auto; padding:0 1.
 }
 .paywall-appli input{ margin-top:.18rem; width:1.05rem; height:1.05rem; flex:none; accent-color:var(--sage, #3f8271); }
 .paywall-appli .detail{ display:block; font-size:.74rem; color:var(--faint); margin-top:.2rem; }
+/* La case qui accepte les CGV et vaut renonciation au droit de rétractation :
+   sans elle, aucun bouton ne mène au paiement (voir armerPaiement). */
+.cgv-case{ display:flex; gap:.55rem; align-items:flex-start; text-align:left; font-size:.86rem; line-height:1.45;
+  color:var(--ink); margin:.1rem 0 1rem; padding:.6rem .75rem; border-radius:.8rem; border:1px solid var(--hairline-strong);
+  background:var(--card); cursor:pointer; transition:border-color .2s, box-shadow .2s; }
+.cgv-case input{ margin-top:.2rem; width:1.05rem; height:1.05rem; flex:none; accent-color:var(--sage); cursor:pointer; }
+.cgv-case a{ color:var(--sage-deep); text-decoration:underline; text-underline-offset:2px; }
+.cgv-case.a-cocher{ border-color:var(--sage); box-shadow:0 0 0 3px var(--sage-soft); animation:cgv-secousse .35s var(--ease); }
+@keyframes cgv-secousse{ 25%{ transform:translateX(-4px); } 75%{ transform:translateX(4px); } }
+@media (prefers-reduced-motion: reduce){ .cgv-case.a-cocher{ animation:none; } }
+.vente-cta .cgv-case{ margin:.6rem 0 .8rem; font-size:.8rem; }
+.btn.paiement-inactif{ opacity:.5; cursor:not-allowed; }
 .skip-zone{ margin-top:1.2rem; padding-top:1.1rem; border-top:1px dashed var(--hairline-strong); }
 .skip-zone p{ font-size:.74rem; color:var(--faint); margin-top:.6rem; }
 .paywall-foot{ margin-top:1.1rem; font-size:.84rem; color:var(--faint); display:flex; gap:.6rem; justify-content:center; align-items:center; flex-wrap:wrap; }
@@ -1180,6 +1192,7 @@ footer p + p{ margin-top:.3rem; }
             <div class="vente-prix" id="ventePrix">5,99 €</div>
             <div class="vente-prix-note">paiement unique · TVA incluse</div>
             <p class="vente-complement" id="venteComplement" hidden>Tes 1,99 € sont déjà réglés&nbsp;: il ne reste que la différence.</p>
+            <label class="cgv-case" id="venteCgvBox"><input type="checkbox" id="venteCgv"><span>J’accepte les <a href="legal/cgv.html" target="_blank" rel="noopener">conditions de vente</a> et je renonce à mon droit de rétractation pour un accès immédiat.</span></label>
             <a class="btn btn-primary" id="btnAcheter" target="_blank" rel="noopener">Obtenir mon dossier <span class="ico" aria-hidden="true">→</span></a>
             <button class="btn btn-ghost" id="btnDejaCle">J’ai déjà payé <span class="ico" aria-hidden="true">🔑</span></button>
           </div>
@@ -1231,6 +1244,7 @@ footer p + p{ margin-top:.3rem; }
             </span>
           </label>
         </div>
+        <label class="cgv-case" id="pwCgvBox"><input type="checkbox" id="pwCgv"><span>J’accepte les <a href="legal/cgv.html" target="_blank" rel="noopener">conditions de vente</a> et je renonce à mon droit de rétractation pour un accès immédiat.</span></label>
         <div class="offres">
           <div class="offre">
             <h4>Tes résultats</h4>
@@ -3168,6 +3182,36 @@ function enLien(a, href){
   a.onkeydown = null;
 }
 
+/* ————— Le garde du paiement —————
+   Une seule case accepte les conditions de vente ET vaut renonciation au droit de
+   rétractation : c'est elle qui recueille l'accord exprès et la renonciation expresse
+   qu'exige l'article L221-28 13° pour un contenu numérique livré tout de suite.
+   Tant qu'elle n'est pas cochée, le bouton n'a pas de lien : un clic ne fait que
+   montrer la case. Deux parcours mènent à Stripe — la pop-up de fin et l'encart du
+   dossier sur la page de résultats — et passent tous deux par ici.
+   « sansLien » : ce que fait le bouton quand aucun lien de paiement n'est configuré
+   (mode aperçu), une fois la case cochée. */
+function armerPaiement(a, href, caseCgv, sansLien){
+  const coche = !!(caseCgv && caseCgv.checked);
+  a.classList.toggle("paiement-inactif", !coche);
+  a.setAttribute("aria-disabled", coche ? "false" : "true");
+  if(coche && href){ enLien(a, href); a.onclick = null; return; }
+  enBouton(a);
+  a.onclick = e => {
+    e.preventDefault();
+    if(!caseCgv || !caseCgv.checked){ signalerCgv(caseCgv); return; }
+    if(sansLien) sansLien();
+  };
+}
+function signalerCgv(caseCgv){
+  if(!caseCgv) return;
+  const boite = caseCgv.closest(".cgv-case");
+  boite.classList.remove("a-cocher"); void boite.offsetWidth;   /* rejouer l'animation */
+  boite.classList.add("a-cocher");
+  boite.scrollIntoView({ block:"nearest", behavior:"smooth" });
+  caseCgv.focus({ preventScroll:true });
+}
+
 /* ————— Comportement des groupes de boutons radio —————
    Les échelles de notation portaient déjà role="radiogroup" et aria-checked, mais
    pas le comportement qui va avec : les cinq crans de chacune des quatorze émotions
@@ -3234,6 +3278,15 @@ function ouvrirPaywall(){
   $("#pwPrixResultats").textContent = VENTE.prixResultats;
   $("#pwPrixDossier").innerHTML = prixDossierAffiche();
   $("#pwBadgeDossier").textContent = badgeDossier();
+  const caseCgv = $("#pwCgv");
+  caseCgv.checked = false;                 /* jamais pré-cochée, même à la réouverture */
+  $("#pwCgvBox").classList.remove("a-cocher");
+  const liens = !!(VENTE.lienResultats && VENTE.lienDossier);
+  const armer = () => {
+    armerPaiement(aR, liens ? lienAvecSuivi(VENTE.lienResultats) : "", caseCgv, () => appliquerAcces("resultats"));
+    armerPaiement(aD, liens ? lienAvecSuivi(VENTE.lienDossier) : "", caseCgv, () => appliquerAcces("dossier"));
+  };
+  caseCgv.onchange = armer;
   const caseAppli = $("#pwAppli");
   if(caseAppli){
     /* toujours décochée à l'ouverture : un consentement ne se pré-coche pas, même
@@ -3246,22 +3299,13 @@ function ouvrirPaywall(){
       noterAppli(caseAppli.checked);
       /* les liens sont réécrits tout de suite : la case peut être cochée après
          que la pop-up s'est ouverte, et le href doit suivre */
-      if(VENTE.lienResultats && VENTE.lienDossier){
-        aR.href = lienAvecSuivi(VENTE.lienResultats);
-        aD.href = lienAvecSuivi(VENTE.lienDossier);
-      }
+      armer();
       majVenteBox();
     };
   }
-  if(VENTE.lienResultats && VENTE.lienDossier){
-    enLien(aR, lienAvecSuivi(VENTE.lienResultats)); aR.onclick = null;
-    enLien(aD, lienAvecSuivi(VENTE.lienDossier)); aD.onclick = null;
-  }else{
-    /* mode aperçu sans liens configurés : les boutons débloquent directement */
-    enBouton(aR); enBouton(aD);
-    aR.onclick = e => { e.preventDefault(); appliquerAcces("resultats"); };
-    aD.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); };
-  }
+  /* sans liens configurés (mode aperçu), les boutons débloquent directement —
+     mais eux aussi seulement une fois la case cochée */
+  armer();
   $("#skipZone").hidden = !VENTE.modeTest;
   /* Le lien « on m'a offert un code » ne s'affiche que si des codes peuvent
      exister : proposer d'en saisir un quand aucun ne peut avoir été créé, ce
@@ -3341,6 +3385,9 @@ function majVenteBox(){
     if(badge) badge.textContent = badgeDossier();
   }
   a.onclick = null;
+  const caseV = $("#venteCgv");
+  $("#venteCgvBox").hidden = niveauAcces === "dossier" || !paywallActif();
+  a.classList.remove("paiement-inactif"); a.removeAttribute("aria-disabled");
   if(niveauAcces === "dossier"){
     box.hidden = false;
     enBouton(a);
@@ -3352,8 +3399,7 @@ function majVenteBox(){
       ? 'Compléter mon accès <span class="ico" aria-hidden="true">→</span>'
       : 'Passer au dossier complet <span class="ico" aria-hidden="true">→</span>';
     const lien = complement ? VENTE.lienComplement : VENTE.lienDossier;
-    if(lien){ enLien(a, lienAvecSuivi(lien, complement)); }
-    else{ enBouton(a); a.onclick = e => { e.preventDefault(); appliquerAcces("dossier"); }; }
+    armerPaiement(a, lien ? lienAvecSuivi(lien, complement) : "", caseV, () => appliquerAcces("dossier"));
   }else{
     box.hidden = true;
   }
@@ -4476,6 +4522,7 @@ $("#btnFermerCle").addEventListener("click", fermerModaleCle);
 $("#rapportOverlay").addEventListener("click", e => { if(e.target === e.currentTarget) fermerModaleCle(); });
 $("#btnRapportPdf").addEventListener("click", () => window.print());
 $("#btnRapportRetour").addEventListener("click", () => showView("v-resultats"));
+$("#venteCgv").addEventListener("change", majVenteBox);
 /* Depuis le dossier, la carte s'ouvre sans repasser par la page de résultats —
    c'est là qu'on la cherche, et le sommaire vient de promettre qu'elle existe. */
 $("#btnRapportCarte").addEventListener("click", () => { showView("v-resultats"); ouvrirCarte(); });

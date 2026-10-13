@@ -348,6 +348,10 @@ Sans le paramètre `formule`, la page de remerciement ne sait pas quoi débloque
   produit alors une preuve horodatée de l'acceptation — ce qu'aucun code côté navigateur ne
   peut faire.
 - **Collecte de l'adresse e-mail** du client, pour le reçu.
+- **Une phrase dans le pied de page des reçus** (Stripe → Paramètres → Reçus clients) :
+  « Vous avez accepté les conditions de vente et renoncé à votre droit de rétractation pour
+  un accès immédiat. » La loi veut que cette renonciation soit confirmée sur un support
+  durable : le reçu envoyé par e-mail en est un, la page de remerciement le dit aussi.
 
 **Ce que tu me donnes ensuite :** les deux URL de paiement, **et les deux identifiants de prix**
 (`price_...`, visibles sur la fiche produit). Les identifiants de prix permettent au Worker de
