@@ -306,21 +306,19 @@ Je t'attends sur : nom du médiateur, adresse postale, URL. Ces trois éléments
 dans les CGV et les mentions légales, où le crochet `[nom et coordonnées du médiateur adhéré]`
 attend encore d'être rempli.
 
-## B4 · Trancher le prix barré
+## ~~B4 · Trancher le prix barré~~ — ✅ tranché et appliqué le 13 octobre 2026
 
-Le site affiche aujourd'hui **« 5,99 € au lieu de 20 € »** et un badge **« −70 % »**, à quatre
-endroits. L'article L112-1-1 impose que toute annonce de réduction se réfère au prix le plus
-bas pratiqué dans les trente jours précédents. **20 € n'a jamais été pratiqué.** C'est le motif
-de contrôle le plus courant sur ce type de site, et il se vérifie depuis n'importe quel
-navigateur.
+**« Tarif de lancement, 5,99 € »**, sans prix barré ni pourcentage : c'est en ligne, sur la
+fenêtre de paiement, sur l'encart du dossier de la page de résultats et dans les CGV.
 
-Deux options honnêtes, une seule à choisir :
+La règle, pour mémoire (art. L112-1-1 du code de la consommation, DGCCRF) : une remise ne
+peut s'annoncer que par rapport au **prix le plus bas réellement pratiqué pendant les
+30 jours précédents**, pour tous les clients. Le dossier n'ayant jamais été vendu 20 €,
+« 5,99 € au lieu de 20 € » était un faux rabais — sanction : pratique commerciale trompeuse.
 
-- **vendre réellement le dossier 20 €** pendant au moins trente jours avant d'annoncer une remise ;
-- **retirer le prix barré et le badge**, et parler de « tarif de lancement » sans pourcentage.
-
-*Ma recommandation : la seconde. « Tarif de lancement, 5,99 € » se défend seul et personne ne
-peut le contester.* Tant que tu n'as pas tranché, je ne touche pas à l'affichage.
+**Si un jour tu veux une vraie promotion** : vends le dossier à son prix normal pendant au
+moins trente jours, puis annonce la remise par rapport à ce prix. Il suffira de renseigner
+`prixDossierRef` et `remiseDossier` dans `VENTE` : le prix barré et le badge reviennent seuls.
 
 ## B5 · Le compte Stripe de la SAS, en production
 
@@ -554,7 +552,7 @@ carrousels et le dossier `publication/` en une commande.
 | les 10 décisions | je complète statuts et pacte |
 | les 7 champs du Kbis + directeur de publication | je publie les trois pages légales SAS |
 | le médiateur (nom, adresse, URL) | je l'inscris dans les CGV et les mentions légales |
-| ta décision sur le prix barré | je l'applique aux 4 endroits + les CGV |
+| ~~ta décision sur le prix barré~~ | ✅ « tarif de lancement », appliqué le 13 octobre |
 | les 3 liens Stripe (résultats, dossier, complément) | je branche et je prépare la bascule |
 | `wrangler secret put STRIPE_CLE` | je renseigne `VENTE.verification` et je bascule |
 | les 9 images régénérées | je remonte les carrousels et `publication/` |
