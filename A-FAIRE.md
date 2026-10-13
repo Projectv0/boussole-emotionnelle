@@ -21,8 +21,10 @@ dépôts d'annuaire : **le guide de 57 articles est en accès libre**, et le tes
 librement — mais **aucun résultat ne s'affiche sans payer**, pas même les trois émotions
 dominantes, à partir de 1,99 €. Écrire « test gratuit » quelque part serait faux, et c'est
 précisément le schéma qui produit le plus de réclamations : quelqu'un passe dix à quinze
-minutes sur seize situations, puis découvre le prix. *(L'audit de mise en marché demande
-d'ailleurs d'annoncer le prix avant le test — point 2.4, encore à faire.)*
+minutes sur seize situations, puis découvre le prix. *Ta décision, confirmée le 13 octobre :
+le paiement n'est annoncé nulle part avant la fin du test (le point 2.4 de l'audit est
+écarté). Le prix, le lien des CGV et la case de renonciation vivent donc dans la fenêtre de
+paiement, au moment où la personne décide.*
 
 **Le Kbis ne bloque que la vente, jamais l'audience.** C'est la distinction qui décide du
 calendrier : tout le bloc A — publier, mesurer, se rendre visible — se fait sans lui. Et
