@@ -9,8 +9,8 @@ quand et comment, image par image, à 30 images par seconde :
     un mot long prend plus de temps qu'un mot court, une virgule fait respirer, un
     point marque un vrai temps. Quand une phrase est dite en entier, elle reste le
     temps de finir de la lire, puis la suivante arrive. Le tout est accéléré pour que
-    chaque vidéo dure 50 s (DUREE_VISEE) : environ 160 mots par minute, le débit d'une
-    voix off. Avec une voix (SANS_VOIX = False), ce sont les instants de la voix.
+    chaque vidéo dure 45 s (DUREE_VISEE) : environ 180 mots par minute, le débit d'une
+    voix off soutenue. Avec une voix (SANS_VOIX = False), ce sont les instants de la voix.
   · LES MOTS. Chacun arrive en fondu, en remontant de quelques pixels ; les mots en
     couleur arrivent un peu plus gros et se posent. La phrase d'avant s'efface quand
     la suivante commence.
@@ -30,19 +30,19 @@ L, H, FPS = G.L, G.H, G.FPS
 NOIR, BLANC = G.NOIR, G.BLANC
 
 # — le rythme d'une voix off posée —
-DUREE_VISEE = 50.0          # chaque vidéo dure 50 s : le rythme ci-dessous est accéléré d'autant
-                            # (de ~130 à ~160 mots par minute, le débit d'une voix off)
+DUREE_VISEE = 45.0          # chaque vidéo dure 45 s : le rythme ci-dessous est accéléré d'autant
+                            # (de ~130 à ~180 mots par minute, le débit d'une voix off soutenue)
 DEBUT = 0.5                 # le noir avant le premier mot
 TENUE = 0.75                # une phrase dite en entier reste ce temps-là avant la suivante
 TENUE_ACCROCHE = 1.15       # un peu plus pour les trois phrases de l'accroche, sur fond noir
-FIN = 4.5                   # la page de fin reste ce temps-là
+FIN = 4.0                   # la page de fin reste ce temps-là
 PAUSES = {",": 0.24, ";": 0.32, ":": 0.32, ".": 0.42, "!": 0.42, "?": 0.42, "…": 0.45}
 PAUSE_LIGNE = 0.12          # le petit souffle d'un « / »
 
 # — les effets —
 APPARITION = 0.18           # un mot met ce temps à apparaître
 EFFACEMENT = 0.20           # la phrase d'avant s'efface en ce temps-là
-TRANSITION = 0.55           # durée d'un changement d'image
+TRANSITION = 0.45           # durée d'un changement d'image
 MONTEE_BANDEAU = 0.55
 TRANSITIONS = ["fondu", "glisse", "zoom", "flou"]
 MOUVEMENTS = ["avant", "gauche", "arriere", "droite"]
