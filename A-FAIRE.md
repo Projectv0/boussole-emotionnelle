@@ -1,7 +1,7 @@
 # Ce que tu as à faire
 
-*État au 24 septembre 2026. Le bloc A est clos — il ne reste qu'à configurer TikTok et à
-publier. Tout le reste ne dépend plus que de toi.*
+*État au 3 novembre 2026. La SAS existe depuis le 2 novembre. Le bloc A est clos — il ne
+reste qu'à configurer TikTok et à publier. Le bloc B avance : Kbis reçu.*
 
 Tout ce qui pouvait être fait dans le dépôt l'est. Ce qui reste demande un compte tiers,
 une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste que ça.
@@ -9,7 +9,7 @@ une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste qu
 Trois blocs indépendants, dans l'ordre de ce qui rapporte le plus vite :
 
 - **A. Se rendre visible** — clos, sauf une chose : configurer TikTok, puis publier.
-- **B. Pouvoir vendre** — bloqué par la société. Plusieurs semaines.
+- **B. Pouvoir vendre** — la société existe ; restent le médiateur, la TVA, Stripe et la clé.
 - **C. Finir les images** — bloqué par les crédits. ~10 €.
 - **D. Les vingt vidéos** — prêtes à publier.
 
@@ -271,27 +271,50 @@ Dix cases à cocher, une soirée à deux. Les trois qui pèsent le plus :
 Dès que les dix cases sont cochées, je mets à jour les statuts et le pacte (documents 2 et 3,
 déjà rédigés) avec vos choix.
 
-## B2 · Immatriculer, et me donner sept champs
+## ~~B2 · Immatriculer, et me donner sept champs~~ — ✅ Kbis reçu le 3 novembre 2026
 
-La suite mécanique : signature des statuts → dépôt du capital → annonce légale → dossier sur
-<https://procedures.inpi.fr> → Kbis sous une à deux semaines.
+**BC LABS**, société par actions simplifiée au capital de 1 000 €, RCS Paris 130 916 968,
+immatriculée le 2 novembre 2026, siège 8 rue Abel, 75012 Paris (domiciliation), président
+Martial Cavalier — directeur de la publication, donc. Le SIREN est confirmé dans le registre
+national (annuaire des entreprises). L'extrait est rangé dans `societe/` (privé, hors dépôt) :
+il porte des dates de naissance et des adresses personnelles, il ne doit jamais être commité.
 
-**Ce que j'attends du Kbis, exactement sept champs :**
+Les trois pages légales en ligne portent maintenant cette identité (mentions légales, CGV,
+confidentialité). **La TVA est tranchée** (options fiscales de l'immatriculation, relues le 3 novembre) : la
+société est **assujettie, au réel simplifié**, sans option pour les déclarations trimestrielles.
+Le numéro intracommunautaire **FR50 130 916 968** est dans les pages légales. Voir B2 bis pour
+ce que ça change.
 
-1. dénomination sociale exacte
-2. forme juridique
-3. montant du capital
-4. numéro SIREN
-5. ville du greffe (RCS)
-6. adresse du siège
-7. numéro de TVA intracommunautaire, s'il existe
+**Le téléphone est en ligne** (06 59 88 56 55, donné le 3 novembre). Les trois pages
+légales version SAS sont **publiées** : mentions légales, conditions de vente, confidentialité.
+Il ne reste, dans les CGV, que le crochet du médiateur (B3).
 
-**Plus un huitième qui n'est pas sur le Kbis :** le nom du directeur de la publication.
+## B2 bis · La TVA, concrètement
 
-Les trois pages légales en version SAS sont déjà écrites dans `societe/site-jour-J/` et
-n'attendent que ces champs. Aujourd'hui les pages en ligne déclarent un éditeur **« non
-professionnel »** et un site **« proposé gratuitement »** — deux affirmations qui deviennent
-fausses, et publiées, le jour du premier euro.
+Être au réel simplifié veut dire que **chaque vente contient 20 % de TVA**, à reverser :
+
+| Prix affiché (TTC) | TVA incluse | Ce qui reste à la société |
+|---|---|---|
+| 1,99 € | 0,33 € | 1,66 € |
+| 5,99 € | 1,00 € | 4,99 € |
+| 4,00 € (complément) | 0,67 € | 3,33 € |
+
+Ce que ça demande :
+
+- **Dans Stripe** (à créer en même temps que les produits, B5) : les prix sont saisis
+  **TVA incluse** ; dans *Paramètres → Informations fiscales*, ajoute le numéro FR50 130 916 968
+  pour qu'il figure sur les reçus. Tant que les ventes à des particuliers d'autres pays de l'UE
+  restent sous 10 000 € par an, c'est la TVA française qui s'applique à tout le monde : pas
+  besoin de Stripe Tax au départ.
+- **Les déclarations** : une déclaration annuelle (CA12) dans les trois mois qui suivent la
+  clôture du 30 septembre, et deux acomptes (juillet, décembre) — dispensés si la TVA de
+  l'année précédente est inférieure à 1 000 €, ce qui sera le cas au début. Ton comptable sait
+  faire.
+- **À savoir** : à 1,99 € la vente, la TVA pèse un sixième du chiffre. La franchise en base
+  (pas de TVA sous 37 500 € de chiffre d'affaires) aurait été plus avantageuse pour ce site,
+  et elle reste possible plus tard : le choix du réel vaut pour deux ans (2026 et 2027), on
+  peut y renoncer pour 2028 par courrier au service des impôts. À voir avec ton comptable le
+  moment venu — ce n'est pas urgent, et ça dépend des autres activités de la société.
 
 ## B3 · Adhérer à un médiateur de la consommation
 
@@ -554,7 +577,9 @@ carrousels et le dossier `publication/` en une commande.
 | ~~les adresses de profil Instagram~~ | ✅ `sameAs` et pied de page sur les 59 pages |
 | l'adresse du profil TikTok | je l'ajoute au `sameAs` et aux pieds de page |
 | les 10 décisions | je complète statuts et pacte |
-| les 7 champs du Kbis + directeur de publication | je publie les trois pages légales SAS |
+| ~~les 7 champs du Kbis + directeur de publication~~ | ✅ Kbis reçu le 3 novembre, pages légales préparées |
+| ~~le régime de TVA~~ | ✅ réel simplifié, numéro FR50 130 916 968 posé le 3 novembre |
+| ~~un numéro de téléphone~~ | ✅ pages légales SAS publiées le 3 novembre |
 | le médiateur (nom, adresse, URL) | je l'inscris dans les CGV et les mentions légales |
 | ~~ta décision sur le prix barré~~ | ✅ « tarif de lancement », appliqué le 13 octobre |
 | les 3 liens Stripe (résultats, dossier, complément) | je branche et je prépare la bascule |
