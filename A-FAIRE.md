@@ -345,6 +345,31 @@ moins trente jours, puis annonce la remise par rapport à ce prix. Il suffira de
 
 ## B5 · Le compte Stripe de la SAS, en production
 
+**Fait le 3 novembre 2026, en mode test, sur ton compte Stripe « ODEM »** (`acct_1UAPdl3hSbsXrutw`) :
+le prix du dossier corrigé à **5,99 €** (nouveau tarif par défaut ; l'ancien 9,99 € reste
+listé, Stripe m'a refusé de l'archiver — sans effet), un produit **« Complément — Dossier
+complet » à 4 €**, et **trois liens de paiement de test** avec les bonnes URL de retour :
+
+| Formule | Lien de test | Retour |
+|---|---|---|
+| Tes résultats, 1,99 € | `…/test_9B68wI5BQ11M8Mg00oc7u00` (inchangé) | `formule=resultats` |
+| Résultats + Dossier, 5,99 € | `…/test_5kQaEQ6FUaCm3rW28wc7u03` (nouveau) | `formule=dossier` |
+| Complément, 4 € | `…/test_6oU14g4xM25Qd2w9AYc7u02` (nouveau) | `formule=dossier` |
+
+Les trois sont branchés dans `VENTE` : le parcours complet — y compris le complément à 4 € —
+se teste maintenant de bout en bout en mode test.
+
+**Ce que je n'ai pas pu faire, et pourquoi.** Le compte n'est **pas activé** pour les
+paiements réels : Stripe attend le profil de l'entreprise (« Des informations de votre
+entreprise sont manquantes »). Tant qu'il n'est pas activé, le mode production est
+inaccessible, et l'option « exiger l'acceptation des conditions de vente » reste grisée sur
+les liens (elle demande l'URL des CGV dans les informations publiques, qui font partie du
+profil). **L'activation, c'est toi** : elle demande ton identité, ton IBAN et un code SMS —
+trois choses que je ne manipule jamais. Voir B5 bis.
+
+### Ce qu'il restera à faire en production, une fois le compte activé (moi, avec ton Chrome)
+
+
 Après l'ouverture du compte bancaire professionnel (il faut le Kbis et l'IBAN société).
 
 **Créer trois produits** aux prix réels : **1,99 €** (résultats), **5,99 €** (dossier complet)
@@ -380,6 +405,37 @@ Sans le paramètre `formule`, la page de remerciement ne sait pas quoi débloque
 (`price_...`, visibles sur la fiche produit). Les identifiants de prix permettent au Worker de
 reconnaître le produit acheté au lieu de deviner d'après le montant — sans eux, un code promo
 de −20 % ferait passer un acheteur du dossier sous le seuil et il recevrait un produit amputé.
+
+## B5 bis · Activer le compte Stripe — toi, dix minutes
+
+Dans Stripe, bouton **« Activer les paiements »** (ou *Guide de démarrage*). Le parcours a
+trois étapes ; voici quoi répondre, d'après le Kbis :
+
+1. **Type d'entreprise** : France · **Société** (pas « Particulier / Entrepreneur individuel »,
+   qui est présélectionné) · structure **SAS**.
+2. **Informations sur l'entreprise** : dénomination **BC LABS** · SIREN **130 916 968** ·
+   adresse du siège **8 rue Abel, 75012 Paris** · numéro de TVA **FR50130916968** · site
+   `https://boussole-emotionnelle.fr` · description de l'activité : « Vente en ligne de
+   contenus numériques : résultats et dossier d'analyse d'un test de connaissance de soi ».
+   Catégorie : *Services numériques / Logiciels* ou proche.
+3. **Représentant légal** : toi, président — tes nom, date de naissance, adresse personnelle
+   (celles du Kbis). Stripe peut demander une pièce d'identité : c'est normal, c'est la loi
+   contre le blanchiment. **Jimmy** peut être demandé comme « dirigeant » ou « bénéficiaire
+   effectif » s'il détient 25 % ou plus : renseigne-le si le formulaire l'exige.
+4. **Informations publiques** (ce que voient les clients) : nom affiché **Boussole
+   émotionnelle** · e-mail d'assistance `contact@boussole-emotionnelle.fr` · téléphone
+   06 59 88 56 55 · libellé sur relevé bancaire **BOUSSOLE EMOTION** (22 caractères max, sans
+   accent) · **URL des conditions d'utilisation** `https://boussole-emotionnelle.fr/legal/cgv.html`
+   et **URL de confidentialité** `https://boussole-emotionnelle.fr/legal/confidentialite.html`
+   — c'est ce qui débloque l'option « exiger l'acceptation » sur les liens.
+5. **Compte bancaire** : l'IBAN de la SAS (compte professionnel). Jamais un compte personnel :
+   Stripe vérifie que le titulaire est l'entreprise.
+6. **Sécuriser le compte** : numéro de téléphone vérifié par SMS, et l'authentification à deux
+   facteurs (une application, pas le SMS, si Stripe le propose).
+7. **Vérifier et envoyer.** L'activation prend de quelques minutes à quelques jours.
+
+Dis-moi quand c'est fait : je reviens dans ton Chrome créer les trois produits, les trois
+liens et les réglages en production, puis je bascule le site.
 
 ## B6 · La clé Stripe du Worker
 
@@ -456,7 +512,7 @@ Une fois que j'ai basculé le site, à faire **dans l'ordre**, en production :
 **Le point 6 demande une vraie carte bancaire, sur un vrai paiement de 1,99 € que tu te
 rembourseras ensuite. Je ne peux pas le faire : je n'entre jamais de numéro de carte, même de test.**
 
-## B7 bis · Le lien de complément — fait côté site, il manque le lien Stripe
+## B7 bis · Le lien de complément — fait côté site, lien de test branché le 3 novembre
 
 **Ta décision du 24 septembre : le complément.** Quelqu'un qui a pris la formule à 1,99 € et
 qui veut le dossier ne paie plus que la **différence, 4 €**, au lieu de 5,99 € par-dessus ses
