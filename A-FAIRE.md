@@ -103,13 +103,15 @@ Deux corrections possibles, toutes deux dans ton espace IONOS — je ne m'y conn
 
 ## A4 · Les deux comptes réseaux — Instagram ✅, **TikTok à finir**
 
-**Première publication Instagram faite le 3 novembre 2026, à 23 h** — semaine 01, lundi, la fiche
-« L'anxiété, le simulateur d'avenir qui tourne un peu trop bien » (5 diapositives, 4:5, légende et
-hashtags du dossier) : <https://www.instagram.com/boussole.emotionnelle/p/DfS5VXDiKCX/>.
-Publiée depuis ton Chrome, où le compte Boussole est désormais connecté à côté du tien. **La
-suivante** est `publication/semaine-01/2-mardi-bd-lundi-matin-boule-au-ventre` — dis « publie
-la suivante » et je la poste, aux heures qui portent (12 h-13 h ou 19 h-21 h). Pour les
-carrousels illustrés et BD, j'activerai l'étiquette « créé avec l'IA » d'Instagram.
+**Première publication faite le 3 novembre à 23 h, puis supprimée vingt minutes plus tard à ta
+demande** : le texte des diapositives t'a paru incompréhensible. Tu as raison sur le fond : tout le
+corpus des 99 publications est écrit dans un style télégraphique (titres sans verbe, tirets, points
+de suspension, énumérations sèches). **Réécriture complète lancée le soir même**, série par série
+(39 fiches, 30 illustrés, 30 BD), avec une règle simple : des phrases complètes, en français
+naturel, qui expliquent au lieu de suggérer. Le post 1 réécrit sert de référence de style.
+**Rien ne se publie sans que tu aies validé le texte.** Prochaine étape : je te montre le post 1
+refait, tu valides, et il part le 4 novembre à midi. Le compte Boussole est connecté dans ton
+Chrome, à côté du tien ; je sais publier depuis le web.
 
 Instagram et TikTok existent. Les 99 publications de `publication/` sont prêtes : six par
 semaine, du lundi au samedi, sur 17 semaines, sans jamais deux fois le même genre deux
