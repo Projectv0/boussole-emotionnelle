@@ -93,7 +93,7 @@ const ACCES_KEY = "boussole.acces.v1";
    de la même façon. Tant qu'elle est vide, aucun accès n'est accordé ici : sans
    serveur, cette page ne peut rien vérifier, et « ?formule=dossier » suffirait
    sinon à débloquer les 5,99 € sans être jamais passé par Stripe. */
-const VERIFICATION = "";
+const VERIFICATION = "https://boussole.projectv0-0.workers.dev/";
 
 const p = new URLSearchParams(location.search);
 const formule = p.get("formule") === "dossier" ? "dossier" : p.get("formule") === "resultats" ? "resultats" : null;

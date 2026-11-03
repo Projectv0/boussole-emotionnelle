@@ -843,7 +843,6 @@ footer p + p{ margin-top:.3rem; }
         <span>⏳ 10 à 20 minutes</span>
         <span>🔒 Tes réponses restent dans ton navigateur</span>
       </div>
-      <p class="hero-prix reveal" id="heroPrix" hidden></p>
       <div class="callout callout-privacy reveal" id="repriseBox" hidden style="max-width:38rem; margin:2rem auto 0; text-align:left">
         <span class="emo" aria-hidden="true">⏳</span>
         <div style="flex:1">
@@ -1692,8 +1691,9 @@ const URL_SITE = "boussole-emotionnelle.fr";
 const VENTE = {
   actif: true,
   /* Phase de test entre amis : la pop-up s'affiche mais un bouton « Passer le
-     paiement » débloque tout. Passe à false au lancement des vrais paiements. */
-  modeTest: true,
+     paiement » débloque tout. Passé à false le 3 novembre 2026 : les vrais
+     paiements sont ouverts, et ?apercu=1 est fermé avec lui. */
+  modeTest: false,
   prixResultats: "1,99 €",
   lienResultats: "https://buy.stripe.com/9B628k5GD5yU8oEd2R4AU00",          /* production, 1,99 € (BC LABS) */
   produitResultats: "price_1UXoEu3FK7OJuB9z7THgWoiu",
@@ -1717,9 +1717,11 @@ const VENTE = {
   prixComplement: "4 €",
   lienComplement: "https://buy.stripe.com/bJe28kd95bXidIYbYN4AU02",         /* production, 4 € */
   produitComplement: "price_1UXoHE3FK7OJuB9zD8HCaeQ2",
-  /* Adresse d'une éventuelle fonction de vérification côté serveur.
-     Laissée vide : le déblocage se fait alors sur la seule référence Stripe. */
-  verification: "",
+  /* Le Worker de vérification (worker/verification.js) : il demande à Stripe si
+     la référence correspond à un paiement réel, non remboursé, de l'un des trois
+     prix de la Boussole. Branché le 3 novembre 2026 ; vide, le déblocage ne se
+     ferait que sur le format de la référence. Même adresse dans merci.html. */
+  verification: "https://boussole.projectv0-0.workers.dev/",
   /* Codes cadeaux. Le Worker ne peut engendrer un code qu'après avoir demandé à
      Stripe si le dossier a bien été payé : tant que « verification » est vide,
      c'est que la clé Stripe n'est pas posée, et cette fonction reste en sommeil.
@@ -4587,17 +4589,11 @@ $("#compCode").addEventListener("keydown", e => { if(e.key === "Enter") validerC
 $("#btnRappel").addEventListener("click", creerRappel);
 $("#btnInstaller").addEventListener("click", installerApp);
 
-/* Le prix se dit avant le test, pas après seize situations. La phrase n'apparaît
-   qu'une fois la vente réellement active : l'afficher pendant la phase de test
-   annoncerait un prix que personne ne paie. Elle se rend depuis VENTE, donc elle
-   suit les tarifs sans qu'on ait à y penser. */
-(function annoncerPrix(){
-  const p = $("#heroPrix");
-  if(!p || VENTE.modeTest || !VENTE.actif || !VENTE.lienResultats) return;
-  p.textContent = `Le test est libre. Les résultats détaillés sont payants : ${VENTE.prixResultats}, `
-                + `ou ${VENTE.prixDossier} avec le dossier complet.`;
-  p.hidden = false;
-})();
+/* Aucun prix avant la fin du test — décision du 13 octobre 2026. Une phrase
+   « Le test est libre, les résultats sont payants » s'affichait ici sur l'accueil
+   dès la mise en vente ; elle a été retirée le 3 novembre 2026, le jour où elle
+   serait apparue. Ce que la loi exige (prix, conditions, renonciation) est dans la
+   fenêtre de paiement et l'encart du dossier, avant tout paiement. */
 
 /* Un achat déjà effectué sur cet appareil rouvre l'accès sans rien redemander */
 const accesEnregistre = lireAcces();
