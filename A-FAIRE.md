@@ -3,7 +3,7 @@
 *État au 3 novembre 2026, au soir. La SAS existe depuis le 2 novembre. Le bloc A est clos — il
 ne reste qu'à configurer TikTok et à publier. **Le site est en vente depuis ce soir** : Stripe
 BC LABS en production, vérification d'achat branchée, mode test fermé. Il reste le test réel
-(B7) et le médiateur (B3).*
+(B7) ; le médiateur est reporté (B3).*
 
 Tout ce qui pouvait être fait dans le dépôt l'est. Ce qui reste demande un compte tiers,
 une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste que ça.
@@ -11,7 +11,7 @@ une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste qu
 Trois blocs indépendants, dans l'ordre de ce qui rapporte le plus vite :
 
 - **A. Se rendre visible** — clos, sauf une chose : configurer TikTok, puis publier.
-- **B. Pouvoir vendre** — en vente ; restent le test réel (B7, B8) et le médiateur (B3).
+- **B. Pouvoir vendre** — en vente ; reste le test réel (B7, B8). Médiateur reporté (B3).
 - **C. Finir les images** — bloqué par les crédits. ~10 €.
 - **D. Les vingt vidéos** — prêtes à publier.
 
@@ -289,7 +289,7 @@ ce que ça change.
 
 **Le téléphone est en ligne** (06 59 88 56 55, donné le 3 novembre). Les trois pages
 légales version SAS sont **publiées** : mentions légales, conditions de vente, confidentialité.
-Il ne reste, dans les CGV, que le crochet du médiateur (B3).
+Le crochet du médiateur a été remplacé le 3 novembre par une mention honnête (B3, reporté).
 
 ## B2 bis · La TVA, concrètement
 
@@ -318,18 +318,25 @@ Ce que ça demande :
   peut y renoncer pour 2028 par courrier au service des impôts. À voir avec ton comptable le
   moment venu — ce n'est pas urgent, et ça dépend des autres activités de la société.
 
-## B3 · Adhérer à un médiateur de la consommation
+## B3 · Adhérer à un médiateur de la consommation — reporté, ta décision du 3 novembre 2026
 
-**Obligation légale** pour tout professionnel vendant à des consommateurs (article L612-1 du
-code de la consommation). Quelques dizaines d'euros par an. Organismes agréés : CM2C, Medicys,
-AME Conso.
+**Pas de médiateur pour le moment**, as-tu tranché le 3 novembre. Ce que ça change dans les
+pages : l'article 11 des CGV ne porte plus de crochet vide. Il dit, honnêtement, que tout
+consommateur a droit à un médiateur, que BC LABS n'a pas encore adhéré, que les coordonnées
+seront publiées dès l'adhésion, et que toute réclamation s'adresse à l'e-mail de contact avec
+réponse sous quinze jours. L'encart « aucune vente en cours » a disparu avec la mise en vente.
+La mention de la plateforme européenne de règlement des litiges a été retirée : elle a fermé
+le 20 juillet 2025.
 
-Ça ne s'improvise pas le jour d'une réclamation : compte plusieurs jours à quelques semaines
-d'adhésion. **Lance-le en parallèle du dossier d'immatriculation**, pas après.
+**Ce que tu dois savoir.** L'adhésion est une obligation légale pour tout professionnel qui
+vend à des consommateurs (article L612-1 du code de la consommation), et l'absence des
+coordonnées du médiateur dans les CGV est passible d'une amende administrative, jusqu'à
+15 000 € pour une société (article L641-1). Le risque réel, à l'échelle de quelques ventes à
+1,99 €, est faible — mais il existe, et il se règle pour quelques dizaines d'euros par an.
 
-Je t'attends sur : nom du médiateur, adresse postale, URL. Ces trois éléments doivent figurer
-dans les CGV et les mentions légales, où le crochet `[nom et coordonnées du médiateur adhéré]`
-attend encore d'être rempli.
+**Le jour où tu veux le faire** : CM2C, Medicys ou AME Conso ; compte quelques jours à
+quelques semaines. Donne-moi nom, adresse postale et URL, et je les inscris dans les CGV et
+les mentions légales.
 
 ## ~~B4 · Trancher le prix barré~~ — ✅ tranché et appliqué le 13 octobre 2026
 
@@ -615,7 +622,7 @@ carrousels et le dossier `publication/` en une commande.
 | ~~les 7 champs du Kbis + directeur de publication~~ | ✅ Kbis reçu le 3 novembre, pages légales préparées |
 | ~~le régime de TVA~~ | ✅ réel simplifié, numéro FR50 130 916 968 posé le 3 novembre |
 | ~~un numéro de téléphone~~ | ✅ pages légales SAS publiées le 3 novembre |
-| le médiateur (nom, adresse, URL) | je l'inscris dans les CGV et les mentions légales |
+| le médiateur (nom, adresse, URL) — reporté le 3 novembre | je l'inscris dans les CGV et les mentions légales, le jour venu |
 | ~~ta décision sur le prix barré~~ | ✅ « tarif de lancement », appliqué le 13 octobre |
 | ~~les 3 liens Stripe (résultats, dossier, complément)~~ | ✅ créés et branchés le 3 novembre |
 | ~~`wrangler secret put STRIPE_CLE`~~ | ✅ clé posée, site basculé en vente le 3 novembre |
