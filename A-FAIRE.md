@@ -104,14 +104,22 @@ Deux corrections possibles, toutes deux dans ton espace IONOS — je ne m'y conn
 ## A4 · Les deux comptes réseaux — Instagram ✅, **TikTok à finir**
 
 **Première publication faite le 3 novembre à 23 h, puis supprimée vingt minutes plus tard à ta
-demande** : le texte des diapositives t'a paru incompréhensible. Tu as raison sur le fond : tout le
-corpus des 99 publications est écrit dans un style télégraphique (titres sans verbe, tirets, points
-de suspension, énumérations sèches). **Réécriture complète lancée le soir même**, série par série
-(39 fiches, 30 illustrés, 30 BD), avec une règle simple : des phrases complètes, en français
-naturel, qui expliquent au lieu de suggérer. Le post 1 réécrit sert de référence de style.
-**Rien ne se publie sans que tu aies validé le texte.** Prochaine étape : je te montre le post 1
-refait, tu valides, et il part le 4 novembre à midi. Le compte Boussole est connecté dans ton
-Chrome, à côté du tien ; je sais publier depuis le web.
+demande** : le texte des diapositives t'a paru incompréhensible. Tu avais raison sur le fond : tout le
+corpus des 99 publications était écrit dans un style télégraphique (titres sans verbe, tirets, points
+de suspension, énumérations sèches). **Réécriture complète faite dans la nuit du 3 au 4 novembre**,
+série par série : 39 fiches (319 champs), 30 illustrés (166), 30 BD (126). Règle appliquée partout :
+des phrases complètes avec sujet et verbe, une idée par phrase, des mots de tous les jours, le
+mécanisme expliqué au lieu d'être suggéré ; sens, structure et longueurs conservés ; plus un seul
+tiret, plus un point de suspension, aucun mot interdit. Les 1 182 images ont été régénérées sans
+qu'aucun texte ait dû être réduit, et le dossier `publication/` réassemblé (légendes comprises).
+
+**Rien ne se publie sans que tu aies validé le texte.** Pour relire : chaque dossier de
+`publication/semaine-XX/` contient les images et `legende.txt`, et `SEMAINE.md` rassemble les
+légendes de la semaine. Commence par `semaine-01/1-lundi-fiche-comprendre-anxiete` : c'est le
+post 1 refait, prévu pour le 4 novembre à midi. Dis « publie le post 1 » et je le poste depuis
+ton Chrome (le compte Boussole y est connecté à côté du tien) ; ensuite « publie la suivante »,
+un jour sur l'autre, aux heures qui portent (12 h-13 h ou 19 h-21 h). Pour les carrousels
+illustrés et BD, j'activerai l'étiquette « créé avec l'IA » d'Instagram.
 
 Instagram et TikTok existent. Les 99 publications de `publication/` sont prêtes : six par
 semaine, du lundi au samedi, sur 17 semaines, sans jamais deux fois le même genre deux
