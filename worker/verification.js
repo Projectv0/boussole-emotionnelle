@@ -71,6 +71,15 @@ export default {
     };
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
 
+    /* Limitation de débit par adresse IP, avant tout travail (voir wrangler.jsonc). */
+    const limiteur = url.pathname === "/mesure" ? env.LIMITE_MESURE : env.LIMITE_ACHAT;
+    if (await tropVite(limiteur, req)) {
+      return new Response(JSON.stringify({ valide: false, erreur: "trop de demandes" }), {
+        status: 429,
+        headers: { "content-type": "application/json", "retry-after": "60", "cache-control": "no-store", ...cors },
+      });
+    }
+
     if (url.pathname === "/mesure") {
       return req.method === "POST"
         ? ecrireMesure(req, env, origine, cors)
@@ -235,9 +244,9 @@ async function lireAchat(id, env) {
    Alphabet sans O ni 0, sans I ni 1 : un code se lit à voix haute et se recopie
    d'un téléphone à l'autre, et personne ne devrait avoir à deviner lequel des
    deux caractères c'était. Trente-deux lettres sur huit positions font mille
-   milliards de combinaisons : on ne tombe pas dessus par hasard. Une règle de
-   limitation de débit côté Cloudflare reste à poser malgré tout (voir A-FAIRE),
-   pour qu'on ne puisse pas non plus essayer en masse. */
+   milliards de combinaisons : on ne tombe pas dessus par hasard, et la limitation
+   de débit du Worker (dix demandes par minute et par adresse) interdit d'essayer
+   en masse. */
 const ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const DUREE_CADEAU = 24 * 3600 * 1000;
 
@@ -345,6 +354,19 @@ async function utiliserCadeau(req, env, origine, cors) {
     return json({ valide: false, raison }, 200, cors);
   } catch (e) {
     return json({ valide: false, erreur: String(e && e.message || e) }, 500, cors);
+  }
+}
+
+/* Vrai si cette adresse a dépassé sa part pour la minute en cours. Sans liaison
+   (Worker lancé sans la configuration), on laisse passer plutôt que de tout bloquer. */
+async function tropVite(limiteur, req) {
+  if (!limiteur) return false;
+  const ip = req.headers.get("CF-Connecting-IP") || "inconnue";
+  try {
+    const { success } = await limiteur.limit({ key: ip });
+    return !success;
+  } catch (_) {
+    return false;
   }
 }
 

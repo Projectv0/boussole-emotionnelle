@@ -407,31 +407,41 @@ Une fois le compte actif, dis-le-moi : je crée les trois produits et les trois 
 production, je pose l'URL des CGV dans les informations publiques (ce qui débloque l'option
 « exiger l'acceptation » sur les liens), le numéro de TVA sur les reçus, et je bascule le site.
 
-## B6 · La clé Stripe du Worker
+## B6 · La clé Stripe du Worker — tout est prêt, il reste deux gestes à toi
 
-**Le Worker est déjà déployé** — c'est celui de la mesure, `boussole.projectv0-0.workers.dev`.
-Le code de vérification d'achat y est, et il répond déjà correctement : référence mal formée
-rejetée, et 501 tant qu'il n'a pas sa clé. Il ne manque que la clé.
+**Le Worker est déployé** (`boussole.projectv0-0.workers.dev`), avec le code de vérification
+d'achat et, depuis le 3 novembre, **sa propre limitation de débit** : dix demandes par minute et
+par adresse sur la vérification d'achat et les codes à offrir, soixante sur la mesure d'audience
+(`ratelimits` dans `wrangler.jsonc`). Plus rien à poser dans le tableau de bord Cloudflare. La
+limite est approximative, comme Cloudflare l'annonce — un flot est coupé après une quinzaine de
+demandes rapides, pas pile à la dixième — et c'est suffisant : on ne peut ni essayer des codes en
+masse, ni faire interroger Stripe en boucle.
 
-1. Créer dans Stripe une **clé restreinte**, en lecture seule, avec **deux** permissions :
-   **Checkout Sessions (lecture)** et **PaymentIntents (lecture)**. La seconde est
-   indispensable : sans elle, une session remboursée resterait valable indéfiniment, sur
-   autant d'appareils que la personne veut — le remboursement coûterait le prix **et** le
-   produit.
-2. La poser depuis `worker/` :
+Il ne manque que la clé, et je ne peux pas la générer ni la manipuler à ta place : c'est un
+identifiant secret de ton compte de paiement. Tout est préparé pour que ça te prenne une minute :
+
+1. Dans ton Chrome, la page **« Créer une clé API limitée »** est ouverte, nom et permissions
+   déjà remplis : **Checkout Sessions (lecture)**, **PaymentIntents (lecture)** et **Charges
+   (lecture)**. Les deux dernières sont indispensables : sans elles, une session remboursée ou
+   contestée resterait valable indéfiniment, sur autant d'appareils que la personne veut — le
+   remboursement coûterait le prix **et** le produit. Clique **« Créer une clé »** en bas, puis
+   **copie la clé** affichée (elle ne s'affiche qu'une fois).
+2. Dans le Terminal, l'onglet « clé Stripe du Worker » attend sur `Enter a secret value:` —
+   **colle la clé, Entrée**. Rien ne s'affiche pendant la frappe, c'est normal. Si l'onglet a été
+   fermé, relance depuis `worker/` :
 
    ```bash
-   wrangler secret put STRIPE_CLE
+   npx wrangler secret put STRIPE_CLE
    ```
 
-   La valeur se tape au clavier, comme pour `MESURE_CLE`. Je ne la vois jamais.
+   Je ne vois jamais la valeur. Si la page Stripe a été fermée : Développeurs → Clés API →
+   « Créer une clé limitée », mêmes trois permissions en lecture.
 
-3. Poser une **règle de limitation de débit** Cloudflare : 10 requêtes par minute et par IP
-   sur la route du Worker. Elle protège à la fois le compteur d'audience et la vérification
-   d'achat.
-
-Ensuite je renseigne `VENTE.verification` dans le site — une ligne — et **deux choses
-s'allument d'un coup** : la vérification d'achat, et le code à offrir (B6 bis).
+Ensuite je renseigne `VENTE.verification` dans le site et je passe `modeTest` à faux — et **deux
+choses s'allument d'un coup** : la vérification d'achat, et le code à offrir (B6 bis). À partir de
+là, un paiement de test n'ouvre plus rien : la clé est de production, elle ne connaît que les vrais
+paiements. Le premier essai sera donc un vrai achat à 1,99 € (B7), que tu te rembourses ensuite
+depuis Stripe si tu veux — et le remboursement doit alors **fermer** l'accès : c'est le test.
 
 ## B6 bis · Le code à offrir — prêt, en sommeil
 

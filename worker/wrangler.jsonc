@@ -27,6 +27,18 @@
     }
   ],
 
+  // Limitation de débit, par adresse IP, portée par le Worker lui-même : pas de
+  // règle à poser dans le tableau de bord Cloudflare. Dix demandes par minute sur
+  // la vérification d'achat et les codes à offrir (personne n'en a besoin de plus,
+  // et c'est ce qui interdit d'essayer des codes en masse), soixante sur la mesure
+  // d'audience (un visiteur en envoie moins de dix par visite ; la marge est pour
+  // les adresses partagées — une école, un bureau). La période ne peut valoir que
+  // 10 ou 60 secondes. L'adresse sert de clé de comptage et n'est écrite nulle part.
+  "ratelimits": [
+    { "name": "LIMITE_ACHAT",  "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } },
+    { "name": "LIMITE_MESURE", "namespace_id": "1002", "simple": { "limit": 60, "period": 60 } }
+  ],
+
   // Les deux secrets ne sont JAMAIS écrits ici — ce fichier est versionné.
   // STRIPE_CLE et MESURE_CLE se posent avec « wrangler secret put ».
   "observability": { "enabled": true }
