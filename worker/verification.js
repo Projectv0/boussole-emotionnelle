@@ -31,20 +31,19 @@ const ORIGINES = [
   "https://www.boussole-emotionnelle.fr",
 ];
 
-/* Seuil en centimes séparant la formule Résultats du reste. Trois montants sont
-   vendus : 199 (Résultats), 400 (le complément, pour qui a déjà payé les 199) et
-   599 (Résultats + Dossier d'un coup). Les deux derniers ouvrent le dossier.
+/* Les trois prix de la Boussole dans Stripe (compte BC LABS, mode production), et
+   la formule que chacun ouvre. C'est le prix acheté qui décide du palier, pas le
+   montant : le compte Stripe est celui de la société, il servira à d'autres sites,
+   et un achat fait ailleurs — même à 5,99 € — ne doit rien ouvrir ici. Un prix
+   absent de cette liste ne débloque donc rien.
 
-   Le seuil est posé à 250 et non à 400 : à 400 il tombait pile sur le montant du
-   complément, et un centime de moins — un prix arrondi autrement, une devise,
-   une remise — aurait silencieusement livré la formule à 1,99 € à quelqu'un qui
-   a payé le double. On laisse donc de la marge sous le plus petit des deux
-   montants qui ouvrent le dossier.
-
-   À revoir si les prix changent : c'est le montant réellement encaissé qui décide
-   du palier, et rien d'autre. Tant qu'aucun produit n'est vendu entre 2,00 € et
-   2,50 €, cette règle est sans ambiguïté. */
-const SEUIL_DOSSIER = 250;
+   Le complément (4 €, pour qui a déjà payé les 1,99 €) ouvre le dossier, comme la
+   formule complète. À compléter si un prix est ajouté dans Stripe. */
+const PRIX = {
+  "price_1UXoEu3FK7OJuB9z7THgWoiu": "resultats",   // Boussole émotionnelle · Tes résultats — 1,99 €
+  "price_1UXoGg3FK7OJuB9zceZSTOOy": "dossier",     // Boussole émotionnelle · Résultats + Dossier complet — 5,99 €
+  "price_1UXoHE3FK7OJuB9zD8HCaeQ2": "dossier",     // Boussole émotionnelle · Complément — Dossier complet — 4 €
+};
 const DEVISE = "eur";
 
 /* Les sept seuls événements acceptés. Une liste fermée plutôt qu'un champ libre :
@@ -191,7 +190,7 @@ async function lireAchat(id, env) {
        contestée reste « paid » et continuerait d'ouvrir l'accès indéfiniment. */
     const r = await fetch(
       `https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(id)}`
-        + "?expand[]=payment_intent.latest_charge",
+        + "?expand[]=payment_intent.latest_charge&expand[]=line_items",
       { headers: { Authorization: `Bearer ${env.STRIPE_CLE}` } }
     );
     if (!r.ok) return { valide: false, niveau: null };
@@ -206,8 +205,17 @@ async function lireAchat(id, env) {
   const bonneDevise = (s.currency || "").toLowerCase() === DEVISE;
   const paye = s.payment_status === "paid" && bonneDevise && !rembourse && !conteste;
 
-  /* Le palier suit le montant réellement encaissé, dans la devise attendue. */
-  const niveau = (s.amount_total | 0) >= SEUIL_DOSSIER ? "dossier" : "resultats";
+  /* Le palier suit le prix acheté : le plus haut des prix connus de la session.
+     Une session sans aucun prix de la Boussole — un achat fait sur un autre site de
+     la société, ou un produit inconnu — n'ouvre rien, quel que soit son montant. */
+  const lignes = (s.line_items && s.line_items.data) || [];
+  let niveau = null;
+  for (const l of lignes) {
+    const n = PRIX[l.price && l.price.id];
+    if (n === "dossier") niveau = "dossier";
+    else if (n === "resultats" && !niveau) niveau = "resultats";
+  }
+  if (!niveau) return { valide: false, niveau: null };
   return { valide: paye, niveau: paye ? niveau : null };
 }
 

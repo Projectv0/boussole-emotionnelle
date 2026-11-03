@@ -343,68 +343,39 @@ peut s'annoncer que par rapport au **prix le plus bas réellement pratiqué pend
 moins trente jours, puis annonce la remise par rapport à ce prix. Il suffira de renseigner
 `prixDossierRef` et `remiseDossier` dans `VENTE` : le prix barré et le badge reviennent seuls.
 
-## B5 · Le compte Stripe de la SAS, en production
+## ~~B5 · Le compte Stripe de la SAS, en production~~ — ✅ fait le 3 novembre 2026
 
-**Fait le 3 novembre 2026, en mode test, sur ton compte Stripe « ODEM »** (`acct_1UAPdl3hSbsXrutw`) :
-le prix du dossier corrigé à **5,99 €** (nouveau tarif par défaut ; l'ancien 9,99 € reste
-listé, Stripe m'a refusé de l'archiver — sans effet), un produit **« Complément — Dossier
-complet » à 4 €**, et **trois liens de paiement de test** avec les bonnes URL de retour :
+**Le compte Stripe est celui de BC LABS**, activé le 3 novembre (profil de l'entreprise,
+représentant, associé, compte bancaire, double authentification). BC LABS est le nom global
+du compte : c'est lui que les clients voient sur la page de paiement, les reçus et leurs
+relevés bancaires (libellé « BC LABS »), pour ce site comme pour les suivants. Les
+informations publiques portent l'e-mail de contact, le téléphone, et les adresses des
+conditions de vente et de la politique de confidentialité.
 
-| Formule | Lien de test | Retour |
-|---|---|---|
-| Tes résultats, 1,99 € | `…/test_9B68wI5BQ11M8Mg00oc7u00` (inchangé) | `formule=resultats` |
-| Résultats + Dossier, 5,99 € | `…/test_5kQaEQ6FUaCm3rW28wc7u03` (nouveau) | `formule=dossier` |
-| Complément, 4 € | `…/test_6oU14g4xM25Qd2w9AYc7u02` (nouveau) | `formule=dossier` |
+**Trois produits et trois liens de paiement, en production**, chacun nommé « Boussole
+émotionnelle · … » pour être reconnu au premier coup d'œil dans Stripe, avec l'acceptation
+des conditions de vente exigée avant de payer et le retour vers `merci.html` :
 
-Les trois sont branchés dans `VENTE` : le parcours complet — y compris le complément à 4 € —
-se teste maintenant de bout en bout en mode test.
+| Formule | Prix | Identifiant de prix | Retour |
+|---|---|---|---|
+| Tes résultats | 1,99 € | `price_1UXoEu3FK7OJuB9z7THgWoiu` | `formule=resultats` |
+| Résultats + Dossier complet | 5,99 € | `price_1UXoGg3FK7OJuB9zceZSTOOy` | `formule=dossier` |
+| Complément | 4 € | `price_1UXoHE3FK7OJuB9zD8HCaeQ2` | `formule=dossier` |
 
-**Ce que je n'ai pas pu faire, et pourquoi.** Le compte n'est **pas activé** pour les
-paiements réels : Stripe attend le profil de l'entreprise (« Des informations de votre
-entreprise sont manquantes »). Tant qu'il n'est pas activé, le mode production est
-inaccessible, et l'option « exiger l'acceptation des conditions de vente » reste grisée sur
-les liens (elle demande l'URL des CGV dans les informations publiques, qui font partie du
-profil). **L'activation, c'est toi** : elle demande ton identité, ton IBAN et un code SMS —
-trois choses que je ne manipule jamais. Voir B5 bis.
+Les trois liens et les trois identifiants sont dans `VENTE`. **Comment les paiements de la
+Boussole sont identifiés dans un compte partagé entre plusieurs sites :** par le nom des
+produits (chaque paiement affiche « Boussole émotionnelle · … » dans Stripe, les reçus et les
+exports), et par le Worker, qui ne débloque la Boussole que pour ces trois identifiants de
+prix — un achat fait sur un autre site de la société, même du même montant, n'ouvre rien ici.
+Ce qui n'est **pas** distinct par site : le libellé sur le relevé bancaire du client, « BC LABS »
+pour tout le compte. Si un jour tu veux un libellé par site, c'est un compte Stripe par site.
 
-### Ce qu'il restera à faire en production, une fois le compte activé (moi, avec ton Chrome)
+**Les trois liens de test** (dossier à 5,99 €, complément à 4 €, résultats) existent
+toujours dans l'environnement de test, pour rejouer le parcours sans payer.
 
-
-Après l'ouverture du compte bancaire professionnel (il faut le Kbis et l'IBAN société).
-
-**Créer trois produits** aux prix réels : **1,99 €** (résultats), **5,99 €** (dossier complet)
-et **4,00 €** (le complément, pour qui a déjà payé les 1,99 € — voir B7 bis).
-
-**Créer trois liens de paiement**, avec ces URL de redirection **exactement** :
-
-```
-https://boussole-emotionnelle.fr/merci.html?formule=resultats&session_id={CHECKOUT_SESSION_ID}
-```
-```
-https://boussole-emotionnelle.fr/merci.html?formule=dossier&session_id={CHECKOUT_SESSION_ID}
-```
-
-Le complément utilise **la même URL de retour que le dossier** — `formule=dossier` — puisque
-c'est bien le dossier qu'il ouvre.
-
-Sans le paramètre `formule`, la page de remerciement ne sait pas quoi débloquer. Sans
-`session_id`, rien ne peut être vérifié.
-
-**Deux réglages à activer sur les trois liens :**
-
-- **« Exiger l'acceptation des conditions de vente »**, en y mettant l'URL des CGV. Stripe
-  produit alors une preuve horodatée de l'acceptation — ce qu'aucun code côté navigateur ne
-  peut faire.
-- **Collecte de l'adresse e-mail** du client, pour le reçu.
-- **Une phrase dans le pied de page des reçus** (Stripe → Paramètres → Reçus clients) :
-  « Vous avez accepté les conditions de vente et renoncé à votre droit de rétractation pour
-  un accès immédiat. » La loi veut que cette renonciation soit confirmée sur un support
-  durable : le reçu envoyé par e-mail en est un, la page de remerciement le dit aussi.
-
-**Ce que tu me donnes ensuite :** les deux URL de paiement, **et les deux identifiants de prix**
-(`price_...`, visibles sur la fiche produit). Les identifiants de prix permettent au Worker de
-reconnaître le produit acheté au lieu de deviner d'après le montant — sans eux, un code promo
-de −20 % ferait passer un acheteur du dossier sous le seuil et il recevrait un produit amputé.
+**Ce que Stripe ne permet pas :** une phrase de renonciation en pied de reçu. En échange,
+Stripe enregistre lui-même, horodaté, l'acceptation des conditions de vente que le client
+coche avant de payer — c'est la preuve qui compte.
 
 ## B5 bis · Activer le compte Stripe — j'ai fait la moitié, il te reste quatre écrans
 
@@ -511,7 +482,7 @@ Une fois que j'ai basculé le site, à faire **dans l'ordre**, en production :
 **Le point 6 demande une vraie carte bancaire, sur un vrai paiement de 1,99 € que tu te
 rembourseras ensuite. Je ne peux pas le faire : je n'entre jamais de numéro de carte, même de test.**
 
-## B7 bis · Le lien de complément — fait côté site, lien de test branché le 3 novembre
+## ~~B7 bis · Le lien de complément~~ — ✅ lien de production branché le 3 novembre
 
 **Ta décision du 24 septembre : le complément.** Quelqu'un qui a pris la formule à 1,99 € et
 qui veut le dossier ne paie plus que la **différence, 4 €**, au lieu de 5,99 € par-dessus ses
@@ -637,7 +608,7 @@ carrousels et le dossier `publication/` en une commande.
 | ~~un numéro de téléphone~~ | ✅ pages légales SAS publiées le 3 novembre |
 | le médiateur (nom, adresse, URL) | je l'inscris dans les CGV et les mentions légales |
 | ~~ta décision sur le prix barré~~ | ✅ « tarif de lancement », appliqué le 13 octobre |
-| les 3 liens Stripe (résultats, dossier, complément) | je branche et je prépare la bascule |
+| ~~les 3 liens Stripe (résultats, dossier, complément)~~ | ✅ créés et branchés le 3 novembre |
 | `wrangler secret put STRIPE_CLE` | je renseigne `VENTE.verification` et je bascule |
 | les 9 images régénérées | je remonte les carrousels et `publication/` |
 

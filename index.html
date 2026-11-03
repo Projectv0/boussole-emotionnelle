@@ -1695,8 +1695,8 @@ const VENTE = {
      paiement » débloque tout. Passe à false au lancement des vrais paiements. */
   modeTest: true,
   prixResultats: "1,99 €",
-  lienResultats: "https://buy.stripe.com/test_9B68wI5BQ11M8Mg00oc7u00",
-  produitResultats: "",
+  lienResultats: "https://buy.stripe.com/9B628k5GD5yU8oEd2R4AU00",          /* production, 1,99 € (BC LABS) */
+  produitResultats: "price_1UXoEu3FK7OJuB9z7THgWoiu",
   prixDossier: "5,99 €",
   /* Pas de prix barré ni de pourcentage : toute annonce de réduction doit se référer
      au prix le plus bas pratiqué pendant les 30 jours précédents (art. L112-1-1 du
@@ -1705,8 +1705,8 @@ const VENTE = {
      Décision du 13 octobre 2026 : « tarif de lancement », sans référence. */
   prixDossierRef: "",
   remiseDossier: "",
-  lienDossier: "https://buy.stripe.com/test_5kQaEQ6FUaCm3rW28wc7u03",   /* test, 5,99 € — l'ancien lien à 9,99 € ne sert plus */
-  produitDossier: "",
+  lienDossier: "https://buy.stripe.com/4gM8wI1qn7H25cs1k94AU01",            /* production, 5,99 € */
+  produitDossier: "price_1UXoGg3FK7OJuB9zceZSTOOy",
 
   /* Le complément, pour qui a déjà payé les résultats : la différence entre les
      deux formules, et rien de plus. Sans lui, passer de 1,99 € au dossier coûtait
@@ -1715,8 +1715,8 @@ const VENTE = {
      tarif : c'est le comportement d'avant, et il n'a rien de faux, il est
      seulement moins généreux. Le lien se crée dans Stripe (voir A-FAIRE, B5). */
   prixComplement: "4 €",
-  lienComplement: "https://buy.stripe.com/test_6oU14g4xM25Qd2w9AYc7u02",   /* test, 4 € */
-  produitComplement: "",
+  lienComplement: "https://buy.stripe.com/bJe28kd95bXidIYbYN4AU02",         /* production, 4 € */
+  produitComplement: "price_1UXoHE3FK7OJuB9zD8HCaeQ2",
   /* Adresse d'une éventuelle fonction de vérification côté serveur.
      Laissée vide : le déblocage se fait alors sur la seule référence Stripe. */
   verification: "",
