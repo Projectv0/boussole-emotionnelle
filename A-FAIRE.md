@@ -1,7 +1,9 @@
 # Ce que tu as à faire
 
-*État au 3 novembre 2026. La SAS existe depuis le 2 novembre. Le bloc A est clos — il ne
-reste qu'à configurer TikTok et à publier. Le bloc B avance : Kbis reçu.*
+*État au 3 novembre 2026, au soir. La SAS existe depuis le 2 novembre. Le bloc A est clos — il
+ne reste qu'à configurer TikTok et à publier. **Le site est en vente depuis ce soir** : Stripe
+BC LABS en production, vérification d'achat branchée, mode test fermé. Il reste le test réel
+(B7) et le médiateur (B3).*
 
 Tout ce qui pouvait être fait dans le dépôt l'est. Ce qui reste demande un compte tiers,
 une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste que ça.
@@ -9,12 +11,13 @@ une identité, de l'argent ou un arbitrage — donc toi. Ce document ne liste qu
 Trois blocs indépendants, dans l'ordre de ce qui rapporte le plus vite :
 
 - **A. Se rendre visible** — clos, sauf une chose : configurer TikTok, puis publier.
-- **B. Pouvoir vendre** — la société existe ; restent le médiateur, la TVA, Stripe et la clé.
+- **B. Pouvoir vendre** — en vente ; restent le test réel (B7, B8) et le médiateur (B3).
 - **C. Finir les images** — bloqué par les crédits. ~10 €.
 - **D. Les vingt vidéos** — prêtes à publier.
 
-Le site ne vend rien aujourd'hui (`modeTest: true`, liens Stripe de test) : rien n'est en
-train de mal tourner. Le bloc B est à faire **avant** de basculer, pas en urgence.
+**Le site vend depuis le 3 novembre au soir** (`modeTest: false`, liens Stripe de production,
+Worker de vérification branché). Aucun paiement réel n'a encore eu lieu : le premier doit être
+le tien (B7), avant toute publication.
 
 **Ce qui est gratuit, exactement.** À dire juste partout, y compris dans les bios et les
 dépôts d'annuaire : **le guide de 57 articles est en accès libre**, et le test se répond
@@ -193,11 +196,10 @@ Enregistre la réponse dans un fichier, puis `python3 mesure.py chiffres.json` �
 l'entonnoir, les pages les plus lues et les quatorze derniers jours. Le compteur tourne
 depuis le 23 septembre : laisse-lui une semaine avant d'y chercher du sens.
 
-### À faire aussi, quand tu passeras sur Cloudflare
+### ~~À faire aussi, quand tu passeras sur Cloudflare~~ — ✅ fait le 3 novembre
 
-Une **règle de limitation de débit** sur la route du Worker — 10 requêtes par minute et par
-IP. Elle protège le compteur d'un gonflage à la main, et elle sera de toute façon nécessaire
-pour la vérification d'achat.
+La limitation de débit est portée par le Worker lui-même (voir B6) : soixante mesures par
+minute et par adresse, dix vérifications d'achat. Rien à poser dans le tableau de bord.
 
 ---
 
@@ -407,43 +409,38 @@ Une fois le compte actif, dis-le-moi : je crée les trois produits et les trois 
 production, je pose l'URL des CGV dans les informations publiques (ce qui débloque l'option
 « exiger l'acceptation » sur les liens), le numéro de TVA sur les reçus, et je bascule le site.
 
-## B6 · La clé Stripe du Worker — tout est prêt, il reste deux gestes à toi
+## ~~B6 · La clé Stripe du Worker~~ — ✅ fait le 3 novembre 2026
 
-**Le Worker est déployé** (`boussole.projectv0-0.workers.dev`), avec le code de vérification
-d'achat et, depuis le 3 novembre, **sa propre limitation de débit** : dix demandes par minute et
-par adresse sur la vérification d'achat et les codes à offrir, soixante sur la mesure d'audience
-(`ratelimits` dans `wrangler.jsonc`). Plus rien à poser dans le tableau de bord Cloudflare. La
-limite est approximative, comme Cloudflare l'annonce — un flot est coupé après une quinzaine de
-demandes rapides, pas pile à la dixième — et c'est suffisant : on ne peut ni essayer des codes en
-masse, ni faire interroger Stripe en boucle.
+La clé restreinte « Boussole - Worker verification achat » (lecture seule : Checkout Sessions,
+PaymentIntents, Charges) a été créée dans Stripe et posée dans le Worker par `wrangler secret
+put STRIPE_CLE`, par toi, dans ton Terminal — je ne l'ai jamais vue. Les permissions
+PaymentIntents et Charges sont ce qui permet au Worker de voir un remboursement ou une
+contestation, et de refuser alors la référence.
 
-Il ne manque que la clé, et je ne peux pas la générer ni la manipuler à ta place : c'est un
-identifiant secret de ton compte de paiement. Tout est préparé pour que ça te prenne une minute :
+**Ce qui s'est allumé avec elle**, le même soir : `VENTE.verification` et `merci.html`
+pointent sur `https://boussole.projectv0-0.workers.dev/` ; `modeTest` est à faux (plus de
+bouton « Passer le paiement », plus de `?apercu=1`) ; le code à offrir (B6 bis) est actif ; et
+la phrase de prix qui serait apparue sur l'accueil à ce moment a été retirée — aucun prix avant
+la fin du test, ta décision du 13 octobre.
 
-1. Dans ton Chrome, la page **« Créer une clé API limitée »** est ouverte, nom et permissions
-   déjà remplis : **Checkout Sessions (lecture)**, **PaymentIntents (lecture)** et **Charges
-   (lecture)**. Les deux dernières sont indispensables : sans elles, une session remboursée ou
-   contestée resterait valable indéfiniment, sur autant d'appareils que la personne veut — le
-   remboursement coûterait le prix **et** le produit. Clique **« Créer une clé »** en bas, puis
-   **copie la clé** affichée (elle ne s'affiche qu'une fois).
-2. Dans le Terminal, l'onglet « clé Stripe du Worker » attend sur `Enter a secret value:` —
-   **colle la clé, Entrée**. Rien ne s'affiche pendant la frappe, c'est normal. Si l'onglet a été
-   fermé, relance depuis `worker/` :
+**Vérifié sur le site réel le 3 novembre** : mode test fermé même avec `?apercu=1`, fenêtre de
+paiement active, bouton « Passer le paiement » absent, aucun prix sur l'accueil, Worker joignable
+depuis le site, référence inventée refusée, référence mal formée refusée.
 
-   ```bash
-   npx wrangler secret put STRIPE_CLE
-   ```
+**La limitation de débit** est portée par le Worker lui-même : dix demandes par minute et par
+adresse sur la vérification d'achat et les codes à offrir, soixante sur la mesure d'audience
+(`ratelimits` dans `wrangler.jsonc`). Elle est approximative, comme Cloudflare l'annonce — un
+flot est coupé après une quinzaine de demandes rapides, pas pile à la dixième — et c'est
+suffisant : on ne peut ni essayer des codes en masse, ni faire interroger Stripe en boucle.
 
-   Je ne vois jamais la valeur. Si la page Stripe a été fermée : Développeurs → Clés API →
-   « Créer une clé limitée », mêmes trois permissions en lecture.
+**Ce qu'un remboursement ferme, et ce qu'il ne ferme pas.** Le Worker refuse une référence
+remboursée : elle n'ouvrira plus rien sur un *autre* appareil, ni via « J'ai déjà payé ». Mais
+l'appareil où l'accès a déjà été enregistré ne redemande rien au Worker : il garde l'accès.
+C'est un choix (le site reste utilisable hors ligne, et ne dépend pas du Worker à chaque
+visite). Si tu veux qu'un remboursement ferme aussi l'appareil d'origine, dis-le : une
+revérification silencieuse à l'ouverture, une ligne, et l'accès tombe à la visite suivante.
 
-Ensuite je renseigne `VENTE.verification` dans le site et je passe `modeTest` à faux — et **deux
-choses s'allument d'un coup** : la vérification d'achat, et le code à offrir (B6 bis). À partir de
-là, un paiement de test n'ouvre plus rien : la clé est de production, elle ne connaît que les vrais
-paiements. Le premier essai sera donc un vrai achat à 1,99 € (B7), que tu te rembourses ensuite
-depuis Stripe si tu veux — et le remboursement doit alors **fermer** l'accès : c'est le test.
-
-## B6 bis · Le code à offrir — prêt, en sommeil
+## B6 bis · Le code à offrir — ✅ en service depuis le 3 novembre
 
 Fait le 24 septembre 2026, et **déjà en ligne côté serveur**. Acheter le dossier ouvre le
 droit d'offrir le test à une personne : un code unique, valable vingt-quatre heures à partir
@@ -451,30 +448,30 @@ du moment où l'acheteur le crée, utilisable une seule fois, qui donne **les r�
 jamais le dossier.
 
 Le Worker vérifie auprès de Stripe que le dossier a bien été payé avant d'engendrer quoi que
-ce soit. Donc, très concrètement : **tant que `STRIPE_CLE` n'est pas posée, aucun code ne peut
-exister**, et le site n'en propose aucun — ni le bouton sur la page de résultats, ni le lien
-« On m'a offert un code » dans la fenêtre de paiement. Rien à faire de ton côté : la même
-ligne `VENTE.verification` allume les deux.
+ce soit. La clé est posée depuis le 3 novembre : le bouton sur la page de résultats et le lien
+« On m'a offert un code » dans la fenêtre de paiement sont visibles. Le point 11 de B7 vérifie
+le parcours complet.
 
 **Un code perdu est perdu** — ta décision du 24 septembre. Passé les vingt-quatre heures,
 qu'il ait servi ou non, l'achat n'en ouvre pas d'autre. Comme c'est irréversible, la carte le
 dit **avant** le clic, et le bouton demande une confirmation : le premier clic annonce ce qui
 va se passer, le second le fait.
 
-La règle de limitation de débit du point 3 ci-dessus devient plus importante avec cette
-fonction : elle est ce qui empêche d'essayer des codes en masse.
+La limitation de débit du Worker (B6) est ce qui empêche d'essayer des codes en masse.
 
-## B7 · Le test réel, avant d'annoncer quoi que ce soit
+## B7 · Le test réel, avant d'annoncer quoi que ce soit — **c'est la prochaine étape**
 
-Une fois que j'ai basculé le site, à faire **dans l'ordre**, en production :
+Le site est basculé. À faire **dans l'ordre**, en production. Les points 1 à 5, je les ai
+vérifiés moi-même le 3 novembre sur le site en ligne ; les suivants demandent une carte
+bancaire, donc toi :
 
-1. Le pied de page mène aux CGV, et les CGV portent le nom réel de la société.
-2. Les boutons de paiement sont inertes tant que la case de renonciation n'est pas cochée —
-   **sur les deux parcours** (la pop-up de fin *et* le bouton « dossier complet » de la page
-   de résultats).
-3. `?apercu=1` ne montre plus rien de spécial.
-4. `merci.html?formule=dossier` sans `session_id` ne débloque rien.
-5. Une référence inventée dans « J'ai déjà payé » est refusée.
+1. ~~Le pied de page mène aux CGV, et les CGV portent le nom réel de la société.~~ ✅
+2. ~~Les boutons de paiement sont inertes tant que la case n'est pas cochée, sur les deux
+   parcours.~~ ✅
+3. ~~`?apercu=1` ne montre plus rien de spécial.~~ ✅
+4. ~~`merci.html?formule=dossier` sans `session_id` ne débloque rien.~~ ✅ (sans référence, la
+   page ne demande rien au Worker et n'accorde rien)
+5. ~~Une référence inventée dans « J'ai déjà payé » est refusée.~~ ✅
 6. **Un vrai achat à 1,99 € donne les résultats et *pas* le dossier** — et le bouton
    « Créer ma carte à partager » n'apparaît pas ; à sa place, l'encart « Ta boussole, en image »
    mène à la vitrine du dossier.
@@ -490,7 +487,10 @@ Une fois que j'ai basculé le site, à faire **dans l'ordre**, en production :
     servir une deuxième fois. Un achat à 1,99 €, lui, ne montre pas cet encadré.
 
 **Le point 6 demande une vraie carte bancaire, sur un vrai paiement de 1,99 € que tu te
-rembourseras ensuite. Je ne peux pas le faire : je n'entre jamais de numéro de carte, même de test.**
+rembourseras ensuite depuis Stripe. Je ne peux pas le faire : je n'entre jamais de numéro de
+carte, même de test.** Après le remboursement, colle la même référence dans « J'ai déjà payé »
+sur un autre navigateur : elle doit être refusée. Et fais-le depuis ton téléphone, via le lien
+en bio d'Instagram puis de TikTok (B8) : c'est le chemin que prendront les clients.
 
 ## ~~B7 bis · Le lien de complément~~ — ✅ lien de production branché le 3 novembre
 
@@ -537,9 +537,8 @@ un complément sans achat antérieur.
 ## B7 ter · Ce qui reste vrai quoi qu'il arrive
 
 **La carte n'a jamais été vendue à personne.** Si tu t'étais demandé si quelqu'un ayant acheté
-à 1,99 € avant ce changement se retrouvait lésé : non. Le mode test est encore actif, aucun
-paiement réel n'a eu lieu, et les CGV disent aujourd'hui qu'aucune formule payante n'est
-proposée. La question ne se posera plus jamais si la vente ouvre après ce changement.
+à 1,99 € avant ce changement se retrouvait lésé : non. La vente a ouvert le 3 novembre 2026,
+après ce changement, et aucun paiement réel n'avait eu lieu avant. La question ne se pose pas.
 
 ## B8 · Le test depuis Instagram et TikTok, sur un vrai téléphone
 
@@ -619,7 +618,8 @@ carrousels et le dossier `publication/` en une commande.
 | le médiateur (nom, adresse, URL) | je l'inscris dans les CGV et les mentions légales |
 | ~~ta décision sur le prix barré~~ | ✅ « tarif de lancement », appliqué le 13 octobre |
 | ~~les 3 liens Stripe (résultats, dossier, complément)~~ | ✅ créés et branchés le 3 novembre |
-| `wrangler secret put STRIPE_CLE` | je renseigne `VENTE.verification` et je bascule |
+| ~~`wrangler secret put STRIPE_CLE`~~ | ✅ clé posée, site basculé en vente le 3 novembre |
+| un vrai achat à 1,99 € depuis ton téléphone (B7, B8) | je corrige ce qui casse, s'il y a quelque chose |
 | les 9 images régénérées | je remonte les carrousels et `publication/` |
 
 **Rien de tout cela ne se fait à ta place.** Chacun de ces points demande un compte à ton nom,
