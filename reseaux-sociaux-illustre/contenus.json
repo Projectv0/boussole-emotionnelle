@@ -5,14 +5,14 @@
       "slug": "honte-et-culpabilite",
       "titre": "J’AI MAL AGI, OU C’EST MOI LE PROBLÈME ?",
       "titreAccent": "LE PROBLÈME",
-      "sousTitre": "Deux phrases qui se ressemblent, deux émotions différentes",
+      "sousTitre": "Elles se ressemblent, mais elles parlent de deux émotions.",
       "emotions": [
         "honte",
         "culpabilite"
       ],
       "phraseFinale": "Quand tu veux réparer, c’est la culpabilité. Quand tu veux disparaître, c’est la honte.",
       "question": "Tu te dis plutôt « j’ai mal agi » ou « je suis comme ça » ?",
-      "legende": "La honte et la culpabilité arrivent souvent dans la même minute, alors on finit par les confondre. Pour les séparer, pose-toi une question simple : est-ce que je regrette ce que j’ai fait, ou est-ce que je m’en veux d’être moi ? La culpabilité parle d’un geste précis, et un geste, ça peut souvent se réparer : tu t’excuses, tu corriges, tu fais autrement la prochaine fois. La honte, elle, grossit dans le silence, et on peut en porter pendant des années pour quelque chose dont on n’était même pas responsable. En parler à une seule personne de confiance suffit souvent à la faire redescendre, et l’article complet t’attend dans le guide.",
+      "legende": "La honte et la culpabilité arrivent souvent dans la même minute, alors on finit par les confondre. Pour les séparer, pose-toi une question simple : est-ce que je regrette ce que j’ai fait, ou est-ce que je m’en veux d’être moi ? La culpabilité parle d’un geste précis, et un geste, ça peut souvent se réparer. Tu t’excuses, tu corriges, tu fais autrement la prochaine fois. La honte, elle, grandit dans le silence. On peut en porter pendant des années pour quelque chose dont on n’était même pas responsable. En parler à une seule personne de confiance suffit souvent à la faire redescendre, et l’article complet t’attend dans le guide.",
       "hashtags": "#honte #culpabilité #émotions #intelligenceémotionnelle #estimedesoi #psychologie #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "honte.html",
       "slides": [
@@ -41,18 +41,18 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Deux phrases qui ne disent pas la même chose",
+          "titre": "Ces deux phrases ne disent pas la même chose",
           "items": [
             {
               "etiquette": "La culpabilité",
-              "texte": "Elle parle de ce que tu as fait, à un moment précis. Et ça, tu peux souvent le réparer.",
+              "texte": "Elle parle d’un geste que tu as fait, à un moment précis. Un geste, tu peux souvent le réparer.",
               "bulle": "« J’ai mal agi »",
               "illustration": "bistrot-reparation",
               "prompt": "A woman in her fifties with light skin and short grey-blonde waves sits at a bistro table leaning toward a friend, both hands open on the tablecloth. Her eyebrows are raised in the centre, her eyes meet the other person’s directly, her mouth is caught mid-sentence and soft. Opposite her, a man in his fifties with brown skin and close-cropped hair listens with loose shoulders and an unguarded face."
             },
             {
               "etiquette": "La honte",
-              "texte": "Là, tu ne juges plus ton geste, tu te juges toi. Et ça, ça ne se répare pas, alors tu préfères te cacher.",
+              "texte": "Là, tu ne juges plus ton geste, tu juges la personne que tu es. Ça ne se répare pas, alors tu préfères te cacher.",
               "bulle": "« C’est moi le problème »",
               "illustration": "couloir-demi-tour",
               "prompt": "A man in his thirties with pale skin and dark wavy hair stands in an apartment hallway, coat still on, his back half-turned to a lit doorway, one hand gripping the strap of his bag. His chin is tucked, his eyes avoid the doorway, his jaw is clenched and his shoulders are pulled up and inward."
@@ -61,7 +61,7 @@
         },
         {
           "gabarit": "avant-apres",
-          "titre": "Ce que chacune te pousse à faire",
+          "titre": "Chacune te pousse à agir autrement",
           "items": [
             {
               "etiquette": "Avec la culpabilité",
@@ -72,7 +72,7 @@
             },
             {
               "etiquette": "Avec la honte",
-              "texte": "Tu annules, tu changes de trottoir, tu évites la personne, le lieu et le sujet.",
+              "texte": "Tu annules le rendez-vous, tu changes de trottoir, tu évites la personne et le sujet.",
               "bulle": "Je ne viendrai pas.",
               "illustration": "canape-annulation",
               "prompt": "A man in his sixties with light skin, grey stubble and thinning wavy hair sits on the edge of a sofa in a dim living room, his phone face-down on the cushion beside him, one hand rubbing the back of his neck. His gaze is unfocused toward the floor, his brows are low and drawn together, his mouth is a flat line and his back is rounded."
@@ -81,29 +81,29 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Quatre phrases de honte, et ce qui s’est vraiment passé",
+          "titre": "La honte te dit ceci, et voilà ce qui s’est vraiment passé",
           "items": [
             {
               "etiquette": "« Je ne vaux rien »",
-              "texte": "Ce qui s’est passé : on m’a posé une question en réunion et j’ai répondu que je ne savais pas.",
+              "texte": "En réalité, on m’a posé une question en réunion et j’ai répondu que je ne savais pas.",
               "illustration": "honte-question-reunion",
               "prompt": "A woman in her twenties with light olive skin and dark hair in a high ponytail sits at a meeting table, caught the second after answering, her eyes dropping to her hands, her lips pressed together, a flush rising on her neck and her shoulders drawing in."
             },
             {
               "etiquette": "« Tout le monde a vu »",
-              "texte": "Ce qui s’est passé : trois personnes ont entendu ma voix trembler pendant quelques secondes.",
+              "texte": "En réalité, trois personnes ont entendu ma voix trembler pendant quelques secondes.",
               "illustration": "honte-voix-tremble",
               "prompt": "A man in his fifties with deep brown skin and short grey hair stands to speak in a small room, one hand steadying itself on the back of a chair, his throat tight, his eyes flicking to the two people listening, his eyebrows lifted in the middle."
             },
             {
               "etiquette": "« Je gâche tout »",
-              "texte": "Ce qui s’est passé : j’ai oublié de rappeler jeudi, et je peux encore le faire aujourd’hui.",
+              "texte": "En réalité, j’ai oublié de rappeler jeudi, et je peux encore le faire aujourd’hui.",
               "illustration": "honte-oubli-rappel",
               "prompt": "A woman in her forties with pale skin and short red hair stops in a doorway with her keys still in her hand, remembering something; her eyes widen then close for a second, her mouth tightens and her free hand presses against her forehead."
             },
             {
               "etiquette": "« Je fais pitié »",
-              "texte": "Ce qui s’est passé : j’ai pleuré dix secondes devant une collègue, puis on a continué à travailler.",
+              "texte": "En réalité, j’ai pleuré dix secondes devant une collègue, puis on a continué à travailler.",
               "illustration": "honte-larmes-bureau",
               "prompt": "A man in his thirties with South Asian features and short dark hair turns his face away in a quiet office corner, wiping one eye quickly with the back of his wrist, his jaw working, his other hand braced on a filing cabinet while a colleague looks over with a kind, unhurried face."
             }
@@ -111,11 +111,11 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Le geste qui fait redescendre la honte",
+          "titre": "Un geste simple fait redescendre la honte",
           "items": [
             {
               "etiquette": "Reviens au fait précis",
-              "texte": "Remplace « je ne vaux rien » par « mardi, j’ai bafouillé deux minutes en réunion ». Tu parles d’un moment précis, pas de la personne que tu es.",
+              "texte": "Remplace « je ne vaux rien » par « mardi, j’ai bafouillé deux minutes en réunion ». Tu parles alors d’un moment précis, et non de la personne que tu es.",
               "illustration": "reunion-mot-qui-manque",
               "prompt": "A woman in her forties with East Asian features and dark hair in a loose bun stands mid-sentence in a small meeting room, one hand half-raised, her mouth open on a word that will not come, her eyes flicking toward a colleague. Her shoulders are lifted toward her ears and her other hand grips the edge of the table."
             }
@@ -128,14 +128,14 @@
       "slug": "peur-et-anxiete",
       "titre": "LA PEUR RETOMBE, L’ANXIÉTÉ TOURNE EN ROND",
       "titreAccent": "EN ROND",
-      "sousTitre": "La peur s’arrête quand le danger passe.\nL’anxiété, non.",
+      "sousTitre": "La peur s’arrête quand le danger passe.\nL’anxiété continue.",
       "emotions": [
         "peur",
         "anxiete"
       ],
       "phraseFinale": "La peur te prépare à une chose précise. L’anxiété te prépare à tout, tout le temps.",
       "question": "Ton inquiétude finit par une décision, ou elle tourne en boucle ?",
-      "legende": "La peur et l’anxiété font la même chose à ton corps : la gorge se serre, le souffle raccourcit, le cœur accélère. La différence, c’est la fin : la peur s’arrête quand le danger passe, l’anxiété continue parce que son danger n’est pas encore arrivé. Ce danger est bien réel : un résultat d’examen qui tarde, une facture à payer, un travail menacé. Comme il n’arrive rien pour de vrai, ton corps ne sait pas quand s’arrêter, alors donne rendez-vous à ton inquiétude : dix minutes ce soir, avec un carnet. Si ça dure depuis des semaines et que ton sommeil ou ton travail en souffrent, parles-en à un médecin ou à un psychologue, et l’article complet t’attend dans le guide.",
+      "legende": "La peur et l’anxiété font la même chose à ton corps : la gorge se serre, le souffle raccourcit et le cœur accélère. La différence se joue à la fin. La peur s’arrête quand le danger est passé. L’anxiété continue, parce que le danger qu’elle attend n’est pas encore arrivé. Ce danger est souvent bien réel : un résultat d’examen qui tarde, une facture à payer, un emploi menacé. Mais comme rien n’arrive pour de vrai, ton corps ne sait pas quand s’arrêter. Alors donne un rendez-vous à ton inquiétude : dix minutes ce soir, avec un carnet. Si ça dure depuis des semaines et que ton sommeil ou ton travail en souffrent, parles-en à un médecin ou à un psychologue. L’article complet t’attend dans le guide.",
       "hashtags": "#anxiété #peur #émotions #stress #respiration #sommeil #santémentale #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "anxiete.html",
       "slides": [
@@ -184,7 +184,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Quatre signes que ça tourne en boucle",
+          "titre": "Comment savoir que ça tourne en boucle ?",
           "items": [
             {
               "etiquette": "La scène qui repasse",
@@ -194,7 +194,7 @@
             },
             {
               "etiquette": "Demander qu’on te rassure",
-              "texte": "La réponse te calme une minute, et tu as déjà envie de reposer la question.",
+              "texte": "On te rassure, ça te calme une minute, et tu as déjà envie de reposer la question.",
               "illustration": "boucle-rassurer",
               "prompt": "Close framing, chest up: a man in his thirties with light olive skin and dark stubble leans toward a friend in a stairwell, both hands open in front of him as he asks the same question again, his eyebrows raised and pinched, his eyes searching her face; the friend, a woman in her thirties with brown skin and a headwrap, answers with a patient half-smile and a small nod."
             },
@@ -214,21 +214,21 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "Deux phrases à remplacer",
+          "titre": "Remplace ces deux phrases",
           "items": [
             {
               "etiquette": "Arrête d’y penser",
               "texte": "Ce soir, je prends dix minutes avec mon carnet pour y penser.",
               "illustration": "carnet-dix-minutes",
               "prompt": "A man in his forties with brown skin and short dark hair sits at a dining table with a mug and a small kitchen timer, an open notebook in front of him with its pages angled away from view, pen resting in his hand. His shoulders are low, his brow is smooth, his eyes rest calmly on the table and his mouth is relaxed, slightly pursed in concentration.",
-              "note": "Tu ne chasses pas l’inquiétude, tu lui donnes rendez-vous."
+              "note": "Tu ne chasses pas l’inquiétude, tu lui donnes un rendez-vous."
             },
             {
               "etiquette": "Arrête de stresser",
               "texte": "Ce soir, je fais une seule chose : je prépare mon sac.",
               "illustration": "sac-prepare",
               "prompt": "A young man in his twenties with pale skin, freckles and auburn curls crouches in a hallway packing a bag for the next morning, his movements unhurried; his brow is smooth, his lips are slightly parted in concentration and his shoulders are low and loose.",
-              "note": "Une chose précise à faire t’aide plus que « arrête de stresser »."
+              "note": "Une chose précise à faire t’aide plus qu’un « arrête de stresser »."
             }
           ]
         }
@@ -239,7 +239,7 @@
       "slug": "jalousie-et-envie",
       "titre": "CE N’EST PAS DE LA JALOUSIE, C’EST DE L’ENVIE",
       "titreAccent": "L’ENVIE",
-      "sousTitre": "Son appart, son poste, ses vacances : ce que tu ressens à un autre nom",
+      "sousTitre": "Son appart, son poste, ses vacances : ce que tu ressens porte un autre nom",
       "emotions": [
         "jalousie",
         "peur",
@@ -247,7 +247,7 @@
       ],
       "phraseFinale": "La jalousie ne prouve pas que tu aimes. Elle dit juste que tu as peur de perdre quelqu’un.",
       "question": "Tu as peur de perdre quelqu’un, ou il te manque quelque chose ?",
-      "legende": "On dit « jalousie » pour l’appartement d’un ami, alors que ce qu’on ressent, c’est de l’envie : personne ne prend ta place, c’est la comparaison qui pique. La jalousie, elle, met toujours trois personnes en jeu : toi, quelqu’un qui compte pour toi, et une autre personne. Quand tu vois quelqu’un réussir, tu peux te dire « je n’y arriverai jamais » ou « donc c’est possible », et la deuxième phrase te donne parfois une idée à essayer. Face à la jalousie, dis ta peur plutôt que de poser une question dont tu connais déjà la réponse. Et il y a une limite claire : fouiller les messages de l’autre ou contrôler ses sorties, ce n’est plus de la jalousie, et c’est vrai aussi quand c’est toi qui le subis. Deux articles t’attendent dans le guide.",
+      "legende": "On dit « jalousie » devant l’appartement d’un ami, alors que ce qu’on ressent s’appelle l’envie. Personne ne prend ta place, c’est la comparaison qui fait mal. La jalousie, elle, met toujours trois personnes en jeu : toi, quelqu’un qui compte pour toi, et une autre personne. Quand tu vois quelqu’un réussir, tu peux te dire « je n’y arriverai jamais » ou « donc c’est possible ». La deuxième phrase te donne parfois une idée à essayer. Face à la jalousie, dis ta peur plutôt que de poser une question dont tu connais déjà la réponse. Il y a aussi une limite claire : fouiller les messages de l’autre ou contrôler ses sorties, ce n’est plus de la jalousie. C’est vrai aussi quand c’est toi qui le subis. Deux articles t’attendent dans le guide.",
       "hashtags": "#jalousie #envie #comparaison #couple #relations #émotions #réseauxsociaux #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "jalousie.html",
       "slides": [
@@ -296,7 +296,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Ce que tu veux vraiment",
+          "titre": "Que veux-tu vraiment ?",
           "items": [
             {
               "etiquette": "Son appart",
@@ -326,7 +326,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Deux pièges qui se ressemblent",
+          "titre": "Ces deux pièges se ressemblent",
           "items": [
             {
               "etiquette": "Chercher une preuve",
@@ -336,7 +336,7 @@
             },
             {
               "etiquette": "Se comparer aux autres",
-              "texte": "Tu compares ta vie de tous les jours à ce que les autres montrent. Or ils ne montrent que le meilleur.",
+              "texte": "Tu compares ta vie de tous les jours à ce que les autres montrent. Mais eux ne montrent que le meilleur.",
               "illustration": "salle-pause-felicitations",
               "prompt": "Two colleagues in a bright staffroom: a woman in her fifties with deep brown skin and silver locs holds a folder against her chest with both hands, her chin high and her smile wide after being congratulated; a step behind her a man in his fifties with light skin and glasses holds a coffee mug in both hands, his smile polite and brief, his eyes already back on the floor. Each character has exactly two arms and two hands; every visible hand connects to a visible arm and has exactly five clearly separated fingers."
             }
@@ -344,7 +344,7 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "Ce que tu peux dire à la place",
+          "titre": "Tu peux dire ceci à la place",
           "items": [
             {
               "etiquette": "Tu étais avec qui ?",
@@ -369,13 +369,13 @@
       "slug": "tristesse-vagues-et-eclaircies",
       "titre": "ÇA VA MIEUX, PUIS ÇA REVIENT",
       "titreAccent": "ÇA REVIENT",
-      "sousTitre": "Le chagrin avance par vagues, pas en ligne droite",
+      "sousTitre": "Le chagrin avance par vagues, jamais en ligne droite",
       "emotions": [
         "tristesse"
       ],
       "phraseFinale": "Une vague qui revient n’efface pas les jours où tu allais mieux.",
       "question": "Qu’est-ce qui te fait encore du bien, même les mauvais jours ?",
-      "legende": "La tristesse n’est pas une panne à réparer : c’est la façon dont on absorbe une perte, et elle avance par vagues plutôt qu’en ligne droite. Entre deux vagues, un rire, un bon repas ou une chanson te font encore du bien. Être triste sans savoir pourquoi, ça arrive. Ce qui doit t’alerter, c’est quand plus aucun bon moment n’arrive pendant des semaines. Là, ce n’est pas un manque de volonté : un médecin ou un psychologue peut vraiment aider. Rien ici ne remplace l’avis d’un professionnel de santé, et l’article complet t’attend dans le guide.",
+      "legende": "La tristesse n’est pas une panne à réparer. C’est la façon dont on absorbe une perte, et elle avance par vagues plutôt qu’en ligne droite. Entre deux vagues, un rire, un bon repas ou une chanson te font encore du bien. Être triste sans savoir pourquoi, ça arrive aussi. Ce qui doit t’alerter, c’est l’absence de tout bon moment pendant des semaines. Là, ce n’est pas un manque de volonté, et un médecin ou un psychologue peut vraiment t’aider. Rien ici ne remplace l’avis d’un professionnel de santé. L’article complet t’attend dans le guide.",
       "hashtags": "#tristesse #chagrin #deuil #émotions #santémentale #prendresoindesoi #boussoleémotionnelle",
       "lienGuide": "tristesse.html",
       "slides": [
@@ -404,7 +404,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Deux choses à ne pas confondre",
+          "titre": "Ne confonds pas ces deux choses",
           "items": [
             {
               "etiquette": "La tristesse",
@@ -426,7 +426,7 @@
           "items": [
             {
               "etiquette": "Ce n’est pas un recul",
-              "texte": "Une grosse vague après des jours calmes ne veut pas dire que tu recules. Ce qui change en premier, c’est que les moments calmes durent plus longtemps.",
+              "texte": "Une grosse vague après des jours calmes ne veut pas dire que tu recules. Le premier signe de mieux, c’est que les moments calmes durent plus longtemps.",
               "illustration": "jardin-vague",
               "prompt": "A man in his fifties with pale skin and grey stubble stands in a small garden holding a watering can, stopped mid-movement, his eyes filling as he looks at a rose bush; his mouth trembles once, he breathes out through parted lips and his shoulders drop."
             }
@@ -434,7 +434,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Quatre formes que ça prend",
+          "titre": "Elle prend quatre formes",
           "items": [
             {
               "etiquette": "La vague sans prévenir",
@@ -464,10 +464,10 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Quand ça ne repart pas",
+          "titre": "Et si ça ne repart pas ?",
           "items": [
             {
-              "etiquette": "Où demander de l’aide",
+              "etiquette": "Où trouver de l’aide",
               "texte": "Si plus rien ne te fait de bien depuis des semaines, ce n’est pas un manque de volonté. Parles-en à un médecin ou à un psychologue.",
               "illustration": "table-ecoute",
               "prompt": "Two people at a kitchen table with tea: a man in his sixties with deep brown skin and short white hair leans in and rests one hand lightly on the forearm of a woman in her twenties with pale skin and auburn curls. His brows are raised in attention and his eyes hold hers; her eyes are lowered but her shoulders have let go."
@@ -489,7 +489,7 @@
       ],
       "phraseFinale": "Quand plus rien ne te touche, ce n’est pas une panne. C’est une protection contre ce qui faisait trop mal.",
       "question": "Est-ce qu’une bonne nouvelle te fait encore plaisir ?",
-      "legende": "Le calme, on ne le remarque pas : ce qui dérange se voit tout de suite, alors qu’un moment paisible passe sans bruit. Dans le vrai calme, tout te traverse encore : la peine, la colère et la joie montent, puis elles redescendent. Quand tu ne sens plus rien, plus rien ne te secoue, mais plus rien ne te touche non plus, même les bonnes nouvelles. Ce n’est pas une panne : c’est une protection, parce que ressentir a fait trop mal trop longtemps. Si c’est comme ça depuis des semaines, parles-en à un médecin ou à un psychologue. L’article complet t’attend dans le guide.",
+      "legende": "Le calme, on ne le remarque pas. Ce qui dérange se voit tout de suite, alors qu’un moment paisible passe sans bruit. Dans le vrai calme, tout te traverse encore : la peine, la colère et la joie montent, puis elles redescendent. Quand tu ne sens plus rien, plus rien ne te secoue, mais plus rien ne te touche non plus, même les bonnes nouvelles. Ce n’est pas une panne. C’est une protection, parce que ressentir a fait trop mal pendant trop longtemps. Si c’est comme ça depuis des semaines, parles-en à un médecin ou à un psychologue. L’article complet t’attend dans le guide.",
       "hashtags": "#sérénité #calme #émotions #ralentir #pleineconscience #santémentale #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "ne-plus-rien-ressentir.html",
       "slides": [
@@ -512,7 +512,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Deux calmes qui se ressemblent",
+          "titre": "Ces deux calmes se ressemblent",
           "items": [
             {
               "etiquette": "La sérénité",
@@ -530,7 +530,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Un test très simple",
+          "titre": "Essaie ce petit test",
           "items": [
             {
               "etiquette": "Le test des bonnes nouvelles",
@@ -542,7 +542,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Quatre choses qui ne te font plus rien",
+          "titre": "Ces quatre choses ne te font plus rien",
           "items": [
             {
               "etiquette": "Les fous rires",
@@ -572,7 +572,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Deux idées du calme",
+          "titre": "Le calme a deux sens",
           "items": [
             {
               "etiquette": "Le calme qu’on imagine",
@@ -581,7 +581,7 @@
               "prompt": "A woman in her thirties with East Asian features and straight dark hair sits very upright on a made bed in a tidy room, hands flat on her thighs, her face composed and empty, her gaze level at the wall and her mouth neither up nor down."
             },
             {
-              "etiquette": "Le calme réel",
+              "etiquette": "Le vrai calme",
               "texte": "Il te reste une seconde entre ce qui arrive et ta réaction. Tu sens tout, mais tu choisis ce que tu fais ensuite.",
               "illustration": "table-rire-franc",
               "prompt": "A man in his forties with brown skin and a short beard sits at a restaurant table across from a friend, his head thrown back mid-laugh, one hand flat on the table, his eyes creased; the friend, a woman in her forties with pale skin and grey-streaked hair, laughs back with a hand over her mouth."
@@ -593,9 +593,9 @@
     {
       "numero": 6,
       "slug": "deguisements-honte",
-      "titre": "LES 4 DÉGUISEMENTS DE LA HONTE",
-      "titreAccent": "DÉGUISEMENTS",
-      "sousTitre": "Quatre façons de la vivre sans jamais la reconnaître.",
+      "titre": "LA HONTE SE DÉGUISE DE 4 FAÇONS",
+      "titreAccent": "SE DÉGUISE",
+      "sousTitre": "Tu la vis de quatre façons, sans jamais la reconnaître.",
       "emotions": [
         "honte",
         "anxiete",
@@ -603,7 +603,7 @@
       ],
       "phraseFinale": "La honte grandit quand tout reste flou. Raconte ce qui s’est vraiment passé, et elle perd de sa force.",
       "question": "Tu te reconnais dans lequel des quatre ?",
-      "legende": "La honte donne envie de disparaître, alors on la voit rarement telle quelle. Ce qu’on remarque, c’est la blague qu’on lance sur soi, le message relu dix fois, le rendez-vous annulé la veille. Une différence aide beaucoup : la culpabilité dit « j’ai mal agi », la honte dit « je ne vaux rien ». La première parle d’un geste que tu peux réparer, la seconde parle de qui tu es, et c’est pour ça qu’elle pousse à se cacher. L’article « Comprendre la honte » explique comment ça marche et donne trois choses simples à essayer.",
+      "legende": "La honte donne envie de disparaître, alors on la voit rarement telle quelle. On remarque plutôt la blague qu’on lance sur soi, le message relu dix fois ou le rendez-vous annulé la veille. Une différence aide beaucoup à la reconnaître. La culpabilité dit « j’ai mal agi », la honte dit « je ne vaux rien ». La première parle d’un geste que tu peux réparer. La seconde parle de qui tu es, et c’est pour ça qu’elle pousse à se cacher. L’article « Comprendre la honte » explique comment ça marche et donne trois choses simples à essayer.",
       "hashtags": "#honte #émotions #intelligenceémotionnelle #développementpersonnel #connaissancedesoi #psychologie #bienêtre #boussoleémotionnelle",
       "lienGuide": "honte.html",
       "slides": [
@@ -657,7 +657,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Deux émotions qu’on confond",
+          "titre": "On confond ces deux émotions",
           "items": [
             {
               "etiquette": "La culpabilité",
@@ -679,7 +679,7 @@
           "items": [
             {
               "etiquette": "Tant que personne ne sait",
-              "texte": "Ces quatre habitudes ont toutes le même but : que personne ne voie ce qui te gêne. Mais ce qu’on cache ne s’efface pas, ça prend encore plus de place.",
+              "texte": "Ces quatre habitudes ont le même but : que personne ne voie ce qui te gêne. Mais ce que tu caches ne s’efface pas, ça prend au contraire plus de place.",
               "illustration": "souvenir-canape",
               "prompt": "A man in his twenties with medium brown skin and dark wavy hair sits alone on a sofa at night, his phone face-down on the cushion beside him, caught by an old memory. His eyes are squeezed shut, his nose wrinkles in a grimace, one hand covers his mouth and his knees are pulled up toward his chest."
             }
@@ -687,12 +687,12 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "Ce qui aide vraiment",
+          "titre": "Voici ce qui aide",
           "items": [
             {
               "etiquette": "Je suis ridicule",
               "texte": "Mardi, j’ai bafouillé deux minutes",
-              "note": "La première phrase parle de qui tu es, la deuxième raconte juste un moment précis, un jour donné.",
+              "note": "La première phrase parle de qui tu es. La deuxième raconte seulement un moment précis, un jour donné.",
               "illustration": "carnet-cuisine",
               "prompt": "The same woman in her thirties with fair skin and long dark wavy hair now sits at a kitchen table writing a few lines in a small notebook, a mug beside her. Her shoulders sit low and well below her ears, her jaw is loose, her lips are slightly parted and her eyes rest calmly on the page."
             }
@@ -705,7 +705,7 @@
       "slug": "deguisements-colere",
       "titre": "LA COLÈRE QU’ON NE DIT PAS SORT AILLEURS",
       "titreAccent": "SORT AILLEURS",
-      "sousTitre": "Quatre chemins qu’elle prend : la porte trop douce, le sarcasme, les oublis, la fatigue du soir.",
+      "sousTitre": "Elle prend quatre chemins : la porte trop douce, le sarcasme, les oublis et la fatigue du soir.",
       "emotions": [
         "colere",
         "tristesse",
@@ -713,7 +713,7 @@
       ],
       "phraseFinale": "Une colère qu’on retient ne disparaît pas. Elle ressort ailleurs, souvent au mauvais moment.",
       "question": "Ta colère sort par où, quand tu ne la dis pas ?",
-      "legende": "Être en colère, ce n’est pas être agressif : la colère, c’est ce que tu ressens, l’agressivité, c’est ce que tu fais. Tu peux bouillir à l’intérieur et parler calmement. Quand la colère ne sort pas directement, elle trouve un autre chemin : l’ironie, les oublis, la distance polie, la fatigue du soir. L’article « Comprendre la colère » propose une façon simple de la dire : ce qui s’est passé, l’effet que ça a eu sur toi, et ce que tu demandes. Et si dire ton désaccord risque de se retourner contre toi, te taire n’est pas un échec, c’est une protection.",
+      "legende": "Être en colère, ce n’est pas être agressif. La colère, c’est ce que tu ressens. L’agressivité, c’est ce que tu fais. Tu peux bouillir à l’intérieur et parler calmement. Quand la colère ne sort pas directement, elle trouve un autre chemin : l’ironie, les oublis, la distance polie ou la fatigue du soir. L’article « Comprendre la colère » propose une façon simple de la dire : ce qui s’est passé, l’effet que ça a eu sur toi, et ce que tu demandes. Et si dire ton désaccord risque de se retourner contre toi, te taire n’est pas un échec. C’est une protection.",
       "hashtags": "#colère #émotions #communication #relations #intelligenceémotionnelle #développementpersonnel #connaissancedesoi #boussoleémotionnelle",
       "lienGuide": "colere.html",
       "slides": [
@@ -753,7 +753,7 @@
             },
             {
               "etiquette": "Les oublis",
-              "texte": "Tu oublies de répondre, tu oublies les courses. C’est souvent la fatigue, mais parfois c’est autre chose.",
+              "texte": "Tu oublies de répondre, tu oublies les courses. C’est souvent la fatigue, mais parfois c’est de la colère.",
               "illustration": "course-oubliee",
               "prompt": "A man in his twenties with fair skin and short blond hair stands in a hallway holding a single shopping bag, having forgotten what he was asked to buy. His eyebrows are raised in exaggerated blankness, one shoulder shrugs, his mouth is a flat neutral line and his eyes avoid the person in the room."
             },
@@ -767,7 +767,7 @@
         },
         {
           "gabarit": "avant-apres",
-          "titre": "La même semaine",
+          "titre": "Lundi tu te tais, vendredi ça déborde",
           "items": [
             {
               "etiquette": "Lundi",
@@ -802,7 +802,7 @@
       "slug": "deguisements-anxiete",
       "titre": "CE N’EST PAS DE LA PARESSE.",
       "titreAccent": "PAS DE LA PARESSE",
-      "sousTitre": "Quatre habitudes qu’on prend pour un défaut de caractère.",
+      "sousTitre": "On prend ces quatre habitudes pour un défaut de caractère.",
       "emotions": [
         "anxiete",
         "peur",
@@ -810,7 +810,7 @@
       ],
       "phraseFinale": "L’anxiété se voit rarement. Tu la reconnais à tout ce que tu fais pour l’éviter.",
       "question": "Tu la reconnais à quoi, le plus souvent ?",
-      "legende": "L’anxiété n’est pas un défaut de fabrication : c’est une alarme intérieure qui se déclenche un peu trop souvent. Il y a une anxiété qui aide et une anxiété qui épuise. La différence, ce n’est pas sa force : c’est qu’elle te fait décider quelque chose, ou qu’elle te fait tourner en rond. L’article « Reconnaître l’anxiété » montre comment elle se manifeste en même temps dans le corps, dans les pensées et dans les gestes, et ce qui l’apaise vraiment. Si ces signaux durent des semaines et abîment ton sommeil, ton travail ou tes relations, en parler à un médecin ou à un psychologue aide souvent.",
+      "legende": "L’anxiété n’est pas un défaut. C’est une alarme intérieure qui se déclenche un peu trop souvent. Il y a une anxiété qui aide et une anxiété qui épuise. La différence ne tient pas à sa force. L’anxiété utile te fait décider quelque chose, l’anxiété qui épuise te fait tourner en rond. L’article « Reconnaître l’anxiété » montre comment elle se manifeste en même temps dans le corps, dans les pensées et dans les gestes, et ce qui l’apaise vraiment. Si ces signaux durent des semaines et abîment ton sommeil, ton travail ou tes relations, en parler à un médecin ou à un psychologue aide souvent.",
       "hashtags": "#anxiété #stress #émotions #chargementale #développementpersonnel #connaissancedesoi #bienêtre #boussoleémotionnelle",
       "lienGuide": "anxiete.html",
       "slides": [
@@ -833,7 +833,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Ce que l’anxiété te fait faire",
+          "titre": "L’anxiété te fait faire tout ça",
           "items": [
             {
               "etiquette": "Repousser une tâche",
@@ -875,7 +875,7 @@
         },
         {
           "gabarit": "avant-apres",
-          "titre": "Trier au lieu de tourner en rond",
+          "titre": "Tu tries au lieu de tourner en rond",
           "items": [
             {
               "etiquette": "Avant",
@@ -898,7 +898,7 @@
       "slug": "phrases-culpabilite",
       "titre": "« ÇA NE ME DÉRANGE PAS. » SI, UN PEU.",
       "titreAccent": "SI, UN PEU",
-      "sousTitre": "Cinq phrases qu’on dit quand on n’ose pas déranger.",
+      "sousTitre": "On dit ces cinq phrases quand on n’ose pas déranger.",
       "emotions": [
         "culpabilite",
         "honte",
@@ -906,7 +906,7 @@
       ],
       "phraseFinale": "La culpabilité te montre un geste à faire. Elle ne dit pas que tu es quelqu’un de mauvais.",
       "question": "Laquelle de ces phrases te vient le plus vite ?",
-      "legende": "La culpabilité est une des rares émotions désagréables qui te rapprochent des autres au lieu de t’en éloigner : elle te pousse vers un geste, pas vers la fuite. Encore faut-il qu’elle serve à quelque chose. Se sentir coupable ne prouve pas que tu as mal agi, et les personnes qui culpabilisent le plus sont rarement celles qui ont le plus de raisons de le faire. L’article « Comprendre la culpabilité » propose de faire la part des choses : tu notes tout ce qui a joué, le contexte, la fatigue, ce que tu ne savais pas encore, puis tu regardes ce qui dépendait vraiment de toi.",
+      "legende": "La culpabilité est une des rares émotions désagréables qui te rapprochent des autres au lieu de t’en éloigner. Elle te pousse vers un geste, pas vers la fuite. Encore faut-il qu’elle serve à quelque chose. Se sentir coupable ne prouve pas que tu as mal agi. Les personnes qui culpabilisent le plus sont rarement celles qui ont le plus de raisons de le faire. L’article « Comprendre la culpabilité » propose de faire la part des choses. Tu notes tout ce qui a joué : le contexte, la fatigue, ce que tu ne savais pas encore. Puis tu regardes ce qui dépendait vraiment de toi.",
       "hashtags": "#culpabilité #direnon #émotions #relations #chargementale #développementpersonnel #connaissancedesoi #boussoleémotionnelle",
       "lienGuide": "culpabilite.html",
       "slides": [
@@ -931,7 +931,7 @@
         },
         {
           "gabarit": "liste",
-          "titre": "Cinq réflexes qui en disent long",
+          "titre": "Ces cinq réflexes en disent long",
           "items": [
             {
               "etiquette": "Dire oui sans envie",
@@ -972,7 +972,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Quand ça tourne en rond",
+          "titre": "Elle peut tourner en rond",
           "items": [
             {
               "etiquette": "Y repenser ne répare rien",
@@ -984,7 +984,7 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "Une excuse qui répare",
+          "titre": "Cette excuse-là répare",
           "items": [
             {
               "etiquette": "Je m’excuse si tu l’as mal pris",
@@ -1002,7 +1002,7 @@
       "slug": "signaux-du-corps",
       "titre": "TON CORPS LE SAIT AVANT TOI",
       "titreAccent": "AVANT TOI",
-      "sousTitre": "Cinq signaux du corps et ce qu’ils disent le plus souvent.",
+      "sousTitre": "Voici cinq signaux du corps et ce qu’ils disent souvent.",
       "emotions": [
         "anxiete",
         "colere",
@@ -1011,7 +1011,7 @@
       ],
       "phraseFinale": "Ton corps te prévient avant ta tête. Il te dit qu’il se passe quelque chose, sans dire quoi.",
       "question": "Ton corps t’envoie quoi en premier ?",
-      "legende": "Un signal du corps ne correspond pas à une seule émotion : un ventre noué, c’est de l’anxiété chez l’un, de la tristesse chez l’autre, et parfois les deux le même jour. Se tromper est normal, et plus tu prends l’habitude de mettre un mot sur ce que tu ressens, plus tu tombes juste. La bonne question n’est pas « qu’est-ce que je devrais ressentir », mais « qu’est-ce qui s’est passé juste avant ». L’article « Reconnaître l’anxiété » revient sur ces signaux et sur les gestes simples qui les calment. Dernier point : tout ne vient pas des émotions, donc si un signal s’installe ou t’inquiète, parles-en à un médecin avant d’interpréter.",
+      "legende": "Un signal du corps ne correspond pas à une seule émotion. Un ventre noué, c’est de l’anxiété chez l’un, de la tristesse chez l’autre, et parfois les deux le même jour. Se tromper est normal. Plus tu prends l’habitude de mettre un mot sur ce que tu ressens, plus tu tombes juste. La bonne question n’est pas « qu’est-ce que je devrais ressentir », mais « qu’est-ce qui s’est passé juste avant ». L’article « Reconnaître l’anxiété » revient sur ces signaux et sur les gestes simples qui les calment. Dernier point : tout ne vient pas des émotions. Si un signal s’installe ou t’inquiète, parles-en à un médecin avant de chercher à l’interpréter.",
       "hashtags": "#émotions #corps #anxiété #stress #intelligenceémotionnelle #connaissancedesoi #bienêtre #boussoleémotionnelle",
       "lienGuide": "anxiete.html",
       "slides": [
@@ -1034,7 +1034,7 @@
         },
         {
           "gabarit": "liste",
-          "titre": "Ce que le corps dit en premier",
+          "titre": "Ton corps parle en premier",
           "items": [
             {
               "etiquette": "Mâchoires serrées",
@@ -1070,7 +1070,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Le même signal, deux histoires",
+          "titre": "Le même signal dit deux choses",
           "items": [
             {
               "etiquette": "Ventre noué, anxiété",
@@ -1088,7 +1088,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Calmer le corps d’abord",
+          "titre": "Calme ton corps d’abord",
           "items": [
             {
               "etiquette": "Dans les dix secondes",
@@ -1115,7 +1115,7 @@
       ],
       "phraseFinale": "Une dispute qui revient ne veut pas dire que votre couple va mal. Elle dit que l’un de vous n’a pas été entendu.",
       "question": "Qu’est-ce qui revient toujours dans vos disputes ?",
-      "legende": "On croit se disputer pour une éponge ou un retard. En vrai, on se dispute pour autre chose : être vu, compter, sentir que l’autre est encore là. Parfois les tâches sont vraiment mal réparties, et il faut les repartager pour de bon. Mais si personne n’entend ce qu’il y a derrière, la même dispute revient à la prochaine occasion. Les couples qui durent ne sont pas ceux qui ne se disputent jamais : ce sont ceux qui reviennent se parler une fois calmés.",
+      "legende": "On croit se disputer pour une éponge ou un retard. En vrai, on se dispute pour autre chose : on veut être vu, compter, sentir que l’autre est encore là. Parfois, les tâches sont vraiment mal réparties, et il faut les repartager pour de bon. Mais si personne n’entend ce qu’il y a derrière, la même dispute revient à la prochaine occasion. Les couples qui durent ne sont pas ceux qui ne se disputent jamais. Ce sont ceux qui reviennent se parler une fois calmés.",
       "hashtags": "#émotions #couple #dispute #communication #colère #viedecouple #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "dispute-en-boucle.html",
       "slides": [
@@ -1174,7 +1174,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Le moment où plus personne n’écoute",
+          "titre": "À un moment, plus personne n’écoute",
           "items": [
             {
               "etiquette": "Quand ça déborde",
@@ -1187,7 +1187,7 @@
         },
         {
           "gabarit": "etapes",
-          "titre": "Comment en sortir",
+          "titre": "Tu peux en sortir",
           "items": [
             {
               "etiquette": "Quand c’est de la peur",
@@ -1222,7 +1222,7 @@
       "slug": "angoisse-dimanche-soir",
       "titre": "DIMANCHE 17 H, LUNDI EST DÉJÀ LÀ",
       "titreAccent": "DÉJÀ LÀ",
-      "sousTitre": "Tu es encore en week-end, mais ta tête a repris le travail",
+      "sousTitre": "Tu n’as pas encore repris, mais ta tête est déjà au travail",
       "emotions": [
         "anxiete",
         "peur",
@@ -1231,7 +1231,7 @@
       ],
       "phraseFinale": "Ton dimanche soir est encore à toi. Lundi commencera demain matin, pas ce soir.",
       "question": "À quel moment ton dimanche s’arrête ?",
-      "legende": "Ce pincement du dimanche soir est très courant, même chez des gens qui aiment leur travail. Il ne dit pas que tu es fragile : il dit que le passage du repos au travail est brutal. En semaine, préparer la suite te sert vraiment, mais un dimanche soir tu ne peux rien faire de ce que tu prépares. C’est pour ça que ça se joue avant : dix minutes le vendredi pour écrire ce qui t’attend lundi, et ta tête n’a plus besoin de retenir la liste. Entre dix minutes de pincement et une soirée entière gâchée, il y a une sacrée différence.",
+      "legende": "Ce pincement du dimanche soir est très courant, même chez des gens qui aiment leur travail. Il ne dit pas que tu es fragile. Il dit que le passage du repos au travail est brutal. En semaine, préparer la suite te sert vraiment. Mais un dimanche soir, tu ne peux rien faire de ce que tu prépares. C’est pour ça que tout se joue avant. Prends dix minutes le vendredi pour écrire ce qui t’attend lundi, et ta tête n’aura plus besoin de retenir la liste. Entre dix minutes de pincement et une soirée entière gâchée, il y a une sacrée différence.",
       "hashtags": "#anxiété #dimanchesoir #émotions #travail #repos #sérénité #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "angoisse-dimanche-soir.html",
       "slides": [
@@ -1260,12 +1260,12 @@
         },
         {
           "gabarit": "grand",
-          "titre": "La semaine qui commence trop tôt",
+          "titre": "Ta semaine commence trop tôt",
           "items": [
             {
               "etiquette": "Dimanche, vers 17 h",
               "texte": "Ta tête passe déjà la semaine en revue, comme pour t’y préparer. Le problème, c’est qu’un dimanche soir, tu ne peux rien régler.",
-              "bulle": "Demain 9 h, la réunion… et ce mail.",
+              "bulle": "Demain 9 h, la réunion, et ce message.",
               "illustration": "tete-ailleurs",
               "prompt": "A man in his fifties with tan skin and thinning grey hair sits on the very edge of a sofa in warm late-afternoon light, elbows on his knees, fingers laced so tightly the knuckles pale, eyes fixed on one point of the floor, upper eyelids raised, one corner of his mouth twitching, a cup of tea going cold and untouched beside him."
             }
@@ -1277,7 +1277,7 @@
           "items": [
             {
               "etiquette": "Un œil samedi matin",
-              "texte": "Tu ouvres tes mails « juste pour vérifier ». Pour ta tête, le travail n’a jamais fermé, alors elle reste en alerte.",
+              "texte": "Tu ouvres tes messages de travail « pour vérifier ». Pour ta tête, le travail n’a jamais fermé, alors elle reste en alerte.",
               "illustration": "mail-du-samedi",
               "prompt": "A woman in her twenties with brown skin and box braids sits on a kitchen stool in soft pyjamas, phone held low in one hand, thumb frozen mid-scroll, eyes narrowed at the screen, the muscles around her mouth tightening, her other hand stalled around a mug she has forgotten to drink."
             },
@@ -1288,7 +1288,7 @@
               "prompt": "A man in his forties with light skin, a red beard and short hair grabs his coat while half-turned away from a cluttered desk, his body already pointed at the door but his eyes pulled back toward the papers, upper lip tense, one hand hovering in mid-air as if he has forgotten something."
             },
             {
-              "etiquette": "Les tâches pas finies",
+              "etiquette": "Les tâches en cours",
               "texte": "Ce que tu as fini, tu l’oublies vite. Ce que tu n’as pas terminé revient sans arrêt, surtout le dimanche soir quand rien ne t’occupe.",
               "illustration": "pensees-en-boucle",
               "prompt": "A woman in her sixties with olive skin and silver wavy hair lies awake on her side in dim light, eyes wide and fixed on the ceiling, blinking rarely, one hand curled near her chin, her lips moving faintly as if finishing a sentence with someone who is not there, the other hand gripping the edge of the blanket."
@@ -1303,7 +1303,7 @@
         },
         {
           "gabarit": "avant-apres",
-          "titre": "Deux dimanches soir possibles",
+          "titre": "Choisis ton dimanche soir",
           "items": [
             {
               "etiquette": "Sans rien changer",
@@ -1324,9 +1324,9 @@
     {
       "numero": 13,
       "slug": "message-sans-reponse",
-      "titre": "LU, ET TOUJOURS RIEN",
-      "titreAccent": "TOUJOURS RIEN",
-      "sousTitre": "Ce que ta tête invente pendant que l’autre vit sa journée",
+      "titre": "LU, ET RIEN NE VIENT",
+      "titreAccent": "RIEN NE VIENT",
+      "sousTitre": "Ta tête invente la suite pendant que l’autre vit sa journée",
       "emotions": [
         "anxiete",
         "peur",
@@ -1336,7 +1336,7 @@
       ],
       "phraseFinale": "Un silence ne dit rien de toi. C’est toi qui inventes la réponse, et tu choisis souvent la pire.",
       "question": "Qu’est-ce que ta tête raconte quand l’autre ne répond pas ?",
-      "legende": "Un message lu sans réponse ne dit rien de toi. Il te manque juste une information, et comme on supporte mal le silence, on écrit la suite tout seul en choisissant presque toujours le pire. La plupart du temps, l’explication est banale : un métro, une réunion, une casserole sur le feu. Parfois, c’est vrai, un silence veut dire quelque chose, et c’est une raison de plus pour poser la question au lieu de la deviner. Deux gestes changent tout : pose ton téléphone hors de vue, et au bout d’un jour ou deux, demande simplement.",
+      "legende": "Un message lu sans réponse ne dit rien de toi. Il te manque juste une information. Comme on supporte mal le silence, on écrit la suite tout seul, et on choisit presque toujours le pire. La plupart du temps, l’explication est banale : un métro, une réunion, une casserole sur le feu. Parfois, c’est vrai, un silence veut dire quelque chose. C’est une raison de plus pour poser la question au lieu de deviner la réponse. Deux gestes changent tout. Pose ton téléphone hors de vue, puis au bout d’un jour ou deux, demande simplement.",
       "hashtags": "#anxiété #émotions #messages #relations #amitié #communication #introspection #boussoleémotionnelle",
       "lienGuide": "",
       "slides": [
@@ -1365,11 +1365,11 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Ta version, et la vraie",
+          "titre": "Tu inventes la réponse",
           "items": [
             {
               "etiquette": "Ce que tu imagines",
-              "texte": "Tu te dis que tu as écrit une bêtise. Ou que l’autre se lasse de toi, et que personne ne te le dira.",
+              "texte": "Tu te dis que tu as écrit une bêtise, ou que l’autre se lasse de toi et que personne ne te le dira.",
               "illustration": "scenarios",
               "prompt": "A young man in his twenties with tan skin and messy dark curls paces an empty living room at night, one hand gripping the back of his neck, the other clenched at his side, eyes fixed on the floor, jaw tight, chin tucked down, his steps short and quick."
             },
@@ -1396,7 +1396,7 @@
         },
         {
           "gabarit": "avant-apres",
-          "titre": "Quoi faire de cette attente",
+          "titre": "Que faire de cette attente ?",
           "items": [
             {
               "etiquette": "La boucle qui tourne",
@@ -1420,7 +1420,7 @@
       "slug": "boule-au-ventre-lundi",
       "titre": "TON VENTRE SE SERRE AVANT 9 H",
       "titreAccent": "SE SERRE",
-      "sousTitre": "Ce que ton corps essaie de te dire tous les matins",
+      "sousTitre": "Chaque matin, ton corps essaie de te dire quelque chose",
       "emotions": [
         "peur",
         "anxiete",
@@ -1429,7 +1429,7 @@
       ],
       "phraseFinale": "Ta tête dit que ça va. Ton ventre, lui, dit autre chose.",
       "question": "À quel moment exact la boule arrive ?",
-      "legende": "Le ventre parle en premier. En cas d’alerte, le corps met la digestion en pause pour envoyer l’énergie ailleurs, ça se serre, et tu le sens bien avant de trouver les mots. C’est de la peur, en version discrète : il n’y a aucun danger devant toi, c’est la journée qui t’attend qui inquiète ton corps. Pendant deux semaines, note l’heure exacte où la boule arrive, avant quoi et avec qui : on ne peut rien faire contre « le travail » en général, mais on peut faire beaucoup pour une réunion précise. Et si elle ne te lâche jamais, même en vacances, parles-en à un médecin plutôt que de la garder pour toi.",
+      "legende": "Le ventre parle en premier. En cas d’alerte, le corps met la digestion en pause pour envoyer l’énergie ailleurs. Ton ventre se serre, et tu le sens bien avant de trouver les mots. C’est de la peur, en version discrète. Il n’y a aucun danger devant toi, mais la journée qui t’attend inquiète ton corps. Pendant deux semaines, note l’heure exacte où la boule arrive, avant quoi et avec qui. On ne peut rien faire contre « le travail » en général, mais on peut faire beaucoup pour une réunion précise. Et si elle ne te lâche jamais, même en vacances, parles-en à un médecin plutôt que de la garder pour toi.",
       "hashtags": "#bouleauventre #travail #anxiété #émotions #lundi #santéautravail #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "boule-au-ventre-travail.html",
       "slides": [
@@ -1506,7 +1506,7 @@
         },
         {
           "gabarit": "etapes",
-          "titre": "À qui en parler, dans cet ordre",
+          "titre": "Parles-en, dans cet ordre",
           "items": [
             {
               "etiquette": "Un collègue d’abord",
@@ -1515,7 +1515,7 @@
               "prompt": "Two colleagues stand by a coffee machine: a woman in her thirties with pale freckled skin speaks quietly with her eyes lowered and a small relieved smile; a man in his fifties with brown skin listens with a slight nod, his eyebrows lifting in recognition, one hand resting on the machine."
             },
             {
-              "etiquette": "Ton manager, si possible",
+              "etiquette": "Ton chef, si possible",
               "texte": "Parle avec des faits : la charge, les délais, les priorités qui se contredisent. Si cette personne fait partie du problème, saute l’étape.",
               "illustration": "entretien-calme",
               "prompt": "A young man in his twenties with light skin and short blond hair sits upright across a small table from a woman in her forties with deep brown skin, speaking steadily with one open hand gesture, his gaze direct and his jaw relaxed; she leans slightly forward, her head tilted, eyes attentive."
@@ -1545,7 +1545,7 @@
       ],
       "phraseFinale": "Tu vas mieux quand tu recommences à faire des choses, même si tu as encore de la peine.",
       "question": "Qu’est-ce qui t’a manqué en premier ?",
-      "legende": "Le désordre qui suit une rupture ne veut pas dire que tu t’y prends mal. La colère qui revient sur tout ce qui s’est passé, l’amour qui remonte au pire moment, la jalousie quand l’autre avance : tout ça arrive en même temps, et c’est normal. Le manque mesure la place que cette relation prenait dans tes journées, mais il ne dit pas si c’était la bonne histoire. Il n’y a pas de délai officiel, mais les vagues s’espacent peu à peu et les bons moments s’allongent. Et si tu ne vois pas le bout depuis longtemps, en parler à ton médecin ou à un psychologue n’a rien d’une faiblesse.",
+      "legende": "Le désordre qui suit une rupture ne veut pas dire que tu t’y prends mal. La colère revient sur tout ce qui s’est passé, l’amour remonte au pire moment, la jalousie arrive quand l’autre avance. Tout ça se mélange, et c’est normal. Le manque mesure la place que cette relation prenait dans tes journées, mais il ne dit pas si c’était la bonne histoire. Il n’y a pas de délai officiel. Les vagues s’espacent peu à peu et les bons moments s’allongent. Et si tu ne vois pas le bout depuis longtemps, en parler à ton médecin ou à un psychologue n’a rien d’une faiblesse.",
       "hashtags": "#rupture #tristesse #deuil #émotions #amour #reconstruction #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "apres-la-rupture.html",
       "slides": [
@@ -1574,7 +1574,7 @@
         },
         {
           "gabarit": "liste",
-          "titre": "Trois pertes en une",
+          "titre": "Tu vis trois pertes",
           "items": [
             {
               "etiquette": "La personne",
@@ -1616,7 +1616,7 @@
         },
         {
           "gabarit": "etapes",
-          "titre": "Trois choses qui aident",
+          "titre": "Ces trois choses t’aident",
           "items": [
             {
               "etiquette": "Mettre de la distance",
@@ -1653,7 +1653,7 @@
       ],
       "phraseFinale": "Annoncer une pause, ce n’est pas fuir. C’est dire à l’autre que tu reviens.",
       "question": "Quand la colère monte, tu claques la porte ou tu dis que tu reviens ?",
-      "legende": "La colère n’est pas de la violence : elle arrive quand quelqu’un est allé trop loin avec toi. Ce que tu as à dire est souvent juste. C’est le moment où tu le dis qui pose problème : dans les premières minutes, tu n’as aucun recul et les mots dépassent ce que tu voulais dire. Vingt minutes plus tard, tu dis la même chose en mieux, et l’autre arrive à l’écouter. Et si la même colère revient toujours au même endroit, c’est qu’il te manque quelque chose, et que tu n’en parles jamais avant d’exploser.",
+      "legende": "La colère n’est pas de la violence. Elle arrive quand quelqu’un est allé trop loin avec toi. Ce que tu as à dire est souvent juste. C’est le moment où tu le dis qui pose problème. Dans les premières minutes, tu n’as aucun recul, et les mots dépassent ce que tu voulais dire. Vingt minutes plus tard, tu dis la même chose en mieux, et l’autre arrive à l’écouter. Et si la même colère revient toujours au même endroit, c’est qu’il te manque quelque chose, et que tu n’en parles jamais avant d’exploser.",
       "hashtags": "#colère #gestiondelacolère #émotions #communication #disputedecouple #relations #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "colere.html",
       "slides": [
@@ -1682,7 +1682,7 @@
         },
         {
           "gabarit": "etapes",
-          "titre": "La pause en quatre étapes",
+          "titre": "Comment faire la pause ?",
           "items": [
             {
               "etiquette": "Repère les signaux",
@@ -1713,12 +1713,12 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "La phrase à remplacer",
+          "titre": "Remplace cette phrase",
           "items": [
             {
               "etiquette": "Laisse-moi tranquille !",
               "texte": "Je suis trop en colère pour te parler correctement, je reviens dans vingt minutes",
-              "note": "Tu dis ce que tu ressens et à quelle heure tu reviens, donc vous arrêtez la dispute sans arrêter la relation.",
+              "note": "Tu dis ce que tu ressens et à quelle heure tu reviens. Vous arrêtez la dispute sans arrêter la relation.",
               "illustration": "pause-annoncee-porte",
               "prompt": "The same living room and the same two people. The woman in her forties with pale freckled skin and auburn hair pinned up stands in the doorway turned back toward the sofa, one hand resting flat on the frame, her shoulders lowered, her eyebrows level, her mouth speaking one short sentence. The man in his forties with medium brown skin and short greying hair looks up at her from the sofa, his eyebrows softening, his hands settling on his knees, the beginning of a small relieved nod in his chin."
             }
@@ -1726,7 +1726,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Ce que vit l’autre pendant ce temps",
+          "titre": "Pendant ce temps, l’autre attend",
           "items": [
             {
               "etiquette": "Une porte qui claque",
@@ -1749,7 +1749,7 @@
       "slug": "merci-plutot-que-desole",
       "titre": "DIS MERCI, PAS DÉSOLÉ",
       "titreAccent": "MERCI",
-      "sousTitre": "Cinq phrases de tous les jours, et ce que ça change entre vous.",
+      "sousTitre": "Tu dis ces phrases tous les jours. Un merci change tout entre vous.",
       "emotions": [
         "culpabilite",
         "gratitude",
@@ -1757,7 +1757,7 @@
       ],
       "phraseFinale": "Tu n’as pas à t’excuser d’exister. Tu peux dire merci à ceux qui prennent du temps pour toi.",
       "question": "Combien de fois tu dis « désolé » dans une journée ?",
-      "legende": "La culpabilité te prévient que tu as peut-être fait du mal. Elle ne prouve pas que tu es quelqu’un de mauvais, et elle se déclenche souvent chez les gens les plus attentifs aux autres. Les « désolé » à répétition obligent l’autre à te rassurer, et tu te sens encore un peu fautif après. Avec un merci, tu rends quelque chose à l’autre au lieu de demander qu’on te pardonne d’exister. C’est la même situation, et pourtant tout change entre vous.",
+      "legende": "La culpabilité te prévient que tu as peut-être fait du mal. Elle ne prouve pas que tu es quelqu’un de mauvais, et elle se déclenche souvent chez les gens les plus attentifs aux autres. Les « désolé » à répétition obligent l’autre à te rassurer, et tu te sens encore un peu fautif après. Avec un merci, tu rends quelque chose à l’autre, au lieu de demander qu’on te pardonne d’exister. C’est la même situation, et pourtant tout change entre vous.",
       "hashtags": "#culpabilité #gratitude #émotions #confianceensoi #communication #relations #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "culpabilite.html",
       "slides": [
@@ -1786,7 +1786,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Ce que font les excuses à répétition",
+          "titre": "Trop d’excuses fatiguent l’autre",
           "items": [
             {
               "etiquette": "L’effet caché",
@@ -1798,10 +1798,10 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "Quand tu es en retard",
+          "titre": "Tu arrives en retard",
           "items": [
             {
-              "etiquette": "Désolé, je suis en retard…",
+              "etiquette": "Désolé, je suis en retard",
               "texte": "Merci d’avoir patienté",
               "note": "Tu remercies pour le temps qu’on t’a donné, au lieu de t’excuser de l’avoir pris.",
               "illustration": "cafe-merci",
@@ -1811,7 +1811,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Quatre autres phrases du quotidien",
+          "titre": "Tu dis aussi ces quatre phrases",
           "items": [
             {
               "etiquette": "Désolé de déranger",
@@ -1833,7 +1833,7 @@
             },
             {
               "etiquette": "Désolé d’avoir pleuré",
-              "texte": "« Merci d’être là pour moi. » Pleurer devant quelqu’un, tu n’as pas à t’en excuser.",
+              "texte": "« Merci d’être là pour moi. » Tu n’as pas à t’excuser d’avoir pleuré devant quelqu’un.",
               "illustration": "larmes-cuisine",
               "prompt": "A person in their fifties with pale skin and grey-blond wavy hair sits at a kitchen table wiping one cheek with the back of a hand, eyes wet with clumped lashes, eyebrows raised in the middle, mouth trembling into a small embarrassed smile. Beside them sits a friend, a woman in her fifties with deep brown skin and braided hair, one arm along the back of the chair, her face calm and entirely unbothered, her eyes warm."
             }
@@ -1841,7 +1841,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Ce que ça change vraiment",
+          "titre": "Voilà ce que ça change",
           "items": [
             {
               "etiquette": "Deux façons de parler",
@@ -1866,7 +1866,7 @@
       ],
       "phraseFinale": "Entraîne-toi trois minutes les jours où tout va bien. C’est ce qui marche le jour où ça va mal.",
       "question": "Tu essaies de te calmer seulement quand c’est déjà la panique ?",
-      "legende": "L’anxiété n’est pas un défaut chez toi : c’est une alarme qui te prévient d’un danger, même quand il n’y en a pas. Se raisonner ne suffit pas. Ce qui la calme, c’est ce que tu fais avec ton corps. Quand tu expires plus longtemps que tu inspires, ton cœur ralentit tout seul, et peu de choses agissent aussi vite. Et comme n’importe quel geste, ça s’apprend : les jours où tu n’en as pas besoin comptent autant que les autres.",
+      "legende": "L’anxiété n’est pas un défaut chez toi. C’est une alarme qui te prévient d’un danger, même quand il n’y en a pas. Se raisonner ne suffit pas. Ce qui la calme, c’est ce que tu fais avec ton corps. Quand tu expires plus longtemps que tu inspires, ton cœur ralentit tout seul, et peu de choses agissent aussi vite. Comme n’importe quel geste, ça s’apprend. Les jours où tu n’en as pas besoin comptent autant que les autres.",
       "hashtags": "#anxiété #respiration #stress #calme #émotions #sérénité #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "anxiete.html",
       "slides": [
@@ -1895,7 +1895,7 @@
         },
         {
           "gabarit": "avant-apres",
-          "titre": "Pourquoi s’entraîner les jours calmes",
+          "titre": "Pourquoi t’entraîner les jours calmes ?",
           "items": [
             {
               "etiquette": "Sans entraînement",
@@ -1913,7 +1913,7 @@
         },
         {
           "gabarit": "etapes",
-          "titre": "Comment respirer, étape par étape",
+          "titre": "Respire ainsi, étape par étape",
           "items": [
             {
               "etiquette": "Installe-toi bien",
@@ -1958,9 +1958,9 @@
     {
       "numero": 19,
       "slug": "excuse-qui-repare",
-      "titre": "LE MOT QUI ANNULE TES EXCUSES",
+      "titre": "UN SEUL MOT ANNULE TES EXCUSES",
       "titreAccent": "ANNULE",
-      "sousTitre": "Trois phrases qui réparent, et un mot de quatre lettres qui efface tout.",
+      "sousTitre": "Trois phrases réparent, et un mot de quatre lettres efface tout.",
       "emotions": [
         "culpabilite",
         "honte",
@@ -1968,7 +1968,7 @@
       ],
       "phraseFinale": "Tu t’excuses sans rien attendre en retour. L’autre a le droit de ne pas te pardonner tout de suite.",
       "question": "Quand tu culpabilises, tu vas t’excuser ou tu y repenses toute la nuit ?",
-      "legende": "La culpabilité sert à quelque chose de très concret : elle te met mal à l’aise jusqu’à ce que tu ailles réparer, puis elle retombe une fois le geste fait. Si elle reste après coup, ce n’est pas que tu t’y es mal pris : elle vient d’ailleurs, d’une histoire plus ancienne. Et quand tu ne répares jamais, tu tournes en rond dans ta tête à la place, alors que te punir ne change rien pour la personne à qui tu as fait mal. Une excuse qui répare est courte, précise, et ne demande rien en retour. Et quand plus rien n’est réparable, il te reste deux choses : écrire ce que tu aurais voulu dire, et faire autrement la prochaine fois.",
+      "legende": "La culpabilité sert à quelque chose de très concret. Elle te met mal à l’aise jusqu’à ce que tu ailles réparer, puis elle retombe une fois le geste fait. Si elle reste après coup, ce n’est pas que tu t’y es mal pris. Elle vient d’ailleurs, d’une histoire plus ancienne. Quand tu ne répares jamais, tu tournes en rond dans ta tête à la place. Or te punir ne change rien pour la personne à qui tu as fait mal. Une excuse qui répare est courte, précise, et ne demande rien en retour. Et quand plus rien n’est réparable, il te reste deux choses : écrire ce que tu aurais voulu dire, et faire autrement la prochaine fois.",
       "hashtags": "#culpabilité #excuses #réparation #communication #relations #émotions #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "culpabilite.html",
       "slides": [
@@ -1998,7 +1998,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Le mot qui annule tout",
+          "titre": "Ce mot annule tout",
           "items": [
             {
               "etiquette": "Supprime le « mais »",
@@ -2010,7 +2010,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "L’excuse qui répare, en trois phrases",
+          "titre": "Une excuse répare en trois phrases",
           "items": [
             {
               "etiquette": "Ce que tu as fait",
@@ -2034,7 +2034,7 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "L’excuse qui accuse l’autre",
+          "titre": "Cette excuse accuse l’autre",
           "items": [
             {
               "etiquette": "Désolé, tu l’as mal pris",
@@ -2060,7 +2060,7 @@
       ],
       "phraseFinale": "Quand tu sais dire non, tes oui deviennent de vrais oui.",
       "question": "Ça t’a coûté quoi, le dernier oui que tu n’avais pas envie de dire ?",
-      "legende": "Si refuser te coûte autant, c’est souvent que tu crois une chose depuis longtemps : si tu rends service, on t’aime, et si tu refuses, on t’aime moins. Avec cette idée en tête, refuser un dîner ne ressemble pas à un petit refus, mais à un risque de perdre quelqu’un. Cette peur se trompe souvent : elle réagit aussi fort pour un dîner refusé que pour une vraie trahison. Et elle faiblit un peu à chaque fois que tu dis non quand même. Quand la personne en face a du pouvoir sur toi, ton chef par exemple, le « je te réponds demain » reste la réponse la plus sûre.",
+      "legende": "Si refuser te coûte autant, c’est souvent que tu crois une chose depuis longtemps : si tu rends service, on t’aime, et si tu refuses, on t’aime moins. Avec cette idée en tête, refuser un dîner ne ressemble pas à un petit refus. Ça ressemble au risque de perdre quelqu’un. Cette peur se trompe souvent. Elle réagit aussi fort pour un dîner refusé que pour une vraie trahison. Et elle faiblit un peu à chaque fois que tu dis non quand même. Quand la personne en face a du pouvoir sur toi, ton chef par exemple, le « je te réponds demain » reste la réponse la plus sûre.",
       "hashtags": "#direnon #culpabilité #poserseslimites #émotions #relations #estimedesoi #développementpersonnel #boussoleémotionnelle",
       "lienGuide": "culpabilite-de-dire-non.html",
       "slides": [
@@ -2089,7 +2089,7 @@
         },
         {
           "gabarit": "liste",
-          "titre": "Trois façons de dire non",
+          "titre": "Dis non de trois façons",
           "items": [
             {
               "etiquette": "Réponds plus tard",
@@ -2113,12 +2113,12 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "Le non qui s’excuse trop",
+          "titre": "Ce non s’excuse trop",
           "items": [
             {
-              "etiquette": "Désolé, c’est compliqué…",
+              "etiquette": "Désolé, c’est compliqué",
               "texte": "Non, je ne peux pas cette fois",
-              "note": "Une seule raison suffit, parfois même aucune, et un non court passe souvent mieux qu’un non qui s’excuse.",
+              "note": "Une seule raison suffit, parfois même aucune. Un non court passe souvent mieux qu’un non qui s’excuse.",
               "illustration": "non-court",
               "prompt": "The same young woman with medium brown skin and long dark braids, a moment later, standing still with both feet planted and her hands quiet at her sides. Her eyebrows are level, her gaze steady on the other person, her mouth just closed after a short sentence, her shoulders low and easy."
             }
@@ -2126,7 +2126,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Quand tu dis oui sans en avoir envie",
+          "titre": "Tu dis oui sans en avoir envie",
           "items": [
             {
               "etiquette": "Ce que ça te coûte",
@@ -2143,7 +2143,7 @@
       "slug": "ok-et-tu-relis-trois-fois",
       "titre": "« OK. » ET TU RELIS TROIS FOIS",
       "titreAccent": "TROIS FOIS",
-      "sousTitre": "Quatre silences qu’on prend mal, sans savoir ce qui s’est passé",
+      "sousTitre": "On prend mal ces quatre silences, sans savoir ce qui s’est passé",
       "emotions": [
         "anxiete",
         "peur",
@@ -2152,7 +2152,7 @@
       ],
       "phraseFinale": "Un silence ne t’explique rien. Tant que tu n’as pas demandé, tu ne sais pas ce qui s’est passé.",
       "question": "Quel message as-tu relu trois fois cette semaine ?",
-      "legende": "Quand il manque une information, ton cerveau la complète tout seul. Quand tu es sous pression, il choisit rarement l’explication qui t’arrange. Ce n’est pas un défaut de caractère : ton cerveau préfère te prévenir pour rien plutôt que rater un vrai problème. Tu ne sauras pas toujours ce que l’autre voulait dire, et ce n’est pas grave : ce qui aide, c’est d’avoir deux explications en tête au lieu d’une seule. Le test te montre la place que l’anxiété prend chez toi en ce moment, et l’article « L’anxiété » du guide explique pourquoi le doute tourne en boucle.",
+      "legende": "Quand il manque une information, ton cerveau la complète tout seul. Quand tu es sous pression, il choisit rarement l’explication qui t’arrange. Ce n’est pas un défaut de caractère. Ton cerveau préfère te prévenir pour rien plutôt que rater un vrai problème. Tu ne sauras pas toujours ce que l’autre voulait dire, et ce n’est pas grave. Ce qui aide, c’est d’avoir deux explications en tête au lieu d’une seule. Le test te montre la place que l’anxiété prend chez toi en ce moment, et l’article « L’anxiété » du guide explique pourquoi le doute tourne en boucle.",
       "hashtags": "#émotions #emotions #anxiété #anxiete #relations #malentendu #psychologie #connaissancedesoi #bienetre",
       "lienGuide": "anxiete.html",
       "slides": [
@@ -2181,7 +2181,7 @@
         },
         {
           "gabarit": "avant-apres",
-          "titre": "Le message sec",
+          "titre": "Tu reçois un « Ok. » et tu t’inquiètes",
           "items": [
             {
               "etiquette": "CE QUE TU LIS",
@@ -2200,7 +2200,7 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "L’ami qui annule",
+          "titre": "Ton ami annule",
           "items": [
             {
               "etiquette": "Il me laisse tomber",
@@ -2213,7 +2213,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Deux autres silences",
+          "titre": "Et ces deux silences ?",
           "items": [
             {
               "etiquette": "LA RÉUNION MUETTE",
@@ -2236,7 +2236,7 @@
       "slug": "ce-quon-avale-ressort-de-travers",
       "titre": "TU TE TAIS, ET ÇA RESSORT PLUS TARD",
       "titreAccent": "RESSORT",
-      "sousTitre": "Quatre émotions qu’on apprend à taire, et ce qu’elles deviennent",
+      "sousTitre": "On apprend à taire quatre émotions. Voici ce qu’elles deviennent.",
       "emotions": [
         "colere",
         "amour",
@@ -2245,7 +2245,7 @@
       ],
       "phraseFinale": "Une émotion que tu t’interdis ne s’en va pas. Elle attend, et elle ressort au mauvais moment.",
       "question": "Laquelle de ces quatre émotions as-tu appris à taire ?",
-      "legende": "Personne ne décide tout seul de taire une émotion : enfant, tu as appris à cacher celle qui gênait les gens autour de toi. Le problème, c’est que tu ne choisis pas : quand tu baisses le son de la colère, celui de la joie baisse aussi. Te retenir sur le moment n’a rien d’une faute, et c’est même parfois le choix le plus sûr. Ce qui pèse, c’est de n’avoir ensuite personne à qui en parler. Le test te donne tes quatorze niveaux en dix minutes, et l’article « La colère » du guide raconte ce qu’elle essaie de protéger.",
+      "legende": "Personne ne décide tout seul de taire une émotion. Enfant, tu as appris à cacher celle qui gênait les gens autour de toi. Le problème, c’est que tu ne choisis pas laquelle. Quand tu baisses le son de la colère, celui de la joie baisse aussi. Te retenir sur le moment n’a rien d’une faute, et c’est même parfois le choix le plus sûr. Ce qui pèse, c’est de n’avoir ensuite personne à qui en parler. Le test te donne tes quatorze niveaux en dix minutes, et l’article « La colère » du guide raconte ce qu’elle essaie de protéger.",
       "hashtags": "#émotions #emotions #colère #colere #tristesse #tendresse #psychologie #développementpersonnel #developpementpersonnel #connaissancedesoi",
       "lienGuide": "colere.html",
       "slides": [
@@ -2274,7 +2274,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Ce que tu as appris à taire",
+          "titre": "Tu as appris à taire tout ça",
           "items": [
             {
               "etiquette": "LA COLÈRE",
@@ -2305,7 +2305,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Le prix du silence",
+          "titre": "Se taire a un prix",
           "items": [
             {
               "etiquette": "TU BAISSES TOUT LE SON",
@@ -2317,7 +2317,7 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "Une phrase à dire à la place",
+          "titre": "Dis cette phrase à la place",
           "items": [
             {
               "etiquette": "Ça va, ce n’est rien",
@@ -2333,7 +2333,7 @@
     {
       "numero": 23,
       "slug": "ce-que-ta-colere-defend",
-      "titre": "CE QUE TA COLÈRE DÉFEND",
+      "titre": "QUE DÉFEND TA COLÈRE ?",
       "titreAccent": "DÉFEND",
       "sousTitre": "Elle ne cherche pas la bagarre, elle protège quelque chose",
       "emotions": [
@@ -2343,7 +2343,7 @@
       ],
       "phraseFinale": "Ta colère n’est pas ton ennemie. Elle te montre ce qui compte vraiment pour toi.",
       "question": "La dernière fois que la colère est montée, qu’est-ce qu’on n’avait pas respecté ?",
-      "legende": "Une colère arrive rarement pour rien : elle te signale que quelqu’un vient de dépasser une limite qui compte pour toi. La nommer n’a rien de brutal, et ça t’évite de la faire sortir plus tard en petites piques ou en silence. Parfois, sous la colère, il y a surtout de la peine ou de la peur : demande-toi quand même ce qu’elle essaie de protéger. L’article « La colère » du guide déroule les valeurs qu’elle défend le plus souvent, et le test te dit la place qu’elle prend chez toi en ce moment.",
+      "legende": "Une colère arrive rarement pour rien. Elle te signale que quelqu’un vient de dépasser une limite qui compte pour toi. La nommer n’a rien de brutal, et ça t’évite de la faire sortir plus tard en petites piques ou en silence. Parfois, sous la colère, il y a surtout de la peine ou de la peur. Demande-toi quand même ce qu’elle essaie de protéger. L’article « La colère » du guide présente les valeurs qu’elle défend le plus souvent, et le test te dit la place qu’elle prend chez toi en ce moment.",
       "hashtags": "#colère #colere #émotions #emotions #limites #communication #psychologie #développementpersonnel #developpementpersonnel #connaissancedesoi",
       "lienGuide": "colere.html",
       "slides": [
@@ -2372,7 +2372,7 @@
         },
         {
           "gabarit": "liste",
-          "titre": "Quatre colères et ce qu’elles défendent",
+          "titre": "Ces quatre colères défendent quelque chose",
           "items": [
             {
               "etiquette": "ON TE COUPE LA PAROLE",
@@ -2382,19 +2382,19 @@
             },
             {
               "etiquette": "UNE PROMESSE OUBLIÉE",
-              "texte": "On te fait encore attendre. Elle défend ton besoin de pouvoir compter sur les gens.",
+              "texte": "On te fait encore attendre. Ta colère défend ton besoin de pouvoir compter sur les gens.",
               "illustration": "attente-perron",
               "prompt": "A woman in her sixties with white hair in a bun waits on a doorstep in her coat, a bag at her feet, checking her wristwatch. Her lips are pressed together, one eyebrow is raised, her chin is up and her shoulders are squared."
             },
             {
               "etiquette": "UNE BLAGUE DE TROP",
-              "texte": "Tout le monde rit et toi, tu as la gorge serrée. Elle défend le respect : le tien, ou celui d’une personne qui n’est pas là pour se défendre.",
+              "texte": "Tout le monde rit et toi, tu as la gorge serrée. Ta colère défend le respect : le tien, ou celui d’une personne qui n’est pas là pour se défendre.",
               "illustration": "blague-de-trop",
               "prompt": "Two friends at a bar table: a woman in her thirties with dark skin and long braids laughs loudly with her head thrown back, while beside her a man in his twenties with South Asian features holds a fixed polite smile, his eyes hardening and his hand tightening around his glass."
             },
             {
               "etiquette": "UN EFFORT INVISIBLE",
-              "texte": "Tu as tenu la maison toute la semaine et personne ne l’a vu. Elle défend une idée simple : les efforts de chacun devraient compter.",
+              "texte": "Tu as tenu la maison toute la semaine et personne ne l’a vu. Ta colère défend une idée simple : les efforts de chacun devraient compter.",
               "illustration": "vaisselle-nuit",
               "prompt": "A man in his forties with light skin and stubble stands in a quiet kitchen at night, a tea towel over his shoulder and his hands resting on the edge of the sink. He stares at the drying rack, his lips tight, his eyes flat with fatigue and his shoulders heavy."
             }
@@ -2402,7 +2402,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "La colère et ce que tu en fais",
+          "titre": "Tu choisis ce que tu en fais",
           "items": [
             {
               "etiquette": "LA COLÈRE QUI MONTE",
@@ -2420,11 +2420,11 @@
         },
         {
           "gabarit": "etapes",
-          "titre": "Quoi faire quand elle monte",
+          "titre": "Que faire quand elle monte ?",
           "items": [
             {
               "etiquette": "NOMME LA LIMITE",
-              "texte": "Demande-toi ce que l’autre n’a pas respecté. Ton temps, ta parole, le partage des efforts ?",
+              "texte": "Demande-toi ce que l’autre n’a pas respecté. Est-ce ton temps, ta parole ou le partage des efforts ?",
               "illustration": "carnet-sur-les-genoux",
               "prompt": "A woman in her thirties with medium brown skin and curly hair sits on the edge of a bed, a notebook on her knees and a pen paused in her hand. Her eyebrows are drawn together in thought, her gaze is slightly off camera and her other hand rests on her chest."
             },
@@ -2448,9 +2448,9 @@
     {
       "numero": 24,
       "slug": "les-phrases-qui-effacent-ta-part",
-      "titre": "LES PHRASES QUI EFFACENT CE QUE TU AS FAIT",
+      "titre": "CES PHRASES EFFACENT CE QUE TU AS FAIT",
       "titreAccent": "EFFACENT",
-      "sousTitre": "Quatre façons de donner ta réussite à quelqu’un d’autre",
+      "sousTitre": "De quatre façons, tu offres ta réussite à quelqu’un d’autre",
       "emotions": [
         "fierte",
         "honte",
@@ -2458,7 +2458,7 @@
       ],
       "phraseFinale": "Si tu dis que c’était la chance, il ne te reste rien de ta réussite.",
       "question": "Laquelle de ces quatre phrases dis-tu le plus souvent ?",
-      "legende": "Tu ne décides pas un matin d’effacer ce que tu as fait : tu répètes des phrases apprises, comme des politesses. Elles servent à éviter une peur précise : passer pour quelqu’un qui se croit au-dessus des autres. Le souci, c’est qu’une réussite que tu n’as jamais reconnue ne te donne pas confiance pour la suite. Dire ce que tu as fait n’écrase personne, et te réjouir pour quelqu’un d’autre ne t’enlève rien. Le test te dit où en est ta fierté aujourd’hui, et l’article « La fierté » du guide explique pourquoi elle dure si peu de temps chez la plupart des gens.",
+      "legende": "Tu ne décides pas un matin d’effacer ce que tu as fait. Tu répètes des phrases apprises, comme des politesses. Elles servent à éviter une peur précise : passer pour quelqu’un qui se croit au-dessus des autres. Le souci, c’est qu’une réussite que tu n’as jamais reconnue ne te donne pas confiance pour la suite. Dire ce que tu as fait n’écrase personne, et te réjouir pour quelqu’un d’autre ne t’enlève rien. Le test te dit où en est ta fierté aujourd’hui, et l’article « La fierté » du guide explique pourquoi elle dure si peu de temps chez la plupart des gens.",
       "hashtags": "#fierté #fierte #estimedesoi #émotions #emotions #psychologie #développementpersonnel #developpementpersonnel #connaissancedesoi #bienetre",
       "lienGuide": "fierte.html",
       "slides": [
@@ -2487,7 +2487,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Quatre phrases que tu dis sans y penser",
+          "titre": "Tu dis ces quatre phrases sans y penser",
           "items": [
             {
               "etiquette": "« J’AI EU DE LA CHANCE »",
@@ -2550,7 +2550,7 @@
     {
       "numero": 25,
       "slug": "la-regle-des-vingt-secondes",
-      "titre": "LA RÈGLE DES VINGT SECONDES",
+      "titre": "ATTARDE-TOI VINGT SECONDES",
       "titreAccent": "VINGT SECONDES",
       "sousTitre": "Pourquoi tes petites joies ne laissent aucune trace",
       "emotions": [
@@ -2560,7 +2560,7 @@
       ],
       "phraseFinale": "Ta journée contient plein de bons moments. La plupart s’effacent avant le soir.",
       "question": "Quelle petite joie as-tu laissée passer aujourd’hui ?",
-      "legende": "Ton cerveau remarque ce qui est nouveau et laisse tomber ce qui revient tous les jours : il fait des économies, ce n’est pas un manque de reconnaissance. La solution tient en quelques secondes : tu restes sur le bon moment au lieu d’enchaîner tout de suite, et il laisse une trace. Et si en ce moment rien ne te fait d’effet, ce n’est pas un manque de bonne volonté : l’article « Ne plus rien ressentir » du guide parle de ces périodes-là. Le test mesure la place que la joie prend chez toi aujourd’hui, et l’article « La joie » du guide explique en détail pourquoi on finit par s’habituer à tout, même au meilleur.",
+      "legende": "Ton cerveau remarque ce qui est nouveau et laisse tomber ce qui revient tous les jours. Il fait des économies, ce n’est pas un manque de reconnaissance. La solution tient en quelques secondes. Tu restes sur le bon moment au lieu d’enchaîner tout de suite, et il laisse une trace. Et si en ce moment rien ne te fait d’effet, ce n’est pas un manque de bonne volonté. L’article « Ne plus rien ressentir » du guide parle de ces périodes-là. Le test mesure la place que la joie prend chez toi aujourd’hui, et l’article « La joie » du guide explique en détail pourquoi on finit par s’habituer à tout, même au meilleur.",
       "hashtags": "#joie #gratitude #émotions #emotions #instantprésent #instantpresent #psychologie #bienêtre #bienetre #connaissancedesoi",
       "lienGuide": "joie.html",
       "slides": [
@@ -2589,7 +2589,7 @@
         },
         {
           "gabarit": "liste",
-          "titre": "Quatre joies minuscules",
+          "titre": "Ces joies passent vite",
           "items": [
             {
               "etiquette": "LA PREMIÈRE GORGÉE",
@@ -2620,7 +2620,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Ce que tu peux faire",
+          "titre": "Tu peux faire ceci",
           "items": [
             {
               "etiquette": "COMPTE JUSQU’À VINGT",
@@ -2632,7 +2632,7 @@
         },
         {
           "gabarit": "avant-apres",
-          "titre": "Ce qu’on n’entend plus",
+          "titre": "Tu entends son rire sans l’écouter",
           "items": [
             {
               "etiquette": "AVANT",
@@ -2681,7 +2681,7 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "La question qui change tout",
+          "titre": "Une question change tout",
           "items": [
             {
               "etiquette": "Tu ne me montres jamais rien.",
@@ -2694,7 +2694,7 @@
         },
         {
           "gabarit": "grille",
-          "titre": "Quatre façons de dire « je t’aime »",
+          "titre": "On dit « je t’aime » de quatre façons",
           "items": [
             {
               "etiquette": "LES COUPS DE MAIN",
@@ -2737,7 +2737,7 @@
       ],
       "phraseFinale": "Tu ne t’y prends pas mal. Tu montres ton amour d’une façon que l’autre ne repère pas.",
       "question": "Toi, à quoi tu vois que quelqu’un t’aime ?",
-      "legende": "Chacun apprend à aimer chez lui, quand il est enfant : chez les uns avec des gestes, chez les autres avec des mots. Ensuite, tu offres cette façon-là toute ta vie, en croyant qu’elle est évidente pour tout le monde. Beaucoup de gens reçoivent vraiment de l’amour, mais sous une forme qu’ils ne reconnaissent pas, et personne ne pense à le dire autrement. Demande à l’autre à quel moment il a senti que tu l’aimais cette semaine : c’est le plus court chemin pour savoir ce qui compte pour lui. L’article du guide sur l’amour et la tendresse raconte tout ça en détail.",
+      "legende": "Chacun apprend à aimer chez lui, quand il est enfant : chez les uns avec des gestes, chez les autres avec des mots. Ensuite, tu offres cette façon-là toute ta vie, en croyant qu’elle est évidente pour tout le monde. Beaucoup de gens reçoivent vraiment de l’amour, mais sous une forme qu’ils ne reconnaissent pas, et personne ne pense à le dire autrement. Demande à l’autre à quel moment il a senti que tu l’aimais cette semaine. C’est le plus court chemin pour savoir ce qui compte pour lui. L’article du guide sur l’amour et la tendresse raconte tout ça en détail.",
       "hashtags": "#amour #couple #tendresse #languesdelamour #relations #émotions #communication #connaissancedesoi",
       "lienGuide": "amour.html"
     },
@@ -2772,7 +2772,7 @@
         },
         {
           "gabarit": "etapes",
-          "titre": "Les trois étapes d’un amour",
+          "titre": "L’amour a trois étapes",
           "items": [
             {
               "etiquette": "LA PASSION",
@@ -2808,7 +2808,7 @@
         },
         {
           "gabarit": "liste",
-          "titre": "Quatre gestes de dix secondes",
+          "titre": "Ces gestes durent dix secondes",
           "items": [
             {
               "etiquette": "LE VRAI BONJOUR",
@@ -2839,7 +2839,7 @@
       ],
       "phraseFinale": "Un amour plus calme n’est pas un amour qui s’en va. Il se montre autrement.",
       "question": "Quel petit geste tu fais tous les jours, sans y penser ?",
-      "legende": "La passion, c’est la première étape de l’amour : la plus bruyante, et la plus courte. Ce qui vient après est bien plus discret, et ça tient souvent bien mieux : tu te sens en sécurité, et de petits gestes reviennent chaque jour. Le vrai risque des histoires longues, ce n’est pas la dispute, c’est que ces gestes deviennent invisibles. Si tu ne ressens plus rien comme avant, parles-en à l’autre plutôt que d’essayer de deviner tout seul. L’article du guide reprend les trois étapes et donne des idées simples pour entretenir la tendresse au quotidien.",
+      "legende": "La passion est la première étape de l’amour. C’est la plus bruyante, et la plus courte. Ce qui vient après est bien plus discret, et ça tient souvent bien mieux : tu te sens en sécurité, et de petits gestes reviennent chaque jour. Le vrai risque des histoires longues, ce n’est pas la dispute. C’est que ces gestes deviennent invisibles. Si tu ne ressens plus rien comme avant, parles-en à l’autre plutôt que d’essayer de deviner tout seul. L’article du guide reprend les trois étapes et donne des idées simples pour entretenir la tendresse au quotidien.",
       "hashtags": "#amour #couple #passion #attachement #tendresse #relations #viedecouple #émotions",
       "lienGuide": "amour.html"
     },
@@ -2887,7 +2887,7 @@
         },
         {
           "gabarit": "avant-apres",
-          "titre": "Deux façons de dire la même peur",
+          "titre": "La même peur se dit de deux façons",
           "items": [
             {
               "etiquette": "AVANT, TU INTERROGES",
@@ -2907,7 +2907,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Quand ce n’est plus de la jalousie",
+          "titre": "Là, ce n’est plus de la jalousie",
           "items": [
             {
               "etiquette": "LÀ, C’EST DU CONTRÔLE",
@@ -2920,15 +2920,15 @@
       ],
       "phraseFinale": "Tu fouilles pour protéger ton couple. En vrai, c’est la confiance qui le protège, pas la surveillance.",
       "question": "La dernière fois que tu as résisté, l’envie de vérifier a duré combien de temps ?",
-      "legende": "Un prénom revient souvent dans vos conversations, le téléphone de l’autre est posé à l’envers, et te voilà en alerte. Vérifier te calme une minute, puis ton cerveau retient que le doute s’apaise en fouillant, alors il te redemandera de recommencer. Si quelque chose ne va vraiment pas, tu l’apprendras dans une conversation, pas dans un téléphone. La prochaine fois, attends dix minutes avant de regarder, et vois ce que devient l’envie. Si l’angoisse devient trop forte, en parler à un professionnel change tout, et l’article du guide explique aussi la différence entre montrer son téléphone parce qu’on en a envie et devoir le montrer parce que l’autre l’exige.",
+      "legende": "Un prénom revient souvent dans vos conversations, le téléphone de l’autre est posé à l’envers, et te voilà en alerte. Vérifier te calme une minute. Puis ton cerveau retient que le doute s’apaise en fouillant, alors il te demandera de recommencer. Si quelque chose ne va vraiment pas, tu l’apprendras dans une conversation, pas dans un téléphone. La prochaine fois, attends dix minutes avant de regarder, et observe ce que devient l’envie. Si l’angoisse devient trop forte, en parler à un professionnel change tout. L’article du guide explique aussi la différence entre montrer son téléphone parce qu’on en a envie et devoir le montrer parce que l’autre l’exige.",
       "hashtags": "#jalousie #couple #confiance #peurdeperdre #relations #communication #émotions",
       "lienGuide": "jalousie-dans-le-couple.html"
     },
     {
       "numero": 29,
       "slug": "recevoir-sans-rembourser",
-      "titre": "RECEVOIR SANS RIEN DONNER EN ÉCHANGE",
-      "titreAccent": "EN ÉCHANGE",
+      "titre": "APPRENDS À RECEVOIR SANS RENDRE AUSSITÔT",
+      "titreAccent": "SANS RENDRE AUSSITÔT",
       "sousTitre": "Quand tu rends tout de suite, un cadeau devient une dette.",
       "emotions": [
         "gratitude",
@@ -2955,7 +2955,7 @@
         },
         {
           "gabarit": "duo",
-          "titre": "Deux façons de recevoir",
+          "titre": "On reçoit de deux façons",
           "items": [
             {
               "etiquette": "LA GRATITUDE",
@@ -2973,7 +2973,7 @@
         },
         {
           "gabarit": "grand",
-          "titre": "Rendre dans l’heure",
+          "titre": "Tu rends aussitôt",
           "items": [
             {
               "etiquette": "LE RÉFLEXE DE RENDRE",
@@ -2985,7 +2985,7 @@
         },
         {
           "gabarit": "remplace",
-          "titre": "Ce que tu peux répondre",
+          "titre": "Tu peux répondre ceci",
           "items": [
             {
               "etiquette": "Oh, il ne fallait pas.",
@@ -2999,14 +2999,14 @@
       ],
       "phraseFinale": "Accepter un cadeau sans rien rendre, c’est déjà faire plaisir à l’autre.",
       "question": "La dernière fois qu’on t’a fait un compliment, tu as répondu quoi ?",
-      "legende": "Quand on te donne quelque chose, l’autre a fait un pas et toi pas encore : ça met mal à l’aise pendant deux secondes, puis ça passe tout seul. Beaucoup de gens n’ont jamais appris à tenir cette seconde-là. Ils minimisent, ils plaisantent, ou ils rendent aussitôt, et chacun se met à compter ce qu’il doit à l’autre. Rendre vite n’est pas un défaut, mais ça empêche l’autre de voir que son geste t’a touché. Écoute, dis merci, puis dis ce que ça te fait : l’article du guide montre comment nommer précisément ce qui t’a touché.",
+      "legende": "Quand on te donne quelque chose, l’autre a fait un pas et toi pas encore. Ça met mal à l’aise pendant deux secondes, puis ça passe tout seul. Beaucoup de gens n’ont jamais appris à tenir ces deux secondes. Ils minimisent, ils plaisantent, ou ils rendent aussitôt, et chacun se met à compter ce qu’il doit à l’autre. Rendre vite n’est pas un défaut, mais ça empêche l’autre de voir que son geste t’a touché. Écoute, dis merci, puis dis ce que ça te fait. L’article du guide montre comment nommer précisément ce qui t’a touché.",
       "hashtags": "#gratitude #recevoir #compliment #lien #relations #émotions #bienveillance #connaissancedesoi",
       "lienGuide": "gratitude.html"
     },
     {
       "numero": 30,
       "slug": "meteo-interieure",
-      "titre": "TROIS QUESTIONS AVANT D’ÉTEINDRE LA LUMIÈRE",
+      "titre": "POSE-TOI TROIS QUESTIONS AVANT D’ÉTEINDRE",
       "titreAccent": "AVANT D’ÉTEINDRE",
       "sousTitre": "Une minute le soir, au calme, et tu sais où tu en es.",
       "emotions": [
@@ -3035,7 +3035,7 @@
         },
         {
           "gabarit": "etapes",
-          "titre": "Une minute, trois questions",
+          "titre": "Pose-toi trois questions",
           "items": [
             {
               "etiquette": "QUELLE ÉMOTION",
@@ -3051,7 +3051,7 @@
             },
             {
               "etiquette": "DE QUOI TU AS BESOIN",
-              "texte": "Derrière l’énervement, il y a souvent de la fatigue. Et derrière l’angoisse, le besoin qu’on te rassure.",
+              "texte": "Derrière l’énervement, il y a souvent de la fatigue. Derrière l’angoisse, il y a le besoin qu’on te rassure.",
               "illustration": "fauteuil-relache",
               "prompt": "A man with warm brown skin and short grey curly hair sitting back in an armchair by a window, head resting against the back of the chair, eyes closed, face finally loosening after a long day. His hands lie open on his thighs, jaw unclenched, shoulders melted down. He is clearly in his fifties: deep lines at the eyes, greying stubble, heavier features. Single character in frame."
             }
@@ -3085,7 +3085,7 @@
       ],
       "phraseFinale": "Quand tu donnes son vrai nom à une émotion, elle prend moins de place.",
       "question": "Là, tout de suite, quelle émotion est la plus forte chez toi ?",
-      "legende": "Chaque soir, prends une minute et pose-toi trois questions : quelle émotion a dominé, où tu la sens dans le corps, et de quoi tu as besoin. Le but n’est pas de tenir un journal parfait, c’est d’apprendre à nommer précisément ce que tu ressens. Avec « ça va pas », tu ne sais pas quoi faire ; avec « j’ai peur de rater demain », tu peux préparer ta journée. Au fil des semaines, tu verras revenir les mêmes journées difficiles et les mêmes causes. Et si ces questions t’empêchent de dormir, pose-les une heure plus tôt.",
+      "legende": "Chaque soir, prends une minute et pose-toi trois questions : quelle émotion a dominé, où tu la sens dans ton corps, et de quoi tu as besoin. Le but n’est pas de tenir un journal parfait. C’est d’apprendre à nommer précisément ce que tu ressens. Avec « ça va pas », tu ne sais pas quoi faire. Avec « j’ai peur de rater demain », tu peux préparer ta journée. Au fil des semaines, tu verras revenir les mêmes journées difficiles et les mêmes causes. Et si ces questions t’empêchent de dormir, pose-les une heure plus tôt.",
       "hashtags": "#émotions #météointérieure #introspection #journaldesémotions #sérénité #connaissancedesoi #pleineconscience",
       "lienGuide": "serenite.html"
     }
