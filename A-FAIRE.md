@@ -419,18 +419,18 @@ Stripe enregistre chaque étape, rien n'est à refaire :
 - service client : le 06 59 88 56 55, affiché sur les reçus ;
 - libellé de relevé bancaire : **BOUSSOLE EMOTIONNELLE**, abrégé **BOUSSOLE**.
 
-**Ce qui te reste, dans l'ordre du parcours** (l'onglet est resté ouvert dans ton Chrome,
-sur l'écran du compte bancaire ; sinon : Stripe → *Activer les paiements*) :
+**Avancement au 3 novembre au soir** : le compte bancaire, le SMS et la double
+authentification sont faits ; j'ai décliné les étapes facultatives (calcul des taxes par
+Stripe — inutile, TVA française à 20 % pour tous — et contribution Climate). **Le
+récapitulatif est complet sauf une section**, et Stripe refuse l'envoi tant qu'elle ne l'est pas :
 
-1. **Propriétaires ou directeurs.** Stripe a trouvé dans les registres les deux associés,
-   toi et Jimmy, et demande de confirmer. Le système m'a interdit de le faire parce que ça
-   engage l'identité de Jimmy : confirme, puis renseigne sa date de naissance et son adresse
-   (elles sont sur le Kbis, dans `societe/`) — avec son accord.
-2. **Compte bancaire** : l'IBAN du compte professionnel de BC LABS, jamais un compte
-   personnel. Fréquence des virements : « Automatique chaque semaine » est le plus simple.
-3. **Sécuriser le compte** : code SMS, puis l'authentification à deux facteurs.
-4. **Vérifier et envoyer.** Stripe peut ensuite demander une pièce d'identité : c'est
-   normal, c'est la loi contre le blanchiment.
+1. **« Gestion et propriété » → la fiche de ton associé est marquée « Incomplet ».** Il manque
+   sa date de naissance et son adresse (sur le Kbis, dans `societe/`). Je ne saisis pas
+   l'identité d'un tiers : c'est à toi, avec son accord, ou à lui. Bouton *Modifier* sur sa ligne.
+2. **« Accepter et envoyer »**, en bas du récapitulatif : c'est l'acceptation du contrat
+   Stripe au nom de BC LABS — toi aussi. Stripe pourra ensuite demander une pièce d'identité.
+
+L'onglet est resté ouvert dans ton Chrome sur le récapitulatif.
 
 Une fois le compte actif, dis-le-moi : je crée les trois produits et les trois liens en
 production, je pose l'URL des CGV dans les informations publiques (ce qui débloque l'option
