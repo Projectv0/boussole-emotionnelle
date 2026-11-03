@@ -406,36 +406,35 @@ Sans le paramètre `formule`, la page de remerciement ne sait pas quoi débloque
 reconnaître le produit acheté au lieu de deviner d'après le montant — sans eux, un code promo
 de −20 % ferait passer un acheteur du dossier sous le seuil et il recevrait un produit amputé.
 
-## B5 bis · Activer le compte Stripe — toi, dix minutes
+## B5 bis · Activer le compte Stripe — j'ai fait la moitié, il te reste quatre écrans
 
-Dans Stripe, bouton **« Activer les paiements »** (ou *Guide de démarrage*). Le parcours a
-trois étapes ; voici quoi répondre, d'après le Kbis :
+**Fait le 3 novembre 2026, dans ton Chrome, sur le parcours « Activez votre compte »** —
+Stripe enregistre chaque étape, rien n'est à refaire :
 
-1. **Type d'entreprise** : France · **Société** (pas « Particulier / Entrepreneur individuel »,
-   qui est présélectionné) · structure **SAS**.
-2. **Informations sur l'entreprise** : dénomination **BC LABS** · SIREN **130 916 968** ·
-   adresse du siège **8 rue Abel, 75012 Paris** · numéro de TVA **FR50130916968** · site
-   `https://boussole-emotionnelle.fr` · description de l'activité : « Vente en ligne de
-   contenus numériques : résultats et dossier d'analyse d'un test de connaissance de soi ».
-   Catégorie : *Services numériques / Logiciels* ou proche.
-3. **Représentant légal** : toi, président — tes nom, date de naissance, adresse personnelle
-   (celles du Kbis). Stripe peut demander une pièce d'identité : c'est normal, c'est la loi
-   contre le blanchiment. **Jimmy** peut être demandé comme « dirigeant » ou « bénéficiaire
-   effectif » s'il détient 25 % ou plus : renseigne-le si le formulaire l'exige.
-4. **Informations publiques** (ce que voient les clients) : nom affiché **Boussole
-   émotionnelle** · e-mail d'assistance `contact@boussole-emotionnelle.fr` · téléphone
-   06 59 88 56 55 · libellé sur relevé bancaire **BOUSSOLE EMOTION** (22 caractères max, sans
-   accent) · **URL des conditions d'utilisation** `https://boussole-emotionnelle.fr/legal/cgv.html`
-   et **URL de confidentialité** `https://boussole-emotionnelle.fr/legal/confidentialite.html`
-   — c'est ce qui débloque l'option « exiger l'acceptation » sur les liens.
-5. **Compte bancaire** : l'IBAN de la SAS (compte professionnel). Jamais un compte personnel :
-   Stripe vérifie que le titulaire est l'entreprise.
-6. **Sécuriser le compte** : numéro de téléphone vérifié par SMS, et l'authentification à deux
-   facteurs (une application, pas le SMS, si Stripe le propose).
-7. **Vérifier et envoyer.** L'activation prend de quelques minutes à quelques jours.
+- type d'entreprise : Société · structure « Société non cotée » (c'est la case des SAS) ;
+- informations sur l'entreprise : BC LABS, nom commercial « Boussole émotionnelle », SIREN,
+  TVA FR50130916968, siège 8 rue Abel 75012 Paris, téléphone, site ;
+- représentant du compte : toi, président, avec les éléments du Kbis ;
+- produits : catégorie « Autres biens numériques », description des formules ;
+- service client : le 06 59 88 56 55, affiché sur les reçus ;
+- libellé de relevé bancaire : **BOUSSOLE EMOTIONNELLE**, abrégé **BOUSSOLE**.
 
-Dis-moi quand c'est fait : je reviens dans ton Chrome créer les trois produits, les trois
-liens et les réglages en production, puis je bascule le site.
+**Ce qui te reste, dans l'ordre du parcours** (l'onglet est resté ouvert dans ton Chrome,
+sur l'écran du compte bancaire ; sinon : Stripe → *Activer les paiements*) :
+
+1. **Propriétaires ou directeurs.** Stripe a trouvé dans les registres les deux associés,
+   toi et Jimmy, et demande de confirmer. Le système m'a interdit de le faire parce que ça
+   engage l'identité de Jimmy : confirme, puis renseigne sa date de naissance et son adresse
+   (elles sont sur le Kbis, dans `societe/`) — avec son accord.
+2. **Compte bancaire** : l'IBAN du compte professionnel de BC LABS, jamais un compte
+   personnel. Fréquence des virements : « Automatique chaque semaine » est le plus simple.
+3. **Sécuriser le compte** : code SMS, puis l'authentification à deux facteurs.
+4. **Vérifier et envoyer.** Stripe peut ensuite demander une pièce d'identité : c'est
+   normal, c'est la loi contre le blanchiment.
+
+Une fois le compte actif, dis-le-moi : je crée les trois produits et les trois liens en
+production, je pose l'URL des CGV dans les informations publiques (ce qui débloque l'option
+« exiger l'acceptation » sur les liens), le numéro de TVA sur les reçus, et je bascule le site.
 
 ## B6 · La clé Stripe du Worker
 
