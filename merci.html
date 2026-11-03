@@ -44,13 +44,13 @@
   <p class="chapeau" id="sous">Ton accès est activé.</p>
 
   <div class="encart doux" id="retour" hidden>
-    <strong>Retourne à l’onglet du test</strong>
-    Il s’est débloqué tout seul — tes résultats t’y attendent. Tu peux fermer cette page.
+    <strong>Tes résultats t’attendent</strong>
+    Le bouton ci-dessous les ouvre. Si l’onglet du test est encore ouvert, il s’est débloqué tout seul.
   </div>
 
   <div class="encart attention" id="refaire" hidden>
-    <strong>L’onglet du test n’est plus ouvert&nbsp;?</strong>
-    Aucun souci : ton accès est enregistré sur cet appareil. Refais simplement le test, tes résultats s’afficheront directement à la fin.
+    <strong>Les résultats ne s’ouvrent pas&nbsp;?</strong>
+    C’est que le test a été fait dans un autre navigateur. Ton accès est enregistré ici : refais le test ici, tes résultats s’afficheront directement à la fin.
   </div>
 
   <div class="cle-boite" id="cleBoite" hidden>
@@ -143,6 +143,10 @@ if(!formule){
     if(enregistre){
       $("#retour").hidden = false;
       $("#refaire").hidden = false;
+      /* Le bouton mène droit aux résultats : index.html ouvre le test terminé
+         s'il est sur cet appareil, sinon la fenêtre de paiement avec la référence. */
+      $("#btnRetour").href = "./?resultats=1";
+      $("#btnRetour").innerHTML = "Voir mes résultats <span aria-hidden=\"true\">→</span>";
     }else{
       /* stockage indisponible : l'accès ne peut pas être mémorisé, on explique la reprise */
       $("#etapes").hidden = false;

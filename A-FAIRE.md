@@ -482,6 +482,15 @@ bancaire, donc toi :
 6. **Un vrai achat à 1,99 € donne les résultats et *pas* le dossier** — et le bouton
    « Créer ma carte à partager » n'apparaît pas ; à sa place, l'encart « Ta boussole, en image »
    mène à la vitrine du dossier.
+   ✅ **Fait le 3 novembre à 22 h 26** : paiement par Link, reconnu par le Worker (« resultats »).
+   Et un défaut trouvé du premier coup : l'onglet du test s'est bien débloqué, mais le bouton
+   de la page « Merci » ramenait à un accueil vide — l'onglet du test avait effacé le test
+   terminé en ouvrant les résultats. Corrigé le soir même : le test terminé reste sur
+   l'appareil (il s'efface en repartant de zéro, ou au bout de sept jours), le bouton de la
+   page « Merci » s'appelle « Voir mes résultats » et les ouvre directement, et un onglet
+   rechargé entre-temps s'ouvre lui aussi sur les résultats quand le paiement arrive.
+   **Reste à vérifier sur cet achat** : le bouton de la carte est absent, l'encart du dossier
+   affiche 4 € (point 8), puis le remboursement ferme la référence (voir sous le point 11).
 7. **Un vrai achat du dossier fait apparaître le bouton de la carte**, et l'image se fabrique
    aux deux formats (post et story).
 8. **Le complément** : avec un accès « resultats », la vitrine affiche 4 € et non

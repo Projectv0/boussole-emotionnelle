@@ -3321,7 +3321,12 @@ function ouvrirPaywall(){
 function appliquerAcces(niveau){
   niveauAcces = niveau;
   paywallEnAttente = false;
-  effacerBrouillon();   /* les résultats s'ouvrent : le brouillon a fait son office */
+  /* Le brouillon terminé n'est plus effacé ici (3 novembre 2026). Il l'était, et
+     c'est ce qui a perdu le premier acheteur : son onglet de test s'est débloqué
+     tout seul, mais l'onglet du paiement, revenu à l'accueil, ne trouvait plus
+     rien — « je dois tout refaire ». Le test terminé reste sur l'appareil tant
+     qu'on n'en commence pas un autre : chaque onglet, et chaque rechargement,
+     retrouve les résultats. */
   $("#paywallOverlay").hidden = true;
   $("#rapportOverlay").hidden = true;
   /* L'accès peut aussi redescendre — un code cadeau saisi dans un autre onglet
@@ -4416,11 +4421,12 @@ function finish(){
   lastPart    = repartition(state.answers, state.reelles, state.selection);
   resultatsGardesCe = false;
   mesurer("test-fin");   /* le test est terminé, avant même de savoir s'il y a un verrou */
-  /* Le brouillon n'est effacé qu'une fois les résultats réellement ouverts. Effacé
-     ici, il laissait celui qui part payer — donc qui change d'onglet — sans rien à
-     retrouver au retour : seize situations à refaire après avoir payé. */
+  /* Le brouillon terminé n'est pas effacé quand les résultats s'ouvrent : il est
+     ce qui permet de les rouvrir après un rechargement, depuis l'onglet du
+     paiement, ou le lendemain — sans refaire les seize situations. Il s'efface
+     quand on repart de zéro, quand un autre test l'écrase, ou au bout de sept
+     jours. Ceux qui veulent plus longtemps ont « Garder mes résultats ». */
   if(paywallActif() && niveauAcces === "aucun"){ ouvrirPaywall(); return; }
-  effacerBrouillon();
   renderResults(lastNotes);
   showView("v-resultats");
 }
@@ -4605,8 +4611,28 @@ window.addEventListener("storage", e => {
   const n = lireAcces();
   if(!n || niveauAcces === n) return;
   niveauAcces = n;
-  if(lastNotes) appliquerAcces(n);
+  if(lastNotes){ appliquerAcces(n); return; }
+  /* L'onglet a été rechargé entre-temps (un téléphone le fait de lui-même) : les
+     notes sont parties, mais le test terminé est encore là. On l'ouvre, pour que
+     la personne trouve ses résultats en revenant, et pas l'accueil. */
+  const b = chargerBrouillon();
+  if(b && b.complet){ reprendreBrouillon(b); finish(); }
 });
+
+/* Arrivée depuis merci.html (« Voir mes résultats ») : si le test terminé est sur
+   cet appareil, il s'ouvre sans un clic de plus. Sans accès, c'est la fenêtre de
+   paiement qui s'ouvre, avec « J'ai déjà payé » — jamais l'accueil nu. */
+(function ouvrirDirect(){
+  let u;
+  try{ u = new URL(location.href); }catch(_){ return; }
+  if(!u.searchParams.has("resultats")) return;
+  u.searchParams.delete("resultats");
+  try{ history.replaceState(null, "", u.pathname + u.search + u.hash); }catch(_){}
+  const b = chargerBrouillon();
+  if(!b || !b.complet) return;
+  reprendreBrouillon(b);
+  finish();
+})();
 
 renderEmotionCards();
 majBandeauReprise();
