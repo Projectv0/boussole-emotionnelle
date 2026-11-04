@@ -128,6 +128,11 @@ posts prévus maintenant »), toutes en version réécrite, en 4:5, légendes et
 | mercredi | Illustré · La peur retombe, l'anxiété tourne en rond | <https://www.instagram.com/boussole.emotionnelle/p/DfT4LgOiFMI/> |
 | jeudi | Fiche · Peur ou anxiété ? | <https://www.instagram.com/boussole.emotionnelle/p/DfT4WxNiONH/> |
 
+**Nombre de J'aime masqué sur les quatre** (4 novembre, à ta demande) : Instagram n'a pas de seuil
+automatique, on réaffiche à la main (trois points → « Afficher le nombre de J'aime ») quand le
+compteur est flatteur ; pour les prochaines, le masquage se fait à la publication dans
+« Paramètres avancés ». Dis-moi à partir de combien tu veux réafficher.
+
 **La suivante** est `semaine-01/5-vendredi-bd-reunion-personne-ne-dit-rien` (BD). Dis « publie la
 suivante », un jour sur l'autre, aux heures qui portent (12 h-13 h ou 19 h-21 h). Les vidéos
 restent hors plan tant que tu ne les as pas déclarées terminées.
