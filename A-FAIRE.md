@@ -117,11 +117,20 @@ qu'aucun texte ait dû être réduit, et le dossier `publication/` réassemblé 
 `publication/semaine-XX/` contient les images et `legende.txt`, et `SEMAINE.md` rassemble les
 légendes de la semaine.
 
-**Post 1 validé par toi et publié le 4 novembre à 7 h 45**, version réécrite :
-<https://www.instagram.com/boussole.emotionnelle/p/DfT3XNCiAjG/>. **La suivante** est
-`semaine-01/2-mardi-bd-lundi-matin-boule-au-ventre` (BD, étiquette « créé avec l'IA » à activer).
-Dis « publie la suivante », un jour sur l'autre, aux heures qui portent (12 h-13 h ou
-19 h-21 h) ; je te montre les diapositives et la légende avant de poster si tu le demandes.
+**Quatre publications en ligne le 4 novembre au matin**, à ta demande (« fais les 4 premiers
+posts prévus maintenant »), toutes en version réécrite, en 4:5, légendes et hashtags du dossier,
+étiquette « créé avec l'IA » activée sur la BD et l'illustré :
+
+| Jour | Publication | Lien |
+|---|---|---|
+| lundi | Fiche · L'anxiété | <https://www.instagram.com/boussole.emotionnelle/p/DfT3XNCiAjG/> |
+| mardi | BD · Lundi matin, la boule au ventre | <https://www.instagram.com/boussole.emotionnelle/p/DfT3_akCOgA/> |
+| mercredi | Illustré · La peur retombe, l'anxiété tourne en rond | <https://www.instagram.com/boussole.emotionnelle/p/DfT4LgOiFMI/> |
+| jeudi | Fiche · Peur ou anxiété ? | <https://www.instagram.com/boussole.emotionnelle/p/DfT4WxNiONH/> |
+
+**La suivante** est `semaine-01/5-vendredi-bd-reunion-personne-ne-dit-rien` (BD). Dis « publie la
+suivante », un jour sur l'autre, aux heures qui portent (12 h-13 h ou 19 h-21 h). Les vidéos
+restent hors plan tant que tu ne les as pas déclarées terminées.
 
 Instagram et TikTok existent. Les 99 publications de `publication/` sont prêtes : six par
 semaine, du lundi au samedi, sur 17 semaines, sans jamais deux fois le même genre deux
