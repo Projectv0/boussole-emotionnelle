@@ -115,11 +115,13 @@ qu'aucun texte ait dû être réduit, et le dossier `publication/` réassemblé 
 
 **Rien ne se publie sans que tu aies validé le texte.** Pour relire : chaque dossier de
 `publication/semaine-XX/` contient les images et `legende.txt`, et `SEMAINE.md` rassemble les
-légendes de la semaine. Commence par `semaine-01/1-lundi-fiche-comprendre-anxiete` : c'est le
-post 1 refait, prévu pour le 4 novembre à midi. Dis « publie le post 1 » et je le poste depuis
-ton Chrome (le compte Boussole y est connecté à côté du tien) ; ensuite « publie la suivante »,
-un jour sur l'autre, aux heures qui portent (12 h-13 h ou 19 h-21 h). Pour les carrousels
-illustrés et BD, j'activerai l'étiquette « créé avec l'IA » d'Instagram.
+légendes de la semaine.
+
+**Post 1 validé par toi et publié le 4 novembre à 7 h 45**, version réécrite :
+<https://www.instagram.com/boussole.emotionnelle/p/DfT3XNCiAjG/>. **La suivante** est
+`semaine-01/2-mardi-bd-lundi-matin-boule-au-ventre` (BD, étiquette « créé avec l'IA » à activer).
+Dis « publie la suivante », un jour sur l'autre, aux heures qui portent (12 h-13 h ou
+19 h-21 h) ; je te montre les diapositives et la légende avant de poster si tu le demandes.
 
 Instagram et TikTok existent. Les 99 publications de `publication/` sont prêtes : six par
 semaine, du lundi au samedi, sur 17 semaines, sans jamais deux fois le même genre deux
